@@ -46,18 +46,20 @@ class PictureFactory:
 
 
 class DafYomPicture(PictureFactory):
+    font_size = 90
+    _font = ImageFont.truetype(super()._font_path, font_size)
+    _bold_font = ImageFont.truetype(super()._bold_font_path, font_size)
+    background_path = 'res/backgrounds/daf_yomi.png'
+    _draw = super()._get_draw(background_path)
+
     def __init__(self, lang: str, text):
         title = '123567'  # TODO title
-        font_size = 90
-        background_path = 'res/backgrounds/daf_yomi.png'
-
         self._lines = text.split('\n')
-        self._font = ImageFont.truetype(self._font_path, font_size)
-        self._bold_font = ImageFont.truetype(self._bold_font_path, font_size)
-        self._draw = self._get_draw(background_path)
-        self._font_offset = lambda x: self._bold_font.getsize(x)[0]
 
         self._draw_title(self._draw, title)
+
+    def _font_offset(self, text: str):
+        return self._bold_font.getsize(text)[0]
 
     def draw_picture(self):
         pos_y = 470
