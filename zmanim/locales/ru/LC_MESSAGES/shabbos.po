@@ -1,0 +1,291 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2019-05-22 20:03+0300\n"
+"PO-Revision-Date: 2019-05-22 20:06+0300\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: Poedit 2.2.3\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Language: ru\n"
+
+#: shabbos.py:42
+msgid "Bereshit"
+msgstr ""
+
+#: shabbos.py:43
+msgid "Noach"
+msgstr ""
+
+#: shabbos.py:44
+msgid "Lech Lecha"
+msgstr ""
+
+#: shabbos.py:45
+msgid "Vayerah"
+msgstr ""
+
+#: shabbos.py:46
+msgid "Chayei Sarah"
+msgstr ""
+
+#: shabbos.py:47
+msgid "Toldot"
+msgstr ""
+
+#: shabbos.py:48
+msgid "Vayeitzei"
+msgstr ""
+
+#: shabbos.py:49
+msgid "Vayishlach"
+msgstr ""
+
+#: shabbos.py:50
+msgid "Vayeishev"
+msgstr ""
+
+#: shabbos.py:51
+msgid "Mikeitz"
+msgstr ""
+
+#: shabbos.py:52
+msgid "Vayigash"
+msgstr ""
+
+#: shabbos.py:53
+msgid "Vayechi"
+msgstr ""
+
+#: shabbos.py:54
+msgid "Shemot"
+msgstr ""
+
+#: shabbos.py:55
+msgid "Vaeira"
+msgstr ""
+
+#: shabbos.py:56
+msgid "Bo"
+msgstr "Бо"
+
+#: shabbos.py:57
+msgid "Beshalach"
+msgstr ""
+
+#: shabbos.py:58
+msgid "Yitro"
+msgstr ""
+
+#: shabbos.py:59
+msgid "Mishpatim"
+msgstr ""
+
+#: shabbos.py:60
+msgid "Terumah"
+msgstr ""
+
+#: shabbos.py:61
+msgid "Tetzaveh"
+msgstr ""
+
+#: shabbos.py:62
+msgid "Ki Tisa"
+msgstr ""
+
+#: shabbos.py:63
+msgid "Vayakhel-Pekudei"
+msgstr ""
+
+#: shabbos.py:64
+msgid "Vayakhel"
+msgstr ""
+
+#: shabbos.py:65
+msgid "Pekudei"
+msgstr ""
+
+#: shabbos.py:66
+msgid "Vayikra"
+msgstr ""
+
+#: shabbos.py:67
+msgid "Tzav"
+msgstr ""
+
+#: shabbos.py:68
+msgid "Shemini"
+msgstr ""
+
+#: shabbos.py:69
+msgid "Tazria-Metzorah"
+msgstr ""
+
+#: shabbos.py:70
+msgid "Tazria"
+msgstr ""
+
+#: shabbos.py:71
+msgid "Metzorah"
+msgstr ""
+
+#: shabbos.py:72
+msgid "Acharei Mot-Kedoshim"
+msgstr ""
+
+#: shabbos.py:73
+msgid "Acharei Mot"
+msgstr ""
+
+#: shabbos.py:74
+msgid "Kedoshim"
+msgstr ""
+
+#: shabbos.py:75
+msgid "Emor"
+msgstr ""
+
+#: shabbos.py:76
+msgid "Behar-Bechukotai"
+msgstr ""
+
+#: shabbos.py:77
+msgid "Behar"
+msgstr ""
+
+#: shabbos.py:78
+msgid "Bechukotai"
+msgstr ""
+
+#: shabbos.py:79
+msgid "Bamidbar"
+msgstr ""
+
+#: shabbos.py:80
+msgid "Naso"
+msgstr ""
+
+#: shabbos.py:81
+msgid "Beha'alotecha"
+msgstr ""
+
+#: shabbos.py:82
+msgid "Shelach"
+msgstr ""
+
+#: shabbos.py:83
+msgid "Korach"
+msgstr ""
+
+#: shabbos.py:84
+msgid "Chukat"
+msgstr ""
+
+#: shabbos.py:85
+msgid "Balak"
+msgstr ""
+
+#: shabbos.py:86
+msgid "Pinchas"
+msgstr ""
+
+#: shabbos.py:87
+msgid "Matot-Masei"
+msgstr ""
+
+#: shabbos.py:88
+msgid "Matot"
+msgstr ""
+
+#: shabbos.py:89
+msgid "Masei"
+msgstr ""
+
+#: shabbos.py:90
+msgid "Devarim"
+msgstr ""
+
+#: shabbos.py:91
+msgid "Va'etchanan"
+msgstr ""
+
+#: shabbos.py:92
+msgid "Eikev"
+msgstr ""
+
+#: shabbos.py:93
+msgid "Re'eh"
+msgstr ""
+
+#: shabbos.py:94
+msgid "Shoftim"
+msgstr ""
+
+#: shabbos.py:95
+msgid "Ki Teitzei"
+msgstr ""
+
+#: shabbos.py:96
+msgid "Ki Tavo"
+msgstr ""
+
+#: shabbos.py:97
+msgid "Nitzavim-Vayeilech"
+msgstr ""
+
+#: shabbos.py:98
+msgid "Nitzavim"
+msgstr ""
+
+#: shabbos.py:99
+msgid "Vayeilech"
+msgstr ""
+
+#: shabbos.py:100
+msgid "Ha'azinu"
+msgstr ""
+
+#: shabbos.py:104
+msgid "SHABBOS"
+msgstr "ШАББАТ"
+
+#: shabbos.py:105
+msgid "Parashat ha-shavua"
+msgstr "Недельная глава"
+
+#: shabbos.py:107
+msgid "Candle lighting"
+msgstr "Зажигание свечей"
+
+#: shabbos.py:108
+msgid "minutes before shekiah"
+msgstr "минут до шкии"
+
+#: shabbos.py:109
+msgid "Tzeit ha-kochavim"
+msgstr "Выход звёзд"
+
+#: shabbos.py:112
+msgid ""
+"For this location zmanim is impossible\n"
+"to determine because of polar night/day."
+msgstr ""
+"В данных широтах невозможно\n"
+"определить зманим из-за\n"
+"полярного дня/полярной ночи."
+
+#: shabbos.py:118
+msgid ""
+"Notice! You should specify time of candle\n"
+" lighting with the rabbi of your community!"
+msgstr ""
+"Внимание! Необходимо уточнить время\n"
+"зажигания свечей у раввина общины!"

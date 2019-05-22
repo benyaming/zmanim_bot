@@ -1,6 +1,6 @@
 from enum import Enum
 
-from zmanim.res.picture_maker import *
+from zmanim.res.image.picture_maker import *
 
 
 class PictureTypes(Enum):
@@ -24,3 +24,4 @@ class PictureTypes(Enum):
     fast_esther = FastPicture
     fast_sheva_asar_tammuz = FastPicture
     fast_tisha_beav = FastPicture
+

@@ -1,16 +1,20 @@
-import json
-
 from aiohttp import web
 
-from zmanim.res.picture_maker import PictureFactory
-from zmanim.res.picture_types import PictureTypes
+from zmanim.res.image.picture_maker import PictureFactory
+from zmanim.res.image.picture_types import PictureTypes
 
-text = 'Дата: |23-30 декабря 2018,^Понедельник-Понедельник'
+data = {
+    'parasha': 'Bo',
+    'candle_lighting': '11:11',
+    'shkia_offset': 18,
+    'tzeit_kochavim': '22:22',
+    'error': False,
+    'warning': True
+}
 
 
 async def handle(request: web.Request):
-    response = PictureFactory.get_picture(PictureTypes.chanukah, '', text)
-    print(response)
+    response = PictureFactory.get_picture(PictureTypes.shabbos, 'Russian', data)
     return web.Response(body=response, content_type='image/jpeg')
 
 
