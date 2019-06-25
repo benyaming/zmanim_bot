@@ -3,5 +3,10 @@
 __all__ = [
     'daf_yomi',
     'rosh_hodesh',
-    'shabbos'
+    'shabbos',
+    'zmanim',
+    'fast',
+    'rosh_hashana',
+    'yom_kippur'
+
 ]

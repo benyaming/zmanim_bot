@@ -1,21 +1,14 @@
 from typing import Callable
 
+from .types import DafYomi, DYData, SimpleDict
 
-def get_translate(data: dict, _: Callable) -> dict:
+
+def get_translate(data: dict, _: Callable) -> DafYomi:
     """
     input data structure:
     {
         'masehet': '...',
         'daf': '...(int)'
-    }
-
-    output data structure (words in `` are translated):
-    {
-        'title': `...`.
-        'data': {
-            `Masehet`: `...`,
-            `Daf`: `...`
-        }
     }
     """
     talmud_books = {
@@ -59,11 +52,13 @@ def get_translate(data: dict, _: Callable) -> dict:
     }
 
     masehet = talmud_books.get(data['masehet'])
-    localized_data = {
-        'title': _('DAF YOMI'),
-        'data': {
-            _('Masehet'): masehet,
-            _('Daf'): data['daf']
-        }
-    }
+
+    localized_data = DafYomi(
+        title=_('DAF YOMI'),
+        data=DYData(
+            SimpleDict(header=_('Masehet'), value=masehet),
+            SimpleDict(header=_('Daf'), value=str(data['daf']))
+        )
+    )
+
     return localized_data

@@ -1,7 +1,10 @@
 from typing import Callable
 
+from .types import RoshHodesh, SimpleDict, RHData, RHDate, RHMolad
+from .utils import he_months, gr_month_genitive, days_of_week
 
-def get_translate(data: dict, _: Callable) -> dict:
+
+def get_translate(data: dict, _: Callable) -> RoshHodesh:
     """
     input data structure:
     {
@@ -12,97 +15,20 @@ def get_translate(data: dict, _: Callable) -> dict:
           'date_months': [...(int)],
           'date_days': [...(int)],
           'date_dow': [...(int)],
-        }
+        },
         'molad': {
           'molad_month': '...(int)',
           'molad_day': '...(int)',
           'molad_dow': '...(int)',
-          'molad_hours': '...(int)',
+          'molad_hour': '...(int)',
           'molad_minutes': '...(int)',
           'molad_parts': '...(int)',
-        }
-    }
-
-    output data structure (words in `` are translated):
-    {
-        'title': `...`,
-        'data': {
-            'month': {
-                'month_word': `...`,
-                'month_value': `...`
-            }
-            'nod': {
-                'nod_word': `...`,
-                'nod': (int)
-            },
-            'date': {
-                'date_word': `...`,
-                'date_days': ['...(int)'],
-                'date_months': [`...`],
-                'date_years': ['...(int)'],
-                'date_dow': [`...`]
-            },
-            'molad': {
-                'molad_word': `...`,
-                'molad_day': '...(int)',
-                'molad_month': `...`,
-                'molad_dow': `...`,
-                'molad_n_of_hours': '...(int)',
-                'molad_hours_w': `...`,
-                'molad_n_of_minutes': '...(int)',
-                'molad_minutes_w': `...`,
-                'molad_and-word': `...`,
-                'molad_n_of_parts': '...(int)',
-                'molad_parts_w': `...`,
-            }
         }
     }
     """
     title = _('ROSH_HODESH')
     and_word = _('and')
 
-    he_months = {
-        'Nisan': _('Nisan'),
-        'Nissan': _('Nissan'),
-        'Iyar': _('Iyar'),
-        'Sivan': _('Sivan'),
-        'Tamuz': _('Tamuz'),
-        'Av': _('Av'),
-        'Elul': _('Elul'),
-        'Tishrei': _('Tishrei'),
-        'Cheshvan': _('Cheshvan'),
-        'Kislev': _('Kislev'),
-        'Teves': _('Teves'),
-        'Shevat': _('Shevat'),
-        'Adar': _('Adar'),
-        'Adar I': _('Adar I'),
-        'Adar II': _('Adar II'),
-    }
-    gr_month_genitive = {
-        1: _('January'),
-        2: _('February'),
-        3: _('March'),
-        4: _('April'),
-        5: _('May'),
-        6: _('June'),
-        7: _('July'),
-        8: _('August'),
-        9: _('September'),
-        10: _('October'),
-        11: _('November'),
-        12: _('December'),
-    }
-    days_of_week = {
-        0: _('Monday'),
-        1: _('Tuesday'),
-        2: _('Wednesday'),
-        3: _('Thursday'),
-        4: _('Friday'),
-        5: _('Saturday'),
-        6: _('Sunday'),
-        7: _('Monday'),
-        8: _('Tuesday')
-    }
     hours = {
         1: _('Hour-1'),
         2: _('Hour-2'),
@@ -142,43 +68,36 @@ def get_translate(data: dict, _: Callable) -> dict:
 
     he_month = he_months.get(data['he_month'])
 
-    rh_date = {
-        'date_word': _('Date'),
-        'date_days': [i for i in data['date']['date_days']],
-        'date_months': [gr_month_genitive.get(i) for i in data['date']['date_months']],
-        'date_years': [i for i in data['date']['date_years']],
-        'date_dow': [days_of_week.get(i) for i in data['date']['date_dow']]
-    }
+    rh_date = RHDate(
+        header=_('Date'),
+        days=[str(i) for i in data['date']['date_days']],
+        months=[gr_month_genitive.get(i) for i in data['date']['date_months']],
+        years=[str(i) for i in data['date']['date_years']],
+        dow=[days_of_week.get(i) for i in data['date']['date_dow']]
+    )
 
-    molad = {
-        'molad_word': _('Molad'),
-        'molad_day': data['molad']['molad_day'],
-        'molad_month': gr_month_genitive.get(data['molad']['molad_month']),
-        'molad_dow': days_of_week.get(data['molad']['molad_dow']),
-        'molad_n_of_hours': data['molad']['molad_hours'],
-        'molad_hours_w': hours.get(data['molad']['molad_hours'] % 10),
-        'molad_n_of_minutes': data['molad']['molad_minutes'],
-        'molad_minutes_w': minutes.get(data['molad']['molad_minutes'] % 10),
-        'molad_and-word': and_word,
-        'molad_n_of_parts': data['molad']['molad_parts'],
-        'molad_parts_w': parts.get(data['molad']['molad_parts'] % 10),
-    }
+    molad = RHMolad(
+        header=_('Molad'),
+        day=data['molad']['molad_day'],
+        month=gr_month_genitive.get(data['molad']['molad_month']),
+        dow=days_of_week.get(data['molad']['molad_dow']),
+        n_hours=data['molad']['molad_hour'],
+        hours_word=hours.get(data['molad']['molad_hour'] % 10),
+        n_of_minutes=data['molad']['molad_minutes'],
+        minutes_word=minutes.get(data['molad']['molad_minutes'] % 10),
+        and_word=and_word,
+        n_parts=data['molad']['molad_parts'],
+        parts_word=parts.get(data['molad']['molad_parts'] % 10)
+    )
 
-    translated_data = {
-        'title': title,
-        'data': {
-            'month': {
-                'month_word': _('Month'),
-                'month_value': he_month
-            },
-            'nod': {
-                'nod_word': _('Number of days'),
-                'nod_value': data['n_days']
-            },
-            'date': rh_date,
-            'molad': molad
-        }
-    }
+    translated_data = RoshHodesh(
+        title=title, data=RHData(
+            SimpleDict(_('Month'), he_month),
+            SimpleDict(_('Number of days'), data['n_days']),
+            rh_date,
+            molad
+        )
+    )
 
     return translated_data
 
@@ -201,18 +120,3 @@ example = {
         'molad_parts': 2,
     }
 }
-
-#
-# def get_translator(domain: str, lang: str) -> Callable:
-#     languages = {'Russian': 'ru', 'English': 'en'}
-#     loc_path = path.join(r'C:\Users\Benyomin\PycharmProjects\zmanim_api\zmanim', 'locales/')
-#     locale = translation(domain, loc_path, languages=[languages.get(lang)])
-#     locale.install()
-#     return locale.gettext
-#
-#
-# f = get_translator('rosh_hodesh', 'Russian')
-# a = get_translate(t, f)
-#
-# import pprint
-# pprint.pprint(a, indent=4)

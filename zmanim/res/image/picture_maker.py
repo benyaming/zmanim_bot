@@ -1,17 +1,19 @@
 from os import path, getcwd
 from io import BytesIO
-from typing import Callable, NoReturn
+from typing import Callable, NoReturn, Any
 from gettext import translation
+from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 
 from ..localizations import *
+from ..settings import I18N_DOMAIN
 
 
-def get_translator(domain: str, lang: str) -> Callable:
+def get_translator(lang: str) -> Callable:
     languages = {'Russian': 'ru', 'English': 'en'}
-    loc_path = path.join(path.abspath(getcwd()), 'locales/')
-    locale = translation(domain, loc_path, languages=[languages.get(lang)])
+    loc_path = Path(__file__).parent.parent.parent / 'locales'
+    locale = translation(I18N_DOMAIN, loc_path, languages=[languages.get(lang)])
     locale.install()
     return locale.gettext
 
@@ -22,12 +24,27 @@ def format_header(header: str) -> str:
 
 class PictureFactory:
 
-    _font_path = path.join(path.abspath(getcwd()), 'res/image/fonts/gothic.TTF')
-    _bold_font_path = path.join(path.abspath(getcwd()), 'res/image/fonts/gothic-bold.TTF')
-    _title_font = ImageFont.truetype(_bold_font_path, 60)
+    _font_path = Path(__file__).parent / 'fonts' / 'gothic.TTF'
+    _bold_font_path = Path(__file__).parent / 'fonts' / 'gothic-bold.TTF'
+    _title_font = ImageFont.truetype(str(_bold_font_path), 60)
     # smaller font for shmini atzeres
-    _title_font_sa = ImageFont.truetype(_bold_font_path, 55)
-    _bold_font = None
+    _title_font_sa = ImageFont.truetype(str(_bold_font_path), 55)
+    # _bold_font = None
+    _font_size = 0
+    _warning_font_size = 0
+    _background_path = None
+    _lang = None
+    _translation_func = None
+    _raw_data = None
+    _r_type = None
+
+    def __init__(self) -> NoReturn:
+        self._font = ImageFont.truetype(str(self._font_path), self._font_size)
+        self._bold_font = ImageFont.truetype(str(self._bold_font_path), self._font_size)
+        self._draw = self._get_draw(str(self._background_path))
+        self._translator = get_translator(self._lang)
+        self._warning_font = ImageFont.truetype(str(self._bold_font_path),
+                                                self._warning_font_size)
 
     @staticmethod
     def _convert_img_to_bytes_io(img: PngImagePlugin.PngImageFile) -> BytesIO:
@@ -67,19 +84,15 @@ class PictureFactory:
 
 class DafYomPicture(PictureFactory):
     def __init__(self, lang: str, data: dict) -> NoReturn:
-        font_size = 90
-        background_path = 'res/image/backgrounds/daf_yomi.png'
+        self._font_size = 90
+        self._background_path = 'res/image/backgrounds/daf_yomi.png'
+        self._lang = lang
 
-        self._font = ImageFont.truetype(super()._font_path, font_size)
-        self._bold_font = ImageFont.truetype(super()._bold_font_path, font_size)
-        self._draw = super()._get_draw(background_path)
+        super().__init__()
 
-        translator = get_translator('daf_yomi', lang)
-        localized_data = daf_yomi.get_translate(data, translator)
-        self._data = localized_data['data']
-
-        title = localized_data['title']
-        self._draw_title(self._draw, title)
+        localized_data = daf_yomi.get_translate(data, self._translator)
+        self._data = localized_data.data
+        self._draw_title(self._draw, localized_data.title)
 
     def draw_picture(self) -> BytesIO:
         pos_y = 470
@@ -93,34 +106,37 @@ class DafYomPicture(PictureFactory):
         data = self._data
         draw = self._draw
 
-        for header, value in data.items():
-            header = format_header(header)
-            header_offset = font_offset(header)
+        print(data)
 
-            # draw termin
-            draw.text((pos_x, pos_y), f'{header} ', font=bold_font)
-            # draw value
-            draw.text((pos_x + header_offset, pos_y), value, font=font)
+        # draw masehet
+        masehet_header = format_header(data.masehet.header)
+        masehet_offset = font_offset(masehet_header)
 
-            pos_y += y_offset
+        draw.text((pos_x, pos_y), masehet_header, font=bold_font)
+        draw.text((pos_x + masehet_offset, pos_y), data.masehet.value, font=font)
+        pos_y += y_offset
+
+        # draw daf
+        daf_header = format_header(data.daf.header)
+        daf_offset = font_offset(daf_header)
+
+        draw.text((pos_x, pos_y), daf_header, font=bold_font)
+        draw.text((pos_x + daf_offset, pos_y), data.daf.value, font=font)
+
         return self._convert_img_to_bytes_io(self._image)
 
 
 class RoshHodeshPicture(PictureFactory):
     def __init__(self, lang: str, data: dict) -> NoReturn:
-        font_size = 46
-        background_path = 'res/image/backgrounds/rosh_hodesh.png'
+        self._font_size = 46
+        self._background_path = 'res/image/backgrounds/rosh_hodesh.png'
+        self._lang = lang
 
-        self._font = ImageFont.truetype(self._font_path, font_size)
-        self._bold_font = ImageFont.truetype(self._bold_font_path, font_size)
-        self._draw = self._get_draw(background_path)
+        super().__init__()
 
-        translator = get_translator('rosh_hodesh', lang)
-        localized_data = rosh_hodesh.get_translate(data, translator)
-        self._data = localized_data['data']
-
-        title = localized_data['title']
-        self._draw_title(self._draw, title)
+        localized_data = rosh_hodesh.get_translate(data, self._translator)
+        self._data = localized_data.data
+        self._draw_title(self._draw, localized_data.title)
 
     @staticmethod
     def format_rh_date(days: list, months: list, years: list, dow: list) -> str:
@@ -148,50 +164,43 @@ class RoshHodeshPicture(PictureFactory):
         draw = self._draw
 
         # draw month
-        month_header = format_header(data['month']['month_word'])
-        month_value = data['month']['month_value']
+        month_header = format_header(data.month.header)
+        month_value = data.month.value
         offset = font_offset(month_header)
         draw.text((pos_x, pos_y), month_header, font=bold_font)
         draw.text((pos_x + offset, pos_y), month_value, font=font)
         pos_y += y_offset
 
-        # draw number of days (nod)
-        nod_header = format_header(data['nod']['nod_word'])
-        nod_value = data['nod']['nod_value']
-        offset = font_offset(nod_header)
-        draw.text((pos_x, pos_y), nod_header, font=bold_font)
-        draw.text((pos_x + offset, pos_y), str(nod_value), font=font)
+        # draw number of days (n_days)
+        n_days_header = format_header(data.n_days.header)
+        n_days_value = data.n_days.value
+        offset = font_offset(n_days_header)
+        draw.text((pos_x, pos_y), n_days_header, font=bold_font)
+        draw.text((pos_x + offset, pos_y), str(n_days_value), font=font)
         pos_y += y_offset
 
         # prepare date string
-        date = data['date']
-        date_str = self.format_rh_date(
-            days=date['date_days'],
-            months=date['date_months'],
-            years=date['date_years'],
-            dow=date['date_dow']
-        )
+        date = data.date
+        date_str = self.format_rh_date(date.days, date.months, date.years, date.dow)
+        print(date_str)
 
         # draw date strings
-        date_header = format_header(date['date_word'])
+        date_header = format_header(date.header)
         x_offset = font_offset(date_header)
         optional_y_offset = y_font_offset(date_str) if '\n' in date_str else 0
 
         draw.text((pos_x, pos_y), date_header, font=bold_font)
         draw.text((pos_x + x_offset, pos_y), date_str, font=font)
         pos_y += y_offset + optional_y_offset
-        print(optional_y_offset)
 
         # prepare molad string
-        molad = data['molad']
-        molad_str1 = f'{molad["molad_day"]} {molad["molad_month"]}, {molad["molad_dow"]}' \
-                     f',\n{molad["molad_n_of_hours"]} {molad["molad_hours_w"]} ' \
-                     f'{molad["molad_n_of_minutes"]} {molad["molad_minutes_w"]} ' \
-                     f'{molad["molad_and-word"]} {molad["molad_n_of_parts"]} ' \
-                     f'{molad["molad_parts_w"]}'
+        molad = data.molad
+        molad_str1 = f'{molad.day} {molad.month}, {molad.dow},\n{molad.n_hours} ' \
+                     f'{molad.hours_word} {molad.n_of_minutes} {molad.minutes_word} ' \
+                     f'{molad.and_word} {molad.n_parts} {molad.parts_word}'
 
         # draw molad string
-        molad_header = format_header(molad['molad_word'])
+        molad_header = format_header(molad.header)
         offset = font_offset(molad_header)
 
         draw.text((pos_x, pos_y), molad_header, font=bold_font)
@@ -202,33 +211,25 @@ class RoshHodeshPicture(PictureFactory):
 
 class ShabbosPicture(PictureFactory):
 
-    def __init__(self, lang: str, data: dict):
-        font_size = 60
-        warning_font_size = 48
-
-        translator = get_translator('shabbos', lang)
-        localized_data = shabbos.get_translate(data, translator)
-        self._data = localized_data['data']
-
+    def __init__(self, lang: str, data: dict) -> NoReturn:
+        self._font_size = 60
+        self._warning_font_size = 48
+        self._lang = lang
         if data['error'] or data['warning']:
-            background_path = 'res/image/backgrounds/shabbos_attention.png'
-            self._warning = True
+            self._background_path: str = 'res/image/backgrounds/shabbos_attention.png'
         else:
-            background_path = 'res/image/backgrounds/shabbos.png'
-            self._warning = False
+            self._background_path: str = 'res/image/backgrounds/shabbos.png'
 
-        self._font = ImageFont.truetype(self._font_path, font_size)
-        self._bold_font = ImageFont.truetype(self._bold_font_path, font_size)
-        self._warning_font = ImageFont.truetype(self._bold_font_path, warning_font_size)
-        self._draw = self._get_draw(background_path)
+        super().__init__()
 
-        title = localized_data['title']
-        self._draw_title(self._draw, title)
+        localized_data = shabbos.get_translate(data, self._translator)
+        self._data = localized_data.data
+        self._draw_title(self._draw, localized_data.title)
 
     def draw_picture(self):
-        pos_y = 400
+        pos_y = 400 if not self._data.error else 470
         pos_x = 100
-        y_offset = 80
+        y_offset: int = 80
 
         # shortcuts for code glance
         font_offset = self._font_offset
@@ -239,22 +240,25 @@ class ShabbosPicture(PictureFactory):
         draw = self._draw
 
         # draw parashat hashavua
-        p_h = data['parasha']
-        header = format_header(p_h['parasha_header'])
-        value = p_h['parasha_value']
+        header = format_header(data.parasha.header)
+        value = data.parasha.value
         header_offset = font_offset(header)
 
         draw.text((pos_x, pos_y), header, font=bold_font)
         draw.text((pos_x + header_offset, pos_y), value, font=font)
         pos_y += y_offset
 
-        if data['error']:
-            pass
+        # if polar error, draw error message and return
+        if data.error:
+            pos_x = 100
+            pos_y = 840 if data.error.count('\n') < 2 else 810
+
+            draw.text((pos_x, pos_y), data.error, font=warning_font, fill='#ff5959')
+            return self._convert_img_to_bytes_io(self._image)
 
         # draw candle lighting
-        c_l = data['candle_lighting']
-        header = format_header(c_l['candle_lighting_header'])
-        value = c_l['candle_lighting_value']
+        header = format_header(data.candle_lighting.header)
+        value = data.candle_lighting.value
         header_offset = font_offset(header)
 
         draw.text((pos_x, pos_y), header, font=bold_font)
@@ -262,15 +266,12 @@ class ShabbosPicture(PictureFactory):
         pos_y += y_offset
 
         # draw shekiah offset
-        shekiah_offset = data['shkia_offset']
-
-        draw.text((pos_x, pos_y), shekiah_offset, font=font)
+        draw.text((pos_x, pos_y), data.shkia_offset, font=font)
         pos_y += y_offset
 
         # draw tzeis hakochavim
-        t_h = data['tzeit_kochavim']
-        header = format_header(t_h['tzeit_header'])
-        value = t_h['tzeit_value']
+        header = format_header(data.tzeit_kochavim.header)
+        value = data.tzeit_kochavim.value
         header_offset = font_offset(header)
 
         draw.text((pos_x, pos_y), header, font=bold_font)
@@ -278,59 +279,32 @@ class ShabbosPicture(PictureFactory):
         pos_y += y_offset
 
         # draw warning if need
-        if not data['warning']:
+        if not data.warning:
             return self._convert_img_to_bytes_io(self._image)
 
-        warning = data['warning']
         pos_x, pos_y = 100, 840
-
-        draw.text((pos_x, pos_y), warning, font=warning_font, fill='#ff5959')
-
-        # if '%' in text:
-        #     text_lines = text.split('%')[0].split('\n')
-        # elif '?' in text:
-        #     text_lines = text.split('?')[0].split('\n')
-        #     pos_y = 470
-        # else:
-        #     text_lines = text.split('\n')
-        #
-        # for line in text_lines:
-        #     # draw 'candle offset' line without termin offset
-        #     if '+' in line:
-        #         line = line.split('+')[1]
-        #         draw.text((pos_x, pos_y), line, font=font)
-        #         pos_y += y_offset
-        #     else:
-        #         # headers separetes from values by '|' symbol
-        #         header, value = line.split('|')
-        #         header_offset = font_offset(header)
-        #
-        #         # draw termin
-        #         draw.text((pos_x, pos_y), f'{header} ', font=bold_font)
-        #         # draw value
-        #         draw.text((pos_x + header_offset, pos_y), value, font=font)
-        #         pos_y += y_offset
-        #
-        # # draw warning message, if it exist
-        # warning_lines = ''
-        # if '?' in text:
-        #     pos_y = 830 if self._lang == 'English' else 810
-        #     warning_lines = text.split('?')[1].split('\n')
-        # elif '%' in self._text:
-        #     warning_lines = text.split('%')[1].split('\n')
-        #     pos_y = 830
-        # pos_x = 100
-        # y_offset = 50
-        # for line in warning_lines:
-        #     draw.text((pos_x, pos_y), line, font=warning_font, fill='#ff5959')
-        #     pos_y += y_offset
+        draw.text((pos_x, pos_y), data.warning, font=warning_font, fill='#ff5959')
 
         return self._convert_img_to_bytes_io(self._image)
 
 
 class ZmanimPicture(PictureFactory):
 
-    def _set_font_properties(self, number_of_lines: int) -> None:
+    def __init__(self, lang: str, data: dict) -> NoReturn:
+        self._background_path = 'res/image/backgrounds/zmanim.png'
+        self._lang = lang
+
+        localized_data = zmanim.get_translate(data, get_translator(lang))
+        self._data = localized_data.zmanim
+        self._date = localized_data.date
+
+        self._set_font_properties(len(self._data))
+        super().__init__()
+
+        self._draw_title(self._draw, localized_data.title, is_zmanim=True)
+        self._draw_date()
+
+    def _set_font_properties(self, number_of_lines: int) -> NoReturn:
         p = {
             # [font_size, y_offset, start_y_offset
             1: [58, 68, 300],
@@ -353,223 +327,247 @@ class ZmanimPicture(PictureFactory):
             18: [37, 44, 0],
             19: [35, 42, 0]
         }
+        self._font_size, self._y_offset, self._start_y_offset = p.get(number_of_lines)
+        self._font = ImageFont.truetype(self._font_path, size=self._font_size)
+        self._bold_font = ImageFont.truetype(self._bold_font_path, size=self._font_size)
 
-        font_size, self._y_offset, self._start_y_offset = p.get(number_of_lines)
-        self._font = ImageFont.truetype(self._font_path, size=font_size)
-        self._bold_font = ImageFont.truetype(self._bold_font_path, size=font_size)
-
-    def __init__(self, lang, text):
-        self._set_font_properties(len(text.split('\n')))
-
-        title = 'ZMANIM TEST'  # TODO title
-        background_path = 'res/backgrounds/zmanim.png'
-
-        self._date = text.split('=')[0]
-        self._lines = text.split('=')[1].split('\n')
-        self._draw = self._get_draw(background_path)
-
-        self._draw_title(self._draw, title, zmanim=True)
-        self._draw_date()
-
-    def _draw_date(self):
+    def _draw_date(self) -> NoReturn:
         pos_x = 250
-        pos_y = 80
-        draw = self._draw
+        pos_y = 130
         date_font = ImageFont.truetype(self._font_path, 40)
 
-        draw.text((pos_x, pos_y + 50), self._date, font=date_font)
+        self._draw.text((pos_x, pos_y), self._date, font=date_font)
 
-    def draw_picture(self):
-        pos_y = 210
-        pos_x = 100
+    def draw_picture(self) -> BytesIO:
+        pos_y: int = 210
+        pos_x: int = 100
 
         # shortcuts for code glance
-        font_offset = self._font_offset
-        font = self._font
-        bold_font = self._bold_font
-        lines = self._lines
-        draw = self._draw
+        font_offset: Callable = self._font_offset
+        font: ImageFont = self._font
+        bold_font: ImageFont = self._bold_font
+        data: dict = self._data
+        draw: ImageDraw = self._draw
 
-        y_offset = self._y_offset
+        y_offset: int = self._y_offset
         pos_y += self._start_y_offset
 
-        for line in lines:
-            # zman name separates from zman value by `—` symbol
-            # todo set default separate symbol ('|')
-            zman, value = line.split('—')
-            zman_offset = font_offset(zman)
+        # draw all zmanim lines in cycle
+        for header, value in data.items():
+            header = format_header(header)
+            header_offset = font_offset(header)
 
-            # draw zman name
-            draw.text((pos_x, pos_y), zman, font=bold_font)
-
-            # draw zman value
-            draw.text((pos_x + zman_offset, pos_y), value, font=font)
+            draw.text((pos_x, pos_y), header, font=bold_font)
+            draw.text((pos_x + header_offset, pos_y), value, font=font)
             pos_y += y_offset
+
         return self._convert_img_to_bytes_io(self._image)
 
 
 class FastPicture(PictureFactory):
 
-    def __init__(self, lang, text):
-        title = text.split('\n\n')[0]
-        background_path = 'res/backgrounds/fast.png'
-        font_size = 60
+    def __init__(self, lang: str, data: dict):
+        self._background_path = 'res/image/backgrounds/fast.png'
+        self._font_size = 60
+        self._lang = lang
 
-        self._lines = text.split('\n\n')[1].split('\n')
-        self._draw = self._get_draw(background_path)
-        self._font = ImageFont.truetype(self._font_path, font_size)
-        self._bold_font = ImageFont.truetype(self._bold_font_path, font_size)
+        super().__init__()
 
-        self._draw_title(self._draw, title)
+        localized_data = fast.get_translate(data, self._translator)
+        self._data = localized_data.data
+        self._draw_title(self._draw, localized_data.title)
 
     def draw_picture(self):
         pos_y = 290
         pos_x = 100
         y_offset = 80
+        y_offset_sep = 100
+        y_offset_sep_small = 70
 
         # shortcuts for code glance
         font_offset = self._font_offset
         font = self._font
         bold_font = self._bold_font
-        lines = self._lines
+        data = self._data
         draw = self._draw
 
-        for line in lines:
-            # separate the fast's end block
-            if line.startswith('%'):
-                line = line.split('%')[1]
-                pos_y += y_offset
+        # draw date and start time
+        header = format_header(data.start_time.header)
+        header_offset = font_offset(header)
+        value_y_offset = self._y_font_offset(data.start_time.value)
 
-            # separate the chatzot
-            if line.startswith('$'):
-                line = line.split('$')[1]
-                pos_y += 40
+        draw.text((pos_x, pos_y), header, font=bold_font)
+        draw.text((pos_x + header_offset, pos_y), data.start_time.value, font=font)
+        pos_y += y_offset + value_y_offset
 
-            # headers separetes from values by '|' symbol
-            header, value = line.split('|')
+        # draw hatzot, if need
+        if data.hatzot:
+            pos_y += y_offset_sep_small
+
+            header = format_header(data.hatzot.header)
             header_offset = font_offset(header)
 
-            # draw header
             draw.text((pos_x, pos_y), header, font=bold_font)
+            draw.text((pos_x + header_offset, pos_y), data.hatzot.value, font=font)
+            pos_y += y_offset + y_offset_sep_small
+        else:
+            pos_y += y_offset_sep
 
-            # draw value in miltiple lines
-            for value_part in value.split('^'):
-                draw.text((pos_x + header_offset, pos_y), value_part, font=font)
-                if '^' in line:
-                    pos_y += y_offset - 15
-                else:
-                    pos_y += y_offset
+        # draw 4 end times in cycle
+        headers = [
+            format_header(data.tzeit_kochavim.header),
+            format_header(data.sba_time.header),
+            format_header(data.ssk_time.header),
+            format_header(data.nvr_time.header)
+        ]
+        values = [
+            data.tzeit_kochavim.value,
+            data.sba_time.value,
+            data.ssk_time.value,
+            data.nvr_time.value
+        ]
+
+        for header, value in zip(headers, values):
+            header_offset = font_offset(header)
+
+            draw.text((pos_x, pos_y), header, font=bold_font)
+            draw.text((pos_x + header_offset, pos_y), value, font=font)
+
+            pos_y += y_offset
 
         return self._convert_img_to_bytes_io(self._image)
 
 
 class RoshHashanaPicture(PictureFactory):
 
-    def __init__(self, lang, text):
-        background_path = 'res/backgrounds/rosh_hashana.png'
-        font_size = 50
-        title = 'ROSH HASHANAH TEST'  # TODO title
+    def __init__(self, lang: str, data: dict):
+        self._background_path = 'res/image/backgrounds/rosh_hashana.png'
+        self._font_size = 47
+        self._lang = lang
 
-        self._lines = text.split('\n')
-        self._draw = self._get_draw(background_path)
-        self._font = ImageFont.truetype(self._font_path, font_size)
-        self._bold_font = ImageFont.truetype(self._bold_font_path, font_size)
+        super().__init__()
 
-        self._draw_title(self._draw, title)
+        localized_data = rosh_hashana.get_translate(data, self._translator)
+        self._data = localized_data.data
+        self._draw_title(self._draw, localized_data.title)
 
     def draw_picture(self):
-        pos_y = 300
+        pos_y = 400
         pos_x = 100
-        y_offset = 75
+        y_offset = 95
         y_offset_small = 65
 
         # shortcuts for code glance
         font_offset = self._font_offset
         font = self._font
         bold_font = self._bold_font
-        lines = self._lines
+        data = self._data
         draw = self._draw
 
-        for line in lines:
-            # headers separetes from values by '|' symbol
-            header, value = line.split('|')
-            header_offset = font_offset(header)
+        # draw the date
+        header = format_header(data.date.header)
+        header_offset = font_offset(header)
 
-            # draw header
+        draw.text((pos_x, pos_y), header, font=bold_font)
+        draw.text((pos_x + header_offset, pos_y), data.date.value, font=font)
+
+        pos_y += y_offset + self._y_font_offset(data.date.value)
+
+        # draw candle lightings and havdala
+        days = [data.candle_lighting_1, data.candle_lighting_2, data.candle_lighting_3,
+                data.havdalah]
+
+        for day in days:
+            # if there is no third day (shabbos)
+            if not day:
+                continue
+
+            header = format_header(day.header)
+            header_offset = font_offset(header.split('\n')[0])
+
             draw.text((pos_x, pos_y), header, font=bold_font)
-
-            # draw value
-            if '^' in value:  # if value is too long for one string
-                # TODO try: `for x in value.split('^')`
-                day_lines = value.split('^')
-                for day_line in day_lines:
-                    draw.text((pos_x + header_offset, pos_y), day_line, font=font)
-                    pos_y += y_offset_small
-                pos_y += y_offset_small
-            else:
-                draw.text((pos_x + header_offset, pos_y), value, font=font)
-                pos_y += y_offset
+            draw.text((pos_x + header_offset, pos_y), day.value, font=font)
+            pos_y += y_offset_small
 
         return self._convert_img_to_bytes_io(self._image)
 
 
 class YomKippurPicture(PictureFactory):
 
-    def __init__(self, lang, text):
-        background_path = 'res/backgrounds/yom_kippur.png'
-        font_size = 60
-        title = text.split('\n\n')[0]
+    def __init__(self, lang: str, data: dict):
+        self._background_path = 'res/image/backgrounds/yom_kippur.png'
+        self._font_size = 55
+        self._lang = lang
 
-        self._draw = self._get_draw(background_path)
-        self._lines = text.split('\n\n')[1].split('\n')
-        self._font = ImageFont.truetype(self._font_path, font_size)
-        self._bold_font = ImageFont.truetype(self._bold_font_path, font_size)
+        super().__init__()
 
-        self._draw_title(self._draw, title)
+        localized_data = yom_kippur.get_translate(data, self._translator)
+        self._data = localized_data.data
+        self._draw_title(self._draw, localized_data.title)
 
     def draw_picture(self):
         pos_y = 300
         pos_x = 100
-        y_offset = 120
-        y_offset_small = 60
+        y_offset = 170
+        y_offset_small = 90
 
         # shortcuts for code glance
         font_offset = self._font_offset
         font = self._font
         bold_font = self._bold_font
-        lines = self._lines
+        data = self._data
         draw = self._draw
 
-        # due to non-standart structure of this picture let's draw it manually
-        # lines structure: [date, candle_lighting, havdalah]
-
         # draw date
-        date_header = lines[0].split('|')[0]
-        date, day_of_week = lines[0].split('|')[1].split('^')
-        header_offset = font_offset(date_header)
+        header = format_header(data.date.header)
+        header_offset = font_offset(header)
 
-        draw.text((pos_x, pos_y), date_header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), date, font=font)
-        pos_y += y_offset_small
-        draw.text((pos_x + header_offset, pos_y), day_of_week, font=font)
+        draw.text((pos_x, pos_y), header, font=bold_font)
+        draw.text((pos_x + header_offset, pos_y), data.date.value, font=font)
         pos_y += y_offset
 
-        # draw candle ligting (with two-lines header)
-        cl_header1, cl_header2 = lines[1].split('%')[0].split('?')
-        cl_time = lines[1].split('%')[1]
+        # draw candle lightning
+        header = format_header(data.candle_lighting.header)
 
-        draw.text((pos_x, pos_y), cl_header1, font=bold_font)
+        draw.text((pos_x, pos_y), header, font=bold_font)
+        pos_y += self._y_font_offset(header)
+        draw.text((pos_x, pos_y), data.candle_lighting.value, font=font)
         pos_y += y_offset_small
-        draw.text((pos_x, pos_y), cl_header2, font=bold_font)
-        pos_y += y_offset_small
-        draw.text((pos_x, pos_y), cl_time, font=font)
-        pos_y += y_offset
 
-        # draw havdalah
-        havdalah_header, havdala_time = lines[2].split('%')
-        draw.text((pos_x, pos_y), havdalah_header, font=bold_font)
+        # draw havdala
+        header = format_header(data.havdala.header)
+
+        draw.text((pos_x, pos_y), header, font=bold_font)
+        pos_y += self._y_font_offset(header)
+        draw.text((pos_x, pos_y), data.havdala.value, font=font)
         pos_y += y_offset_small
-        draw.text((pos_x, pos_y), havdala_time, font=font)
+
+        # date_header = lines[0].split('|')[0]
+        # date, day_of_week = lines[0].split('|')[1].split('^')
+        # header_offset = font_offset(date_header)
+        #
+        # draw.text((pos_x, pos_y), date_header, font=bold_font)
+        # draw.text((pos_x + header_offset, pos_y), date, font=font)
+        # pos_y += y_offset_small
+        # draw.text((pos_x + header_offset, pos_y), day_of_week, font=font)
+        # pos_y += y_offset
+        #
+        # # draw candle ligting (with two-lines header)
+        # cl_header1, cl_header2 = lines[1].split('%')[0].split('?')
+        # cl_time = lines[1].split('%')[1]
+        #
+        # draw.text((pos_x, pos_y), cl_header1, font=bold_font)
+        # pos_y += y_offset_small
+        # draw.text((pos_x, pos_y), cl_header2, font=bold_font)
+        # pos_y += y_offset_small
+        # draw.text((pos_x, pos_y), cl_time, font=font)
+        # pos_y += y_offset
+        #
+        # # draw havdalah
+        # havdalah_header, havdala_time = lines[2].split('%')
+        # draw.text((pos_x, pos_y), havdalah_header, font=bold_font)
+        # pos_y += y_offset_small
+        # draw.text((pos_x, pos_y), havdala_time, font=font)
 
         return self._convert_img_to_bytes_io(self._image)
 

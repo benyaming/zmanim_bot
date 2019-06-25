@@ -1,41 +1,18 @@
 from typing import Callable
 
-from os import path
-from gettext import translation
+from .types import Shabos, ShabosData, SimpleDict
 
 
-def get_translate(data: dict, _: Callable) -> dict:
+def get_translate(data: dict, _: Callable) -> Shabos:
     """
     input data structure:
     {
         'parasha': '...',
         'candle_lighting': '...|None',
         'shkia_offset': '...(int)|None',
-        'tzeit_kochavim': '...|None'
+        'tzeit_kochavim': '...|None',
         'error': True|False,
         'warning': True|False
-    }
-
-    output data structure (words in `` are translated):
-    {
-        'title': `...`,
-        data: {
-            'parasha': {
-                'parasha_header': `...`,
-                'parasha_value': `...`
-            },
-            'candle_lighting': {
-                'candle_lighting_header': `...`,
-                'candle_lighting_value': '...'
-            } | None,
-            'shkia_offset': `...`| None,
-            'tzeit_kochavim': {
-                'tzeit_header': `...`,
-                'tzeit_value': '...'
-            } | None,
-            'warning': `...`|None,
-            'error': `...`|None
-        }
     }
     """
 
@@ -109,65 +86,19 @@ def get_translate(data: dict, _: Callable) -> dict:
     shkia_offset_header = _('minutes before shekiah')
     tzeit_header = _('Tzeit ha-kochavim')
 
-    if data['error']:
-        error = _('For this location zmanim is impossible\nto determine because of '
-                  'polar night/day.')
-    else:
-        error = None
+    error = _('For this location zmanim is impossible\nto determine because of '
+              'polar night/day.') if data['error'] else None
+    warning = _('Notice! You should specify time of candle\n lighting with the ' 
+                'rabbi of your community!') if data['warning'] else None
 
-    if data['warning']:
-        warning = _('Notice! You should specify time of candle\n lighting with the ' 
-                    'rabbi of your community!')
-    else:
-        warning = None
+    shkia_offset = f'({data["shkia_offset"]} {shkia_offset_header})'
 
-    translated_data = {
-        'title': title,
-        'data': {
-            'parasha': {
-                'parasha_header': parasha_header,
-                'parasha_value': parasha_value
-            },
-            'candle_lighting': {
-                'candle_lighting_header': candle_lighting_header,
-                'candle_lighting_value': data['candle_lighting']
-            },
-            'shkia_offset': f'({data["shkia_offset"]} {shkia_offset_header})',
-            'tzeit_kochavim': {
-                'tzeit_header': tzeit_header,
-                'tzeit_value': data['tzeit_kochavim']
-            },
-            'warning': warning,
-            'error': error
-        }
-    }
+    translated_data = Shabos(title=title, data=ShabosData(
+        parasha=SimpleDict(parasha_header, parasha_value),
+        candle_lighting=SimpleDict(candle_lighting_header, data['candle_lighting']),
+        shkia_offset=shkia_offset,
+        tzeit_kochavim=SimpleDict(tzeit_header, data['tzeit_kochavim']),
+        warning=warning, error=error
+    ))
 
     return translated_data
-
-
-t = {
-    'parasha': 'Bo',
-    'candle_lighting': '11:11',
-    'shkia_offset': 18,
-    'tzeit_kochavim': '22:22',
-    'error': False,
-    'warning': False
-    }
-
-
-# def get_translator(domain: str, lang: str) -> Callable:
-#     languages = {'Russian': 'ru', 'English': 'en'}
-#     loc_path = path.join(r'C:\Users\Benyomin\PycharmProjects\zmanim_api\zmanim', 'locales/')
-#     locale = translation(domain, loc_path, languages=[languages.get(lang)])
-#     locale.install()
-#     return locale.gettext
-#
-#
-# f = get_translator('shabbos', 'Russian')
-# a = get_translate(t, f)
-#
-# import pprint
-# pprint.pprint(a)
-
-
-

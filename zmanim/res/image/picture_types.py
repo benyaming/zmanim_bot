@@ -19,9 +19,10 @@ class PictureTypes(Enum):
     tu_bishvat = 13
     lag_baomer = LagBaomerPicture
     israel_holidays = IsraelHolidaysPicture
-    fast_gedaliah = FastPicture
-    fast_asarah_tevet = FastPicture
-    fast_esther = FastPicture
-    fast_sheva_asar_tammuz = FastPicture
-    fast_tisha_beav = FastPicture
+    fast = FastPicture
+    # fast_gedaliah = FastPicture
+    # fast_asarah_tevet = FastPicture
+    # fast_esther = FastPicture
+    # fast_sheva_asar_tammuz = FastPicture
+    # fast_tisha_beav = FastPicture
 

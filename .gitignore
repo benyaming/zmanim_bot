@@ -4,3 +4,9 @@
 zmanim/__pycache__/
 
 zmanim/res/__pycache__/
+
+zmanim/res/image/__pycache__/
+
+zmanim/res/image/tmp\.py
+
+zmanim/res/localizations/__pycache__/

@@ -1,0 +1,162 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2019-06-20 14:53+0300\n"
+"PO-Revision-Date: 2019-06-20 14:54+0300\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: Poedit 2.2.3\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Language: ru\n"
+
+#: zmanim\res\localizations\utils.py:9
+msgid "january-genetive"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:10
+msgid "february-genetive"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:11
+msgid "march-genetive"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:12
+msgid "april-genetive"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:13
+msgid "may-genetive"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:14
+msgid "june-genetive"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:15
+msgid "july-genetive"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:16
+msgid "august-genetive"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:17
+msgid "september-genetive"
+msgstr "сентября"
+
+#: zmanim\res\localizations\utils.py:18
+msgid "october-genetive"
+msgstr "октября"
+
+#: zmanim\res\localizations\utils.py:19
+msgid "november-genetive"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:20
+msgid "december-genetive"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:25
+msgid "Nisan"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:26
+msgid "Nissan"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:27
+msgid "Iyar"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:28
+msgid "Sivan"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:29
+msgid "Tamuz"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:30
+msgid "Av"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:31
+msgid "Elul"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:32
+msgid "Tishrei"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:33
+msgid "Cheshvan"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:34
+msgid "Kislev"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:35
+msgid "Teves"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:36
+msgid "Shevat"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:37
+msgid "Adar"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:38
+msgid "Adar I"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:39
+msgid "Adar II"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:43
+msgid "monday"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:44
+msgid "tuesday"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:45
+msgid "wednesday"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:46
+msgid "thursday"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:47
+msgid "friday"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:48
+msgid "saturday"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:49
+msgid "sunday"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:52
+msgid "and"
+msgstr ""
+
+#: zmanim\res\localizations\utils.py:53
+msgid "Candle lighting"
+msgstr ""
