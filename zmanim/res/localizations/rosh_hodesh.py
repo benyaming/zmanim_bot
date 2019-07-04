@@ -100,23 +100,3 @@ def get_translate(data: dict, _: Callable) -> RoshHodesh:
     )
 
     return translated_data
-
-
-example = {
-    'he_month': 'Tamuz',
-    'n_days': 2,
-    'date': {
-        'date_years': [2000, 2001],
-        'date_months': [12, 1],
-        'date_days': [31, 1],
-        'date_dow': [6, 0],
-    },
-    'molad': {
-        'molad_month': 7,
-        'molad_day': 15,
-        'molad_dow': 3,
-        'molad_hours': 15,
-        'molad_minutes': 46,
-        'molad_parts': 2,
-    }
-}

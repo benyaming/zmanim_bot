@@ -143,3 +143,21 @@ class YomKippur:
     data: YomKippurData
 
 
+# -------------- SUCCOS DATA CLASSES -------------- #
+
+@dataclass
+class SuccosData:
+    date: SimpleDict
+    candle_lighting_1: SimpleDict
+    candle_lighting_2: Optional[SimpleDict]
+    candle_lighting_3: Optional[SimpleDict]
+    havdala: SimpleDict
+    hoshana_raba: SimpleDict
+
+
+@dataclass
+class Succos:
+    title: str
+    data: SuccosData
+
+

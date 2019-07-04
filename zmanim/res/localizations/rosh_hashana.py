@@ -1,65 +1,76 @@
 from typing import Callable
 
 from .types import RoshHashana, RoshHashanaData, SimpleDict
-from .utils import gr_month_genitive, days_of_week, and_word, cl_header
+from .utils import gr_month_genitive as gr, days_of_week as dow, and_word, cl_header
 
 
 def get_translate(data: dict, _: Callable) -> RoshHashana:
     """
     input data schema:
     {
-        'date: {
-            'year': int,
-            'months': List[int],
-            'days': List[int],
-            'dows': List[int]
-        },
+        'year': int,
         'day_1': {
-            'candle_lighting': str
+            'candle_lighting': str,
+            'eve_day': int,
+            'eve_month': int,
+            'day': int,
+            'month': int,
+            'dow': int
         },
         'day_2': {
             'candle_lighting': str,
-            'havdala': Optional[str]
+            'havdala': Optional[str],
+            'day': int,
+            'month': int,
+            'dow': int
         },
         'day_3': Optional[{
             'candle_lighting': str,
-            'havdala': str
+            'havdala': str,
+            'day': int,
+            'month': int,
+            'dow': int
         }]
     }
     """
     title = _('ROSH HASHANA')
-    havdala_header = _('Havdala')
+    hv_header = _('Havdala')
     shabbos = _('shabbos')
 
-    date = data['date']
-    dow_1 = days_of_week.get(date['dows'][0])
-    dow_2 = days_of_week.get(date['dows'][1])
+    eve_day = data['day_1']['eve_day']
+    eve_month = gr.get(data['day_1']['eve_month'])
+    day_1 = data['day_1']['day']
+    day_2 = data['day_2']['day']
+    dow_1 = dow.get(data['day_1']['dow'])
+    dow_2 = dow.get(data['day_2']['dow'])
+    month_1 = gr.get(data['day_1']['month'])
+    month_2 = gr.get(data['day_2']['month'])
 
-    month_1 = gr_month_genitive.get(date['months'][0])
-    month_2 = gr_month_genitive.get(date['months'][-1])
+    months = f'{day_1} {month_1} {and_word} {day_2} {month_2}' if month_1 != month_2 \
+        else f'{day_1} {and_word} {day_2} {month_1}'
 
-    if month_1 != month_2:
-        date_str = f"{date['days'][0]} {month_1} {and_word} {date['days'][1]} " \
-                   f"{month_2} {date['year']},\n{dow_1}-{dow_2}"
-    else:
-        date_str = f"{date['days'][0]} {and_word} {date['days'][1]} {month_1} " \
-                   f"{date['year']},\n{dow_1}-{dow_2}"
+    date_str = f'{months} {data["year"]},\n{dow_1}-{dow_2}'
 
-    cl_1 = f"{cl_header} {date['days'][0]} {month_1}"
-    cl_2 = f"{cl_header} {date['days'][1]} {month_2}"
+    cl_1 = f"{cl_header} {eve_day} {eve_month}"
+    # eve of second day == first day
+    cl_2 = f"{cl_header} {day_1} {month_2}"
 
-    havdala_header = f'{havdala_header} {date["days"][-1]} {month_2}'
+    havdala_date = f'{day_2} {month_2}' if not data['day_3'] \
+        else f'{data["day_3"]["day"]} {gr.get(data["day_3"]["month"])}'
+    havdala_header = f'{hv_header} {havdala_date}'
 
-    if date['dows'][0] == 6:
+    if dow_1 == 6:
         cl_1 = f'{cl_1} ({shabbos})'
 
+    day_3 = None
+    havdala = SimpleDict(havdala_header, data['day_2']['havdala'])
+
     if data['day_3']:
-        cl_3 = f"{cl_header} {date['days'][2]} {month_2} ({shabbos})"
-        day_3 = SimpleDict(cl_3, data['day_3']['candle_lighting'])
-        havdala = SimpleDict(havdala_header, data['day_3']['havdala'])
-    else:
-        day_3 = None
-        havdala = SimpleDict(havdala_header, data['day_2']['havdala'])
+        day_3_data = data['day_3']
+        # eve of third day == second day
+        cl_3 = f"{cl_header} {day_2} {gr.get(day_3_data['month'])} ({shabbos})"
+        day_3 = SimpleDict(cl_3, day_3_data['candle_lighting'])
+        havdala = SimpleDict(havdala_header, day_3_data['havdala'])
 
     translated_data = RoshHashana(
         title=title,

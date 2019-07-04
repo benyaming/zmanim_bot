@@ -4,19 +4,40 @@ from zmanim.res.image.picture_maker import PictureFactory
 from zmanim.res.image.picture_types import PictureTypes
 
 data = {
-    'date': {
-        'year': 2019,
-        'months': [9],
-        'days': [4, 5],
-        'dows': [1, 2]
+    'year': 2019,
+    'day_1': {
+        'eve_day': 1,
+        'eve_month': 9,
+        'day': 2,
+        'month': 9,
+        'dow': 4,
+        'cl': 'xx:xx',
+        'havdala': 'qq:qq'
     },
-    'candle_lighting': '11:11',
-    'havdala': '22:22'
+    'day_2': {
+        'day': 3,
+        'month': 9,
+        'dow': 5,
+        'cl': 'yy:yy',
+        'havdala': 'zz:zz'
+    },
+    'day_3': {
+        'day': 4,
+        'month': 9,
+        'dow': 6,
+        'cl': 'clsh',
+        'havdala': 'hash'
+    },
+    'hoshana_raba': {
+        'day': 6,
+        'month': 9,
+        'dow': 1
+    },
 }
 
 
 async def handle(request: web.Request):
-    response = PictureFactory.get_picture(PictureTypes.yom_kippur, 'Russian', data)
+    response = PictureFactory.get_picture(PictureTypes.succos, 'Russian', data)
     return web.Response(body=response, content_type='image/jpeg')
 
 

@@ -7,6 +7,7 @@ __all__ = [
     'zmanim',
     'fast',
     'rosh_hashana',
-    'yom_kippur'
+    'yom_kippur',
+    'succos',
 
 ]

@@ -1,5 +1,5 @@
 """
-Some dicts with translated data used in localixatoin files
+Some dicts with translated data used in localizatoin files
 """
 from gettext import gettext as _
 
@@ -52,4 +52,9 @@ days_of_week = {
 and_word = _('and')
 date_header = _('Date')
 cl_header = _('Candle lighting')
+cl_shabbos = _('shabbos')
+havdala_header = _('Havdala')
+
+# SUCCOS
+hoshana_raba_header = _('Hoshana raba')
 

@@ -8,7 +8,7 @@ def get_translate(data: dict, _: Callable) -> YomKippur:
     """
     input data schema:
         {
-            'date: {
+            'date': {
                 'year': int,
                 'months': List[int],
                 'days': List[int],     EVE AND THE DATE

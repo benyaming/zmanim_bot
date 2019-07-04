@@ -377,7 +377,7 @@ class FastPicture(PictureFactory):
         self._data = localized_data.data
         self._draw_title(self._draw, localized_data.title)
 
-    def draw_picture(self):
+    def draw_picture(self) -> BytesIO:
         pos_y = 290
         pos_x = 100
         y_offset = 80
@@ -451,7 +451,7 @@ class RoshHashanaPicture(PictureFactory):
         self._data = localized_data.data
         self._draw_title(self._draw, localized_data.title)
 
-    def draw_picture(self):
+    def draw_picture(self) -> BytesIO:
         pos_y = 400
         pos_x = 100
         y_offset = 95
@@ -505,7 +505,7 @@ class YomKippurPicture(PictureFactory):
         self._data = localized_data.data
         self._draw_title(self._draw, localized_data.title)
 
-    def draw_picture(self):
+    def draw_picture(self) -> BytesIO:
         pos_y = 300
         pos_x = 100
         y_offset = 170
@@ -542,81 +542,85 @@ class YomKippurPicture(PictureFactory):
         draw.text((pos_x, pos_y), data.havdala.value, font=font)
         pos_y += y_offset_small
 
-        # date_header = lines[0].split('|')[0]
-        # date, day_of_week = lines[0].split('|')[1].split('^')
-        # header_offset = font_offset(date_header)
-        #
-        # draw.text((pos_x, pos_y), date_header, font=bold_font)
-        # draw.text((pos_x + header_offset, pos_y), date, font=font)
-        # pos_y += y_offset_small
-        # draw.text((pos_x + header_offset, pos_y), day_of_week, font=font)
-        # pos_y += y_offset
-        #
-        # # draw candle ligting (with two-lines header)
-        # cl_header1, cl_header2 = lines[1].split('%')[0].split('?')
-        # cl_time = lines[1].split('%')[1]
-        #
-        # draw.text((pos_x, pos_y), cl_header1, font=bold_font)
-        # pos_y += y_offset_small
-        # draw.text((pos_x, pos_y), cl_header2, font=bold_font)
-        # pos_y += y_offset_small
-        # draw.text((pos_x, pos_y), cl_time, font=font)
-        # pos_y += y_offset
-        #
-        # # draw havdalah
-        # havdalah_header, havdala_time = lines[2].split('%')
-        # draw.text((pos_x, pos_y), havdalah_header, font=bold_font)
-        # pos_y += y_offset_small
-        # draw.text((pos_x, pos_y), havdala_time, font=font)
-
         return self._convert_img_to_bytes_io(self._image)
 
 
 class SucosPicture(PictureFactory):
 
-    def __init__(self, lang, text):
-        background_path = 'res/backgrounds/succos.png'
-        font_size = 50
-        title = 'SUCCOS TEST'  # TODO title
+    def __init__(self, lang: str, data: dict):
+        self._background_path = 'res/image/backgrounds/succos.png'
+        self._font_size = 47
+        self._lang = lang
 
-        self._lines = text.split('\n')
-        self._draw = self._get_draw(background_path)
-        self._font = ImageFont.truetype(self._font_path, font_size)
-        self._bold_font = ImageFont.truetype(self._bold_font_path, font_size)
+        super().__init__()
 
-        self._draw_title(self._draw, title)
+        localized_data = succos.get_translate(data, self._translator)
+        self._data = localized_data.data
+        self._draw_title(self._draw, localized_data.title)
 
-    def draw_picture(self):
+    def draw_picture(self) -> BytesIO:
         pos_y = 300
         pos_x = 100
-        y_offset = 75
+        y_offset = 100
         y_offset_small = 65
 
         # shortcuts for code glance
         font_offset = self._font_offset
         font = self._font
         bold_font = self._bold_font
-        lines = self._lines
+        data = self._data
         draw = self._draw
 
-        # draw succos data
-        for line in lines:
-            # headers separetes from values by '|' symbol
-            header, value = line.split('|')
+        # draw the date
+        header = format_header(data.date.header)
+        header_offset = font_offset(header)
+
+        draw.text((pos_x, pos_y), header, font=bold_font)
+        draw.text((pos_x + header_offset, pos_y), data.date.value, font=font)
+        pos_y += y_offset + self._y_font_offset(data.date.value)
+
+        # draw cl 1
+        header = format_header(data.candle_lighting_1.header)
+        header_offset = font_offset(header)
+
+        draw.text((pos_x, pos_y), header, font=bold_font)
+        draw.text((pos_x + header_offset, pos_y), data.candle_lighting_1.value, font=font)
+        pos_y += y_offset_small
+
+        # draw cl 2 if it exist
+        if data.candle_lighting_2:
+            header = format_header(data.candle_lighting_2.header)
             header_offset = font_offset(header)
 
-            # draw header
-            draw.text((pos_x, pos_y), header, bold_font)
+            draw.text((pos_x, pos_y), header, font=bold_font)
+            draw.text((pos_x + header_offset, pos_y), data.candle_lighting_2.value,
+                      font=font)
+            pos_y += y_offset_small
 
-            # draw value in multiple lines
-            value_parts = value.split('^')
-            first_iteration = True
-            for value_part in value_parts:
-                if not first_iteration:
-                    pos_y += y_offset_small
-                draw.text((pos_x + header_offset, pos_y), value_part, font=font)
-                first_iteration = False
-            pos_y += y_offset
+        # draw cl 3 if it exist
+        if data.candle_lighting_3:
+            header = format_header(data.candle_lighting_3.header)
+            header_offset = font_offset(header)
+
+            draw.text((pos_x, pos_y), header, font=bold_font)
+            draw.text((pos_x + header_offset, pos_y), data.candle_lighting_3.value,
+                      font=font)
+            pos_y += y_offset_small
+
+        # draw havdala
+        header = format_header(data.havdala.header)
+        header_offset = font_offset(header)
+
+        draw.text((pos_x, pos_y), header, font=bold_font)
+        draw.text((pos_x + header_offset, pos_y), data.havdala.value, font=font)
+        pos_y += y_offset
+
+        # draw hoshana raba
+        header = format_header(data.hoshana_raba.header)
+        header_offset = font_offset(header)
+
+        draw.text((pos_x, pos_y), header, font=bold_font)
+        draw.text((pos_x + header_offset, pos_y), data.hoshana_raba.value, font=font)
 
         return self._convert_img_to_bytes_io(self._image)
 
