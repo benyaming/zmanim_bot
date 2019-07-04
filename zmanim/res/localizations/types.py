@@ -10,6 +10,24 @@ class SimpleDict:
     header: str
     value: str
 
+
+@dataclass
+class GenericYomTovData:
+    """
+    A data class for yom tov with required first day and optional second day and shabbos
+    """
+    date: SimpleDict
+    cl_1: SimpleDict
+    cl_2: Optional[SimpleDict]
+    cl_3: Optional[SimpleDict]
+    havdala: SimpleDict
+
+
+@dataclass
+class GenericYomTov:
+    title: str
+    data: GenericYomTovData
+
 # -------------- DAF YOMI DATA CLASSES -------------- #
 
 
@@ -111,23 +129,6 @@ class Fast:
     data: FastData
 
 
-# -------------- ROSH HASHANA DATA CLASSES -------------- #
-
-@dataclass
-class RoshHashanaData:
-    date: SimpleDict
-    candle_lighting_1: SimpleDict
-    candle_lighting_2: SimpleDict
-    havdalah: SimpleDict
-    candle_lighting_3: Optional[SimpleDict] = None
-
-
-@dataclass
-class RoshHashana:
-    title: str
-    data: RoshHashanaData
-
-
 # -------------- YOM KIPPUR DATA CLASSES -------------- #
 
 @dataclass
@@ -160,4 +161,5 @@ class Succos:
     title: str
     data: SuccosData
 
+# -------------- SHMINI ATZERES DATA CLASSES -------------- #
 

@@ -1,10 +1,10 @@
 from typing import Callable
 
-from .types import RoshHashana, RoshHashanaData, SimpleDict
+from .types import SimpleDict, GenericYomTov, GenericYomTovData
 from .utils import gr_month_genitive as gr, days_of_week as dow, and_word, cl_header
 
 
-def get_translate(data: dict, _: Callable) -> RoshHashana:
+def get_translate(data: dict, _: Callable) -> GenericYomTov:
     """
     input data schema:
     {
@@ -59,7 +59,7 @@ def get_translate(data: dict, _: Callable) -> RoshHashana:
         else f'{data["day_3"]["day"]} {gr.get(data["day_3"]["month"])}'
     havdala_header = f'{hv_header} {havdala_date}'
 
-    if dow_1 == 6:
+    if dow_1 == 5:
         cl_1 = f'{cl_1} ({shabbos})'
 
     day_3 = None
@@ -72,14 +72,14 @@ def get_translate(data: dict, _: Callable) -> RoshHashana:
         day_3 = SimpleDict(cl_3, day_3_data['candle_lighting'])
         havdala = SimpleDict(havdala_header, day_3_data['havdala'])
 
-    translated_data = RoshHashana(
+    translated_data = GenericYomTov(
         title=title,
-        data=RoshHashanaData(
+        data=GenericYomTovData(
             date=SimpleDict(_('Date'), date_str),
-            candle_lighting_1=SimpleDict(cl_1, data['day_1']['candle_lighting']),
-            candle_lighting_2=SimpleDict(cl_2, data['day_2']['candle_lighting']),
-            candle_lighting_3=day_3,
-            havdalah=havdala
+            cl_1=SimpleDict(cl_1, data['day_1']['candle_lighting']),
+            cl_2=SimpleDict(cl_2, data['day_2']['candle_lighting']),
+            cl_3=day_3,
+            havdala=havdala
         )
     )
 

@@ -63,8 +63,8 @@ def get_translate(data: dict, _: Callable) -> Succos:
     shabbos = f' ({cl_shabbos})'
 
     cl_1_header = f'{cl_header} {eve_day} {eve_month}'
-    if data['day_1']['dow'] == 6:
-        cl_1_header = f'{cl_header}{shabbos}'
+    if data['day_1']['dow'] == 5:
+        cl_1_header = f'{cl_1_header}{shabbos}'
 
     cl_2 = None
     if day_2:
@@ -74,7 +74,7 @@ def get_translate(data: dict, _: Callable) -> Succos:
 
     cl_3 = None
     if day_3:
-        # eve of sethird day == second day
+        # eve of third day == second day
         cl_3_header = f'{cl_header} {day_2["day"]} {gr.get(day_2["month"])}{shabbos}'
         cl_3 = SimpleDict(cl_3_header, day_3["cl"])
 

@@ -10,34 +10,29 @@ data = {
         'eve_month': 9,
         'day': 2,
         'month': 9,
-        'dow': 4,
+        'dow': 3,
         'cl': 'xx:xx',
-        'havdala': 'qq:qq'
+        'havdala': None
     },
     'day_2': {
         'day': 3,
         'month': 9,
-        'dow': 5,
+        'dow': 4,
         'cl': 'yy:yy',
-        'havdala': 'zz:zz'
+        'havdala': None
     },
     'day_3': {
         'day': 4,
         'month': 9,
-        'dow': 6,
+        'dow': 5,
         'cl': 'clsh',
         'havdala': 'hash'
-    },
-    'hoshana_raba': {
-        'day': 6,
-        'month': 9,
-        'dow': 1
-    },
+    }
 }
 
 
 async def handle(request: web.Request):
-    response = PictureFactory.get_picture(PictureTypes.succos, 'Russian', data)
+    response = PictureFactory.get_picture(PictureTypes.shmini_atseres, 'Russian', data)
     return web.Response(body=response, content_type='image/jpeg')
 
 

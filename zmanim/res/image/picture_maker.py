@@ -1,6 +1,5 @@
-from os import path, getcwd
 from io import BytesIO
-from typing import Callable, NoReturn, Any
+from typing import Callable, NoReturn
 from gettext import translation
 from pathlib import Path
 
@@ -63,9 +62,9 @@ class PictureFactory:
         return draw
 
     def _draw_title(self, draw: ImageDraw, title: str, is_zmanim: bool = False,
-                    shmini_atzeres: bool = False) -> None:
+                    is_shmini_atzeres: bool = False) -> None:
         coordinates = (250, 90) if not is_zmanim else (250, 65)
-        font = self._title_font if not shmini_atzeres else self._title_font_sa
+        font = self._title_font if not is_shmini_atzeres else self._title_font_sa
         draw.text(coordinates, title, font=font)
 
     @staticmethod
@@ -627,50 +626,76 @@ class SucosPicture(PictureFactory):
 
 class ShminiAtzeretPicture(PictureFactory):
 
-    def __init__(self, lang, text):
-        background_path = 'res/backgrounds/shmini_atzeret.png'
-        font_size = 45
-        title = 'SHMINI TEST'  # TODO title
+    def __init__(self, lang: str, data: dict):
+        self._background_path = 'res/image/backgrounds/shmini_atzeret.png'
+        self._font_size = 45
+        self._lang = lang
 
-        self._lines = text.split('\n')
-        self._draw = self._get_draw(background_path)
-        self._font = ImageFont.truetype(self._font_path, font_size)
-        self._bold_font = ImageFont.truetype(self._bold_font_path, font_size)
+        super().__init__()
 
-        self._draw_title(self._draw, title, shmini_atzeres=True)
+        localized_data = shmini_atzeres.get_translate(data, self._translator)
+        self._data = localized_data.data
+        self._draw_title(self._draw, localized_data.title, is_shmini_atzeres=True)
 
-    def draw_image(self):
-        pos_y = 300
+    def draw_picture(self) -> BytesIO:
+        pos_y = 400
         pos_x = 100
-        y_offset = 70
+        y_offset = 100
         y_offset_small = 65
 
         # shortcuts for code glance
         font_offset = self._font_offset
         font = self._font
         bold_font = self._bold_font
-        lines = self._lines
+        data = self._data
         draw = self._draw
 
-        for line in lines:
-            # headers separetes from values by '|' symbol
-            header, value = line.split('|')
+        # draw the date
+        header = format_header(data.date.header)
+        header_offset = font_offset(header)
+
+        draw.text((pos_x, pos_y), header, font=bold_font)
+        draw.text((pos_x + header_offset, pos_y), data.date.value, font=font)
+        pos_y += y_offset + self._y_font_offset(data.date.value)
+
+        # draw cl 1
+        header = format_header(data.cl_1.header)
+        header_offset = font_offset(header)
+
+        draw.text((pos_x, pos_y), header, font=bold_font)
+        draw.text((pos_x + header_offset, pos_y), data.cl_1.value,
+                  font=font)
+        pos_y += y_offset_small
+
+        # draw cl 2 if it exist
+        if data.cl_2:
+            header = format_header(data.cl_2.header)
             header_offset = font_offset(header)
 
-            # draw header
             draw.text((pos_x, pos_y), header, font=bold_font)
+            draw.text((pos_x + header_offset, pos_y), data.cl_2.value,
+                      font=font)
+            pos_y += y_offset_small
 
-            if '^' in value:  # draw value in multiple lines
-                day_lines = value.split('^')
-                for day_line in day_lines:
-                    draw.text((pos_x + header_offset, pos_y), day_line, font=font)
-                    pos_y += y_offset_small
-                pos_y += y_offset_small
-            else:  # draw value in single line
-                draw.text((pos_x + header_offset, pos_y), value, font=font)
-                pos_y += y_offset
+        # draw cl 3 if it exist
+        if data.cl_3:
+            header = format_header(data.cl_3.header)
+            header_offset = font_offset(header)
 
-        self._convert_img_to_bytes_io(self._image)
+            draw.text((pos_x, pos_y), header, font=bold_font)
+            draw.text((pos_x + header_offset, pos_y), data.cl_3.value,
+                      font=font)
+            pos_y += y_offset_small
+
+        # draw havdala
+        header = format_header(data.havdala.header)
+        header_offset = font_offset(header)
+
+        draw.text((pos_x, pos_y), header, font=bold_font)
+        draw.text((pos_x + header_offset, pos_y), data.havdala.value, font=font)
+        pos_y += y_offset
+
+        return self._convert_img_to_bytes_io(self._image)
 
 
 class ChanukaPicture(PictureFactory):

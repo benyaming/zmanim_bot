@@ -9,5 +9,5 @@ __all__ = [
     'rosh_hashana',
     'yom_kippur',
     'succos',
-
+    'shmini_atzeres'
 ]
