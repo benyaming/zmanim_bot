@@ -1,5 +1,3 @@
-
-
 __all__ = [
     'daf_yomi',
     'rosh_hodesh',
@@ -9,5 +7,8 @@ __all__ = [
     'rosh_hashana',
     'yom_kippur',
     'succos',
-    'shmini_atzeres'
+    'shmini_atzeres',
+    'channukah',
+    'tu_bishvat',
+
 ]

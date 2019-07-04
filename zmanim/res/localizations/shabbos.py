@@ -1,6 +1,6 @@
 from typing import Callable
 
-from .types import Shabos, ShabosData, SimpleDict
+from .types import Shabos, ShabosData, GenericData
 
 
 def get_translate(data: dict, _: Callable) -> Shabos:
@@ -94,10 +94,10 @@ def get_translate(data: dict, _: Callable) -> Shabos:
     shkia_offset = f'({data["shkia_offset"]} {shkia_offset_header})'
 
     translated_data = Shabos(title=title, data=ShabosData(
-        parasha=SimpleDict(parasha_header, parasha_value),
-        candle_lighting=SimpleDict(candle_lighting_header, data['candle_lighting']),
+        parasha=GenericData(parasha_header, parasha_value),
+        candle_lighting=GenericData(candle_lighting_header, data['candle_lighting']),
         shkia_offset=shkia_offset,
-        tzeit_kochavim=SimpleDict(tzeit_header, data['tzeit_kochavim']),
+        tzeit_kochavim=GenericData(tzeit_header, data['tzeit_kochavim']),
         warning=warning, error=error
     ))
 

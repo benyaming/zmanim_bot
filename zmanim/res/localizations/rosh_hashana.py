@@ -1,6 +1,6 @@
 from typing import Callable
 
-from .types import SimpleDict, GenericYomTov, GenericYomTovData
+from .types import GenericData, GenericYomTov, GenericYomTovData
 from .utils import gr_month_genitive as gr, days_of_week as dow, and_word, cl_header
 
 
@@ -63,21 +63,21 @@ def get_translate(data: dict, _: Callable) -> GenericYomTov:
         cl_1 = f'{cl_1} ({shabbos})'
 
     day_3 = None
-    havdala = SimpleDict(havdala_header, data['day_2']['havdala'])
+    havdala = GenericData(havdala_header, data['day_2']['havdala'])
 
     if data['day_3']:
         day_3_data = data['day_3']
         # eve of third day == second day
         cl_3 = f"{cl_header} {day_2} {gr.get(day_3_data['month'])} ({shabbos})"
-        day_3 = SimpleDict(cl_3, day_3_data['candle_lighting'])
-        havdala = SimpleDict(havdala_header, day_3_data['havdala'])
+        day_3 = GenericData(cl_3, day_3_data['candle_lighting'])
+        havdala = GenericData(havdala_header, day_3_data['havdala'])
 
     translated_data = GenericYomTov(
         title=title,
         data=GenericYomTovData(
-            date=SimpleDict(_('Date'), date_str),
-            cl_1=SimpleDict(cl_1, data['day_1']['candle_lighting']),
-            cl_2=SimpleDict(cl_2, data['day_2']['candle_lighting']),
+            date=GenericData(_('Date'), date_str),
+            cl_1=GenericData(cl_1, data['day_1']['candle_lighting']),
+            cl_2=GenericData(cl_2, data['day_2']['candle_lighting']),
             cl_3=day_3,
             havdala=havdala
         )

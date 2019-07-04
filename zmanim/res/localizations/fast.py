@@ -1,6 +1,6 @@
 from typing import Callable
 
-from .types import Fast, FastData, SimpleDict
+from .types import Fast, FastData, GenericData
 from .utils import gr_month_genitive, days_of_week
 
 
@@ -45,16 +45,16 @@ def get_translate(data: dict, _: Callable) -> Fast:
     start_time = f'{day} {month} {year}\n{dow}, {fast_data["start_time"]}'
 
     if data['fast']['hatzot']:
-        hatzot = SimpleDict(_('Hatzot'), fast_data['hatzot'])
+        hatzot = GenericData(_('Hatzot'), fast_data['hatzot'])
     else:
         hatzot = None
 
     translated_data = Fast(title=title, data=FastData(
-        start_time=SimpleDict(_('The fast begins'), start_time),
-        tzeit_kochavim=SimpleDict(_('Tzeit akochavim'), fast_data['tzeit_time']),
-        sba_time=SimpleDict(_('Sefer ben ashmashot'), fast_data['sba_time']),
-        nvr_time=SimpleDict(_('Nevareshet'), fast_data['nvr_time']),
-        ssk_time=SimpleDict(_('Shmirat shabbat keilhata'), fast_data['ssk_time']),
+        start_time=GenericData(_('The fast begins'), start_time),
+        tzeit_kochavim=GenericData(_('Tzeit akochavim'), fast_data['tzeit_time']),
+        sba_time=GenericData(_('Sefer ben ashmashot'), fast_data['sba_time']),
+        nvr_time=GenericData(_('Nevareshet'), fast_data['nvr_time']),
+        ssk_time=GenericData(_('Shmirat shabbat keilhata'), fast_data['ssk_time']),
         hatzot=hatzot,
     ))
 

@@ -1,6 +1,6 @@
 from typing import Callable
 
-from .types import YomKippur, YomKippurData, SimpleDict
+from .types import YomKippur, YomKippurData, GenericData
 from .utils import gr_month_genitive, days_of_week, date_header
 
 
@@ -34,9 +34,9 @@ def get_translate(data: dict, _: Callable) -> YomKippur:
     translated_data = YomKippur(
         title=title,
         data=YomKippurData(
-            date=SimpleDict(date_header, date),
-            candle_lighting=SimpleDict(cl_header, candle_lighting),
-            havdala=SimpleDict(havdala_header, havdala)
+            date=GenericData(date_header, date),
+            candle_lighting=GenericData(cl_header, candle_lighting),
+            havdala=GenericData(havdala_header, havdala)
         )
     )
 

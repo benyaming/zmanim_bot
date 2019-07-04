@@ -1,6 +1,6 @@
 from typing import Callable
 
-from .types import DafYomi, DYData, SimpleDict
+from .types import DafYomi, DYData, GenericData
 
 
 def get_translate(data: dict, _: Callable) -> DafYomi:
@@ -56,8 +56,8 @@ def get_translate(data: dict, _: Callable) -> DafYomi:
     localized_data = DafYomi(
         title=_('DAF YOMI'),
         data=DYData(
-            SimpleDict(header=_('Masehet'), value=masehet),
-            SimpleDict(header=_('Daf'), value=str(data['daf']))
+            GenericData(header=_('Masehet'), value=masehet),
+            GenericData(header=_('Daf'), value=str(data['daf']))
         )
     )
 

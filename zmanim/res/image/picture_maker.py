@@ -700,84 +700,66 @@ class ShminiAtzeretPicture(PictureFactory):
 
 class ChanukaPicture(PictureFactory):
 
-    def __init__(self, lang, text):
-        background_path = 'res/backgrounds/chanuka.png'
-        title = 'CHANUKKAH TEST'  # TODO title
-        font_size = 60
+    def __init__(self, lang: str, data: dict):
+        self._background_path = 'res/image/backgrounds/chanuka.png'
+        self._font_size = 60
+        self._lang = lang
 
-        self._text = text
-        self._draw = self._get_draw(background_path)
-        self._font = ImageFont.truetype(self._font_path, font_size)
-        self._bold_font = ImageFont.truetype(self._bold_font_path, font_size)
+        super().__init__()
 
-        self._draw_title(self._draw, title)
+        localized_data = channukah.get_translate(data, self._translator)
+        self._data = localized_data.date
+        self._draw_title(self._draw, localized_data.title)
 
-    def draw_picture(self):
+    def draw_picture(self) -> BytesIO:
         pos_y = 450
         pos_x = 100
-        y_offset_small = 75
 
         # shortcuts for code glance
         font_offset = self._font_offset
         font = self._font
         bold_font = self._bold_font
-        text = self._text
+        data = self._data
         draw = self._draw
 
-        # due to non-standart structure of this picture let's draw it manually
-        date_header = text.split('|')[0]
-        header_offset = font_offset(date_header)
-        date, days = text.split('|')[1].split('^')
+        header = format_header(data.header)
+        header_offset = font_offset(header)
 
-        # draw date header
-        draw.text((pos_x, pos_y), date_header, font=bold_font)
-        # draw date
-        draw.text((pos_x + header_offset, pos_y), date, font=font)
-        pos_y += y_offset_small
-        # draw days
-        draw.text((pos_x + header_offset, pos_y), days, font=font)
+        draw.text((pos_x, pos_y), text=header, font=bold_font)
+        draw.text((pos_x + header_offset, pos_y), text=data.value, font=font)
 
         return self._convert_img_to_bytes_io(self._image)
 
 
 class TuBiShvatPicture(PictureFactory):
 
-    def __init__(self, lang, text):
-        background_path = 'res/backgrounds/tubishvat.png'
-        font_size = 70
-        title = 'TU BISHVAT TEST'  # TODO title
+    def __init__(self, lang: str, data: dict):
+        self._background_path = 'res/image/backgrounds/tubishvat.png'
+        self._font_size = 70
+        self._lang = lang
 
-        self._lines = text.split('\n')
-        self._draw = self._get_draw(background_path)
-        self._font = ImageFont.truetype(self._font_path, font_size)
-        self._bold_font = ImageFont.truetype(self._bold_font_path, font_size)
+        super().__init__()
 
-        self._draw_title(self._draw, title)
+        localized_data = tu_bishvat.get_translate(data, self._translator)
+        self._data = localized_data.date
+        self._draw_title(self._draw, localized_data.title)
 
     def draw_picture(self):
         pos_y = 450
         pos_x = 100
-        y_offset_small = 75
 
         # shortcuts for code glance
         font_offset = self._font_offset
         font = self._font
         bold_font = self._bold_font
-        text = self._lines
+        data = self._data
         draw = self._draw
 
-        # due to non-standart structure of this picture let's draw it manually
-        date_header = text.split('|')[0]
-        header_offset = font_offset(date_header)
-        date, days = text.split('|')[1].split('^')
+        header = format_header(data.header)
+        header_offset = font_offset(header)
 
-        # draw date header
-        draw.text((pos_x, pos_y), date_header, font=bold_font)
-        # draw date
-        draw.text((pos_x + header_offset, pos_y), date, font=font)
-        pos_y += y_offset_small
-        # draw days
-        draw.text((pos_x + header_offset, pos_y), days, font=font)
+        draw.text((pos_x, pos_y), text=header, font=bold_font)
+        draw.text((pos_x + header_offset, pos_y), text=data.value, font=font)
 
         return self._convert_img_to_bytes_io(self._image)
 

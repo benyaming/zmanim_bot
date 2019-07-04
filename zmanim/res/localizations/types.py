@@ -3,9 +3,9 @@ from typing import Optional, List, Dict
 
 
 @dataclass
-class SimpleDict:
+class GenericData:
     """
-    A simple dict {'header': str, 'value': str}
+    A simple data struct like {'header': str, 'value': str}
     """
     header: str
     value: str
@@ -16,25 +16,31 @@ class GenericYomTovData:
     """
     A data class for yom tov with required first day and optional second day and shabbos
     """
-    date: SimpleDict
-    cl_1: SimpleDict
-    cl_2: Optional[SimpleDict]
-    cl_3: Optional[SimpleDict]
-    havdala: SimpleDict
+    date: GenericData
+    cl_1: GenericData
+    cl_2: Optional[GenericData]
+    cl_3: Optional[GenericData]
+    havdala: GenericData
 
 
 @dataclass
 class GenericYomTov:
     title: str
-    data: GenericYomTovData
+    date: GenericYomTovData
+
+
+@dataclass
+class GenericHoliday:
+    title: str
+    date: GenericData
 
 # -------------- DAF YOMI DATA CLASSES -------------- #
 
 
 @dataclass
 class DYData:
-    masehet: SimpleDict
-    daf: SimpleDict
+    masehet: GenericData
+    daf: GenericData
 
 
 @dataclass
@@ -71,8 +77,8 @@ class RHMolad:
 
 @dataclass
 class RHData:
-    month: SimpleDict
-    n_days: SimpleDict
+    month: GenericData
+    n_days: GenericData
     date: RHDate
     molad: RHMolad
 
@@ -87,10 +93,10 @@ class RoshHodesh:
 
 @dataclass
 class ShabosData:
-    parasha: SimpleDict
-    candle_lighting: Optional[SimpleDict]
+    parasha: GenericData
+    candle_lighting: Optional[GenericData]
     shkia_offset: Optional[str]
-    tzeit_kochavim: Optional[SimpleDict]
+    tzeit_kochavim: Optional[GenericData]
     warning: Optional[str]
     error: Optional[str]
 
@@ -115,12 +121,12 @@ class Zmanim:
 
 @dataclass
 class FastData:
-    start_time: SimpleDict
-    tzeit_kochavim: SimpleDict
-    sba_time: SimpleDict
-    nvr_time: SimpleDict
-    ssk_time: SimpleDict
-    hatzot: Optional[SimpleDict]
+    start_time: GenericData
+    tzeit_kochavim: GenericData
+    sba_time: GenericData
+    nvr_time: GenericData
+    ssk_time: GenericData
+    hatzot: Optional[GenericData]
 
 
 @dataclass
@@ -133,9 +139,9 @@ class Fast:
 
 @dataclass
 class YomKippurData:
-    date: SimpleDict
-    candle_lighting: SimpleDict
-    havdala: SimpleDict
+    date: GenericData
+    candle_lighting: GenericData
+    havdala: GenericData
 
 
 @dataclass
@@ -148,12 +154,12 @@ class YomKippur:
 
 @dataclass
 class SuccosData:
-    date: SimpleDict
-    candle_lighting_1: SimpleDict
-    candle_lighting_2: Optional[SimpleDict]
-    candle_lighting_3: Optional[SimpleDict]
-    havdala: SimpleDict
-    hoshana_raba: SimpleDict
+    date: GenericData
+    candle_lighting_1: GenericData
+    candle_lighting_2: Optional[GenericData]
+    candle_lighting_3: Optional[GenericData]
+    havdala: GenericData
+    hoshana_raba: GenericData
 
 
 @dataclass
@@ -161,5 +167,5 @@ class Succos:
     title: str
     data: SuccosData
 
-# -------------- SHMINI ATZERES DATA CLASSES -------------- #
 
+# -------------- CHANUKAH DATA CLASSES -------------- #

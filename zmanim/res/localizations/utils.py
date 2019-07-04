@@ -14,8 +14,8 @@ gr_month_genitive = {
     6: _('june-genetive'),
     7: _('july-genetive'),
     8: _('august-genetive'),
-    9: _('september'),
-    10: _('october-genetive'),
+    9: _('septemberr'),
+    10: _('octoberrr'),
     11: _('november-genetive'),
     12: _('december-genetive'),
 }

@@ -16,7 +16,7 @@ class PictureTypes(Enum):
     purim = PurimPicture
     pesach = PesahPicture
     shavuos = ShavuotPicture
-    tu_bishvat = 13
+    tu_bishvat = TuBiShvatPicture
     lag_baomer = LagBaomerPicture
     israel_holidays = IsraelHolidaysPicture
     fast = FastPicture

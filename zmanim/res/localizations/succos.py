@@ -1,6 +1,6 @@
 from typing import Callable
 
-from .types import SuccosData, Succos, SimpleDict
+from .types import SuccosData, Succos, GenericData
 from .utils import gr_month_genitive as gr, days_of_week as dow, date_header, \
     cl_header, cl_shabbos, havdala_header, hoshana_raba_header
 
@@ -70,24 +70,24 @@ def get_translate(data: dict, _: Callable) -> Succos:
     if day_2:
         # eve of second day == first day
         cl_2_header = f'{cl_header} {day_start} {month_start}'
-        cl_2 = SimpleDict(cl_2_header, day_2['cl'])
+        cl_2 = GenericData(cl_2_header, day_2['cl'])
 
     cl_3 = None
     if day_3:
         # eve of third day == second day
         cl_3_header = f'{cl_header} {day_2["day"]} {gr.get(day_2["month"])}{shabbos}'
-        cl_3 = SimpleDict(cl_3_header, day_3["cl"])
+        cl_3 = GenericData(cl_3_header, day_3["cl"])
 
     # havdala
     if day_3:
         havdala_header_str = f'{havdala_header} {day_3["day"]} {gr.get(day_3["month"])}'
-        havdala = SimpleDict(havdala_header_str, day_3['havdala'])
+        havdala = GenericData(havdala_header_str, day_3['havdala'])
     elif day_2:
         havdala_header_str = f'{havdala_header} {day_2["day"]} {gr.get(day_2["month"])}'
-        havdala = SimpleDict(havdala_header_str, day_2['havdala'])
+        havdala = GenericData(havdala_header_str, day_2['havdala'])
     else:
         havdala_header_str = f'{havdala_header} {day_1["day"]} {gr.get(day_1["month"])}'
-        havdala = SimpleDict(havdala_header_str, day_1['havdala'])
+        havdala = GenericData(havdala_header_str, day_1['havdala'])
 
     hr_data = data['hoshana_raba']
     hoshana_raba_value = f'{hr_data["day"]} {gr.get(hr_data["month"])}, ' \
@@ -96,12 +96,12 @@ def get_translate(data: dict, _: Callable) -> Succos:
     translated_data = Succos(
         title=title,
         data=SuccosData(
-            date=SimpleDict(date_header, date_str),
-            candle_lighting_1=SimpleDict(cl_1_header, day_1['cl']),
+            date=GenericData(date_header, date_str),
+            candle_lighting_1=GenericData(cl_1_header, day_1['cl']),
             candle_lighting_2=cl_2,
             candle_lighting_3=cl_3,
             havdala=havdala,
-            hoshana_raba=SimpleDict(hoshana_raba_header, hoshana_raba_value)
+            hoshana_raba=GenericData(hoshana_raba_header, hoshana_raba_value)
         )
     )
 

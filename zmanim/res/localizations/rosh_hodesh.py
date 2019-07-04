@@ -1,6 +1,6 @@
 from typing import Callable
 
-from .types import RoshHodesh, SimpleDict, RHData, RHDate, RHMolad
+from .types import RoshHodesh, GenericData, RHData, RHDate, RHMolad
 from .utils import he_months, gr_month_genitive, days_of_week
 
 
@@ -92,8 +92,8 @@ def get_translate(data: dict, _: Callable) -> RoshHodesh:
 
     translated_data = RoshHodesh(
         title=title, data=RHData(
-            SimpleDict(_('Month'), he_month),
-            SimpleDict(_('Number of days'), data['n_days']),
+            GenericData(_('Month'), he_month),
+            GenericData(_('Number of days'), data['n_days']),
             rh_date,
             molad
         )

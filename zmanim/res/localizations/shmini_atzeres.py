@@ -1,6 +1,6 @@
 from typing import Callable
 
-from .types import SimpleDict, GenericYomTov, GenericYomTovData
+from .types import GenericData, GenericYomTov, GenericYomTovData
 from .utils import gr_month_genitive as gr, days_of_week as dow, date_header, cl_header,\
     cl_shabbos, havdala_header, hoshana_raba_header
 
@@ -62,34 +62,34 @@ def get_translate(data: dict, _: Callable) -> GenericYomTov:
     if day_2:
         # eve of second day == first day
         cl_2_header = f'{cl_header} {day_1} {month_1}'
-        cl_2 = SimpleDict(cl_2_header, day_2_data['cl'])
+        cl_2 = GenericData(cl_2_header, day_2_data['cl'])
 
     cl_3 = None
     if day_3_data:
         # eve of third day == second day
         cl_3_header = f'{cl_header} {day_2_data["day"]} ' \
                       f'{gr.get(day_2_data["month"])}{shabbos}'
-        cl_3 = SimpleDict(cl_3_header, day_3_data["cl"])
+        cl_3 = GenericData(cl_3_header, day_3_data["cl"])
 
     # havdala
     if day_3_data:
         havdala_header_str = f'{havdala_header} {day_3_data["day"]} ' \
                              f'{gr.get(day_3_data["month"])}'
-        havdala = SimpleDict(havdala_header_str, day_3_data['havdala'])
+        havdala = GenericData(havdala_header_str, day_3_data['havdala'])
     elif day_2:
         havdala_header_str = f'{havdala_header} {day_2_data["day"]} ' \
                              f'{gr.get(day_2_data["month"])}'
-        havdala = SimpleDict(havdala_header_str, day_2_data['havdala'])
+        havdala = GenericData(havdala_header_str, day_2_data['havdala'])
     else:
         havdala_header_str = f'{havdala_header} {day_1_data["day"]} ' \
                              f'{gr.get(day_1_data["month"])}'
-        havdala = SimpleDict(havdala_header_str, day_1_data['havdala'])
+        havdala = GenericData(havdala_header_str, day_1_data['havdala'])
 
     translated_data = GenericYomTov(
         title=title,
         data=GenericYomTovData(
-            date=SimpleDict(date_header, date_str),
-            cl_1=SimpleDict(cl_1_header, day_1_data['cl']),
+            date=GenericData(date_header, date_str),
+            cl_1=GenericData(cl_1_header, day_1_data['cl']),
             cl_2=cl_2,
             cl_3=cl_3,
             havdala=havdala
