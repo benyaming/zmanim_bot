@@ -53,7 +53,7 @@ and_word = _('and')
 date_header = _('Date')
 cl_header = _('Candle lighting')
 cl_shabbos = _('shabbos')
-havdala_header = _('Havdala')
+hvd_header = _('Havdala')
 
 # SUCCOS
 hoshana_raba_header = _('Hoshana raba')

@@ -2,7 +2,7 @@ from typing import Callable
 
 from .types import SuccosData, Succos, GenericData
 from .utils import gr_month_genitive as gr, days_of_week as dow, date_header, \
-    cl_header, cl_shabbos, havdala_header, hoshana_raba_header
+    cl_header, cl_shabbos, hvd_header, hoshana_raba_header
 
 
 def get_translate(data: dict, _: Callable) -> Succos:
@@ -80,13 +80,13 @@ def get_translate(data: dict, _: Callable) -> Succos:
 
     # havdala
     if day_3:
-        havdala_header_str = f'{havdala_header} {day_3["day"]} {gr.get(day_3["month"])}'
+        havdala_header_str = f'{hvd_header} {day_3["day"]} {gr.get(day_3["month"])}'
         havdala = GenericData(havdala_header_str, day_3['havdala'])
     elif day_2:
-        havdala_header_str = f'{havdala_header} {day_2["day"]} {gr.get(day_2["month"])}'
+        havdala_header_str = f'{hvd_header} {day_2["day"]} {gr.get(day_2["month"])}'
         havdala = GenericData(havdala_header_str, day_2['havdala'])
     else:
-        havdala_header_str = f'{havdala_header} {day_1["day"]} {gr.get(day_1["month"])}'
+        havdala_header_str = f'{hvd_header} {day_1["day"]} {gr.get(day_1["month"])}'
         havdala = GenericData(havdala_header_str, day_1['havdala'])
 
     hr_data = data['hoshana_raba']

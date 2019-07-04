@@ -1,5 +1,5 @@
 from io import BytesIO
-from typing import Callable, NoReturn
+from typing import Callable, NoReturn, Tuple
 from gettext import translation
 from pathlib import Path
 
@@ -35,7 +35,6 @@ class PictureFactory:
     _lang = None
     _translation_func = None
     _raw_data = None
-    _r_type = None
 
     def __init__(self) -> NoReturn:
         self._font = ImageFont.truetype(str(self._font_path), self._font_size)
@@ -79,6 +78,12 @@ class PictureFactory:
 
     def _y_font_offset(self, text: str) -> int:
         return self._bold_font.getsize(text)[1]
+
+    def _draw_line(self, xy: Tuple[int, int], header: str, value: str) -> NoReturn:
+        header = format_header(header)
+        self._draw.text(xy, text=header, font=self._bold_font)
+        self._draw.text((xy[0] + self._font_offset(header), xy[1]), text=value,
+                        font=self._font)
 
 
 class DafYomPicture(PictureFactory):
@@ -744,7 +749,7 @@ class TuBiShvatPicture(PictureFactory):
         self._data = localized_data.date
         self._draw_title(self._draw, localized_data.title)
 
-    def draw_picture(self):
+    def draw_picture(self) -> BytesIO:
         pos_y = 450
         pos_x = 100
 
@@ -766,98 +771,87 @@ class TuBiShvatPicture(PictureFactory):
 
 class PurimPicture(PictureFactory):
 
-    def __init__(self, lang, text):
-        background_path = 'res/backgrounds/purim.png'
-        font_size = 70
-        title = 'PURIM TEST'  # TODO title
+    def __init__(self, lang: str, data: dict):
+        self._background_path = 'res/image/backgrounds/purim.png'
+        self._font_size = 70
+        self._lang = lang
 
-        self._text = text
-        self._draw = self._get_draw(background_path)
-        self._font = ImageFont.truetype(self._font_path, font_size)
-        self._bold_font = ImageFont.truetype(self._bold_font_path, font_size)
+        super().__init__()
 
-        self._draw_title(self._draw, title)
+        localized_data = purim.get_translate(data, self._translator)
+        self._data = localized_data.date
+        self._draw_title(self._draw, localized_data.title)
 
-    def draw_picture(self):
+    def draw_picture(self) -> BytesIO:
         pos_y = 450
         pos_x = 100
-        y_offset_small = 75
 
         # shortcuts for code glance
         font_offset = self._font_offset
         font = self._font
         bold_font = self._bold_font
-        text = self._text
+        data = self._data
         draw = self._draw
 
-        # due to non-standart structure of this picture let's draw it manually
-        date_header = text.split('|')[0]
-        header_offset = font_offset(date_header)
-        date, days = text.split('|')[1].split('^')
+        header = format_header(data.header)
+        header_offset = font_offset(header)
 
-        # draw date header
-        draw.text((pos_x, pos_y), date_header, font=bold_font)
-        # draw date
-        draw.text((pos_x + header_offset, pos_y), date, font=font)
-        pos_y += y_offset_small
-        # draw days
-        draw.text((pos_x + header_offset, pos_y), days, font=font)
+        draw.text((pos_x, pos_y), text=header, font=bold_font)
+        draw.text((pos_x + header_offset, pos_y), text=data.value, font=font)
 
         return self._convert_img_to_bytes_io(self._image)
 
 
 class PesahPicture(PictureFactory):
 
-    def __init__(self, lang, text):
-        background_path = 'res/backgrounds/pesah.png'
-        font_size = 43 if lang == 'English' or '(' not in text else 50
-        title = 'PESACH TEST'  # TODO title
+    def __init__(self, lang: str, data: dict):
+        self._background_path = 'res/image/backgrounds/pesah.png'
+        self._font_size = 50
+        self._lang = lang
+        # font_size = 43 if lang == 'English' or '(' not in text else 50
 
-        self._lines = text.split('\n')
-        self._draw = self._get_draw(background_path)
-        self._font = ImageFont.truetype(self._font_path, font_size)
-        self._bold_font = ImageFont.truetype(self._bold_font_path, font_size)
+        super().__init__()
 
-        self._draw_title(self._draw, title)
+        localized_data = pesach.get_translate(data, self._translator)
+        self._data = localized_data.data
+        self._draw_title(self._draw, localized_data.title)
 
-    def draw_picture(self):
+    def draw_picture(self) -> BytesIO:
         pos_y = 270
         pos_x = 100
-        y_offset = 65
+        y_offset = 100
         y_offset_small = 65
 
         # shortcuts for code glance
-        font_offset = self._font_offset
-        font = self._font
-        bold_font = self._bold_font
-        lines = self._lines
-        draw = self._draw
+        date = self._data.date
+        part_1 = self._data.part_1
+        part_2 = self._data.part_2
+        draw = self._draw_line
 
-        # draw pesah data
+        # draw the date
+        draw((pos_x, pos_y), date.header, date.value)
+        pos_y += y_offset + self._y_font_offset(date.value)
+
+        # draw part 1: candle lighting(-s) and havdala
+        lines = [part_1.cl_1, part_1.cl_2, part_1.cl_3, part_1.havdala]
         for line in lines:
-            # headers separetes from values by '|' symbol
-            header, value = line.split('|')
-            header_offset = font_offset(header)
+            if not line:
+                continue
+            draw((pos_x, pos_y), line.header, line.value)
+            pos_y += y_offset_small
 
-            if '!' in header:
-                pos_y += y_offset_small
-                header = header.replace('!', '')
+        pos_y += y_offset
 
-            # draw header
-            draw.text((pos_x, pos_y), header, font=bold_font)
+        # draw part 2: candle lighting(-s) and havdala
+        lines = [part_2.cl_1, part_2.cl_2, part_2.cl_3, part_2.havdala]
+        for line in lines:
+            if not line:
+                continue
+            draw((pos_x, pos_y), line.header, line.value)
+            pos_y += y_offset_small
 
-            # draw value
-            value_parts = value.split('^')
-            first_iteration = True
+        return self._convert_img_to_bytes_io(self._image)
 
-            for value_part in value_parts:
-                if not first_iteration:
-                    pos_y += y_offset_small
-                draw.text((pos_x + header_offset, pos_y), value_part, font=font)
-                first_iteration = False
-            pos_y += y_offset
-
-        self._convert_img_to_bytes_io(self._image)
 
 
 class LagBaomerPicture(PictureFactory):

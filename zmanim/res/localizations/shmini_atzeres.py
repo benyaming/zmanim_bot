@@ -2,7 +2,7 @@ from typing import Callable
 
 from .types import GenericData, GenericYomTov, GenericYomTovData
 from .utils import gr_month_genitive as gr, days_of_week as dow, date_header, cl_header,\
-    cl_shabbos, havdala_header, hoshana_raba_header
+    cl_shabbos, hvd_header
 
 
 def get_translate(data: dict, _: Callable) -> GenericYomTov:
@@ -73,15 +73,15 @@ def get_translate(data: dict, _: Callable) -> GenericYomTov:
 
     # havdala
     if day_3_data:
-        havdala_header_str = f'{havdala_header} {day_3_data["day"]} ' \
+        havdala_header_str = f'{hvd_header} {day_3_data["day"]} ' \
                              f'{gr.get(day_3_data["month"])}'
         havdala = GenericData(havdala_header_str, day_3_data['havdala'])
     elif day_2:
-        havdala_header_str = f'{havdala_header} {day_2_data["day"]} ' \
+        havdala_header_str = f'{hvd_header} {day_2_data["day"]} ' \
                              f'{gr.get(day_2_data["month"])}'
         havdala = GenericData(havdala_header_str, day_2_data['havdala'])
     else:
-        havdala_header_str = f'{havdala_header} {day_1_data["day"]} ' \
+        havdala_header_str = f'{hvd_header} {day_1_data["day"]} ' \
                              f'{gr.get(day_1_data["month"])}'
         havdala = GenericData(havdala_header_str, day_1_data['havdala'])
 

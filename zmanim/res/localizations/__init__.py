@@ -10,5 +10,7 @@ __all__ = [
     'shmini_atzeres',
     'channukah',
     'tu_bishvat',
+    'purim',
+    'pesach',
 
 ]

@@ -16,17 +16,17 @@ class GenericYomTovData:
     """
     A data class for yom tov with required first day and optional second day and shabbos
     """
-    date: GenericData
     cl_1: GenericData
     cl_2: Optional[GenericData]
     cl_3: Optional[GenericData]
     havdala: GenericData
+    date: Optional[GenericData] = None
 
 
 @dataclass
 class GenericYomTov:
     title: str
-    date: GenericYomTovData
+    data: GenericYomTovData
 
 
 @dataclass
@@ -168,4 +168,16 @@ class Succos:
     data: SuccosData
 
 
-# -------------- CHANUKAH DATA CLASSES -------------- #
+# -------------- PESACH DATA CLASSES -------------- #
+@dataclass
+class PesachData:
+    date: GenericData
+    part_1: GenericYomTovData
+    part_2: GenericYomTovData
+
+
+@dataclass
+class Pesach:
+    title: str
+    data: PesachData
+
