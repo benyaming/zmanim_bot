@@ -35,10 +35,9 @@ def get_translate(data: dict, _: Callable) -> YomKippur:
         title=title,
         data=YomKippurData(
             date=GenericData(date_header, date),
-            candle_lighting=GenericData(cl_header, candle_lighting),
+            cl=GenericData(cl_header, candle_lighting),
             havdala=GenericData(havdala_header, havdala)
         )
     )
 
     return translated_data
-

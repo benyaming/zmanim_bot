@@ -58,3 +58,10 @@ hvd_header = _('Havdala')
 # SUCCOS
 hoshana_raba_header = _('Hoshana raba')
 
+# ISRAEL HOLIDAYS
+israel_holidays_names = {  # todo endlish names - ?
+    'yom_hashoa': _('Yom ha-Shoa'),
+    'yom_hazikaron': _('Yom ha-Zikaron'),
+    'yom_haatzmaut': _('Yom ha-Atzmaut'),
+    'yom_yerushalaim': _('Yom Yerushalaim')
+}

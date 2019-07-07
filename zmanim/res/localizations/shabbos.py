@@ -95,7 +95,7 @@ def get_translate(data: dict, _: Callable) -> Shabos:
 
     translated_data = Shabos(title=title, data=ShabosData(
         parasha=GenericData(parasha_header, parasha_value),
-        candle_lighting=GenericData(candle_lighting_header, data['candle_lighting']),
+        cl=GenericData(candle_lighting_header, data['candle_lighting']),
         shkia_offset=shkia_offset,
         tzeit_kochavim=GenericData(tzeit_header, data['tzeit_kochavim']),
         warning=warning, error=error

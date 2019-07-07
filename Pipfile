@@ -6,8 +6,9 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-aiohttp = "*"
+flask = "*"
 pillow = "*"
+Flask-API = "*"
 
 [requires]
 python_version = "3.7"

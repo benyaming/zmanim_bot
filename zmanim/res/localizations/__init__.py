@@ -4,7 +4,7 @@ __all__ = [
     'shabbos',
     'zmanim',
     'fast',
-    'rosh_hashana',
+    'yom_tov',
     'yom_kippur',
     'succos',
     'shmini_atzeres',
@@ -12,5 +12,6 @@ __all__ = [
     'tu_bishvat',
     'purim',
     'pesach',
-
+    'lag_baomer',
+    'israel_holidays'
 ]

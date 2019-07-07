@@ -94,7 +94,7 @@ class RoshHodesh:
 @dataclass
 class ShabosData:
     parasha: GenericData
-    candle_lighting: Optional[GenericData]
+    cl: Optional[GenericData]
     shkia_offset: Optional[str]
     tzeit_kochavim: Optional[GenericData]
     warning: Optional[str]
@@ -140,7 +140,7 @@ class Fast:
 @dataclass
 class YomKippurData:
     date: GenericData
-    candle_lighting: GenericData
+    cl: GenericData
     havdala: GenericData
 
 
@@ -155,9 +155,9 @@ class YomKippur:
 @dataclass
 class SuccosData:
     date: GenericData
-    candle_lighting_1: GenericData
-    candle_lighting_2: Optional[GenericData]
-    candle_lighting_3: Optional[GenericData]
+    cl_1: GenericData
+    cl_2: Optional[GenericData]
+    cl_3: Optional[GenericData]
     havdala: GenericData
     hoshana_raba: GenericData
 
@@ -181,3 +181,18 @@ class Pesach:
     title: str
     data: PesachData
 
+
+# -------------- ISRAEL HOLIDAYS DATA CLASSES -------------- #
+@dataclass
+class IsraelHoliday:
+    title: str
+    date: GenericData
+
+
+@dataclass
+class IsraelHolidays:
+    title: str
+    yom_hashoa: IsraelHoliday
+    yom_hazikaron: IsraelHoliday
+    yom_haatzmaaut: IsraelHoliday
+    yom_yerushalaim: IsraelHoliday

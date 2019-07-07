@@ -97,9 +97,9 @@ def get_translate(data: dict, _: Callable) -> Succos:
         title=title,
         data=SuccosData(
             date=GenericData(date_header, date_str),
-            candle_lighting_1=GenericData(cl_1_header, day_1['cl']),
-            candle_lighting_2=cl_2,
-            candle_lighting_3=cl_3,
+            cl_1=GenericData(cl_1_header, day_1['cl']),
+            cl_2=cl_2,
+            cl_3=cl_3,
             havdala=havdala,
             hoshana_raba=GenericData(hoshana_raba_header, hoshana_raba_value)
         )
