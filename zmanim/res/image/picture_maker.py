@@ -17,10 +17,6 @@ def get_translator(lang: str) -> Callable:
     return locale.gettext
 
 
-# def format_header(header: str) -> str:
-#     return f'{header}: '
-
-
 def _convert_img_to_bytes_io(img: PngImagePlugin.PngImageFile) -> BytesIO:
     bytes_io = BytesIO()
     img.save(bytes_io, 'png')
@@ -32,10 +28,6 @@ def _get_draw(background_path: str) -> ImageDraw:
     image = Image.open(background_path)
     draw = ImageDraw.Draw(image)
     return image, draw
-
-    # def _get_image(self, background_path) -> Image:
-    #     self._image = Image.open(background_path)
-    #     return self._image
 
 
 class BasePicture:
@@ -65,10 +57,6 @@ class BasePicture:
         coordinates = (250, 90) if not is_zmanim else (250, 65)
         font = self._title_font if not is_shmini_atzeres else self._title_font_sa
         draw.text(coordinates, title, font=font)
-
-    # @staticmethod
-    # def get_picture(picture_type, lang, text) -> Callable:
-    #     return picture_type.value(lang, text).draw_picture()
 
     def draw_picture(self) -> NoReturn:
         pass
