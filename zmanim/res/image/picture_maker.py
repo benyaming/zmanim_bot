@@ -73,17 +73,23 @@ class PictureFactory:
     def draw_picture(self) -> NoReturn:
         pass
 
-    def _font_offset(self, text: str) -> int:
+    def _x_font_offset(self, text: str) -> int:
         return self._bold_font.getsize(text)[0]
 
     def _y_font_offset(self, text: str) -> int:
         return self._bold_font.getsize(text)[1]
 
-    def _draw_line(self, xy: Tuple[int, int], header: str, value: str) -> NoReturn:
+    def _draw_line(self, xy: Tuple[int, int], header: str, value: str,
+                   value_on_new_line: bool = False) -> NoReturn:
         header = format_header(header)
         self._draw.text(xy, text=header, font=self._bold_font)
-        self._draw.text((xy[0] + self._font_offset(header), xy[1]), text=value,
-                        font=self._font)
+
+        if not value_on_new_line:
+            xy = xy[0] + self._x_font_offset(header), xy[1]
+        else:
+            xy = xy[0], xy[1] + self._y_font_offset(header)
+
+        self._draw.text((xy[0], xy[1]), text=value, font=self._font)
 
 
 class DafYomPicture(PictureFactory):
@@ -103,29 +109,14 @@ class DafYomPicture(PictureFactory):
         pos_x = 100
         y_offset = 100
 
-        # shortcuts for code glance
-        font_offset = self._font_offset
-        font = self._font
-        bold_font = self._bold_font
         data = self._data
-        draw = self._draw
-
-        print(data)
 
         # draw masehet
-        masehet_header = format_header(data.masehet.header)
-        masehet_offset = font_offset(masehet_header)
-
-        draw.text((pos_x, pos_y), masehet_header, font=bold_font)
-        draw.text((pos_x + masehet_offset, pos_y), data.masehet.value, font=font)
+        self._draw_line((pos_x, pos_y), data.masehet.header, data.masehet.value)
         pos_y += y_offset
 
         # draw daf
-        daf_header = format_header(data.daf.header)
-        daf_offset = font_offset(daf_header)
-
-        draw.text((pos_x, pos_y), daf_header, font=bold_font)
-        draw.text((pos_x + daf_offset, pos_y), data.daf.value, font=font)
+        self._draw_line((pos_x, pos_y), data.daf.header, data.daf.value)
 
         return self._convert_img_to_bytes_io(self._image)
 
@@ -144,6 +135,7 @@ class RoshHodeshPicture(PictureFactory):
 
     @staticmethod
     def format_rh_date(days: list, months: list, years: list, dow: list) -> str:
+        # todo move to rh module
         day = f'{days[0]}' if len(days) == 1 else f'{days[0]}-{days[1]}'
         month = f'{months[0]}' if len(months) == 1 else f'{months[0]}-{months[1]}'
         year = f'{years[0]}' if len(years) == 1 else f'{years[0]}-{years[1]}'
@@ -159,56 +151,32 @@ class RoshHodeshPicture(PictureFactory):
         pos_x = 100
         y_offset = 80
 
-        # shortcuts for code glance
-        font_offset = self._font_offset
-        y_font_offset = self._y_font_offset
-        font = self._font
-        bold_font = self._bold_font
         data = self._data
-        draw = self._draw
 
         # draw month
-        month_header = format_header(data.month.header)
-        month_value = data.month.value
-        offset = font_offset(month_header)
-        draw.text((pos_x, pos_y), month_header, font=bold_font)
-        draw.text((pos_x + offset, pos_y), month_value, font=font)
+        self._draw_line((pos_x, pos_y), data.month.header, data.month.value)
         pos_y += y_offset
 
         # draw number of days (n_days)
-        n_days_header = format_header(data.n_days.header)
-        n_days_value = data.n_days.value
-        offset = font_offset(n_days_header)
-        draw.text((pos_x, pos_y), n_days_header, font=bold_font)
-        draw.text((pos_x + offset, pos_y), str(n_days_value), font=font)
+        self._draw_line((pos_x, pos_y), data.n_days.header, data.n_days.value)
         pos_y += y_offset
 
         # prepare date string
-        date = data.date
+        date = data.date  # todo move to rh module
         date_str = self.format_rh_date(date.days, date.months, date.years, date.dow)
-        print(date_str)
 
         # draw date strings
-        date_header = format_header(date.header)
-        x_offset = font_offset(date_header)
-        optional_y_offset = y_font_offset(date_str) if '\n' in date_str else 0
-
-        draw.text((pos_x, pos_y), date_header, font=bold_font)
-        draw.text((pos_x + x_offset, pos_y), date_str, font=font)
-        pos_y += y_offset + optional_y_offset
+        self._draw_line((pos_x, pos_y), data.date.header, date_str)
+        pos_y += y_offset  # todo test
 
         # prepare molad string
-        molad = data.molad
-        molad_str1 = f'{molad.day} {molad.month}, {molad.dow},\n{molad.n_hours} ' \
-                     f'{molad.hours_word} {molad.n_of_minutes} {molad.minutes_word} ' \
-                     f'{molad.and_word} {molad.n_parts} {molad.parts_word}'
+        molad = data.molad  # todo move to rh module
+        molad_str = f'{molad.day} {molad.month}, {molad.dow},\n{molad.n_hours} ' \
+                    f'{molad.hours_word} {molad.n_of_minutes} {molad.minutes_word} ' \
+                    f'{molad.and_word} {molad.n_parts} {molad.parts_word}'
 
         # draw molad string
-        molad_header = format_header(molad.header)
-        offset = font_offset(molad_header)
-
-        draw.text((pos_x, pos_y), molad_header, font=bold_font)
-        draw.text((pos_x + offset, pos_y), molad_str1, font=font)
+        self._draw_line((pos_x, pos_y), data.molad.header, molad_str)
 
         return self._convert_img_to_bytes_io(self._image)
 
@@ -235,21 +203,13 @@ class ShabbosPicture(PictureFactory):
         pos_x = 100
         y_offset: int = 80
 
-        # shortcuts for code glance
-        font_offset = self._font_offset
         font = self._font
-        bold_font = self._bold_font
         warning_font = self._warning_font
         data = self._data
         draw = self._draw
 
         # draw parashat hashavua
-        header = format_header(data.parasha.header)
-        value = data.parasha.value
-        header_offset = font_offset(header)
-
-        draw.text((pos_x, pos_y), header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), value, font=font)
+        self._draw_line((pos_x, pos_y), data.parasha.header, data.parasha.value)
         pos_y += y_offset
 
         # if polar error, draw error message and return
@@ -261,12 +221,7 @@ class ShabbosPicture(PictureFactory):
             return self._convert_img_to_bytes_io(self._image)
 
         # draw candle lighting
-        header = format_header(data.candle_lighting.header)
-        value = data.candle_lighting.value
-        header_offset = font_offset(header)
-
-        draw.text((pos_x, pos_y), header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), value, font=font)
+        self._draw_line((pos_x, pos_y), data.cl.header, data.cl.value)
         pos_y += y_offset
 
         # draw shekiah offset
@@ -274,12 +229,8 @@ class ShabbosPicture(PictureFactory):
         pos_y += y_offset
 
         # draw tzeis hakochavim
-        header = format_header(data.tzeit_kochavim.header)
-        value = data.tzeit_kochavim.value
-        header_offset = font_offset(header)
-
-        draw.text((pos_x, pos_y), header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), value, font=font)
+        self._draw_line((pos_x, pos_y), data.tzeit_kochavim.header,
+                        data.tzeit_kochavim.value)
         pos_y += y_offset
 
         # draw warning if need
@@ -343,27 +294,15 @@ class ZmanimPicture(PictureFactory):
         self._draw.text((pos_x, pos_y), self._date, font=date_font)
 
     def draw_picture(self) -> BytesIO:
-        pos_y: int = 210
+        pos_y: int = 210 + self._start_y_offset  # todo test
         pos_x: int = 100
 
-        # shortcuts for code glance
-        font_offset: Callable = self._font_offset
-        font: ImageFont = self._font
-        bold_font: ImageFont = self._bold_font
         data: dict = self._data
-        draw: ImageDraw = self._draw
-
-        y_offset: int = self._y_offset
-        pos_y += self._start_y_offset
 
         # draw all zmanim lines in cycle
         for header, value in data.items():
-            header = format_header(header)
-            header_offset = font_offset(header)
-
-            draw.text((pos_x, pos_y), header, font=bold_font)
-            draw.text((pos_x + header_offset, pos_y), value, font=font)
-            pos_y += y_offset
+            self._draw_line((pos_x, pos_y), header, value)
+            pos_y += self._y_offset
 
         return self._convert_img_to_bytes_io(self._image)
 
@@ -388,55 +327,23 @@ class FastPicture(PictureFactory):
         y_offset_sep = 100
         y_offset_sep_small = 70
 
-        # shortcuts for code glance
-        font_offset = self._font_offset
-        font = self._font
-        bold_font = self._bold_font
         data = self._data
-        draw = self._draw
 
         # draw date and start time
-        header = format_header(data.start_time.header)
-        header_offset = font_offset(header)
-        value_y_offset = self._y_font_offset(data.start_time.value)
-
-        draw.text((pos_x, pos_y), header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), data.start_time.value, font=font)
-        pos_y += y_offset + value_y_offset
+        self._draw_line((pos_x, pos_y), data.start_time.header, data.start_time.value)
+        pos_y += y_offset  # todo test
 
         # draw hatzot, if need
         if data.hatzot:
             pos_y += y_offset_sep_small
-
-            header = format_header(data.hatzot.header)
-            header_offset = font_offset(header)
-
-            draw.text((pos_x, pos_y), header, font=bold_font)
-            draw.text((pos_x + header_offset, pos_y), data.hatzot.value, font=font)
+            self._draw_line((pos_x, pos_y), data.hatzot.header, data.hatzot.value)
             pos_y += y_offset + y_offset_sep_small
         else:
             pos_y += y_offset_sep
 
-        # draw 4 end times in cycle
-        headers = [
-            format_header(data.tzeit_kochavim.header),
-            format_header(data.sba_time.header),
-            format_header(data.ssk_time.header),
-            format_header(data.nvr_time.header)
-        ]
-        values = [
-            data.tzeit_kochavim.value,
-            data.sba_time.value,
-            data.ssk_time.value,
-            data.nvr_time.value
-        ]
-
-        for header, value in zip(headers, values):
-            header_offset = font_offset(header)
-
-            draw.text((pos_x, pos_y), header, font=bold_font)
-            draw.text((pos_x + header_offset, pos_y), value, font=font)
-
+        timings = [data.tzeit_kochavim, data.sba_time, data.ssk_time, data.nvr_time]
+        for timing in timings:
+            self._draw_line((pos_x, pos_y), timing.header, timing.value)
             pos_y += y_offset
 
         return self._convert_img_to_bytes_io(self._image)
@@ -461,36 +368,21 @@ class RoshHashanaPicture(PictureFactory):
         y_offset = 95
         y_offset_small = 65
 
-        # shortcuts for code glance
-        font_offset = self._font_offset
-        font = self._font
-        bold_font = self._bold_font
         data = self._data
-        draw = self._draw
 
         # draw the date
-        header = format_header(data.date.header)
-        header_offset = font_offset(header)
-
-        draw.text((pos_x, pos_y), header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), data.date.value, font=font)
-
+        self._draw_line((pos_x, pos_y), data.date.header, data.date.value)
         pos_y += y_offset + self._y_font_offset(data.date.value)
 
         # draw candle lightings and havdala
-        days = [data.candle_lighting_1, data.candle_lighting_2, data.candle_lighting_3,
-                data.havdalah]
+        days = [data.cl_1, data.cl_2, data.cl_3, data.havdala]  # todo replicate
 
         for day in days:
             # if there is no third day (shabbos)
             if not day:
                 continue
 
-            header = format_header(day.header)
-            header_offset = font_offset(header.split('\n')[0])
-
-            draw.text((pos_x, pos_y), header, font=bold_font)
-            draw.text((pos_x + header_offset, pos_y), day.value, font=font)
+            self._draw_line((pos_x, pos_y), day.header, day.value)
             pos_y += y_offset_small
 
         return self._convert_img_to_bytes_io(self._image)
@@ -515,35 +407,18 @@ class YomKippurPicture(PictureFactory):
         y_offset = 170
         y_offset_small = 90
 
-        # shortcuts for code glance
-        font_offset = self._font_offset
-        font = self._font
-        bold_font = self._bold_font
         data = self._data
-        draw = self._draw
 
         # draw date
-        header = format_header(data.date.header)
-        header_offset = font_offset(header)
-
-        draw.text((pos_x, pos_y), header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), data.date.value, font=font)
+        self._draw_line((pos_x, pos_y), data.date.header, data.date.value)
         pos_y += y_offset
 
         # draw candle lightning
-        header = format_header(data.candle_lighting.header)
-
-        draw.text((pos_x, pos_y), header, font=bold_font)
-        pos_y += self._y_font_offset(header)
-        draw.text((pos_x, pos_y), data.candle_lighting.value, font=font)
+        self._draw_line((pos_x, pos_y), data.cl.header, data.cl.value,  True)
         pos_y += y_offset_small
 
         # draw havdala
-        header = format_header(data.havdala.header)
-
-        draw.text((pos_x, pos_y), header, font=bold_font)
-        pos_y += self._y_font_offset(header)
-        draw.text((pos_x, pos_y), data.havdala.value, font=font)
+        self._draw_line((pos_x, pos_y), data.havdala.header, data.havdala.value, True)
         pos_y += y_offset_small
 
         return self._convert_img_to_bytes_io(self._image)
@@ -568,63 +443,31 @@ class SucosPicture(PictureFactory):
         y_offset = 100
         y_offset_small = 65
 
-        # shortcuts for code glance
-        font_offset = self._font_offset
-        font = self._font
-        bold_font = self._bold_font
         data = self._data
-        draw = self._draw
 
         # draw the date
-        header = format_header(data.date.header)
-        header_offset = font_offset(header)
-
-        draw.text((pos_x, pos_y), header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), data.date.value, font=font)
-        pos_y += y_offset + self._y_font_offset(data.date.value)
+        self._draw_line((pos_x, pos_y), data.date.header, data.date.value)
+        pos_y += y_offset
 
         # draw cl 1
-        header = format_header(data.candle_lighting_1.header)
-        header_offset = font_offset(header)
-
-        draw.text((pos_x, pos_y), header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), data.candle_lighting_1.value, font=font)
+        self._draw_line((pos_x, pos_y), data.cl_1.header, data.cl_1.value)
         pos_y += y_offset_small
 
         # draw cl 2 if it exist
-        if data.candle_lighting_2:
-            header = format_header(data.candle_lighting_2.header)
-            header_offset = font_offset(header)
-
-            draw.text((pos_x, pos_y), header, font=bold_font)
-            draw.text((pos_x + header_offset, pos_y), data.candle_lighting_2.value,
-                      font=font)
-            pos_y += y_offset_small
+        self._draw_line((pos_x, pos_y), data.cl_2.header, data.cl_2.value)
+        pos_y += y_offset_small
 
         # draw cl 3 if it exist
-        if data.candle_lighting_3:
-            header = format_header(data.candle_lighting_3.header)
-            header_offset = font_offset(header)
-
-            draw.text((pos_x, pos_y), header, font=bold_font)
-            draw.text((pos_x + header_offset, pos_y), data.candle_lighting_3.value,
-                      font=font)
+        if data.cl_3:
+            self._draw_line((pos_x, pos_y), data.cl_3.header, data.cl_3.value)
             pos_y += y_offset_small
 
         # draw havdala
-        header = format_header(data.havdala.header)
-        header_offset = font_offset(header)
-
-        draw.text((pos_x, pos_y), header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), data.havdala.value, font=font)
+        self._draw_line((pos_x, pos_y), data.havdala.header, data.havdala.value)
         pos_y += y_offset
 
         # draw hoshana raba
-        header = format_header(data.hoshana_raba.header)
-        header_offset = font_offset(header)
-
-        draw.text((pos_x, pos_y), header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), data.hoshana_raba.value, font=font)
+        self._draw_line((pos_x, pos_y), data.hoshana_raba.header, data.hoshana_raba.value)
 
         return self._convert_img_to_bytes_io(self._image)
 
@@ -648,56 +491,28 @@ class ShminiAtzeretPicture(PictureFactory):
         y_offset = 100
         y_offset_small = 65
 
-        # shortcuts for code glance
-        font_offset = self._font_offset
-        font = self._font
-        bold_font = self._bold_font
         data = self._data
-        draw = self._draw
 
         # draw the date
-        header = format_header(data.date.header)
-        header_offset = font_offset(header)
-
-        draw.text((pos_x, pos_y), header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), data.date.value, font=font)
+        self._draw_line((pos_x, pos_y), data.date.header, data.date.value)
         pos_y += y_offset + self._y_font_offset(data.date.value)
 
         # draw cl 1
-        header = format_header(data.cl_1.header)
-        header_offset = font_offset(header)
-
-        draw.text((pos_x, pos_y), header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), data.cl_1.value,
-                  font=font)
+        self._draw_line((pos_x, pos_y), data.cl_1.header, data.cl_1.value)
         pos_y += y_offset_small
 
         # draw cl 2 if it exist
         if data.cl_2:
-            header = format_header(data.cl_2.header)
-            header_offset = font_offset(header)
-
-            draw.text((pos_x, pos_y), header, font=bold_font)
-            draw.text((pos_x + header_offset, pos_y), data.cl_2.value,
-                      font=font)
+            self._draw_line((pos_x, pos_y), data.cl_2.header, data.cl_2.value)
             pos_y += y_offset_small
 
         # draw cl 3 if it exist
         if data.cl_3:
-            header = format_header(data.cl_3.header)
-            header_offset = font_offset(header)
-
-            draw.text((pos_x, pos_y), header, font=bold_font)
-            draw.text((pos_x + header_offset, pos_y), data.cl_3.value,
-                      font=font)
+            self._draw_line((pos_x, pos_y), data.cl_3.header, data.cl_3.value)
             pos_y += y_offset_small
 
         # draw havdala
-        header = format_header(data.havdala.header)
-        header_offset = font_offset(header)
-
-        draw.text((pos_x, pos_y), header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), data.havdala.value, font=font)
+        self._draw_line((pos_x, pos_y), data.havdala.header, data.havdala.value)
         pos_y += y_offset
 
         return self._convert_img_to_bytes_io(self._image)
@@ -720,19 +535,8 @@ class ChanukaPicture(PictureFactory):
         pos_y = 450
         pos_x = 100
 
-        # shortcuts for code glance
-        font_offset = self._font_offset
-        font = self._font
-        bold_font = self._bold_font
         data = self._data
-        draw = self._draw
-
-        header = format_header(data.header)
-        header_offset = font_offset(header)
-
-        draw.text((pos_x, pos_y), text=header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), text=data.value, font=font)
-
+        self._draw_line((pos_x, pos_y), data.header, data.value)
         return self._convert_img_to_bytes_io(self._image)
 
 
@@ -753,19 +557,8 @@ class TuBiShvatPicture(PictureFactory):
         pos_y = 450
         pos_x = 100
 
-        # shortcuts for code glance
-        font_offset = self._font_offset
-        font = self._font
-        bold_font = self._bold_font
         data = self._data
-        draw = self._draw
-
-        header = format_header(data.header)
-        header_offset = font_offset(header)
-
-        draw.text((pos_x, pos_y), text=header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), text=data.value, font=font)
-
+        self._draw_line((pos_x, pos_y), data.header, data.value)
         return self._convert_img_to_bytes_io(self._image)
 
 
@@ -786,19 +579,8 @@ class PurimPicture(PictureFactory):
         pos_y = 450
         pos_x = 100
 
-        # shortcuts for code glance
-        font_offset = self._font_offset
-        font = self._font
-        bold_font = self._bold_font
         data = self._data
-        draw = self._draw
-
-        header = format_header(data.header)
-        header_offset = font_offset(header)
-
-        draw.text((pos_x, pos_y), text=header, font=bold_font)
-        draw.text((pos_x + header_offset, pos_y), text=data.value, font=font)
-
+        self._draw_line((pos_x, pos_y), data.header, data.value)
         return self._convert_img_to_bytes_io(self._image)
 
 
@@ -874,7 +656,7 @@ class LagBaomerPicture(PictureFactory):
         y_offset_small = 75
 
         # shortcuts for code glance
-        font_offset = self._font_offset
+        font_offset = self._x_font_offset
         font = self._font
         bold_font = self._bold_font
         text = self._text
@@ -917,7 +699,7 @@ class ShavuotPicture(PictureFactory):
         y_offset_small = 65
 
         # shortcuts for code glance
-        font_offset = self._font_offset
+        font_offset = self._x_font_offset
         font = self._font
         bold_font = self._bold_font
         lines = self._lines
@@ -966,7 +748,7 @@ class IsraelHolidaysPicture(PictureFactory):
         y_offset_small = 60
 
         # shortcuts for code glance
-        font_offset = self._font_offset
+        font_offset = self._x_font_offset
         font = self._font
         bold_font = self._bold_font
         lines = self._lines
