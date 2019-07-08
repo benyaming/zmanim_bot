@@ -52,35 +52,11 @@ class DafYomi:
 
 
 @dataclass
-class RHDate:
-    header: str
-    days: List[str]
-    months: List[str]
-    years: List[str]
-    dow: List[str]
-
-
-@dataclass
-class RHMolad:
-    header: str
-    day: str
-    month: str
-    dow: str
-    n_hours: str
-    hours_word: str
-    n_of_minutes: str
-    minutes_word: str
-    and_word: str
-    n_parts: str
-    parts_word: str
-
-
-@dataclass
 class RHData:
     month: GenericData
     n_days: GenericData
-    date: RHDate
-    molad: RHMolad
+    date: GenericData
+    molad: GenericData
 
 
 @dataclass

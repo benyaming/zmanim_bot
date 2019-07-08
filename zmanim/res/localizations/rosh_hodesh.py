@@ -1,7 +1,7 @@
 from typing import Callable
 
-from .types import RoshHodesh, GenericData, RHData, RHDate, RHMolad
-from .utils import he_months, gr_month_genitive, days_of_week
+from .types import RoshHodesh, GenericData, RHData
+from .utils import he_months, gr_month_genitive, days_of_week, date_header
 
 
 def get_translate(data: dict, _: Callable) -> RoshHodesh:
@@ -28,6 +28,7 @@ def get_translate(data: dict, _: Callable) -> RoshHodesh:
     """
     title = _('ROSH_HODESH')
     and_word = _('and')
+    molad_header = _('Molad')
 
     hours = {
         1: _('Hour-1'),
@@ -68,34 +69,43 @@ def get_translate(data: dict, _: Callable) -> RoshHodesh:
 
     he_month = he_months.get(data['he_month'])
 
-    rh_date = RHDate(
-        header=_('Date'),
-        days=[str(i) for i in data['date']['date_days']],
-        months=[gr_month_genitive.get(i) for i in data['date']['date_months']],
-        years=[str(i) for i in data['date']['date_years']],
-        dow=[days_of_week.get(i) for i in data['date']['date_dow']]
-    )
+    date_days = [str(i) for i in data['date']['date_days']]
+    date_months = [gr_month_genitive.get(i) for i in data['date']['date_months']]
+    date_years = [str(i) for i in data['date']['date_years']]
+    date_dows = [days_of_week.get(i) for i in data['date']['date_dow']]
+    new_line = '\n' if len(date_days) > 1 else ' '
 
-    molad = RHMolad(
-        header=_('Molad'),
-        day=data['molad']['molad_day'],
-        month=gr_month_genitive.get(data['molad']['molad_month']),
-        dow=days_of_week.get(data['molad']['molad_dow']),
-        n_hours=data['molad']['molad_hour'],
-        hours_word=hours.get(data['molad']['molad_hour'] % 10),
-        n_of_minutes=data['molad']['molad_minutes'],
-        minutes_word=minutes.get(data['molad']['molad_minutes'] % 10),
-        and_word=and_word,
-        n_parts=data['molad']['molad_parts'],
-        parts_word=parts.get(data['molad']['molad_parts'] % 10)
-    )
+    date_day = f'{date_days[0]}' if len(date_days) == 1 \
+        else f'{date_days[0]}-{date_days[1]}'
+    date_month = f'{date_months[0]}' if len(date_months) == 1 \
+        else f'{date_months[0]}-{date_months[1]}'
+    date_year = f'{date_years[0]}' if len(date_years) == 1 \
+        else f'{date_years[0]}-{date_years[1]}'
+    date_dow = f'{date_dows[0]}' if len(date_dows) == 1 \
+        else f'{date_dows[0]}-{date_dows[1]}'
+
+    date_value = f'{date_day} {date_month} {date_year},{new_line}{date_dow}'
+
+    molad_day = data['molad']['molad_day']
+    molad_month = gr_month_genitive.get(data['molad']['molad_month'])
+    molad_dow = days_of_week.get(data['molad']['molad_dow'])
+    molad_n_hours = data['molad']['molad_hour']
+    molad_hours_word = hours.get(data['molad']['molad_hour'] % 10)
+    molad_n_of_minutes = data['molad']['molad_minutes']
+    molad_minutes_word = minutes.get(data['molad']['molad_minutes'] % 10)
+    molad_n_parts = data['molad']['molad_parts']
+    molad_parts_word = parts.get(data['molad']['molad_parts'] % 10)
+
+    molad_value = f'{molad_day} {molad_month}, {molad_dow},\n{molad_n_hours} ' \
+                  f'{molad_hours_word} {molad_n_of_minutes} {molad_minutes_word} ' \
+                  f'{and_word} {molad_n_parts} {molad_parts_word}'
 
     translated_data = RoshHodesh(
         title=title, data=RHData(
-            GenericData(_('Month'), he_month),
-            GenericData(_('Number of days'), data['n_days']),
-            rh_date,
-            molad
+            month=GenericData(_('Month'), he_month),
+            n_days=GenericData(_('Number of days'), data['n_days']),
+            date=GenericData(date_header, date_value),
+            molad=GenericData(molad_header, molad_value)
         )
     )
 

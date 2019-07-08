@@ -121,19 +121,6 @@ class RoshHodeshPicture(BasePicture):
         self._data = localized_data.data
         self._draw_title(self._draw, localized_data.title)
 
-    @staticmethod
-    def format_rh_date(days: list, months: list, years: list, dow: list) -> str:
-        # todo move to rh module
-        day = f'{days[0]}' if len(days) == 1 else f'{days[0]}-{days[1]}'
-        month = f'{months[0]}' if len(months) == 1 else f'{months[0]}-{months[1]}'
-        year = f'{years[0]}' if len(years) == 1 else f'{years[0]}-{years[1]}'
-        dow = f'{dow[0]}' if len(dow) == 1 else f'{dow[0]}-{dow[1]}'
-
-        new_line = '\n' if len(days) > 1 else ' '
-
-        date_str = f'{day} {month} {year},{new_line}{dow}'
-        return date_str
-
     def draw_picture(self) -> BytesIO:
         pos_y = 370
         pos_x = 100
@@ -149,22 +136,12 @@ class RoshHodeshPicture(BasePicture):
         self._draw_line((pos_x, pos_y), data.n_days.header, data.n_days.value)
         pos_y += y_offset
 
-        # prepare date string
-        date = data.date  # todo move to rh module
-        date_str = self.format_rh_date(date.days, date.months, date.years, date.dow)
-
         # draw date strings
-        self._draw_line((pos_x, pos_y), data.date.header, date_str)
+        self._draw_line((pos_x, pos_y), data.date.header, data.date.value)
         pos_y += y_offset  # todo test
 
-        # prepare molad string
-        molad = data.molad  # todo move to rh module
-        molad_str = f'{molad.day} {molad.month}, {molad.dow},\n{molad.n_hours} ' \
-                    f'{molad.hours_word} {molad.n_of_minutes} {molad.minutes_word} ' \
-                    f'{molad.and_word} {molad.n_parts} {molad.parts_word}'
-
         # draw molad string
-        self._draw_line((pos_x, pos_y), data.molad.header, molad_str)
+        self._draw_line((pos_x, pos_y), data.molad.header, data.molad.value)
 
         return _convert_img_to_bytes_io(self._image)
 
@@ -363,7 +340,7 @@ class RoshHashanaPicture(BasePicture):
         pos_y += y_offset + self._y_font_offset(data.date.value)
 
         # draw candle lightings and havdala
-        days = [data.cl_1, data.cl_2, data.cl_3, data.havdala]  # todo replicate
+        days = [data.cl_1, data.cl_2, data.cl_3, data.havdala]
 
         for day in days:
             # if there is no third day (shabbos)
@@ -437,21 +414,17 @@ class SucosPicture(BasePicture):
         self._draw_line((pos_x, pos_y), data.date.header, data.date.value)
         pos_y += y_offset
 
-        # draw cl 1
-        self._draw_line((pos_x, pos_y), data.cl_1.header, data.cl_1.value)
-        pos_y += y_offset_small
+        # draw candle lightings and havdala
+        days = [data.cl_1, data.cl_2, data.cl_3, data.havdala]  # todo test
 
-        # draw cl 2 if it exist
-        self._draw_line((pos_x, pos_y), data.cl_2.header, data.cl_2.value)
-        pos_y += y_offset_small
+        for day in days:
+            # if there is no third day (shabbos)
+            if not day:
+                continue
 
-        # draw cl 3 if it exist
-        if data.cl_3:
-            self._draw_line((pos_x, pos_y), data.cl_3.header, data.cl_3.value)
+            self._draw_line((pos_x, pos_y), day.header, day.value)
             pos_y += y_offset_small
 
-        # draw havdala
-        self._draw_line((pos_x, pos_y), data.havdala.header, data.havdala.value)
         pos_y += y_offset
 
         # draw hoshana raba
@@ -485,23 +458,16 @@ class ShminiAtzeretPicture(BasePicture):
         self._draw_line((pos_x, pos_y), data.date.header, data.date.value)
         pos_y += y_offset + self._y_font_offset(data.date.value)
 
-        # draw cl 1
-        self._draw_line((pos_x, pos_y), data.cl_1.header, data.cl_1.value)
-        pos_y += y_offset_small
+        # draw candle lightings and havdala
+        days = [data.cl_1, data.cl_2, data.cl_3, data.havdala]  # todo test
 
-        # draw cl 2 if it exist
-        if data.cl_2:
-            self._draw_line((pos_x, pos_y), data.cl_2.header, data.cl_2.value)
+        for day in days:
+            # if there is no third day (shabbos)
+            if not day:
+                continue
+
+            self._draw_line((pos_x, pos_y), day.header, day.value)
             pos_y += y_offset_small
-
-        # draw cl 3 if it exist
-        if data.cl_3:
-            self._draw_line((pos_x, pos_y), data.cl_3.header, data.cl_3.value)
-            pos_y += y_offset_small
-
-        # draw havdala
-        self._draw_line((pos_x, pos_y), data.havdala.header, data.havdala.value)
-        pos_y += y_offset
 
         return _convert_img_to_bytes_io(self._image)
 
@@ -601,23 +567,14 @@ class PesahPicture(BasePicture):
         draw((pos_x, pos_y), date.header, date.value)
         pos_y += y_offset + self._y_font_offset(date.value)
 
-        # draw part 1: candle lighting(-s) and havdala
-        lines = [part_1.cl_1, part_1.cl_2, part_1.cl_3, part_1.havdala]
-        for line in lines:
-            if not line:
-                continue
-            draw((pos_x, pos_y), line.header, line.value)
-            pos_y += y_offset_small
-
-        pos_y += y_offset
-
-        # draw part 2: candle lighting(-s) and havdala
-        lines = [part_2.cl_1, part_2.cl_2, part_2.cl_3, part_2.havdala]
-        for line in lines:
-            if not line:
-                continue
-            draw((pos_x, pos_y), line.header, line.value)
-            pos_y += y_offset_small
+        for part in part_1, part_2:
+            lines = [part.cl_1, part.cl_2, part.cl_3, part.havdala]
+            for line in lines:
+                if not line:
+                    continue
+                draw((pos_x, pos_y), line.header, line.value)
+                pos_y += y_offset_small
+            pos_y += y_offset
 
         return _convert_img_to_bytes_io(self._image)
 
@@ -672,7 +629,6 @@ class ShavuotPicture(BasePicture):
 
         # draw candle lightings and havdala
         days = [data.cl_1, data.cl_2, data.cl_3, data.havdala]
-
         for day in days:
             # if there is no third day (shabbos)
             if not day:
