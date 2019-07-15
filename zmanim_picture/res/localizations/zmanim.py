@@ -11,7 +11,7 @@ def get_translate(data: dict, _: Callable) -> Zmanim:
             'gr': [dd, mm, yy],
             'he': [dd, 'mm', yy],
         },
-        'zmanim': {
+        'zmanim_picture': {
             'zman_name': '...',
             ...
             ...
@@ -78,7 +78,7 @@ def get_translate(data: dict, _: Callable) -> Zmanim:
 
     translated_data = Zmanim(
         title=title, date=date,
-        zmanim={zman_names.get(k): v for k, v in data['zmanim'].items()}
+        zmanim={zman_names.get(k): v for k, v in data['zmanim_picture'].items()}
     )
 
     return translated_data

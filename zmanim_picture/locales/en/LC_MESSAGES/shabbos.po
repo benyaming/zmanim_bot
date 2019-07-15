@@ -275,10 +275,10 @@ msgstr "Tzeit ha-kochavim"
 
 #: shabbos.py:112
 msgid ""
-"For this location zmanim is impossible\n"
+"For this location zmanim_picture is impossible\n"
 "to determine because of polar night/day."
 msgstr ""
-"For this location zmanim is impossible\n"
+"For this location zmanim_picture is impossible\n"
 "to determine because of polar night/day."
 
 #: shabbos.py:118

@@ -10,3 +10,7 @@ zmanim/res/image/__pycache__/
 zmanim/res/image/tmp\.py
 
 zmanim/res/localizations/__pycache__/
+
+__pycache__/
+
+\.env

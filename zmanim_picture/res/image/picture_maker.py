@@ -6,7 +6,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 
 from ..localizations import *
-from ..settings import I18N_DOMAIN
+from settings import I18N_DOMAIN
 
 
 def get_translator(lang: str) -> Callable:
@@ -211,7 +211,7 @@ class ShabbosPicture(BasePicture):
 class ZmanimPicture(BasePicture):
 
     def __init__(self, lang: str, data: dict) -> NoReturn:
-        self._background_path = 'res/image/backgrounds/zmanim.png'
+        self._background_path = 'res/image/backgrounds/zmanim_picture.png'
         self._lang = lang
 
         localized_data = zmanim.get_translate(data, get_translator(lang))
@@ -264,7 +264,7 @@ class ZmanimPicture(BasePicture):
 
         data: dict = self._data
 
-        # draw all zmanim lines in cycle
+        # draw all zmanim_picture lines in cycle
         for header, value in data.items():
             self._draw_line((pos_x, pos_y), header, value)
             pos_y += self._y_offset
@@ -675,7 +675,7 @@ class IsraelHolidaysPicture(BasePicture):
 
 def get_picture(picture_type: str):
     picture_types = {
-        'zmanim': ZmanimPicture,
+        'zmanim_picture': ZmanimPicture,
         'shabbos': ShabbosPicture,
         'rosh_chodesh': RoshHodeshPicture,
         'daf_yomi': DafYomPicture,

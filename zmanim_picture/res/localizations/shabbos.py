@@ -86,7 +86,7 @@ def get_translate(data: dict, _: Callable) -> Shabos:
     shkia_offset_header = _('minutes before shekiah')
     tzeit_header = _('Tzeit ha-kochavim')
 
-    error = _('For this location zmanim is impossible\nto determine because of '
+    error = _('For this location zmanim_picture is impossible\nto determine because of '
               'polar night/day.') if data['error'] else None
     warning = _('Notice! You should specify time of candle\n lighting with the ' 
                 'rabbi of your community!') if data['warning'] else None
