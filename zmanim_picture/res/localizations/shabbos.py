@@ -8,8 +8,8 @@ def get_translate(data: dict, _: Callable) -> Shabos:
     input data structure:
     {
         'parasha': '...',
-        'candle_lighting': '...|None',
-        'shkia_offset': '...(int)|None',
+        'cl': '...|None',
+        'cl_offset': '...(int)|None',
         'tzeit_kochavim': '...|None',
         'error': True|False,
         'warning': True|False
@@ -91,11 +91,11 @@ def get_translate(data: dict, _: Callable) -> Shabos:
     warning = _('Notice! You should specify time of candle\n lighting with the ' 
                 'rabbi of your community!') if data['warning'] else None
 
-    shkia_offset = f'({data["shkia_offset"]} {shkia_offset_header})'
+    shkia_offset = f'({data["cl_offset"]} {shkia_offset_header})'
 
     translated_data = Shabos(title=title, data=ShabosData(
         parasha=GenericData(parasha_header, parasha_value),
-        cl=GenericData(candle_lighting_header, data['candle_lighting']),
+        cl=GenericData(candle_lighting_header, data['cl']),
         shkia_offset=shkia_offset,
         tzeit_kochavim=GenericData(tzeit_header, data['tzeit_kochavim']),
         warning=warning, error=error
