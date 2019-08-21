@@ -26,10 +26,12 @@ class TextHandler:
 
     async def process_text(self):
         """Coro for handling and processing user's messages"""
-        if self.text in self._commands:  # todo better
-            handler = self._commands.get(self.text, self._incorrect_text)
-        else:
-            handler = TextHandler._incorrect_text
+        # if state
+        handler = self._commands.get(self.text, self._incorrect_text)
+        # if self.text in self._commands:  # todo better
+        #     handler = self._commands.get(self.text, self._incorrect_text)
+        # else:
+        #     handler = TextHandler._incorrect_text
         await handler(self)
 
     ###############################################################################

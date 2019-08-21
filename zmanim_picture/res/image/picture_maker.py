@@ -132,7 +132,7 @@ class RoshHodeshPicture(BasePicture):
         self._draw_line((pos_x, pos_y), data.month.header, data.month.value)
         pos_y += y_offset
 
-        # draw number of days (n_days)
+        # draw duration (n_days)
         self._draw_line((pos_x, pos_y), data.n_days.header, data.n_days.value)
         pos_y += y_offset
 
@@ -262,7 +262,7 @@ class ZmanimPicture(BasePicture):
         pos_y: int = 210 + self._start_y_offset  # todo test
         pos_x: int = 100
 
-        data: dict = self._data
+        data = self._data
 
         # draw all zmanim_picture lines in cycle
         for header, value in data.items():
@@ -673,24 +673,24 @@ class IsraelHolidaysPicture(BasePicture):
         return _convert_img_to_bytes_io(self._image)
 
 
-def get_picture(picture_type: str):
-    picture_types = {
-        'zmanim_picture': ZmanimPicture,
-        'shabbos': ShabbosPicture,
-        'rosh_chodesh': RoshHodeshPicture,
-        'daf_yomi': DafYomPicture,
-        'rosh_hashana': RoshHashanaPicture,
-        'yom_kippur': YomKippurPicture,
-        'succos': SucosPicture,
-        'shmini_atseres': ShminiAtzeretPicture,
-        'chanukah': ChanukaPicture,
-        'purim': PurimPicture,
-        'pesach': PesahPicture,
-        'shavuos': ShavuotPicture,
-        'tu_bishvat': TuBiShvatPicture,
-        'lag_baomer': LagBaomerPicture,
-        'israel_holidays': IsraelHolidaysPicture,
-        'fast': FastPicture,
-    }
-    picture_class = picture_types.get(picture_type)
-    return picture_class
+# def get_picture(picture_type: str):
+#     picture_types = {
+#         'zmanim_picture': ZmanimPicture,
+#         'shabbos': ShabbosPicture,
+#         'rosh_chodesh': RoshHodeshPicture,
+#         'daf_yomi': DafYomPicture,
+#         'rosh_hashana': RoshHashanaPicture,
+#         'yom_kippur': YomKippurPicture,
+#         'succos': SucosPicture,
+#         'shmini_atseres': ShminiAtzeretPicture,
+#         'chanukah': ChanukaPicture,
+#         'purim': PurimPicture,
+#         'pesach': PesahPicture,
+#         'shavuos': ShavuotPicture,
+#         'tu_bishvat': TuBiShvatPicture,
+#         'lag_baomer': LagBaomerPicture,
+#         'israel_holidays': IsraelHolidaysPicture,
+#         'fast': FastPicture,
+#     }
+#     picture_class = picture_types.get(picture_type)
+#     return picture_class

@@ -31,7 +31,11 @@ async def handle_start(msg: types.Message):
 @dp.message_handler(content_types=types.ContentTypes.TEXT)
 async def handle_start(msg: types.Message):
     th = await TextHandler.create(msg.chat.id, msg.text)
+    #  TODO call __init__ synchronously
     await th.process_text()
+
+
+# todo handlers
 
 
 start_polling(dp)

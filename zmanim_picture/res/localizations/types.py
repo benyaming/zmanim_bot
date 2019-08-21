@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional, List, Dict
+from typing import Optional, Dict
 
 
 @dataclass
@@ -20,7 +20,7 @@ class GenericYomTovData:
     cl_2: Optional[GenericData]
     cl_3: Optional[GenericData]
     havdala: GenericData
-    date: Optional[GenericData] = None
+    date: Optional[GenericData] = None  # todo check none
 
 
 @dataclass
