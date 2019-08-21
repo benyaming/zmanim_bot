@@ -8,21 +8,21 @@ def get_translate(data: dict, _: Callable) -> RoshHodesh:
     """
     input data structure:
     {
-        'he_month': '...',
-        'n_days': '...(int)',
+        'he_month': str,
+        'length': int,
         'date': {
-          'date_years': [...(int)],
-          'date_months': [...(int)],
-          'date_days': [...(int)],
-          'date_dow': [...(int)],
+          'date_years': List[int],
+          'date_months': List[int],
+          'date_days': List[int],
+          'date_dows': List[int],
         },
         'molad': {
-          'molad_month': '...(int)',
-          'molad_day': '...(int)',
-          'molad_dow': '...(int)',
-          'molad_hour': '...(int)',
-          'molad_minutes': '...(int)',
-          'molad_parts': '...(int)',
+          'molad_month': int,
+          'molad_day': int,
+          'molad_dow': int,
+          'molad_hour': int,
+          'molad_minutes': int,
+          'molad_parts': int,
         }
     }
     """
@@ -72,7 +72,7 @@ def get_translate(data: dict, _: Callable) -> RoshHodesh:
     date_days = [str(i) for i in data['date']['date_days']]
     date_months = [gr_month_genitive.get(i) for i in data['date']['date_months']]
     date_years = [str(i) for i in data['date']['date_years']]
-    date_dows = [days_of_week.get(i) for i in data['date']['date_dow']]
+    date_dows = [days_of_week.get(i) for i in data['date']['date_dows']]
     new_line = '\n' if len(date_days) > 1 else ' '
 
     date_day = f'{date_days[0]}' if len(date_days) == 1 \
@@ -103,7 +103,7 @@ def get_translate(data: dict, _: Callable) -> RoshHodesh:
     translated_data = RoshHodesh(
         title=title, data=RHData(
             month=GenericData(_('Month'), he_month),
-            n_days=GenericData(_('Number of days'), data['n_days']),
+            n_days=GenericData(_('Number of days'), data['length']),  # todo rename n_days to length
             date=GenericData(date_header, date_value),
             molad=GenericData(molad_header, molad_value)
         )
