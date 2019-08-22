@@ -1,13 +1,29 @@
 import redis
 
 
-
 redis_host = "localhost"
 redis_port = 6379
 redis_password = ""
 
-class stated:
+
+class States:
+    def __init__(self, user_id: int, state: str):
+        self.user_id = user_id
+        self.state = state
+
     @classmethod
+    async def create(cls, user_id: int, state: str):
+        """
+        Creates TextHandler instance asynchronously for text handling
+        :param user_id: telegram id
+        :param text: user's message
+        :return: TextHandler instance
+        """
+        self = States(user_id, state)
+        return self
+
+
+    @staticmethod
     async def new_user(user_id: int):
         con = redis.StrictRedis(host=redis_host, port=redis_port,
                                   password=redis_password, decode_responses=True)
@@ -15,12 +31,14 @@ class stated:
         con.set(f'{user_id}', "start")
 
 
-    @classmethod
+    @staticmethod
     async def set_state(user_id: int, state: str):
         con = redis.StrictRedis(host=redis_host, port=redis_port,
                                 password=redis_password, decode_responses=True)
 
         con.set(f'{user_id}', state)
+
+
 
 
 def hello_redis():
