@@ -16,16 +16,16 @@ class TextHandler:
     @classmethod
     async def create(cls, user_id: int, text: str):
         """
-        Creates TextHandler instanse asynchronously for text handling
+        Creates TextHandler instance asynchronously for text handling
         :param user_id: telegram id
         :param text: user's message
-        :return: TextHandler instanse
+        :return: TextHandler instance
         """
         self = TextHandler(user_id, text)
         return self
 
     async def process_text(self):
-        """Coro for handling and processing user's messages"""
+        """Core for handling and processing user's messages"""
         # if state
         handler = self._commands.get(self.text, self._incorrect_text)
         # if self.text in self._commands:  # todo better

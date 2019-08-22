@@ -9,6 +9,7 @@ verify_ssl = true
 pillow = "*"
 aiogram = "*"
 pyluach = "*"
+redis = "*"
 
 [requires]
 python_version = "3.7"
