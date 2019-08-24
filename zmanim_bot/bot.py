@@ -29,15 +29,15 @@ async def handle_start(msg: types.Message):
     await bot.send_message(msg.chat.id, response)
 
 
-@dp.message_handler(commands=['help'])
+@dp.message_handler(commands=['help'], state='*')
 async def handle_start(msg: types.Message):
-    response = 'help'
-    await bot.send_message(msg.chat.id, response)
+    th = await TextHandler.create(msg.chat.id, 'Help')
+    #  TODO call __init__ synchronously
+    await th.process_text()
 
 
 @dp.message_handler(content_types=types.ContentTypes.TEXT, state=User.Menus)
 async def handle_start(msg: types.Message):
-    print("why")
     th = await TextHandler.create(msg.chat.id, msg.text)
     #  TODO call __init__ synchronously
     await th.process_text()
@@ -45,7 +45,6 @@ async def handle_start(msg: types.Message):
 
 @dp.message_handler(content_types=types.ContentTypes.TEXT, state=User.GregToHeb)
 async def handle_start(msg: types.Message):
-    print("greg")
     th = await TextHandler.create(msg.chat.id, msg.text)
     #  TODO call __init__ synchronously
     await th.process_text()
