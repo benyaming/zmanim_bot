@@ -4,6 +4,8 @@ from aiogram.types import ChatActions
 from zmanim_bot import keyboards
 from zmanim_bot import texts
 
+from zmanim_bot.states import UserStates as User
+
 
 class TextHandler:
     def __init__(self, user_id: int, text: str):
@@ -27,7 +29,7 @@ class TextHandler:
     async def process_text(self):
         """Core for handling and processing user's messages"""
         # if state
-        handler = self._commands.get(self.text, self._incorrect_text)
+        handler = self._commands.get(self.text, TextHandler._incorrect_text)
         # if self.text in self._commands:  # todo better
         #     handler = self._commands.get(self.text, self._incorrect_text)
         # else:
@@ -98,7 +100,8 @@ class TextHandler:
         """
         resp = texts.incorrect_text
         await self.bot.send_message(self.user_id, resp)
-        await self._main_menu()
+
+
 
     async def _report(self):
         """

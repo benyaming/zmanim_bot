@@ -22,10 +22,10 @@ storage = RedisStorage2(host=env['redis_host'], port=env['redis_port'])
 dp = Dispatcher(bot, storage=storage, loop=loop)
 
 
-@dp.message_handler(commands=['start'])
+@dp.message_handler(commands=['start'], state='*')
 async def handle_start(msg: types.Message):
     response = 'start'
-    User.MainMenu.set()
+    await User.Menus.set()
     await bot.send_message(msg.chat.id, response)
 
 
@@ -35,8 +35,17 @@ async def handle_start(msg: types.Message):
     await bot.send_message(msg.chat.id, response)
 
 
-@dp.message_handler(content_types=types.ContentTypes.TEXT, state=User.MainMenu)
-async def handle_start(msg: types.Message, state: FSMContext):
+@dp.message_handler(content_types=types.ContentTypes.TEXT, state=User.Menus)
+async def handle_start(msg: types.Message):
+    print("why")
+    th = await TextHandler.create(msg.chat.id, msg.text)
+    #  TODO call __init__ synchronously
+    await th.process_text()
+
+
+@dp.message_handler(content_types=types.ContentTypes.TEXT, state=User.GregToHeb)
+async def handle_start(msg: types.Message):
+    print("greg")
     th = await TextHandler.create(msg.chat.id, msg.text)
     #  TODO call __init__ synchronously
     await th.process_text()
@@ -47,4 +56,4 @@ async def handle_start(msg: types.Message, state: FSMContext):
 if __name__ == '__main__':
 
     print (env['BOT_TOKEN'])
-    #start_polling(dp)
+    start_polling(dp)
