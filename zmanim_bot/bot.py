@@ -37,7 +37,9 @@ async def handle_start(msg: types.Message):
 
 
 @dp.message_handler(content_types=types.ContentTypes.TEXT, state=User.Menus)
-async def handle_start(msg: types.Message):
+async def handle_start(msg: types.Message,  state: FSMContext):
+    print('ololo')
+
     th = await TextHandler.create(msg.chat.id, msg.text)
     #  TODO call __init__ synchronously
     await th.process_text()
@@ -48,6 +50,29 @@ async def handle_start(msg: types.Message):
     th = await TextHandler.create(msg.chat.id, msg.text)
     #  TODO call __init__ synchronously
     await th.process_text()
+
+
+# TODO proper folter
+@dp.message_handler(state='*', commands='cancel')
+@dp.message_handler(lambda message: message.text in ["cancel", "отмена"], state='*')
+async def cancel_handler(msg: types.Message, state: FSMContext):
+    """
+    Allow user to cancel any action
+    """
+    print ('hah')
+    current_state = await state.get_state()
+    print(current_state)
+    logging.info('Cancelling state %r')
+    # Cancel state and inform user about it
+    await User.Menus.set()
+    # And remove keyboard (just in case)
+    th = await TextHandler.create(msg.chat.id, "Отмена")
+    #  TODO call __init__ synchronously
+    await th.process_text()
+
+
+
+
 
 
 # todo handlers

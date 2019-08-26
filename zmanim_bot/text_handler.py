@@ -85,6 +85,7 @@ class TextHandler:
         """Sends fasts menu to user"""
         await self.bot.send_chat_action(self.user_id, ChatActions.TYPING)
         # self._chatbase('holidays menu', 'user')
+        await   User.Zmanim.set()
         resp = texts.hm_welcome
         kb = keyboards.get_fast_menu(self.lang)
         await self.bot.send_message(self.user_id, resp, reply_markup=kb)
