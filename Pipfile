@@ -8,7 +8,8 @@ verify_ssl = true
 [packages]
 pillow = "*"
 aiogram = "*"
-pyluach = "*"
+zmanim = {git = "https://github.com/pinnymz/python-zmanim.git"}
+aiopg = "*"
 
 [requires]
 python_version = "3.7"

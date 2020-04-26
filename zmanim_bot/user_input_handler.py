@@ -11,34 +11,34 @@ NOT_EXIST = 'date not exist'
 OK = 'ok'
 
 
-def handle_gregorian_date(raw_date: str) -> str:
-    """
-    Handles gregorian date that has been imputed by user and checks if it correct
-    and exist
-    :param raw_date: date string inputed by user
-    """
-    extracted_date = re.search(DATE_RE_PATTERN, raw_date)
-    if not extracted_date:
-        return INCORRECT
+# def handle_gregorian_date(raw_date: str) -> str:
+#     """
+#     Handles gregorian date that has been imputed by user and checks if it correct
+#     and exist
+#     :param raw_date: date string inputed by user
+#     """
+#     extracted_date = re.search(DATE_RE_PATTERN, raw_date)
+#     if not extracted_date:
+#         return INCORRECT
+#
+#     day, month, year = map(int, extracted_date.group().split('.'))
+#     try:
+#         dt(year=year, month=month, day=day)
+#     except ValueError:
+#         return NOT_EXIST
+#
+#     return OK
 
-    day, month, year = map(int, extracted_date.group().split('.'))
-    try:
-        dt(year=year, month=month, day=day)
-    except ValueError:
-        return NOT_EXIST
 
-    return OK
-
-
-def day_validation(day: str) -> str:
-    """Validates that day inputed by digits and it's lenght not more then 31"""
-    validated = OK
-    if not day.isdigit():
-        validated = INCORRECT
-    day = int(day)
-    if not 0 < day < 31:
-        validated = INCORRECT
-    return validated
+# def day_validation(day: str) -> str:
+#     """Validates that day inputed by digits and it's lenght not more then 31"""
+#     validated = OK
+#     if not day.isdigit():
+#         validated = INCORRECT
+#     day = int(day)
+#     if not 0 < day < 31:
+#         validated = INCORRECT
+#     return validated
 
 
 def month_validation(month: str) -> str:

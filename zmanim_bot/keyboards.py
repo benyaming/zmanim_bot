@@ -1,66 +1,71 @@
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, \
-    ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    ReplyKeyboardMarkup,
+    KeyboardButton
+)
 
-import zmanim_bot.texts as txt
-
-
-def get_main_menu(lang: str) -> ReplyKeyboardMarkup:
-    kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.add(txt.mm_zmanim, txt.mm_shabos, txt.mm_holidays)
-    kb.add(txt.mm_rh, txt.mm_daf, txt.mm_fasts)
-    kb.add(txt.mm_zmanim_by_date, txt.mm_converter)
-    kb.add(txt.mm_help, txt.mm_settings)
-    return kb
+from . import config
+from .texts import buttons
 
 
 def get_lang_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.add('English', 'Русский')
+    kb.add(*config.LANGUAGE_LIST)
     return kb
 
 
-def get_geobutton(lang: str, is_update: bool = False) -> ReplyKeyboardMarkup:
+def get_main_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    btn = KeyboardButton(text=txt.geobutton, request_location=True)
+    kb.add(buttons.mm_zmanim.value, buttons.mm_shabos.value, buttons.mm_holidays.value)
+    kb.add(buttons.mm_rh.value, buttons.mm_daf.value, buttons.mm_fasts.value)
+    kb.add(buttons.mm_zmanim_by_date.value, buttons.mm_converter.value)
+    kb.add(buttons.mm_help.value, buttons.mm_settings.value)
+    return kb
+
+
+def get_geobutton(is_update: bool = False) -> ReplyKeyboardMarkup:
+    kb = ReplyKeyboardMarkup(resize_keyboard=True)
+    btn = KeyboardButton(text=buttons.geobutton.value, request_location=True)
     kb.row(btn)
     if is_update:
-        kb.row(txt.cancel_button)
+        kb.row(buttons.cancel.value)
     return kb
 
 
-def get_help_menu(lang: str) -> ReplyKeyboardMarkup:
+def get_help_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.row(txt.hm_faq, txt.hm_report)
-    kb.row(txt.back_button)
+    kb.row(buttons.hm_faq.value, buttons.hm_report.value)
+    kb.row(buttons.back.value)
     return kb
 
 
-def get_settings_menu(lang: str) -> ReplyKeyboardMarkup:
+def get_settings_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.row(txt.sm_zmanim, txt.sm_candle, txt.sm_lang)
-    kb.row(txt.sm_location, txt.back_button)
+    kb.row(buttons.sm_zmanim.value, buttons.sm_candle.value, buttons.sm_lang.value)
+    kb.row(buttons.sm_location.value, buttons.back.value)
     return kb
 
 
-def get_holidays_menu(lang: str) -> ReplyKeyboardMarkup:
+def get_holidays_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.row(txt.hom_rosh_hashana, txt.hom_yom_kippur, txt.hom_succos)
-    kb.row(txt.hom_shmini_atzeres, txt.hom_chanukah, txt.hom_purim)
-    kb.row(txt.hom_pesach, txt.hom_shavuos, txt.hom_more_holidays_button)
-    kb.row(txt.back_button)
+    kb.row(buttons.hom_rosh_hashana.value, buttons.hom_yom_kippur.value, buttons.hom_succos.value)
+    kb.row(buttons.hom_shmini_atzeres.value, buttons.hom_chanukah.value, buttons.hom_purim.value)
+    kb.row(buttons.hom_pesach.value, buttons.hom_shavuos.value, buttons.hom_more.value)
+    kb.row(buttons.back.value)
     return kb
 
 
-def get_more_holidays_menu(lang: str) -> ReplyKeyboardMarkup:
+def get_more_holidays_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.row(txt.hom_tu_bishvat, txt.hom_lag_baomer, txt.hom_israel)
-    kb.row(txt.hom_main_holidays_button, txt.back_button)
+    kb.row(buttons.hom_tu_bishvat.value, buttons.hom_lag_baomer.value, buttons.hom_israel.value)
+    kb.row(buttons.mm_holidays.value, buttons.back.value)
     return kb
 
 
-def get_fast_menu(lang: str) -> ReplyKeyboardMarkup:
+def get_fast_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.row(txt.fm_fedaliah, txt.fm_tevet, txt.fm_esther)
-    kb.row(txt.fm_tammuz, txt.fm_av)
-    kb.row(txt.back_button)
+    kb.row(buttons.fm_fedaliah.value, buttons.fm_tevet.value, buttons.fm_esther.value)
+    kb.row(buttons.fm_tammuz.value, buttons.fm_av.value)
+    kb.row(buttons.back.value)
     return kb

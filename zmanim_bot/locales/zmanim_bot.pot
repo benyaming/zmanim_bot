@@ -1,0 +1,195 @@
+# Translations template for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-04-24 16:03+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: texts/buttons.py:7
+msgid "send location"
+msgstr ""
+
+#: texts/buttons.py:8
+msgid "cancel"
+msgstr ""
+
+#: texts/buttons.py:9
+msgid "back"
+msgstr ""
+
+#: texts/buttons.py:13
+msgid "zmanim"
+msgstr ""
+
+#: texts/buttons.py:14
+msgid "shabbos"
+msgstr ""
+
+#: texts/buttons.py:15
+msgid "holidays"
+msgstr ""
+
+#: texts/buttons.py:16
+msgid "daf yomi"
+msgstr ""
+
+#: texts/buttons.py:17
+msgid "rosh chodesh"
+msgstr ""
+
+#: texts/buttons.py:18
+msgid "fast days"
+msgstr ""
+
+#: texts/buttons.py:19
+msgid "zmanim by the date"
+msgstr ""
+
+#: texts/buttons.py:20
+msgid "date converter"
+msgstr ""
+
+#: texts/buttons.py:21
+msgid "help"
+msgstr ""
+
+#: texts/buttons.py:22
+msgid "settings"
+msgstr ""
+
+#: texts/buttons.py:26
+msgid "F.A.Q."
+msgstr ""
+
+#: texts/buttons.py:27
+msgid "report a bug"
+msgstr ""
+
+#: texts/buttons.py:31
+msgid "select zmanim"
+msgstr ""
+
+#: texts/buttons.py:32
+msgid "candle lighting"
+msgstr ""
+
+#: texts/buttons.py:33
+msgid "language"
+msgstr ""
+
+#: texts/buttons.py:34
+msgid "location"
+msgstr ""
+
+#: texts/buttons.py:38
+msgid "more..."
+msgstr ""
+
+#: texts/buttons.py:39
+msgid "main holidays"
+msgstr ""
+
+#: texts/buttons.py:41
+msgid "rosh ha-shanah"
+msgstr ""
+
+#: texts/buttons.py:42
+msgid "yom kippur"
+msgstr ""
+
+#: texts/buttons.py:43
+msgid "succos"
+msgstr ""
+
+#: texts/buttons.py:44
+msgid "shmini atzeres"
+msgstr ""
+
+#: texts/buttons.py:45
+msgid "chanukah"
+msgstr ""
+
+#: texts/buttons.py:46
+msgid "purim"
+msgstr ""
+
+#: texts/buttons.py:47
+msgid "pesach"
+msgstr ""
+
+#: texts/buttons.py:48
+msgid "shavuos"
+msgstr ""
+
+#: texts/buttons.py:49
+msgid "tu bi-Shvat"
+msgstr ""
+
+#: texts/buttons.py:50
+msgid "lag ba-omer"
+msgstr ""
+
+#: texts/buttons.py:51
+msgid "israel holidays"
+msgstr ""
+
+#: texts/buttons.py:55
+msgid "fast of Gedaliah"
+msgstr ""
+
+#: texts/buttons.py:56
+msgid "10 of Tevet"
+msgstr ""
+
+#: texts/buttons.py:57
+msgid "fast of Esther"
+msgstr ""
+
+#: texts/buttons.py:58
+msgid "17 of Tammuz"
+msgstr ""
+
+#: texts/buttons.py:59
+msgid "9 of Av"
+msgstr ""
+
+#: texts/messages.py:7
+msgid "Welcome to the main menu!"
+msgstr ""
+
+#: texts/messages.py:8
+msgid "how can I help you?"
+msgstr ""
+
+#: texts/messages.py:9
+msgid "welcome to settings!"
+msgstr ""
+
+#: texts/messages.py:10
+msgid "choose"
+msgstr ""
+
+#: texts/messages.py:13
+msgid "request location"
+msgstr ""
+
+#: texts/messages.py:14
+msgid "request language"
+msgstr ""
+
+#: texts/messages.py:16
+msgid "Incorrect command. Please, choose one of the options on the buttons"
+msgstr ""
+
