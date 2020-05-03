@@ -1,17 +1,9 @@
 from aiogram.types import Update
 
 from ..misc import dp
-from .redirects import (
-    redirect_to_request_location,
-    redirect_to_request_language,
-    incorrect_text_warning
-)
-from ..exceptions import (
-    IncorrectLocationException,
-    NoLocationException,
-    NoLanguageException,
-    IncorrectTextException
-)
+from .redirects import *
+from .warnings import *
+from ..exceptions import *
 
 
 @dp.errors_handler(exception=NoLocationException)
@@ -30,3 +22,17 @@ async def no_language_exception_handler(update: Update, e: NoLanguageException):
 async def no_language_exception_handler(update: Update, e: IncorrectTextException):
     await incorrect_text_warning()
     return True
+
+
+@dp.errors_handler(exception=IncorrectGregorianDateException)
+async def gregorian_date_exception_handler(update: Update, e: IncorrectGregorianDateException):
+    await incorrect_greg_date_warning()
+    return True
+
+
+@dp.errors_handler(exception=IncorrectJewishDateException)
+async def jewish_date_exception_handler(update: Update, e: IncorrectJewishDateException):
+    await incorrect_jew_date_warning()
+    return True
+
+

@@ -3,7 +3,7 @@ from asyncio import create_task
 from aiogram.types import Message
 
 from ..misc import dp
-from ..exceptions import NoLocationException, NoLanguageException
+from ..exceptions import NoLanguageException
 from ..api import track_user, get_or_set_zmanim
 from .redirects import redirect_to_main_menu, redirect_to_request_location
 from ..texts import buttons

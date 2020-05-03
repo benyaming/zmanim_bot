@@ -25,7 +25,7 @@ async def handle_fasts_menu(msg: Message):
     await msg.reply(messages.select, reply_markup=kb)
 
 
-@dp.message_handler(text=buttons.back, state="*")
+@dp.message_handler(text=[buttons.back, buttons.cancel], state="*")
 async def handle_back(msg: Message, state: FSMContext):
     await state.finish()
     await redirect_to_main_menu()

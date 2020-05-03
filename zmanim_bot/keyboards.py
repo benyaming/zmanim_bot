@@ -70,6 +70,20 @@ def get_fast_menu() -> ReplyKeyboardMarkup:
     return kb
 
 
+def get_converter_menu() -> ReplyKeyboardMarkup:
+    kb = ReplyKeyboardMarkup(resize_keyboard=True)
+    kb.row(buttons.conv_greg_to_jew.value, buttons.conv_jew_to_greg.value)
+    # kb.row()
+    kb.row(buttons.back.value)
+    return kb
+
+
+def get_cancel_keyboard() -> ReplyKeyboardMarkup:
+    kb = ReplyKeyboardMarkup(resize_keyboard=True)
+    kb.row(buttons.cancel.value)
+    return kb
+
+
 def get_cl_keyboard(current_value: int) -> InlineKeyboardMarkup:
     options = [10, 15, 18, 20, 22, 30, 40]
     kb = InlineKeyboardMarkup()

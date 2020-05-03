@@ -15,3 +15,6 @@ from . import forms
 
 # Callbacks
 from .callback import settings
+
+# Converter
+from .text import converter

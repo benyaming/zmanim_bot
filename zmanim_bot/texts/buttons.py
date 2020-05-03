@@ -57,5 +57,7 @@ fm_tammuz = _('17 of Tammuz')
 fm_av = _('9 of Av')
 
 
-
+# converter
+conv_greg_to_jew = _('greg to jew')
+conv_jew_to_greg = _('jew to greg')
 
