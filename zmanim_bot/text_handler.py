@@ -3,10 +3,10 @@ import asyncio
 from aiogram import Bot
 from aiogram.types import ChatActions
 
-from zmanim_bot import keyboards
 from zmanim_bot import texts
 from .helpers import UserDataTypes
-from . import texts as txt, keyboards, config, storage
+from . import keyboards, config
+from zmanim_bot.api import _public
 
 
 class TextHandler:
@@ -14,13 +14,13 @@ class TextHandler:
     @property
     async def lang(self):
         if not self.__lang:
-            return await storage.get_user_data(self.user_id, UserDataTypes.lang)
+            return await _public.get_user_data(self.user_id, UserDataTypes.lang)
         return self.__lang
 
     @property
     async def location(self):
         if not self.__location:
-            return await storage.get_user_data(self.user_id, UserDataTypes.location)
+            return await _public.get_user_data(self.user_id, UserDataTypes.location)
         return self.__location
 
     def __init__(self, user_id: int, text: str = None):
@@ -152,7 +152,7 @@ class TextHandler:
 
     async def _set_lang(self):
         self.__lang = self.text
-        await storage.set_user_data(self.user_id, UserDataTypes.lang, self.__lang)
+        await _public.set_user_data(self.user_id, UserDataTypes.lang, self.__lang)
 
     ###############################################################################
     #                               LOCATION                                      #

@@ -1,9 +1,9 @@
 from aiogram.types import Message
 
-from ..misc import dp
-from ..config import LANGUAGE_LIST, LANGUAGE_SHORTCUTS
-from ..storage import get_or_set_lang
-from .redirects import redirect_to_main_menu
+from zmanim_bot.misc import dp
+from zmanim_bot.config import LANGUAGE_LIST, LANGUAGE_SHORTCUTS
+from zmanim_bot.api import get_or_set_lang
+from zmanim_bot.handlers.redirects import redirect_to_main_menu
 
 
 @dp.message_handler(text=LANGUAGE_LIST)

@@ -77,7 +77,7 @@ msgstr "чаво"
 
 #: texts/buttons.py:27
 msgid "report a bug"
-msgstr "сообщить "
+msgstr "сообщить"
 
 #: texts/buttons.py:31
 msgid "select zmanim"

@@ -1,8 +1,8 @@
-from os import environ
+from os import getenv
 
 
 I18N_DOMAIN = 'zmanim_bot'
-BOT_TOKEN = environ.get('BOT_TOKEN')
+BOT_TOKEN = getenv('BOT_TOKEN')
 
 LANGUAGE_LIST = ['English', 'Русский']
 LANGUAGE_SHORTCUTS = {
@@ -11,8 +11,12 @@ LANGUAGE_SHORTCUTS = {
 }
 
 
-DSN = f'dbname={environ.get("DB_NAME")} ' \
-      f'user={environ.get("DB_USER")} ' \
-      f'password={environ.get("DB_PASSWORD")} ' \
-      f'host={environ.get("DB_HOST")} ' \
-      f'port={environ.get("DB_PORT")}'
+DSN = f'dbname={getenv("DB_NAME")} ' \
+      f'user={getenv("DB_USER")} ' \
+      f'password={getenv("DB_PASSWORD")} ' \
+      f'host={getenv("DB_HOST")} ' \
+      f'port={getenv("DB_PORT")}'
+
+REDIS_HOST = getenv('REDIS_HOST')
+REDIS_PORT = int(getenv('REDIS_PORT'))
+REDIS_DB = int(getenv('REDIS_DB'))

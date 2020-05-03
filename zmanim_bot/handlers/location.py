@@ -2,8 +2,8 @@ from asyncio import create_task
 
 from aiogram.types import ContentType, Message
 
-from ..main import dp
-from ..storage import get_or_set_location
+from ..misc import dp
+from ..api import get_or_set_location
 from ..helpers import LOCATION_PATTERN, parse_coordinates
 from .redirects import redirect_to_main_menu
 

@@ -6,7 +6,8 @@ from aiogram.types import (
 )
 
 from . import config
-from .texts import buttons
+from .texts import buttons, zmanim
+from .helpers import CallbackPrefixes
 
 
 def get_lang_menu() -> ReplyKeyboardMarkup:
@@ -24,12 +25,10 @@ def get_main_menu() -> ReplyKeyboardMarkup:
     return kb
 
 
-def get_geobutton(is_update: bool = False) -> ReplyKeyboardMarkup:
+def get_geobutton(with_back: bool = False) -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    btn = KeyboardButton(text=buttons.geobutton.value, request_location=True)
-    kb.row(btn)
-    if is_update:
-        kb.row(buttons.cancel.value)
+    geobutton = KeyboardButton(text=buttons.geobutton.value, request_location=True)
+    kb.row(geobutton) if not with_back else kb.row(buttons.back.value, geobutton)
     return kb
 
 
@@ -68,4 +67,47 @@ def get_fast_menu() -> ReplyKeyboardMarkup:
     kb.row(buttons.fm_fedaliah.value, buttons.fm_tevet.value, buttons.fm_esther.value)
     kb.row(buttons.fm_tammuz.value, buttons.fm_av.value)
     kb.row(buttons.back.value)
+    return kb
+
+
+def get_cl_keyboard(current_value: int) -> InlineKeyboardMarkup:
+    options = [10, 15, 18, 20, 22, 30, 40]
+    kb = InlineKeyboardMarkup()
+    row_1 = []
+    row_2 = []
+
+    for i, option in enumerate(options):
+        button = InlineKeyboardButton(
+            text=f'{option}' if option != current_value else f'✅ {option}',
+            callback_data=f'{CallbackPrefixes.cl}{option}'
+        )
+        row_1.append(button) if i < 3 else row_2.append(button)
+
+    kb.row(*row_1)
+    kb.row(*row_2)
+    return kb
+
+
+# ----------------------------------------- ZMANIM BUTTONS -------------------------------------- #
+
+
+def get_zman_button(name: str, status: bool) -> InlineKeyboardButton:
+    button = InlineKeyboardButton(
+        text=f'{"✅" if status else "❌"} {getattr(zmanim, name)}',
+        callback_data=f'{CallbackPrefixes.zmanim}{name}'
+        # callback_data=f'{CallbackPrefixes.zmanim}{name}:{int(not status)}'
+    )
+    return button
+
+
+def get_zmanim_settings_keyboard(zmanim_data: dict) -> InlineKeyboardMarkup:
+    kb = InlineKeyboardMarkup()
+    row = []
+
+    for name, status in zmanim_data.items():
+        row.append(get_zman_button(name, status))
+        if sum([len(button.text) for button in row]) > 50:
+            kb.row(*row)
+            row = []
+
     return kb

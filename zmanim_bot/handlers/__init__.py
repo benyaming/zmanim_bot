@@ -1,7 +1,17 @@
 # Service handlers
 from . import errors
 from . import commands
-from . import language_selection
+from . import location
+from .text import language_selection
 
 # Menus handlers
-from . import menus
+from .text import help
+from .text import menus
+from .text import settings
+
+# User inputs
+from . import forms
+
+
+# Callbacks
+from .callback import settings
