@@ -9,9 +9,9 @@ back = _('back')
 
 # Main menu
 mm_zmanim = _('zmanim')
-mm_shabos = _('shabbos')
+mm_shabat = _('shabbos')
 mm_holidays = _('holidays')
-mm_daf = _('daf yomi')
+mm_daf_yomi = _('daf yomi')
 mm_rh = _('rosh chodesh')
 mm_fasts = _('fast days')
 mm_zmanim_by_date = _('zmanim by the date')
@@ -28,6 +28,7 @@ hm_report = _('report a bug')
 #     SETTINGS MENU
 sm_zmanim = _('select zmanim')
 sm_candle = _('candle lighting')
+sm_havdala = _('havdala')
 sm_lang = _('language')
 sm_location = _('location')
 

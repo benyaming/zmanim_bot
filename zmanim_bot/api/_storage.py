@@ -7,6 +7,21 @@ from aiogram import Dispatcher
 from zmanim_bot.exceptions import NoLanguageException, NoLocationException
 
 
+__all__ = [
+    'track_user_',
+    'get_cl_offset',
+    'get_zmanim',
+    'get_havdala',
+    'get_lang',
+    'get_location',
+    'set_zmanim',
+    'set_cl',
+    'set_havdala',
+    'set_lang',
+    'set_location',
+]
+
+
 def _get_pool() -> Pool:
     return Dispatcher.get_current()['db_pool']
 
@@ -27,7 +42,7 @@ async def _execute_query(query: str, args: tuple, *, return_result: bool = False
             return ret
 
 
-async def _track_user(user_id: int, first_name: str, last_name: Optional[str], username: Optional[str]):
+async def track_user_(user_id: int, first_name: str, last_name: Optional[str], username: Optional[str]):
     query = 'INSERT INTO public.users VALUES (%s, %s, %s, %s) ' \
             'ON CONFLICT (user_id) DO UPDATE ' \
             'SET user_id = excluded.user_id,' \
@@ -77,7 +92,7 @@ async def set_location(user_id: int, location: Tuple[float, float]):
     await _execute_query(query, args)
 
 
-async def get_cl(user_id: int) -> int:
+async def get_cl_offset(user_id: int) -> int:
     query = 'SELECT cl_offset FROM zmanim_settings WHERE user_id = %s'
     cl = await _execute_query(query, (user_id,), return_result=True)
 
@@ -91,6 +106,23 @@ async def set_cl(user_id: int, cl: int):
             '  SET user_id = excluded.user_id, ' \
             '      cl_offset = excluded.cl_offset;'
     args = (user_id, cl)
+    await _execute_query(query, args)
+
+
+async def get_havdala(user_id: int) -> str:
+    query = 'SELECT havdala_opinion FROM zmanim_settings WHERE user_id = %s'
+    cl = await _execute_query(query, (user_id,), return_result=True)
+
+    return cl[0][0]
+
+
+async def set_havdala(user_id: int, havdala: str):
+    query = 'INSERT INTO zmanim_settings (user_id, havdala_opinion) ' \
+            'VALUES (%s, %s) ' \
+            'ON CONFLICT (user_id) DO UPDATE ' \
+            '  SET user_id = excluded.user_id, ' \
+            '      havdala_opinion = excluded.havdala_opinion;'
+    args = (user_id, havdala)
     await _execute_query(query, args)
 
 

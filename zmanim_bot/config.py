@@ -20,3 +20,5 @@ DSN = f'dbname={getenv("DB_NAME")} ' \
 REDIS_HOST = getenv('REDIS_HOST')
 REDIS_PORT = int(getenv('REDIS_PORT'))
 REDIS_DB = int(getenv('REDIS_DB'))
+
+ZMANIM_API_URL: str = getenv('ZMANIM_API_URL')

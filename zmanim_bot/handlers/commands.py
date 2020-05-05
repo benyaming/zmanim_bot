@@ -1,6 +1,7 @@
 from asyncio import create_task
 
 from aiogram.types import Message
+from aiogram.dispatcher import FSMContext
 
 from ..misc import dp
 from ..exceptions import NoLanguageException
@@ -9,8 +10,10 @@ from .redirects import redirect_to_main_menu, redirect_to_request_location
 from ..texts import buttons
 
 
+@dp.message_handler(state='*')
 @dp.message_handler(commands=['start'])
-async def handle_start(msg: Message):
+async def handle_start(msg: Message, state: FSMContext):
+    await state.finish()
     await redirect_to_main_menu()
     create_task(track_user())
 

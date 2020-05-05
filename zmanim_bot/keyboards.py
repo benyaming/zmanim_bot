@@ -7,7 +7,7 @@ from aiogram.types import (
 
 from . import config
 from .texts import buttons, zmanim
-from .helpers import CallbackPrefixes
+from .helpers import CallbackPrefixes, CL_OFFET_OPTIONS, HAVDALA_OPINION_OPTIONS
 
 
 def get_lang_menu() -> ReplyKeyboardMarkup:
@@ -18,8 +18,8 @@ def get_lang_menu() -> ReplyKeyboardMarkup:
 
 def get_main_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.add(buttons.mm_zmanim.value, buttons.mm_shabos.value, buttons.mm_holidays.value)
-    kb.add(buttons.mm_rh.value, buttons.mm_daf.value, buttons.mm_fasts.value)
+    kb.add(buttons.mm_zmanim.value, buttons.mm_shabat.value, buttons.mm_holidays.value)
+    kb.add(buttons.mm_rh.value, buttons.mm_daf_yomi.value, buttons.mm_fasts.value)
     kb.add(buttons.mm_zmanim_by_date.value, buttons.mm_converter.value)
     kb.add(buttons.mm_help.value, buttons.mm_settings.value)
     return kb
@@ -41,8 +41,8 @@ def get_help_menu() -> ReplyKeyboardMarkup:
 
 def get_settings_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.row(buttons.sm_zmanim.value, buttons.sm_candle.value, buttons.sm_lang.value)
-    kb.row(buttons.sm_location.value, buttons.back.value)
+    kb.row(buttons.sm_zmanim.value, buttons.sm_candle.value, buttons.sm_havdala.value)
+    kb.row(buttons.sm_lang.value, buttons.sm_location.value, buttons.back.value)
     return kb
 
 
@@ -85,12 +85,11 @@ def get_cancel_keyboard() -> ReplyKeyboardMarkup:
 
 
 def get_cl_keyboard(current_value: int) -> InlineKeyboardMarkup:
-    options = [10, 15, 18, 20, 22, 30, 40]
     kb = InlineKeyboardMarkup()
     row_1 = []
     row_2 = []
 
-    for i, option in enumerate(options):
+    for i, option in enumerate(CL_OFFET_OPTIONS):
         button = InlineKeyboardButton(
             text=f'{option}' if option != current_value else f'✅ {option}',
             callback_data=f'{CallbackPrefixes.cl}{option}'
@@ -99,6 +98,18 @@ def get_cl_keyboard(current_value: int) -> InlineKeyboardMarkup:
 
     kb.row(*row_1)
     kb.row(*row_2)
+    return kb
+
+
+def get_havdala_keyboard(current_value: str) -> InlineKeyboardMarkup:
+    kb = InlineKeyboardMarkup()
+
+    for option in HAVDALA_OPINION_OPTIONS:
+        button = InlineKeyboardButton(
+            text=f'{option}' if option != current_value else f'✅ {option}',
+            callback_data=f'{CallbackPrefixes.havdala}{option}'
+        )
+        kb.add(button)
     return kb
 
 

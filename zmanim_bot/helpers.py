@@ -1,8 +1,9 @@
 from typing import Tuple
+from datetime import date
 
 from pydantic import BaseModel
 
-from .exceptions import IncorrectLocationException
+from .exceptions import IncorrectLocationException, IncorrectGregorianDateException
 
 
 LOCATION_PATTERN = r'^-?\d{1,2}\.{1}\d+, {0,1}-?\d{1,3}\.{1}\d+$'
@@ -12,34 +13,21 @@ LANGUAGE_SHORTCUTS = {
 }
 CALL_ANSWER_OK = '✅'
 
+CL_OFFET_OPTIONS = [10, 15, 18, 20, 22, 30, 40]
+HAVDALA_OPINION_OPTIONS = [
+    'tzeis_5_95_degrees',
+    'tzeis_8_5_degrees',
+    'tzeis_42_minutes',
+    'tzeis_72_minutes',
+]
+
+Location = Tuple[float, float]
+
 
 class CallbackPrefixes:
     cl = 'cl:'
     zmanim = 'zmanim:'
-
-
-# class ZmanimSettings(BaseModel):
-#     """
-#     This class represents user's active zmanim set and should have same dignature as
-#     database zmanim set and zmanim_api's zmanim_set
-#     """
-#     sunrise: bool = True
-#     alos: bool = True
-#     sof_zman_tefila_gra: bool = True
-#     sof_zman_tefila_ma: bool = True
-#     talis_ma: bool = True
-#     sof_zman_shema_gra: bool = True
-#     sof_zman_shema_ma: bool = True
-#     chatzos: bool = True
-#     mincha_ketana: bool = True
-#     mincha_gedola: bool = True
-#     plag_mincha: bool = True
-#     sunset: bool = True
-#     tzeis_850_degrees: bool = True
-#     tzeis_72_minutes: bool = True
-#     tzeis_42_minutes: bool = True
-#     tzeis_595_degrees: bool = True
-#     chatzot_laila: bool = True
+    havdala = 'havdala:'
 
 
 def parse_coordinates(coordinates: str) -> Tuple[float, float]:
@@ -52,5 +40,13 @@ def parse_coordinates(coordinates: str) -> Tuple[float, float]:
         raise IncorrectLocationException('Incorrect location value!')  # todo txt
 
     return lat, lng
+
+
+def parse_date(date_: str) -> str:
+    try:
+        date.fromisoformat(date_)
+    except ValueError:
+        raise IncorrectGregorianDateException
+    return date_
 
 
