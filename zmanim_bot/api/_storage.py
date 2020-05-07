@@ -4,7 +4,7 @@ from json import dumps
 from aiopg import Pool
 from aiogram import Dispatcher
 
-from zmanim_bot.exceptions import NoLanguageException, NoLocationException
+from ..exceptions import NoLanguageException, NoLocationException
 
 
 __all__ = [

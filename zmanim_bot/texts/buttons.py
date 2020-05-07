@@ -51,11 +51,16 @@ hom_israel = _('israel holidays')
 
 
 # Fasts
-fm_fedaliah = _('fast of Gedaliah')
+fm_gedaliah = _('fast of Gedaliah')
 fm_tevet = _('10 of Tevet')
 fm_esther = _('fast of Esther')
 fm_tammuz = _('17 of Tammuz')
 fm_av = _('9 of Av')
+
+HOLIDAYS = [hom_rosh_hashana, hom_yom_kippur, hom_succos, hom_shmini_atzeres, hom_chanukah,
+            hom_purim, hom_pesach, hom_shavuos, hom_tu_bishvat, hom_lag_baomer, hom_israel]
+NON_YOM_TOV_HOLIDAYS = [hom_chanukah, hom_purim, hom_tu_bishvat, hom_lag_baomer, hom_israel]
+FASTS = [fm_gedaliah, fm_tevet, fm_esther, fm_tammuz, fm_av]
 
 
 # converter

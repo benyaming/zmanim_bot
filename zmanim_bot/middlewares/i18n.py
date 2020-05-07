@@ -4,7 +4,7 @@ from typing import Tuple, Any
 from aiogram.contrib.middlewares.i18n import I18nMiddleware
 
 from ..misc import dp
-from zmanim_bot.api._public import get_or_set_lang
+from ..api import get_or_set_lang
 from ..config import I18N_DOMAIN
 
 

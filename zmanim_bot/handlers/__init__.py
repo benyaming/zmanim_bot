@@ -1,4 +1,5 @@
 # Service handlers
+from . import commands
 from . import errors
 from . import location
 from .text import language_selection
@@ -20,5 +21,3 @@ from .callback import settings
 
 # Converter
 from .text import converter
-
-from . import commands

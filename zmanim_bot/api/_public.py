@@ -3,10 +3,9 @@ from typing import Tuple, Optional
 from aiogram.types import User
 
 from ._storage import *
-from..helpers import Location
-
 
 __all__ = [
+    'Location',
     'track_user',
     'get_or_set_zmanim',
     'get_or_set_cl',
@@ -24,6 +23,9 @@ async def track_user():
 async def get_or_set_lang(lang: str = None) -> Optional[str]:
     user = User.get_current()
     return await get_lang(user.id) if not lang else await set_lang(user.id, lang)
+
+
+Location = Tuple[float, float]
 
 
 async def get_or_set_location(location: Location = None) -> Optional[Location]:

@@ -1,3 +1,4 @@
+from __future__ import annotations
 from pydantic import BaseModel
 from datetime import time, datetime, date
 from typing import Tuple, List
@@ -42,3 +43,34 @@ class ZmanimApiRoshChodesh(BaseModel):
     days: List[date] = None
     duration: int = None
     molad: Tuple[datetime, int]
+
+
+class _YomTovDay(BaseModel):
+    date: date = None
+    candle_lighting: datetime = None
+    havdala: datetime = None
+
+
+class ZmanimApiHoliday(BaseModel):
+    eve: _YomTovDay = None
+    day_1: _YomTovDay = None
+    day_2: _YomTovDay = None
+    shabbat: _YomTovDay = None
+    part_1: ZmanimApiHoliday = None
+    part_2: ZmanimApiHoliday = None
+    hoshana_rabba: date = None
+    date: date = None
+    dates: List[date] = None
+
+
+class _FastEnd(BaseModel):
+    havdala: datetime = None
+
+
+class ZmanimApiFast(BaseModel):
+    fast_start: datetime
+    fast_end: _FastEnd
+    chatzot: datetime
+
+
+ZmanimApiHoliday.update_forward_refs()

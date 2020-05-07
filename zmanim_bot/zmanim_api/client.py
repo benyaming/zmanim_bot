@@ -1,7 +1,7 @@
 from typing import Type, TypeVar
 
 from ..misc import bot
-from ..helpers import Location
+from ..api import Location
 from . import models
 from ..config import ZMANIM_API_URL
 
@@ -11,7 +11,7 @@ __all__ = [
     'get_shabbat',
     'get_daf_yomi',
     'get_rosh_chodesh',
-
+    'get_holiday'
 ]
 
 # T = TypeVar('T')
@@ -72,4 +72,19 @@ async def get_rosh_chodesh(date=None) -> models.ZmanimApiRoshChodesh:
         raw_resp = await resp.json()
         return models.ZmanimApiRoshChodesh(**raw_resp)
 
+
+async def get_holiday(name: str, cl_offset: int, havdala_opinion: str,
+                      location: Location = None) -> models.ZmanimApiHoliday:
+    url = ZMANIM_API_URL.format('holidays')
+    params = {
+        'lat': str(location[0]) if location else None,
+        'lng': str(location[1]) if location else None,
+        'holiday_name': name,
+        'cl': str(cl_offset),
+        'havdala': havdala_opinion
+    }
+
+    async with bot.session.get(url, params=params) as resp:
+        raw_resp = await resp.json()
+        return models.ZmanimApiHoliday(**raw_resp)
 

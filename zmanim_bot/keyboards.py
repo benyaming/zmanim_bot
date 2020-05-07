@@ -64,7 +64,7 @@ def get_more_holidays_menu() -> ReplyKeyboardMarkup:
 
 def get_fast_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.row(buttons.fm_fedaliah.value, buttons.fm_tevet.value, buttons.fm_esther.value)
+    kb.row(buttons.fm_gedaliah.value, buttons.fm_tevet.value, buttons.fm_esther.value)
     kb.row(buttons.fm_tammuz.value, buttons.fm_av.value)
     kb.row(buttons.back.value)
     return kb

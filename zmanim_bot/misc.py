@@ -3,6 +3,7 @@ import asyncio
 
 from aiogram import Dispatcher, Bot, types
 from aiogram.contrib.fsm_storage.redis import RedisStorage2
+
 from .config import BOT_TOKEN, REDIS_HOST, REDIS_PORT, REDIS_DB
 
 
