@@ -1,1 +1,1 @@
-from .client import *
+from zmanim_bot.zmanim_api.client import *

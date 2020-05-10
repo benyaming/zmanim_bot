@@ -18,7 +18,7 @@ def get_lang_menu() -> ReplyKeyboardMarkup:
 
 def get_main_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.add(buttons.mm_zmanim.value, buttons.mm_shabat.value, buttons.mm_holidays.value)
+    kb.add(buttons.mm_zmanim.value, buttons.mm_shabbat.value, buttons.mm_holidays.value)
     kb.add(buttons.mm_rh.value, buttons.mm_daf_yomi.value, buttons.mm_fasts.value)
     kb.add(buttons.mm_zmanim_by_date.value, buttons.mm_converter.value)
     kb.add(buttons.mm_help.value, buttons.mm_settings.value)
@@ -48,9 +48,9 @@ def get_settings_menu() -> ReplyKeyboardMarkup:
 
 def get_holidays_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.row(buttons.hom_rosh_hashana.value, buttons.hom_yom_kippur.value, buttons.hom_succos.value)
-    kb.row(buttons.hom_shmini_atzeres.value, buttons.hom_chanukah.value, buttons.hom_purim.value)
-    kb.row(buttons.hom_pesach.value, buttons.hom_shavuos.value, buttons.hom_more.value)
+    kb.row(buttons.hom_rosh_hashana.value, buttons.hom_yom_kippur.value, buttons.hom_succot.value)
+    kb.row(buttons.hom_shmini_atzeret.value, buttons.hom_chanukah.value, buttons.hom_purim.value)
+    kb.row(buttons.hom_pesach.value, buttons.hom_shavuot.value, buttons.hom_more.value)
     kb.row(buttons.back.value)
     return kb
 
