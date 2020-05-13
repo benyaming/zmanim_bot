@@ -8,15 +8,15 @@ from ..misc import dp
 from ..exceptions import NoLanguageException
 from ..api import track_user, get_or_set_zmanim
 from .redirects import redirect_to_main_menu, redirect_to_request_location
-from ..texts import buttons
+from ..texts import buttons, names
+from ..middlewares.i18n import i18n_
 
 
 @dp.message_handler(commands=['q'])
 async def handle_start(msg: Message):
-    from ..keyboards import get_zmanim_settings_keyboard
-    z = await get_or_set_zmanim()
-    kb = get_zmanim_settings_keyboard(z)
-    await msg.reply('test', reply_markup=kb)
+    n = int(msg.text.split(' ')[1])
+    # r = i18n_.gettext(*names.entity, n=n)
+    # await msg.reply(r)
 
 
 @dp.message_handler(commands=['lang'])

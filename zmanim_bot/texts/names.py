@@ -1,4 +1,9 @@
-from ..middlewares.i18n import _
+# from ..middlewares.i18n import i18n_
+#
+# _ = i18n_.lazy_gettext
+# __ = i18n_.gettext
+_ = lambda x: x
+__ = lambda x, y: (x, y)
 
 
 MONTH_NAMES_GENETIVE = {
@@ -17,13 +22,13 @@ MONTH_NAMES_GENETIVE = {
 }
 
 WEEKDAYS_GENETIVE = {
-    0: 'monday-g',
-    1: 'tuesday-g',
-    2: 'wednesday-g',
-    3: 'thursday-g',
-    4: 'friday-g',
-    5: 'saturday-g',
-    6: 'sunday-g'
+    0: _('monday-g'),
+    1: _('tuesday-g'),
+    2: _('wednesday-g'),
+    3: _('thursday-g'),
+    4: _('friday-g'),
+    5: _('saturday-g'),
+    6: _('sunday-g')
 }
 
 # Titles
@@ -32,8 +37,13 @@ title_rosh_chodesh = _('ROSH CHODESH')
 
 # Time units
 tu_year = _('year')
-tu_month = _('month')
-tu_hour = _('hour')
-tu_minute = _('minute')
-tu_part = _('chalak (part)')
+tu_month = __('month', 'months')
+tu_day = __('day', 'days')
+tu_hour = __('hour', 'hours')
+tu_minute = __('minute', 'minutes')
+tu_part = __('part', 'parts')
+
+and_word = _('and')
+
+
 
