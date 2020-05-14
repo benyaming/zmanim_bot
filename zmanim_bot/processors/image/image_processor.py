@@ -1,7 +1,7 @@
 from io import BytesIO
 from pathlib import Path
 from datetime import datetime as dt, date, time
-from typing import NoReturn, Union
+from typing import Union, Dict
 
 from babel.support import LazyProxy
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
@@ -98,7 +98,7 @@ class BasePicture:
         # if isinstance(value, int):
         #     value = str(value)
 
-        header = f'{header.value}: '
+        header = f'{str(header)}: '
         self._draw.text((x, y), text=header, font=self._bold_font)
 
         if not value_on_new_line:
@@ -111,7 +111,7 @@ class BasePicture:
 
 
 class DafYomPicture(BasePicture):
-    def __init__(self) -> NoReturn:
+    def __init__(self):
         self._font_size = 90
         self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / 'daf_yomi.png'
 
@@ -227,70 +227,64 @@ class ShabbatPicture(BasePicture):
         return _convert_img_to_bytes_io(self._image)
 
 
-# class ZmanimPicture(BasePicture):
-#
-#     def __init__(self, lang: str, data: dict) -> NoReturn:
-#         self._background_path = 'res/image/backgrounds/image.png'
-#         self._lang = lang
-#
-#         localized_data = zmanim.get_translate(data, get_translator(lang))
-#         self._data = localized_data.zmanim
-#         self._date = localized_data.date
-#
-#         self._set_font_properties(len(self._data))
-#         super().__init__()
-#
-#         self._draw_title(self._draw, localized_data.title, is_zmanim=True)
-#         self._draw_date()
-#
-#     def _set_font_properties(self, number_of_lines: int) -> NoReturn:
-#         p = {
-#             # [font_size, y_offset, start_y_offset
-#             1: [58, 68, 300],
-#             2: [58, 68, 270],
-#             3: [58, 68, 220],
-#             4: [58, 68, 180],
-#             5: [58, 68, 160],
-#             6: [58, 68, 140],
-#             7: [58, 68, 100],
-#             8: [58, 68, 85],
-#             9: [58, 68, 85],
-#             10: [59, 68, 40],
-#             11: [57, 66, 20],
-#             12: [55, 64, 20],
-#             13: [52, 58, 20],
-#             14: [45, 52, 20],
-#             15: [43, 50, 10],
-#             16: [41, 48, 10],
-#             17: [39, 46, 0],
-#             18: [37, 44, 0],
-#             19: [35, 42, 0]
-#         }
-#         self._font_size, self._y_offset, self._start_y_offset = p.get(number_of_lines)
-#         self._font = ImageFont.truetype(self._font_path, size=self._font_size)
-#         self._bold_font = ImageFont.truetype(self._bold_font_path, size=self._font_size)
-#
-#     def _draw_date(self) -> NoReturn:
-#         pos_x = 250
-#         pos_y = 130
-#         date_font = ImageFont.truetype(self._font_path, 40)
-#
-#         self._draw.text((pos_x, pos_y), self._date, font=date_font)
-#
-#     def draw_picture(self) -> BytesIO:
-#         pos_y: int = 210 + self._start_y_offset  # todo test
-#         pos_x: int = 100
-#
-#         data = self._data
-#
-#         # draw all image lines in cycle
-#         for header, value in data.items():
-#             self._draw_line((pos_x, pos_y), header, value)
-#             pos_y += self._y_offset
-#
-#         return _convert_img_to_bytes_io(self._image)
-#
-#
+class ZmanimPicture(BasePicture):
+
+    def __init__(self):
+        self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / 'zmanim.png'
+        super().__init__()
+
+        self._draw_title(self._draw, names.title_zmanim, is_zmanim=True)
+
+    def _set_font_properties(self, number_of_lines: int):
+        p = {
+            # [font_size, y_offset, start_y_offset
+            1: [58, 68, 300],
+            2: [58, 68, 270],
+            3: [58, 68, 220],
+            4: [58, 68, 180],
+            5: [58, 68, 160],
+            6: [58, 68, 140],
+            7: [58, 68, 100],
+            8: [58, 68, 85],
+            9: [58, 68, 85],
+            10: [59, 68, 40],
+            11: [57, 66, 20],
+            12: [55, 64, 20],
+            13: [52, 58, 20],
+            14: [45, 52, 20],
+            15: [43, 50, 10],
+            16: [41, 48, 10],
+            17: [39, 46, 0],
+            18: [37, 44, 0],
+            19: [35, 42, 0]
+        }
+        self._font_size, self._y_offset, self._start_y_offset = p.get(number_of_lines)
+        self._font = ImageFont.truetype(str(self._font_path), size=self._font_size)
+        self._bold_font = ImageFont.truetype(str(self._bold_font_path), size=self._font_size)
+
+    def _draw_date(self, date_: str):
+        x = 250
+        y = 130
+        date_font = ImageFont.truetype(str(self._font_path), 40)
+
+        self._draw.text((x, y), date_, font=date_font)
+
+    def draw_picture(self, data: Zmanim) -> BytesIO:
+        zmanim: Dict[str, dt] = data.dict(exclude={'settings'}, exclude_none=True)
+        self._set_font_properties(len(zmanim))
+        self._draw_date(humanize_date(data.settings.date_))
+
+        y: int = 210 + self._start_y_offset  # todo test
+        x: int = 100
+
+        # draw all image lines in cycle
+        for header, value in zmanim.items():
+            self._draw_line(x, y, _(header), value.time())
+            y += self._y_offset
+
+        return _convert_img_to_bytes_io(self._image)
+
+
 # class FastPicture(BasePicture):
 #
 #     def __init__(self, lang: str, data: dict):

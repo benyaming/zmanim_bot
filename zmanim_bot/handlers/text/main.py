@@ -13,8 +13,10 @@ from ...processors.image import image_processor as ip
 async def handle_zmanim(msg: Message):
     location = await api.get_or_set_location()
     zmanim_settings = await api.get_or_set_zmanim()
-    resp = await zmanim_api.get_zmanim(location, zmanim_settings)
-    await msg.reply(f'<code>{resp.json(exclude_none=True, indent=2, by_alias=True)}</code>')
+    data = await zmanim_api.get_zmanim(location, zmanim_settings)
+
+    pic = ip.ZmanimPicture().draw_picture(data)
+    await msg.reply_photo(pic)
 
 
 @dp.message_handler(text=buttons.mm_shabbat)

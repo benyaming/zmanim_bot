@@ -34,6 +34,7 @@ WEEKDAYS_GENETIVE: Dict[int, LazyProxy] = {
 title_daf_yomi = _('DAF YOMI')
 title_rosh_chodesh = _('ROSH CHODESH')
 title_shabbath = _('SHABBAT')
+title_zmanim = _('ZMANIM')
 
 
 
