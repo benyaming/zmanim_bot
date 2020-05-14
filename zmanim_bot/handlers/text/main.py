@@ -22,8 +22,10 @@ async def handle_shabbat(msg: Message):
     location = await api.get_or_set_location()
     cl = await api.get_or_set_cl()
     havdala = await api.get_or_set_havdala()
-    resp = await zmanim_api.get_shabbat(location, cl, havdala)
-    await msg.reply(f'<code>{resp.json(exclude_none=True, indent=2, by_alias=True)}</code>')
+    data = await zmanim_api.get_shabbat(location, cl, havdala)
+
+    pic = ip.ShabbatPicture().draw_picture(data)
+    await msg.reply_photo(pic)
 
 
 @dp.message_handler(text=buttons.mm_daf_yomi)

@@ -62,7 +62,10 @@ class BasePicture:
     def __init__(self):
         self._font = ImageFont.truetype(str(self._font_path), self._font_size)
         self._bold_font = ImageFont.truetype(str(self._bold_font_path), self._font_size)
-        self._image, self._draw = _get_draw(str(self._background_path))
+
+        if self._background_path:
+            self._image, self._draw = _get_draw(str(self._background_path))
+
         self._warning_font = ImageFont.truetype(str(self._bold_font_path),
                                                 self._warning_font_size)
 
@@ -88,6 +91,8 @@ class BasePicture:
             value: Union[int, str, float, dt, date, time, LazyProxy],
             value_on_new_line: bool = False
     ):
+        if isinstance(value, time):
+            value = value.isoformat(timespec='minutes')
         # if isinstance(value, LazyProxy):
         #     value = value.value
         # if isinstance(value, int):
@@ -101,6 +106,7 @@ class BasePicture:
         else:
             y += self._y_font_offset(header)
 
+        # TODO: validate that value smaller them picture size
         self._draw.text((x, y), text=str(value), font=self._font)
 
 
@@ -118,17 +124,17 @@ class DafYomPicture(BasePicture):
         y_offset = 100
 
         # draw masehet
-        self._draw_line(x, y, headers.daf_masehet_header, data.masehet)
+        self._draw_line(x, y, headers.daf_masehet, data.masehet)
         y += y_offset
 
         # draw daf
-        self._draw_line(x, y, headers.daf_page_header, data.daf)
+        self._draw_line(x, y, headers.daf_page, data.daf)
 
         return _convert_img_to_bytes_io(self._image)
 
 
 class RoshChodeshPicture(BasePicture):
-    def __init__(self) -> NoReturn:
+    def __init__(self):
         self._font_size = 46
         self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / 'rosh_hodesh.png'
 
@@ -141,16 +147,16 @@ class RoshChodeshPicture(BasePicture):
         y_offset = 80
 
         # draw month
-        self._draw_line(x, y, headers.rh_month_header, data.month_name)
+        self._draw_line(x, y, headers.rh_month, data.month_name)
         y += y_offset
 
         # draw duration
         duration_value = f'{data.duration} {_("day", "days", data.duration)}'
-        self._draw_line(x, y, headers.rh_duration_header, duration_value)
+        self._draw_line(x, y, headers.rh_duration, duration_value)
         y += y_offset
 
         date_value = humanize_date(data.settings.date_)
-        self._draw_line(x, y, headers.date_header, date_value)
+        self._draw_line(x, y, headers.date, date_value)
         y += y_offset  # todo test
 
         # draw molad string
@@ -159,73 +165,68 @@ class RoshChodeshPicture(BasePicture):
                       f'{molad.time().hour} {_(*units.tu_hour, molad.time().hour)} ' \
                       f'{molad.time().minute} {_(*units.tu_minute, molad.time().minute)} ' \
                       f'{helpers.and_word} {data.molad[1]} {_(*units.tu_part, data.molad[1])}'
-        self._draw_line(x, y, headers.rh_molad_header, molad_value)
+        self._draw_line(x, y, headers.rh_molad, molad_value)
 
         return _convert_img_to_bytes_io(self._image)
 
 
-# class ShabbosPicture(BasePicture):
-#
-#     def __init__(self, lang: str, data: dict) -> NoReturn:
-#         self._font_size = 60
-#         self._warning_font_size = 48
-#         self._lang = lang
-#         if data['error'] or data['warning']:
-#             self._background_path: str = 'res/image/backgrounds/shabbos_attention.png'
-#         else:
-#             self._background_path: str = 'res/image/backgrounds/shabbos.png'
-#
-#         super().__init__()
-#
-#         localized_data = shabbos.get_translate(data, self._translator)
-#         self._data = localized_data.data
-#         self._draw_title(self._draw, localized_data.title)
-#
-#     def draw_picture(self):
-#         pos_y = 400 if not self._data.error else 470
-#         pos_x = 100
-#         y_offset: int = 80
-#
-#         font = self._font
-#         warning_font = self._warning_font
-#         data = self._data
-#         draw = self._draw
-#
-#         # draw parashat hashavua
-#         self._draw_line((pos_x, pos_y), data.parasha.header, data.parasha.value)
-#         pos_y += y_offset
-#
-#         # if polar error, draw error message and return
-#         if data.error:
-#             pos_x = 100
-#             pos_y = 840 if data.error.count('\n') < 2 else 810
-#
-#             draw.text((pos_x, pos_y), data.error, font=warning_font, fill='#ff5959')
-#             return _convert_img_to_bytes_io(self._image)
-#
-#         # draw candle lighting
-#         self._draw_line((pos_x, pos_y), data.cl.header, data.cl.value)
-#         pos_y += y_offset
-#
-#         # draw shekiah offset
-#         draw.text((pos_x, pos_y), data.shkia_offset, font=font)
-#         pos_y += y_offset
-#
-#         # draw tzeis hakochavim
-#         self._draw_line((pos_x, pos_y), data.tzeit_kochavim.header,
-#                         data.tzeit_kochavim.value)
-#         pos_y += y_offset
-#
-#         # draw warning if need
-#         if not data.warning:
-#             return _convert_img_to_bytes_io(self._image)
-#
-#         pos_x, pos_y = 100, 840
-#         draw.text((pos_x, pos_y), data.warning, font=warning_font, fill='#ff5959')
-#
-#         return _convert_img_to_bytes_io(self._image)
-#
-#
+class ShabbatPicture(BasePicture):
+
+    def __init__(self):
+        self._font_size = 60
+        self._warning_font_size = 48
+
+        super().__init__()
+
+    def draw_picture(self, data: Shabbat):
+        if not data.candle_lighting or data.late_cl_warning:
+            self._background_path: str = Path(__file__).parent / 'src' / 'backgrounds' / 'shabbos_attention.png'
+        else:
+            self._background_path: str = Path(__file__).parent / 'src' / 'backgrounds' / 'shabbos.png'
+        self._image, self._draw = _get_draw(str(self._background_path))
+
+        self._draw_title(self._draw, names.title_shabbath)
+
+        y = 400 if data.candle_lighting else 470
+        x = 100
+        y_offset: int = 80
+
+        # draw parashat hashavua
+        self._draw_line(x, y, headers.parsha, data.torah_part)
+        y += y_offset
+
+        # if polar error, draw error message and return
+        if not data.candle_lighting:
+            x = 100
+            y = 840 if helpers.cl_error_warning.value.count('\n') < 2 else 810
+
+            self._draw.text((x, y), helpers.cl_error_warning.value, font=self._warning_font, fill='#ff5959')
+            return _convert_img_to_bytes_io(self._image)
+
+        # draw candle lighting
+        self._draw_line(x, y, headers.cl, data.candle_lighting.time())
+        y += y_offset
+
+        # draw shekiah offset
+        cl_offset = data.settings.cl_offset
+        offset_value = f'{cl_offset} {_(*units.tu_minute, cl_offset)} {helpers.cl_offset}'
+        self._draw.text((x, y), offset_value, font=self._font)
+        y += y_offset
+
+        # draw havdala
+        self._draw_line(x, y, headers.havdala, data.havdala.time())
+        y += y_offset
+
+        # draw warning if need
+        if not data.late_cl_warning:
+            return _convert_img_to_bytes_io(self._image)
+
+        x, y = 100, 840
+        self._draw.text((x, y), helpers.cl_late_warning.value, font=self._warning_font, fill='#ff5959')
+
+        return _convert_img_to_bytes_io(self._image)
+
+
 # class ZmanimPicture(BasePicture):
 #
 #     def __init__(self, lang: str, data: dict) -> NoReturn:
