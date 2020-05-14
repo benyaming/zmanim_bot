@@ -1,7 +1,7 @@
 from aiogram.types import Message
 
 from ....misc import dp
-from ....texts import buttons
+from ....texts.single import buttons
 from .... import zmanim_api
 
 

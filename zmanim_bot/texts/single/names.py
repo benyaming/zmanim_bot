@@ -1,12 +1,11 @@
-# from ..middlewares.i18n import i18n_
-#
-# _ = i18n_.lazy_gettext
-# __ = i18n_.gettext
-_ = lambda x: x
-__ = lambda x, y: (x, y)
+from typing import Dict
+
+from babel.support import LazyProxy
+
+from zmanim_bot.texts.translators import lazy_gettext as _
 
 
-MONTH_NAMES_GENETIVE = {
+MONTH_NAMES_GENETIVE: Dict[int, LazyProxy] = {
     1: _('january-g'),
     2: _('fubruary-g'),
     3: _('march-g'),
@@ -21,7 +20,7 @@ MONTH_NAMES_GENETIVE = {
     12: _('december-g'),
 }
 
-WEEKDAYS_GENETIVE = {
+WEEKDAYS_GENETIVE: Dict[int, LazyProxy] = {
     0: _('monday-g'),
     1: _('tuesday-g'),
     2: _('wednesday-g'),
@@ -35,15 +34,8 @@ WEEKDAYS_GENETIVE = {
 title_daf_yomi = _('DAF YOMI')
 title_rosh_chodesh = _('ROSH CHODESH')
 
-# Time units
-tu_year = _('year')
-tu_month = __('month', 'months')
-tu_day = __('day', 'days')
-tu_hour = __('hour', 'hours')
-tu_minute = __('minute', 'minutes')
-tu_part = __('part', 'parts')
 
-and_word = _('and')
+
 
 
 

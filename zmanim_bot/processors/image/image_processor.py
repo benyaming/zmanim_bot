@@ -1,14 +1,15 @@
 from io import BytesIO
 from pathlib import Path
 from datetime import datetime as dt, date, time
-from typing import Callable, NoReturn, Tuple, Union
+from typing import NoReturn, Union
 
 from babel.support import LazyProxy
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 
-from ...middlewares.i18n import _, __
+from ...middlewares.i18n import gettext as _
 from ...zmanim_api.models import *
-from ...texts import names, headers
+from ...texts.single import names, headers, helpers
+from ...texts.plural import units
 
 
 def _format_header(header):
@@ -16,8 +17,9 @@ def _format_header(header):
 
 
 def humanize_date(d: date) -> str:
+    """ YYYY-MM-DD -> DD [month name (genetive)] YYYY, [weekday] """
     resp = f'{d.day} ' \
-           f'{_(names.MONTH_NAMES_GENETIVE[d.month])} ' \
+           f'{names.MONTH_NAMES_GENETIVE[d.month]} ' \
            f'{d.year}, ' \
            f'{names.WEEKDAYS_GENETIVE[d.weekday()]}'
     return resp
@@ -64,11 +66,11 @@ class BasePicture:
         self._warning_font = ImageFont.truetype(str(self._bold_font_path),
                                                 self._warning_font_size)
 
-    def _draw_title(self, draw: ImageDraw, title: str, is_zmanim: bool = False,
+    def _draw_title(self, draw: ImageDraw, title: LazyProxy, is_zmanim: bool = False,
                     is_shmini_atzeres: bool = False) -> None:
         coordinates = (250, 90) if not is_zmanim else (250, 65)
         font = self._title_font if not is_shmini_atzeres else self._title_font_sa
-        draw.text(coordinates, title, font=font)
+        draw.text(coordinates, title.value, font=font)
 
     def _x_font_offset(self, text: str) -> int:
         """Returns size in px of given text in axys x"""
@@ -86,10 +88,10 @@ class BasePicture:
             value: Union[int, str, float, dt, date, time, LazyProxy],
             value_on_new_line: bool = False
     ):
-        if isinstance(value, LazyProxy):
-            value = value.value
-        if isinstance(value, int):
-            value = str(value)
+        # if isinstance(value, LazyProxy):
+        #     value = value.value
+        # if isinstance(value, int):
+        #     value = str(value)
 
         header = f'{header.value}: '
         self._draw.text((x, y), text=header, font=self._bold_font)
@@ -99,7 +101,7 @@ class BasePicture:
         else:
             y += self._y_font_offset(header)
 
-        self._draw.text((x, y), text=value, font=self._font)
+        self._draw.text((x, y), text=str(value), font=self._font)
 
 
 class DafYomPicture(BasePicture):
@@ -116,7 +118,7 @@ class DafYomPicture(BasePicture):
         y_offset = 100
 
         # draw masehet
-        self._draw_line(x, y, headers.daf_masehet_header, __(data.masehet))
+        self._draw_line(x, y, headers.daf_masehet_header, data.masehet)
         y += y_offset
 
         # draw daf
@@ -139,11 +141,11 @@ class RoshChodeshPicture(BasePicture):
         y_offset = 80
 
         # draw month
-        self._draw_line(x, y, headers.rh_month_header, _(data.month_name))
+        self._draw_line(x, y, headers.rh_month_header, data.month_name)
         y += y_offset
 
         # draw duration
-        duration_value = f'{data.duration} {__("day", "days", data.duration)}'
+        duration_value = f'{data.duration} {_("day", "days", data.duration)}'
         self._draw_line(x, y, headers.rh_duration_header, duration_value)
         y += y_offset
 
@@ -153,10 +155,10 @@ class RoshChodeshPicture(BasePicture):
 
         # draw molad string
         molad = data.molad[0]
-        molad_value = f'{molad.day} {__(names.MONTH_NAMES_GENETIVE[molad.month])}, {molad.year},\n' \
-                      f'{molad.time().hour} {__(*names.tu_hour, molad.time().hour)} ' \
-                      f'{molad.time().minute} {__(*names.tu_minute, molad.time().minute)} ' \
-                      f'{__(names.and_word)} {data.molad[1]} {__(*names.tu_part, data.molad[1])}'
+        molad_value = f'{molad.day} {names.MONTH_NAMES_GENETIVE[molad.month]}, {molad.year},\n' \
+                      f'{molad.time().hour} {_(*units.tu_hour, molad.time().hour)} ' \
+                      f'{molad.time().minute} {_(*units.tu_minute, molad.time().minute)} ' \
+                      f'{helpers.and_word} {data.molad[1]} {_(*units.tu_part, data.molad[1])}'
         self._draw_line(x, y, headers.rh_molad_header, molad_value)
 
         return _convert_img_to_bytes_io(self._image)

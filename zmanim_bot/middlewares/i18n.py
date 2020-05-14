@@ -18,8 +18,8 @@ class I18N(I18nMiddleware):
 
 i18n_ = I18N(I18N_DOMAIN, LOCALES_DIR)
 dp.middleware.setup(i18n_)
-_ = i18n_.lazy_gettext
-__ = i18n_.gettext
+gettext = i18n_.gettext
+lazy_gettext = i18n_.lazy_gettext
 
 
 # pybabel extract .\texts\buttons.py .\texts\messages.py -o .\locales\zmanim_bot.pot

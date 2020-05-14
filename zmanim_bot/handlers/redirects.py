@@ -3,8 +3,7 @@ from aiogram.types import User
 from .. import keyboards
 from ..misc import bot
 
-from ..texts import messages
-
+from ..texts.single import messages
 
 __all__ = [
     'redirect_to_main_menu',

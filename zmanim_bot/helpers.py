@@ -1,7 +1,7 @@
 from typing import Tuple
 from datetime import date
 
-from .texts import buttons
+from .texts.single import buttons
 from .exceptions import IncorrectLocationException, IncorrectGregorianDateException
 
 

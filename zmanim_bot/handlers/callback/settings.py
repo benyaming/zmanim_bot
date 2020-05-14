@@ -1,11 +1,8 @@
 import asyncio
 
 from aiogram.types import CallbackQuery
-from aiogram.dispatcher import FSMContext
 
 from ...misc import dp, bot
-from ...handlers.redirects import redirect_to_main_menu
-from ...texts import buttons, messages
 from ... import keyboards
 from ...helpers import CallbackPrefixes, CALL_ANSWER_OK
 from ... import api

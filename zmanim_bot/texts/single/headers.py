@@ -1,4 +1,4 @@
-from ..middlewares.i18n import _
+from ..translators import lazy_gettext as _
 
 
 date_header = _('date')

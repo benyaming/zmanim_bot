@@ -1,8 +1,8 @@
 from aiogram.types import Message
 
-from zmanim_bot.misc import dp, bot
+from zmanim_bot.misc import dp
 from zmanim_bot.states import FeedbackState
-from zmanim_bot.texts import buttons, messages
+from zmanim_bot.texts.single import buttons, messages
 
 
 @dp.message_handler(text=buttons.hm_report)

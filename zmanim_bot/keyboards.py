@@ -6,7 +6,7 @@ from aiogram.types import (
 )
 
 from . import config
-from .texts import buttons, zmanim
+from .texts.single import buttons, zmanim
 from .helpers import CallbackPrefixes, CL_OFFET_OPTIONS, HAVDALA_OPINION_OPTIONS
 
 

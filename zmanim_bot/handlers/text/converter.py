@@ -1,8 +1,7 @@
 from aiogram.types import Message
-from aiogram.dispatcher import FSMContext
 
 from ...misc import dp
-from ...texts import buttons, messages
+from ...texts.single import buttons, messages
 from ... import keyboards
 from ..forms import ConverterGregorianDateState, ConverterJewishDateState
 

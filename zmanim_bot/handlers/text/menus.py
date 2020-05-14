@@ -3,7 +3,7 @@ from aiogram.dispatcher import FSMContext
 
 from ...misc import dp
 from ...handlers.redirects import redirect_to_main_menu
-from ...texts import buttons, messages
+from ...texts.single import buttons, messages
 from ... import keyboards
 
 

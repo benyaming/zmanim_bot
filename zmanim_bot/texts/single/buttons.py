@@ -1,7 +1,7 @@
-from ..middlewares.i18n import _
+from ..translators import lazy_gettext as _
+
 
 # Service
-
 geobutton = _('send location')
 cancel = _('cancel')
 back = _('back')
@@ -25,7 +25,7 @@ hm_faq = _('F.A.Q.')
 hm_report = _('report a bug')
 
 
-#     SETTINGS MENU
+# Settings menu
 sm_zmanim = _('select zmanim')
 sm_candle = _('candle lighting')
 sm_havdala = _('havdala')
@@ -66,4 +66,3 @@ FASTS = [fm_gedaliah, fm_tevet, fm_esther, fm_tammuz, fm_av]
 # converter
 conv_greg_to_jew = _('greg to jew')
 conv_jew_to_greg = _('jew to greg')
-

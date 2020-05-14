@@ -1,7 +1,7 @@
 from aiogram.types import Message
 
 from ...misc import dp
-from ...texts import buttons, messages
+from ...texts.single import buttons, messages
 from ... import keyboards
 from ... import api
 from ... import zmanim_api

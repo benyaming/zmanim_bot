@@ -1,15 +1,13 @@
 from asyncio import create_task
 
 from aiogram.types import Message
-from aiogram.dispatcher.filters import StateFilter
 from aiogram.dispatcher import FSMContext
 
 from ..misc import dp
 from ..exceptions import NoLanguageException
-from ..api import track_user, get_or_set_zmanim
+from ..api import track_user
 from .redirects import redirect_to_main_menu, redirect_to_request_location
-from ..texts import buttons, names
-from ..middlewares.i18n import i18n_
+from ..texts.single import buttons
 
 
 @dp.message_handler(commands=['q'])

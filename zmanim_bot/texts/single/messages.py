@@ -1,7 +1,7 @@
-from ..middlewares.i18n import _
+from ..translators import lazy_gettext as _
 
 
-init_bot = 'welcome to Zmanim bot!'
+init_bot = _('welcome to Zmanim bot!')
 init_main_menu = _('Welcome to the main menu!')
 init_help = _('how can I help you?')
 init_settings = _('welcome to settings!')
