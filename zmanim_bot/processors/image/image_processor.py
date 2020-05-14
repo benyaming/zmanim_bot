@@ -209,7 +209,7 @@ class ShabbatPicture(BasePicture):
 
         # draw shekiah offset
         cl_offset = data.settings.cl_offset
-        offset_value = f'{cl_offset} {_(*units.tu_minute, cl_offset)} {helpers.cl_offset}'
+        offset_value = f'({cl_offset} {_(*units.tu_minute, cl_offset)} {helpers.cl_offset})'
         self._draw.text((x, y), offset_value, font=self._font)
         y += y_offset
 
