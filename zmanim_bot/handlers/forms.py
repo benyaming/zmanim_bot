@@ -41,7 +41,7 @@ async def handle_converter_jewish_date(msg: Message, state: FSMContext):
 
 
 @dp.message_handler(state=ZmanimGregorianDateState.waiting_for_gregorian_date)
-async def handle_zmanim_gregorian_date(msg: Message):
+async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
     date = parse_date(msg.text)
     location = await api.get_or_set_location()
     zmanim_settings = await api.get_or_set_zmanim()
@@ -49,3 +49,5 @@ async def handle_zmanim_gregorian_date(msg: Message):
     data = await get_zmanim(location, zmanim_settings, date)
     pic = ZmanimPicture().draw_picture(data)
     await msg.reply_photo(pic)
+    await state.finish()
+    await redirect_to_main_menu()

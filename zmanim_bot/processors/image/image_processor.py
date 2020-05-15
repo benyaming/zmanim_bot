@@ -12,16 +12,13 @@ from ...texts.single import names, headers, helpers
 from ...texts.plural import units
 
 
-def _format_header(header):
-    ...
-
-
-def humanize_date(d: date) -> str:
+def humanize_date(d: date, weekday_on_new_line: bool = False) -> str:
     # Todo customaze weekdays
     """ YYYY-MM-DD -> DD [month name (genetive)] YYYY, [weekday] """
+    weekday_sep = '\n' if weekday_on_new_line else ' '
     resp = f'{d.day} ' \
            f'{names.MONTH_NAMES_GENETIVE[d.month]} ' \
-           f'{d.year}, ' \
+           f'{d.year},{weekday_sep}' \
            f'{names.WEEKDAYS_GENETIVE[d.weekday()]}'
     return resp
 
@@ -94,6 +91,8 @@ class BasePicture:
     ):
         if isinstance(value, time):
             value = value.isoformat(timespec='minutes')
+        elif isinstance(value, date):
+            value = humanize_date(value, weekday_on_new_line=True)
         # elif isinstance(value, dt):
         #     value = f''
         # if isinstance(value, LazyProxy):
@@ -299,8 +298,9 @@ class FastPicture(BasePicture):
     def draw_picture(self, data: Fast) -> BytesIO:
         self._draw_title(self._draw, names.FASTS_TITLES[data.settings.fast_name])
 
-        y = 450
         x = 100
+        y = 450
+
         y_offset = 80
         y_offset_sep = 100
         y_offset_sep_small = 70
@@ -327,6 +327,35 @@ class FastPicture(BasePicture):
         #     self._draw_line((pos_x, pos_y), timing.header, timing.value)
         #     pos_y += y_offset
 
+        return _convert_img_to_bytes_io(self._image)
+
+
+class HolidayPicture(BasePicture):
+
+    def __init__(self, data: Holiday):
+        background_and_font_params = {
+            'chanukah': ('chanuka.png', 60),
+            'tu_bi_shvat': ('tubishvat.png', 70),
+            'purim': ('purim.png', 70),
+            'lag_baomer': ('lagbaomer.png', 70),
+            'israel_holidays': ('israel_holidays.png', 50),
+        }
+        background, font_size = background_and_font_params[data.settings.holiday_name]
+
+        self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / background
+        self._font_size = font_size
+
+        super().__init__()
+
+        self._data = data
+        self._draw_title(self._draw, names.HOLIDAYS_TITLES[data.settings.holiday_name])
+
+    def draw_picture(self) -> BytesIO:
+        x = 100
+        y = 450
+
+        # TODO: add chanukah range days formatting
+        self._draw_line(x, y, headers.date, self._data.date)
         return _convert_img_to_bytes_io(self._image)
 
 

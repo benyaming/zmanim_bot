@@ -43,6 +43,13 @@ FASTS_TITLES = {
     'fast_17_tammuz': _('FAST 17th OF TAMMUZ'),
     'fast_9_av': _('FAST 9th OF AV')
 }
+HOLIDAYS_TITLES = {
+    'chanukah': _('CHANUKAH'),
+    'tu_bi_shvat': _('TU BI-SHVAT'),
+    'purim': _('PURIM'),
+    'lag_baomer': _('LAG BA-OMER'),
+    'israel_holidays': _('ISRAEL HOLIDAYS')
+}
 
 
 

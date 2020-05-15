@@ -10,6 +10,12 @@ from .redirects import redirect_to_main_menu, redirect_to_request_location
 from ..texts.single import buttons
 
 
+@dp.message_handler(text=[buttons.back, buttons.cancel], state="*")
+async def handle_back(msg: Message, state: FSMContext):
+    await state.finish()
+    await redirect_to_main_menu()
+
+
 @dp.message_handler(commands=['q'])
 async def handle_start(msg: Message):
     n = int(msg.text.split(' ')[1])
