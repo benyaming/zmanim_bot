@@ -13,3 +13,7 @@ rh_molad = _('molad')
 parsha = _('torah part')
 cl = _('candle lighting')
 havdala = _('havdala')
+
+fast_start = _('the fast begins')
+fast_end = _('the fast end')
+fast_chatzot = _('chatzot')

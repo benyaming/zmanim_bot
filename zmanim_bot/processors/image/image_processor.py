@@ -17,6 +17,7 @@ def _format_header(header):
 
 
 def humanize_date(d: date) -> str:
+    # Todo customaze weekdays
     """ YYYY-MM-DD -> DD [month name (genetive)] YYYY, [weekday] """
     resp = f'{d.day} ' \
            f'{names.MONTH_NAMES_GENETIVE[d.month]} ' \
@@ -93,6 +94,8 @@ class BasePicture:
     ):
         if isinstance(value, time):
             value = value.isoformat(timespec='minutes')
+        # elif isinstance(value, dt):
+        #     value = f''
         # if isinstance(value, LazyProxy):
         #     value = value.value
         # if isinstance(value, int):
@@ -285,48 +288,48 @@ class ZmanimPicture(BasePicture):
         return _convert_img_to_bytes_io(self._image)
 
 
-# class FastPicture(BasePicture):
-#
-#     def __init__(self, lang: str, data: dict):
-#         self._background_path = 'res/image/backgrounds/fast.png'
-#         self._font_size = 60
-#         self._lang = lang
-#
-#         super().__init__()
-#
-#         localized_data = fast.get_translate(data, self._translator)
-#         self._data = localized_data.data
-#         self._draw_title(self._draw, localized_data.title)
-#
-#     def draw_picture(self) -> BytesIO:
-#         pos_y = 290
-#         pos_x = 100
-#         y_offset = 80
-#         y_offset_sep = 100
-#         y_offset_sep_small = 70
-#
-#         data = self._data
-#
-#         # draw date and start time
-#         self._draw_line((pos_x, pos_y), data.start_time.header, data.start_time.value)
-#         pos_y += y_offset  # todo test
-#
-#         # draw hatzot, if need
-#         if data.hatzot:
-#             pos_y += y_offset_sep_small
-#             self._draw_line((pos_x, pos_y), data.hatzot.header, data.hatzot.value)
-#             pos_y += y_offset + y_offset_sep_small
-#         else:
-#             pos_y += y_offset_sep
-#
-#         timings = [data.tzeit_kochavim, data.sba_time, data.ssk_time, data.nvr_time]
-#         for timing in timings:
-#             self._draw_line((pos_x, pos_y), timing.header, timing.value)
-#             pos_y += y_offset
-#
-#         return _convert_img_to_bytes_io(self._image)
-#
-#
+class FastPicture(BasePicture):
+
+    def __init__(self):
+        self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / 'fast.png'
+        self._font_size = 60
+
+        super().__init__()
+
+    def draw_picture(self, data: Fast) -> BytesIO:
+        self._draw_title(self._draw, names.FASTS_TITLES[data.settings.fast_name])
+
+        y = 450
+        x = 100
+        y_offset = 80
+        y_offset_sep = 100
+        y_offset_sep_small = 70
+
+        # draw date and start time
+        fast_date, fast_weekday = humanize_date(data.fast_start).split(', ')
+        fast_start_value = f'{fast_date}\n{fast_weekday}, {data.fast_start.time().isoformat("minutes")}'
+        self._draw_line(x, y, headers.fast_start, fast_start_value)
+        y += y_offset  # todo test
+
+        # draw hatzot, if need
+        if data.chatzot:
+            y += y_offset_sep_small
+            self._draw_line(x, y, headers.fast_chatzot, data.chatzot.time().isoformat('minutes'))
+            y += y_offset + y_offset_sep_small
+        else:
+            y += y_offset_sep
+
+        # draw havdala
+        self._draw_line(x, y, headers.fast_end, data.havdala.time())
+
+        # timings = [data.tzeit_kochavim, data.sba_time, data.ssk_time, data.nvr_time]
+        # for timing in timings:
+        #     self._draw_line((pos_x, pos_y), timing.header, timing.value)
+        #     pos_y += y_offset
+
+        return _convert_img_to_bytes_io(self._image)
+
+
 # class RoshHashanaPicture(BasePicture):
 #
 #     def __init__(self, lang: str, data: dict):

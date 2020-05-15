@@ -2,6 +2,7 @@ from typing import Dict
 
 from babel.support import LazyProxy
 
+from ...zmanim_api.models import *
 from zmanim_bot.texts.translators import lazy_gettext as _
 
 
@@ -35,6 +36,13 @@ title_daf_yomi = _('DAF YOMI')
 title_rosh_chodesh = _('ROSH CHODESH')
 title_shabbath = _('SHABBAT')
 title_zmanim = _('ZMANIM')
+FASTS_TITLES = {
+    'fast_gedalia': _('FAST OF GEDALIAH'),
+    'fast_10_teves': _('FAST 10th OF TEVETH'),
+    'fast_esther': _('FAST OF ESTHER'),
+    'fast_17_tammuz': _('FAST 17th OF TAMMUZ'),
+    'fast_9_av': _('FAST 9th OF AV')
+}
 
 
 

@@ -21,6 +21,7 @@ __all__ = [
 
 class SimpleSettings(BaseModel):
     date_: Optional[date] = None
+    holiday_name: Optional[str] = None
 
     class Config:
         fields = {'date_': 'date'}
@@ -31,28 +32,8 @@ class Settings(SimpleSettings):
     havdala_opinion: Optional[str] = None
     coordinates: Optional[Tuple[float, float]] = None
     elevation: Optional[int] = None
-
-
-# class ZmanimRequest(BaseModel):
-#     sunrise: bool = True
-#     alos: bool = True
-#     sof_zman_tefila_gra: bool = True
-#     sof_zman_tefila_ma: bool = True
-#     talis_ma: bool = True
-#     sof_zman_shema_gra: bool = True
-#     sof_zman_shema_ma: bool = True
-#     chatzos: bool = True
-#     mincha_ketana: bool = True
-#     mincha_gedola: bool = True
-#     plag_mincha: bool = True
-#     sunset: bool = True
-#     tzeis_8_5_degrees: bool = True
-#     tzeis_72_minutes: bool = True
-#     tzeis_42_minutes: bool = True
-#     tzeis_5_95_degrees: bool = True
-#     chatzot_laila: bool = True
-#     astronomical_hour_ma: bool = True
-#     astronomical_hour_gra: bool = True
+    fast_name: Optional[str] = None
+    yomtov_name: Optional[str] = None
 
 
 class Zmanim(BaseModel):

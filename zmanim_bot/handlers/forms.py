@@ -13,6 +13,7 @@ from ..helpers import parse_date
 from .redirects import redirect_to_main_menu
 from .. import api
 from ..zmanim_api import get_zmanim
+from ..processors.image.image_processor import ZmanimPicture
 
 
 @dp.message_handler(state=FeedbackState.waiting_for_feedback_text)
@@ -44,6 +45,7 @@ async def handle_zmanim_gregorian_date(msg: Message):
     date = parse_date(msg.text)
     location = await api.get_or_set_location()
     zmanim_settings = await api.get_or_set_zmanim()
-    resp = await get_zmanim(location, zmanim_settings, date)
-    await msg.reply(f'<code>{resp.json(exclude_none=True)}</code>')
-    await redirect_to_main_menu()
+
+    data = await get_zmanim(location, zmanim_settings, date)
+    pic = ZmanimPicture().draw_picture(data)
+    await msg.reply_photo(pic)
