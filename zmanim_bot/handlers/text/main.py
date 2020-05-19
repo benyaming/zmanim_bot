@@ -15,7 +15,7 @@ async def handle_zmanim(msg: Message):
     zmanim_settings = await api.get_or_set_zmanim()
     data = await zmanim_api.get_zmanim(location, zmanim_settings)
 
-    pic = ip.ZmanimPicture().draw_picture(data)
+    pic = ip.ZmanimImage().get_image(data)
     await msg.reply_photo(pic)
 
 
@@ -26,21 +26,21 @@ async def handle_shabbat(msg: Message):
     havdala = await api.get_or_set_havdala()
     data = await zmanim_api.get_shabbat(location, cl, havdala)
 
-    pic = ip.ShabbatPicture().draw_picture(data)
+    pic = ip.ShabbatImage().draw_picture(data)
     await msg.reply_photo(pic)
 
 
 @dp.message_handler(text=buttons.mm_daf_yomi)
 async def handle_daf_yomi(msg: Message):
     data = await zmanim_api.get_daf_yomi()
-    pic = ip.DafYomPicture().get_image(data)
+    pic = ip.DafYomImage().get_image(data)
     await msg.reply_photo(pic)
 
 
 @dp.message_handler(text=buttons.mm_rh)
 async def handle_rosh_chodesh(msg: Message):
     data = await zmanim_api.get_rosh_chodesh()
-    pic = ip.RoshChodeshPicture().get_image(data)
+    pic = ip.RoshChodeshImage().get_image(data)
     await msg.reply_photo(pic)
 
 

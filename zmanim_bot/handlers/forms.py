@@ -13,7 +13,7 @@ from ..helpers import parse_date
 from .redirects import redirect_to_main_menu
 from .. import api
 from ..zmanim_api import get_zmanim
-from ..processors.image.image_processor import ZmanimPicture
+from ..processors.image.image_processor import ZmanimImage
 
 
 @dp.message_handler(state=FeedbackState.waiting_for_feedback_text)
@@ -47,7 +47,7 @@ async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
     zmanim_settings = await api.get_or_set_zmanim()
 
     data = await get_zmanim(location, zmanim_settings, date)
-    pic = ZmanimPicture().draw_picture(data)
+    pic = ZmanimImage().get_image(data)
     await msg.reply_photo(pic)
     await state.finish()
     await redirect_to_main_menu()

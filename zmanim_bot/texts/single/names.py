@@ -50,6 +50,14 @@ HOLIDAYS_TITLES = {
     'lag_baomer': _('LAG BA-OMER'),
     'israel_holidays': _('ISRAEL HOLIDAYS')
 }
+YOMTOVS_TITLES = {
+    'rosh_hashana': _('ROSH HA-SHANA'),
+    'yom_kippur': _('YOM KIPUR'),
+    'succot': _('SUCCOT'),
+    'shmini_atzeres': _('SHMINI ATZERES'),
+    'pesach': _('PESACH'),
+    'shavuot': _('SHAVUOT')
+}
 
 
 

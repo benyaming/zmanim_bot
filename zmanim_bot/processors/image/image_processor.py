@@ -45,7 +45,7 @@ def _get_draw(background_path: str) -> ImageDraw:
     return image, draw
 
 
-class BasePicture:
+class BaseImage:
 
     _font_path = Path(__file__).parent / 'src' / 'fonts' / 'gothic.TTF'
     _bold_font_path = Path(__file__).parent / 'src' / 'fonts' / 'gothic-bold.TTF'
@@ -112,7 +112,7 @@ class BasePicture:
         self._draw.text((x, y), text=str(value), font=self._font)
 
 
-class DafYomPicture(BasePicture):
+class DafYomImage(BaseImage):
     def __init__(self):
         self._font_size = 90
         self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / 'daf_yomi.png'
@@ -135,7 +135,7 @@ class DafYomPicture(BasePicture):
         return _convert_img_to_bytes_io(self._image)
 
 
-class RoshChodeshPicture(BasePicture):
+class RoshChodeshImage(BaseImage):
     def __init__(self):
         self._font_size = 46
         self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / 'rosh_hodesh.png'
@@ -172,7 +172,7 @@ class RoshChodeshPicture(BasePicture):
         return _convert_img_to_bytes_io(self._image)
 
 
-class ShabbatPicture(BasePicture):
+class ShabbatImage(BaseImage):
 
     def __init__(self):
         self._font_size = 60
@@ -229,7 +229,7 @@ class ShabbatPicture(BasePicture):
         return _convert_img_to_bytes_io(self._image)
 
 
-class ZmanimPicture(BasePicture):
+class ZmanimImage(BaseImage):
 
     def __init__(self):
         self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / 'zmanim.png'
@@ -271,7 +271,7 @@ class ZmanimPicture(BasePicture):
 
         self._draw.text((x, y), date_, font=date_font)
 
-    def draw_picture(self, data: Zmanim) -> BytesIO:
+    def get_image(self, data: Zmanim) -> BytesIO:
         zmanim: Dict[str, dt] = data.dict(exclude={'settings'}, exclude_none=True)
         self._set_font_properties(len(zmanim))
         self._draw_date(humanize_date(data.settings.date_))
@@ -287,7 +287,7 @@ class ZmanimPicture(BasePicture):
         return _convert_img_to_bytes_io(self._image)
 
 
-class FastPicture(BasePicture):
+class FastImage(BaseImage):
 
     def __init__(self):
         self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / 'fast.png'
@@ -295,7 +295,7 @@ class FastPicture(BasePicture):
 
         super().__init__()
 
-    def draw_picture(self, data: Fast) -> BytesIO:
+    def get_image(self, data: Fast) -> BytesIO:
         self._draw_title(self._draw, names.FASTS_TITLES[data.settings.fast_name])
 
         x = 100
@@ -330,7 +330,7 @@ class FastPicture(BasePicture):
         return _convert_img_to_bytes_io(self._image)
 
 
-class HolidayPicture(BasePicture):
+class HolidayImage(BaseImage):
 
     def __init__(self, data: Holiday):
         background_and_font_params = {
@@ -350,13 +350,51 @@ class HolidayPicture(BasePicture):
         self._data = data
         self._draw_title(self._draw, names.HOLIDAYS_TITLES[data.settings.holiday_name])
 
-    def draw_picture(self) -> BytesIO:
+    def get_image(self) -> BytesIO:
         x = 100
         y = 450
 
         # TODO: add chanukah range days formatting
         self._draw_line(x, y, headers.date, self._data.date)
         return _convert_img_to_bytes_io(self._image)
+
+
+class YomTovImage(BaseImage):
+
+    def __init__(self, data: YomTov):
+        background_and_font_params = {
+            'rosh_hashana': ('rosh_hashana.png', 47),
+            'yom_kippur': ('yom_kippur.png', 55),
+            'succot': ('succos.png', 47),
+            'shmini_atzeres': ('shmini_atzeret.png', 45),
+            'pesach': ('pesah.png', 43 if data.shabbat else 50),
+            'shavuot': ('shavuot.png', 45),
+        }
+        background, font_size = background_and_font_params[data.settings.holiday_name]
+
+        self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / background
+        self._font_size = font_size
+
+        super().__init__()
+
+        self._data = data
+        self._draw_title(self._draw, names.YOMTOVS_TITLES[data.settings.holiday_name])
+
+    def format_cl_date(self, date_: str) -> str:
+        ...
+
+    def get_image(self) -> BytesIO:
+        x = 100
+        y = 400
+        y_offset = 95
+        y_offset_small = 65
+
+        # draw the date
+        self._draw_line(x, y, headers.date, humanize_date())
+        ###
+        # 1. date parser - support different date range and humanize it
+        # 2. cl header parser - to perform valid headers (and support shabbat)
+        ###
 
 
 # class RoshHashanaPicture(BasePicture):
