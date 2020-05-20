@@ -1,7 +1,7 @@
 from io import BytesIO
 from pathlib import Path
 from datetime import datetime as dt, date, time
-from typing import Union, Dict
+from typing import Union, Dict, List, Any
 
 from babel.support import LazyProxy
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
@@ -12,15 +12,41 @@ from ...texts.single import names, headers, helpers
 from ...texts.plural import units
 
 
-def humanize_date(d: date, weekday_on_new_line: bool = False) -> str:
-    # Todo customaze weekdays
-    """ YYYY-MM-DD -> DD [month name (genetive)] YYYY, [weekday] """
+# def humanize_date(d: date, weekday_on_new_line: bool = False) -> str:
+#     # Todo customaze weekdays
+#     """ YYYY-MM-DD -> DD [month name (genetive)] YYYY, [weekday] """
+#     weekday_sep = '\n' if weekday_on_new_line else ' '
+#     resp = f'{d.day} ' \
+#            f'{names.MONTH_NAMES_GENETIVE[d.month]} ' \
+#            f'{d.year},{weekday_sep}' \
+#            f'{names.WEEKDAYS_GENETIVE[d.weekday()]}'
+#     return resp
+
+
+def humanize_date(date_range: List[date], weekday_on_new_line: bool = False) -> str:
+    """
+    Examples:
+      2020-01-01 -> 1 January 2020, Wednesday
+      2020-01-01, 2020-01-08 -> 1—7 January 2020, Wednesday-Tuesday
+      2020-01-31, 2020-02-1 -> 31 January—1 February 2020, Friday-Saturday
+      2019-12-25, 2020-01-03 -> 25 December 2019—3 January 2020, Wednesday-Friday
+    """
     weekday_sep = '\n' if weekday_on_new_line else ' '
-    resp = f'{d.day} ' \
-           f'{names.MONTH_NAMES_GENETIVE[d.month]} ' \
-           f'{d.year},{weekday_sep}' \
-           f'{names.WEEKDAYS_GENETIVE[d.weekday()]}'
-    return resp
+
+    if len(date_range) == 1 or (len(date_range) > 1 and date_range[0]) == date_range[1]:
+        d = date_range[0]
+        resp = f'{d.day} ' \
+               f'{names.MONTH_NAMES_GENETIVE[d.month]} ' \
+               f'{d.year},{weekday_sep}' \
+               f'{names.WEEKDAYS_GENETIVE[d.weekday()]}'
+        return resp
+
+    if date_range[0].year != date_range[1].year:
+        ...
+    elif date_range[0].month != date_range[1].month:
+        ...
+    else:
+        ...
 
 
 def _format_value(value: Union[str, int, float, dt, date, time, LazyProxy]) -> str:
@@ -92,7 +118,7 @@ class BaseImage:
         if isinstance(value, time):
             value = value.isoformat(timespec='minutes')
         elif isinstance(value, date):
-            value = humanize_date(value, weekday_on_new_line=True)
+            value = humanize_date([value], weekday_on_new_line=True)
         # elif isinstance(value, dt):
         #     value = f''
         # if isinstance(value, LazyProxy):
@@ -110,6 +136,9 @@ class BaseImage:
 
         # TODO: validate that value smaller them picture size
         self._draw.text((x, y), text=str(value), font=self._font)
+
+    def get_image(self) -> BytesIO:
+        raise NotImplemented
 
 
 class DafYomImage(BaseImage):
@@ -392,7 +421,7 @@ class YomTovImage(BaseImage):
         # draw the date
         self._draw_line(x, y, headers.date, humanize_date())
         ###
-        # 1. date parser - support different date range and humanize it
+        # 1. refactor zmanim api - put list of dates to setings
         # 2. cl header parser - to perform valid headers (and support shabbat)
         ###
 
