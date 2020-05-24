@@ -12,17 +12,6 @@ from ...texts.single import names, headers, helpers
 from ...texts.plural import units
 
 
-# def humanize_date(d: date, weekday_on_new_line: bool = False) -> str:
-#     # Todo customaze weekdays
-#     """ YYYY-MM-DD -> DD [month name (genetive)] YYYY, [weekday] """
-#     weekday_sep = '\n' if weekday_on_new_line else ' '
-#     resp = f'{d.day} ' \
-#            f'{names.MONTH_NAMES_GENETIVE[d.month]} ' \
-#            f'{d.year},{weekday_sep}' \
-#            f'{names.WEEKDAYS_GENETIVE[d.weekday()]}'
-#     return resp
-
-
 def humanize_date(date_range: List[date], weekday_on_new_line: bool = False) -> str:
     """
     Examples:
@@ -32,21 +21,30 @@ def humanize_date(date_range: List[date], weekday_on_new_line: bool = False) -> 
       2019-12-25, 2020-01-03 -> 25 December 2019—3 January 2020, Wednesday-Friday
     """
     weekday_sep = '\n' if weekday_on_new_line else ' '
+    months = names.MONTH_NAMES_GENETIVE
+    weekdays = names.WEEKDAYS_GENETIVE
 
-    if len(date_range) == 1 or (len(date_range) > 1 and date_range[0]) == date_range[1]:
+    d1 = date_range[0]
+    d2 = date_range[1] if (len(date_range) > 1) or (date_range[0] == date_range[1]) else None
+
+    if not d2:
         d = date_range[0]
-        resp = f'{d.day} ' \
-               f'{names.MONTH_NAMES_GENETIVE[d.month]} ' \
-               f'{d.year},{weekday_sep}' \
-               f'{names.WEEKDAYS_GENETIVE[d.weekday()]}'
-        return resp
+        resp = f'{d.day} {months[d.month]} {d.year},{weekday_sep}{weekdays[d.weekday()]}'
 
-    if date_range[0].year != date_range[1].year:
-        ...
-    elif date_range[0].month != date_range[1].month:
-        ...
+    elif d1.year != d2.year:
+        resp = f'{d1.day} {months[d1.month]} {d1.year} — ' \
+               f'{d2.day} {months[d2.month]} {d2.year}, ' \
+               f'{weekdays[d1.weekday()]}-{weekdays[d2.weekday()]}'
+
+    elif d1.month != d2.month:
+        resp = f'{d1.day} {months[d1.month]}—{d2.day} {months[d2.month]} {d1.year}{weekday_sep}' \
+               f'{weekdays[d1.weekday()]}-{weekdays[d2.weekday()]}'
+
     else:
-        ...
+        resp = f'{d1.day}—{d2.day} {d1.year},{weekday_sep}' \
+               f'{weekdays[d1.weekday()]}-{weekdays[d2.weekday()]}'
+
+    return resp
 
 
 def _format_value(value: Union[str, int, float, dt, date, time, LazyProxy]) -> str:
@@ -406,11 +404,26 @@ class YomTovImage(BaseImage):
 
         super().__init__()
 
-        self._data = data
+        self.data = data
         self._draw_title(self._draw, names.YOMTOVS_TITLES[data.settings.holiday_name])
 
     def format_cl_date(self, date_: str) -> str:
         ...
+
+    def parse_date_range(self) -> List[date]:
+        all_dates = [
+            self.data.day_1 and self.data.day_1.date,
+            self.data.day_2 and self.data.day_2.date,
+            self.data.shabbat and self.data.shabbat.date,
+            self.data.pesach_part_2_day_1 and self.data.pesach_part_2_day_1.date,
+            self.data.pesach_part_2_day_2 and self.data.pesach_part_2_day_2.date,
+            self.data.pesach_part_2_shabbat and self.data.pesach_part_2_shabbat.date,
+        ]
+
+        all_existing_dates = filter(lambda date_: date_ is not None, all_dates)
+        d1 = min(all_existing_dates)
+        d2 = max(all_existing_dates)
+        return [d1, d2]
 
     def get_image(self) -> BytesIO:
         x = 100
@@ -419,11 +432,14 @@ class YomTovImage(BaseImage):
         y_offset_small = 65
 
         # draw the date
-        self._draw_line(x, y, headers.date, humanize_date())
+        dates = self.parse_date_range()
+        self._draw_line(x, y, headers.date, humanize_date(dates))
         ###
         # 1. refactor zmanim api - put list of dates to setings
         # 2. cl header parser - to perform valid headers (and support shabbat)
         ###
+
+        return _convert_img_to_bytes_io(self._image)
 
 
 # class RoshHashanaPicture(BasePicture):
