@@ -25,7 +25,7 @@ def humanize_date(date_range: List[date], weekday_on_new_line: bool = False) -> 
     weekdays = names.WEEKDAYS_GENETIVE
 
     d1 = date_range[0]
-    d2 = date_range[1] if (len(date_range) > 1) or (date_range[0] == date_range[1]) else None
+    d2 = date_range[1] if (len(date_range) > 1) and (date_range[0] != date_range[1]) else None
 
     if not d2:
         d = date_range[0]
@@ -37,11 +37,11 @@ def humanize_date(date_range: List[date], weekday_on_new_line: bool = False) -> 
                f'{weekdays[d1.weekday()]}-{weekdays[d2.weekday()]}'
 
     elif d1.month != d2.month:
-        resp = f'{d1.day} {months[d1.month]}—{d2.day} {months[d2.month]} {d1.year}{weekday_sep}' \
+        resp = f'{d1.day} {months[d1.month]} — {d2.day} {months[d2.month]} {d1.year},{weekday_sep}' \
                f'{weekdays[d1.weekday()]}-{weekdays[d2.weekday()]}'
 
     else:
-        resp = f'{d1.day}—{d2.day} {d1.year},{weekday_sep}' \
+        resp = f'{d1.day}-{d2.day} {months[d1.month]} {d1.year},{weekday_sep}' \
                f'{weekdays[d1.weekday()]}-{weekdays[d2.weekday()]}'
 
     return resp
@@ -397,7 +397,7 @@ class YomTovImage(BaseImage):
             'pesach': ('pesah.png', 43 if data.shabbat else 50),
             'shavuot': ('shavuot.png', 45),
         }
-        background, font_size = background_and_font_params[data.settings.holiday_name]
+        background, font_size = background_and_font_params[data.settings.yomtov_name]
 
         self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / background
         self._font_size = font_size
@@ -405,25 +405,43 @@ class YomTovImage(BaseImage):
         super().__init__()
 
         self.data = data
-        self._draw_title(self._draw, names.YOMTOVS_TITLES[data.settings.holiday_name])
+        self._draw_title(self._draw, names.YOMTOVS_TITLES[data.settings.yomtov_name])
 
     def format_cl_date(self, date_: str) -> str:
         ...
 
-    def parse_date_range(self) -> List[date]:
+    def _get_sorted_real_dates(self) -> List[date]:
         all_dates = [
+            self.data.eve,
             self.data.day_1 and self.data.day_1.date,
             self.data.day_2 and self.data.day_2.date,
             self.data.shabbat and self.data.shabbat.date,
+            self.data.pesach_part_2_eve,
             self.data.pesach_part_2_day_1 and self.data.pesach_part_2_day_1.date,
             self.data.pesach_part_2_day_2 and self.data.pesach_part_2_day_2.date,
             self.data.pesach_part_2_shabbat and self.data.pesach_part_2_shabbat.date,
+            self.data.hoshana_rabba
         ]
 
-        all_existing_dates = filter(lambda date_: date_ is not None, all_dates)
-        d1 = min(all_existing_dates)
-        d2 = max(all_existing_dates)
-        return [d1, d2]
+        real_dates = list(filter(lambda date_: date_ is not None, all_dates))
+        real_dates.sort()
+        return real_dates
+
+    # def _parse_date_range(self) -> List[date]:
+    #     all_dates = [
+    #         self.data.day_1 and self.data.day_1.date,
+    #         self.data.day_2 and self.data.day_2.date,
+    #         self.data.shabbat and self.data.shabbat.date,
+    #         self.data.pesach_part_2_day_1 and self.data.pesach_part_2_day_1.date,
+    #         self.data.pesach_part_2_day_2 and self.data.pesach_part_2_day_2.date,
+    #         self.data.pesach_part_2_shabbat and self.data.pesach_part_2_shabbat.date,
+    #         self.data.hoshana_rabba
+    #     ]
+    #
+    #     all_existing_dates = list(filter(lambda date_: date_ is not None, all_dates))
+    #     d1 = min(all_existing_dates)
+    #     d2 = max(all_existing_dates)
+    #     return [d1, d2]
 
     def get_image(self) -> BytesIO:
         x = 100
@@ -431,11 +449,20 @@ class YomTovImage(BaseImage):
         y_offset = 95
         y_offset_small = 65
 
+        dates = self._get_sorted_real_dates()
+
         # draw the date
-        dates = self.parse_date_range()
-        self._draw_line(x, y, headers.date, humanize_date(dates))
+        start_date = dates[1]
+        end_date = dates[-1]
+        self._draw_line(x, y, headers.date, humanize_date([start_date, end_date], weekday_on_new_line=True))
+        y += y_offset
+
+        for date_ in dates:
+            if isinstance(date_, date):  # eve
+                ...
+
+
         ###
-        # 1. refactor zmanim api - put list of dates to setings
         # 2. cl header parser - to perform valid headers (and support shabbat)
         ###
 
