@@ -59,6 +59,8 @@ YOMTOVS_TITLES = {
     'shavuot': _('SHAVUOT')
 }
 
+shabbat = _('shabbat')
+
 
 
 

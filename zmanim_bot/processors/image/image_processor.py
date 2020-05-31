@@ -12,7 +12,7 @@ from ...texts.single import names, headers, helpers
 from ...texts.plural import units
 
 
-def humanize_date(date_range: List[date], weekday_on_new_line: bool = False) -> str:
+def humanize_date(date_range: List[Union[date, AsurBeMelachaDay]], weekday_on_new_line: bool = False) -> str:
     """
     Examples:
       2020-01-01 -> 1 January 2020, Wednesday
@@ -26,6 +26,11 @@ def humanize_date(date_range: List[date], weekday_on_new_line: bool = False) -> 
 
     d1 = date_range[0]
     d2 = date_range[1] if (len(date_range) > 1) and (date_range[0] != date_range[1]) else None
+
+    if isinstance(d1, AsurBeMelachaDay):
+        d1 = d1.date
+    if isinstance(d2, AsurBeMelachaDay):
+        d2 = d2.date
 
     if not d2:
         d = date_range[0]
@@ -44,6 +49,16 @@ def humanize_date(date_range: List[date], weekday_on_new_line: bool = False) -> 
         resp = f'{d1.day}-{d2.day} {months[d1.month]} {d1.year},{weekday_sep}' \
                f'{weekdays[d1.weekday()]}-{weekdays[d2.weekday()]}'
 
+    return resp
+
+
+def get_header_with_date(header_type: str, date_: Union[date, dt], cl: bool = False) -> str:
+    if cl and date_.weekday() == 6:
+        shabbat = f' ({names.shabbat})'
+    else:
+        shabbat = ''
+
+    resp = f'{header_type} {date_.day} {names.MONTH_NAMES_GENETIVE[date_.month]}{shabbat}'
     return resp
 
 
@@ -109,7 +124,7 @@ class BaseImage:
             self,
             x: int,
             y: int,
-            header: LazyProxy,
+            header: Union[LazyProxy, str],
             value: Union[int, str, float, dt, date, time, LazyProxy],
             value_on_new_line: bool = False
     ):
@@ -410,43 +425,27 @@ class YomTovImage(BaseImage):
     def format_cl_date(self, date_: str) -> str:
         ...
 
-    def _get_sorted_real_dates(self) -> List[date]:
+    def _get_sorted_real_dates(self) -> List[Union[date, AsurBeMelachaDay]]:
         all_dates = [
             self.data.eve,
-            self.data.day_1 and self.data.day_1.date,
-            self.data.day_2 and self.data.day_2.date,
-            self.data.shabbat and self.data.shabbat.date,
+            self.data.day_1,
+            self.data.day_2,
+            self.data.shabbat,
             self.data.pesach_part_2_eve,
-            self.data.pesach_part_2_day_1 and self.data.pesach_part_2_day_1.date,
-            self.data.pesach_part_2_day_2 and self.data.pesach_part_2_day_2.date,
-            self.data.pesach_part_2_shabbat and self.data.pesach_part_2_shabbat.date,
+            self.data.pesach_part_2_day_1,
+            self.data.pesach_part_2_day_2,
+            self.data.pesach_part_2_shabbat,
             self.data.hoshana_rabba
         ]
 
         real_dates = list(filter(lambda date_: date_ is not None, all_dates))
-        real_dates.sort()
-        return real_dates
-
-    # def _parse_date_range(self) -> List[date]:
-    #     all_dates = [
-    #         self.data.day_1 and self.data.day_1.date,
-    #         self.data.day_2 and self.data.day_2.date,
-    #         self.data.shabbat and self.data.shabbat.date,
-    #         self.data.pesach_part_2_day_1 and self.data.pesach_part_2_day_1.date,
-    #         self.data.pesach_part_2_day_2 and self.data.pesach_part_2_day_2.date,
-    #         self.data.pesach_part_2_shabbat and self.data.pesach_part_2_shabbat.date,
-    #         self.data.hoshana_rabba
-    #     ]
-    #
-    #     all_existing_dates = list(filter(lambda date_: date_ is not None, all_dates))
-    #     d1 = min(all_existing_dates)
-    #     d2 = max(all_existing_dates)
-    #     return [d1, d2]
+        dates = sorted(real_dates, key=lambda d: d if isinstance(d, date) else d.date)
+        return dates
 
     def get_image(self) -> BytesIO:
         x = 100
-        y = 400
-        y_offset = 95
+        y = 300
+        y_offset = 140
         y_offset_small = 65
 
         dates = self._get_sorted_real_dates()
@@ -454,12 +453,26 @@ class YomTovImage(BaseImage):
         # draw the date
         start_date = dates[1]
         end_date = dates[-1]
+
         self._draw_line(x, y, headers.date, humanize_date([start_date, end_date], weekday_on_new_line=True))
         y += y_offset
 
-        for date_ in dates:
+        for i, date_ in enumerate(dates):
             if isinstance(date_, date):  # eve
-                ...
+            #     header = get_header_with_date(headers.cl, date_)
+            #     self._draw_line(x, y, header, dates[i + 1])
+            #     y += y_offset_small
+                continue
+
+            if date_.candle_lighting:
+                header = get_header_with_date(headers.cl, date_.candle_lighting.date(), cl=True)
+                self._draw_line(x, y, header, date_.candle_lighting.time().isoformat('minutes'))
+                y += y_offset_small
+
+            if date_.havdala:
+                header = get_header_with_date(headers.havdala, date_.havdala.date())
+                self._draw_line(x, y, header, date_.havdala.time().isoformat('minutes'))
+                y += y_offset_small
 
 
         ###
