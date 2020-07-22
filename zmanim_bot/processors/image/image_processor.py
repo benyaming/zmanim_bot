@@ -22,7 +22,7 @@ def humanize_date(date_range: List[Union[date, AsurBeMelachaDay]], weekday_on_ne
     """
     weekday_sep = '\n' if weekday_on_new_line else ' '
     months = names.MONTH_NAMES_GENETIVE
-    weekdays = names.WEEKDAYS_GENETIVE
+    weekdays = names.WEEKDAYS
 
     d1 = date_range[0]
     d2 = date_range[1] if (len(date_range) > 1) and (date_range[0] != date_range[1]) else None
@@ -33,7 +33,7 @@ def humanize_date(date_range: List[Union[date, AsurBeMelachaDay]], weekday_on_ne
         d2 = d2.date
 
     if not d2:
-        d = date_range[0]
+        d = d1
         resp = f'{d.day} {months[d.month]} {d.year},{weekday_sep}{weekdays[d.weekday()]}'
 
     elif d1.year != d2.year:
@@ -53,7 +53,14 @@ def humanize_date(date_range: List[Union[date, AsurBeMelachaDay]], weekday_on_ne
 
 
 def get_header_with_date(header_type: str, date_: Union[date, dt], cl: bool = False) -> str:
-    if cl and date_.weekday() == 6:
+    """
+
+    :param header_type: `headers.cl` or `headers.havdala`
+    :param date_:
+    :param cl:
+    :return:
+    """
+    if header_type == headers.cl and date_.weekday() == 4:
         shabbat = f' ({names.shabbat})'
     else:
         shabbat = ''
@@ -131,7 +138,7 @@ class BaseImage:
         if isinstance(value, time):
             value = value.isoformat(timespec='minutes')
         elif isinstance(value, date):
-            value = humanize_date([value], weekday_on_new_line=True)
+            value = humanize_date([value], weekday_on_new_line=False)
         # elif isinstance(value, dt):
         #     value = f''
         # if isinstance(value, LazyProxy):
@@ -409,7 +416,7 @@ class YomTovImage(BaseImage):
             'yom_kippur': ('yom_kippur.png', 55),
             'succot': ('succos.png', 47),
             'shmini_atzeres': ('shmini_atzeret.png', 45),
-            'pesach': ('pesah.png', 43 if data.shabbat else 50),
+            'pesach': ('pesah.png', 43 if data.post_shabbat or data.post_shabbat else 50),
             'shavuot': ('shavuot.png', 45),
         }
         background, font_size = background_and_font_params[data.settings.yomtov_name]
@@ -422,420 +429,70 @@ class YomTovImage(BaseImage):
         self.data = data
         self._draw_title(self._draw, names.YOMTOVS_TITLES[data.settings.yomtov_name])
 
-    def format_cl_date(self, date_: str) -> str:
-        ...
-
-    def _get_sorted_real_dates(self) -> List[Union[date, AsurBeMelachaDay]]:
-        all_dates = [
-            self.data.eve,
-            self.data.day_1,
-            self.data.day_2,
-            self.data.shabbat,
-            self.data.pesach_part_2_eve,
-            self.data.pesach_part_2_day_1,
-            self.data.pesach_part_2_day_2,
-            self.data.pesach_part_2_shabbat,
-            self.data.hoshana_rabba
-        ]
-
-        real_dates = list(filter(lambda date_: date_ is not None, all_dates))
-        dates = sorted(real_dates, key=lambda d: d if isinstance(d, date) else d.date)
-        return dates
-
     def get_image(self) -> BytesIO:
-        x = 100
-        y = 300
-        y_offset = 140
+        x = 80
+        y = 250
+        y_offset = 70
         y_offset_small = 65
 
-        dates = self._get_sorted_real_dates()
+        dates = [
+            self.data.pre_shabbat,
+            self.data.day_1,
+            self.data.day_2,
+            self.data.post_shabbat,
+            self.data.pesach_part_2_day_1,
+            self.data.pesach_part_2_day_2,
+            self.data.hoshana_rabba
+        ]
+        dates = [d for d in dates if d is not None]
 
         # draw the date
-        start_date = dates[1]
+        start_date = dates[0]
         end_date = dates[-1]
 
         self._draw_line(x, y, headers.date, humanize_date([start_date, end_date], weekday_on_new_line=True))
-        y += y_offset
+        y += y_offset * 2
 
         for i, date_ in enumerate(dates):
-            if isinstance(date_, date):  # eve
-            #     header = get_header_with_date(headers.cl, date_)
-            #     self._draw_line(x, y, header, dates[i + 1])
-            #     y += y_offset_small
+            if isinstance(date_, date):
+                self._draw_line(x, y, headers.hoshana_raba, date_)
                 continue
 
-            if date_.candle_lighting:
-                header = get_header_with_date(headers.cl, date_.candle_lighting.date(), cl=True)
-                self._draw_line(x, y, header, date_.candle_lighting.time().isoformat('minutes'))
+            if date_ == self.data.pesach_part_2_day_1:
                 y += y_offset_small
 
-            if date_.havdala:
-                header = get_header_with_date(headers.havdala, date_.havdala.date())
-                self._draw_line(x, y, header, date_.havdala.time().isoformat('minutes'))
+            if date_.candle_lighting:
+                header = get_header_with_date(headers.cl, date_.candle_lighting)
+                self._draw_line(x, y, header, date_.candle_lighting.time())
                 y += y_offset_small
+            if date_.havdala:
+                header = get_header_with_date(headers.havdala, date_.havdala)
+                self._draw_line(x, y, header, date_.havdala.time())
+                y += y_offset * 1.5
+
+
+        #
+        # for i, date_ in enumerate(dates):
+        #     if isinstance(date_, date):  # eve
+        #     #     header = get_header_with_date(headers.cl, date_)
+        #     #     self._draw_line(x, y, header, dates[i + 1])
+        #     #     y += y_offset_small
+        #         continue
+        #
+        #     if date_.candle_lighting:
+        #         header = get_header_with_date(headers.cl, date_.candle_lighting.date(), cl=True)
+        #         self._draw_line(x, y, header, date_.candle_lighting.time().isoformat('minutes'))
+        #         y += y_offset_small
+        #
+        #     if date_.havdala:
+        #         header = get_header_with_date(headers.havdala, date_.havdala.date())
+        #         self._draw_line(x, y, header, date_.havdala.time().isoformat('minutes'))
+        #         y += y_offset_small
 
 
         ###
-        # 2. cl header parser - to perform valid headers (and support shabbat)
+        #
         ###
 
         return _convert_img_to_bytes_io(self._image)
 
-
-# class RoshHashanaPicture(BasePicture):
-#
-#     def __init__(self, lang: str, data: dict):
-#         self._background_path = 'res/image/backgrounds/rosh_hashana.png'
-#         self._font_size = 47
-#         self._lang = lang
-#
-#         super().__init__()
-#
-#         localized_data = yom_tov.get_translate(data, self._translator, 'rosh_hashana')
-#         self._data = localized_data.data
-#         self._draw_title(self._draw, localized_data.title)
-#
-#     def draw_picture(self) -> BytesIO:
-#         pos_y = 400
-#         pos_x = 100
-#         y_offset = 95
-#         y_offset_small = 65
-#
-#         data = self._data
-#
-#         # draw the date
-#         self._draw_line((pos_x, pos_y), data.date.header, data.date.value)
-#         pos_y += y_offset + self._y_font_offset(data.date.value)
-#
-#         # draw candle lightings and havdala
-#         days = [data.cl_1, data.cl_2, data.cl_3, data.havdala]
-#
-#         for day in days:
-#             # if there is no third day (shabbos)
-#             if not day:
-#                 continue
-#
-#             self._draw_line((pos_x, pos_y), day.header, day.value)
-#             pos_y += y_offset_small
-#
-#         return _convert_img_to_bytes_io(self._image)
-#
-#
-# class YomKippurPicture(BasePicture):
-#
-#     def __init__(self, lang: str, data: dict):
-#         self._background_path = 'res/image/backgrounds/yom_kippur.png'
-#         self._font_size = 55
-#         self._lang = lang
-#
-#         super().__init__()
-#
-#         localized_data = yom_kippur.get_translate(data, self._translator)
-#         self._data = localized_data.data
-#         self._draw_title(self._draw, localized_data.title)
-#
-#     def draw_picture(self) -> BytesIO:
-#         pos_y = 300
-#         pos_x = 100
-#         y_offset = 170
-#         y_offset_small = 90
-#
-#         data = self._data
-#
-#         # draw date
-#         self._draw_line((pos_x, pos_y), data.date.header, data.date.value)
-#         pos_y += y_offset
-#
-#         # draw candle lightning
-#         self._draw_line((pos_x, pos_y), data.cl.header, data.cl.value,  True)
-#         pos_y += y_offset_small
-#
-#         # draw havdala
-#         self._draw_line((pos_x, pos_y), data.havdala.header, data.havdala.value, True)
-#         pos_y += y_offset_small
-#
-#         return _convert_img_to_bytes_io(self._image)
-#
-#
-# class SucosPicture(BasePicture):
-#
-#     def __init__(self, lang: str, data: dict):
-#         self._background_path = 'res/image/backgrounds/succos.png'
-#         self._font_size = 47
-#         self._lang = lang
-#
-#         super().__init__()
-#
-#         localized_data = succos.get_translate(data, self._translator)
-#         self._data = localized_data.data
-#         self._draw_title(self._draw, localized_data.title)
-#
-#     def draw_picture(self) -> BytesIO:
-#         pos_y = 300
-#         pos_x = 100
-#         y_offset = 100
-#         y_offset_small = 65
-#
-#         data = self._data
-#
-#         # draw the date
-#         self._draw_line((pos_x, pos_y), data.date.header, data.date.value)
-#         pos_y += y_offset
-#
-#         # draw candle lightings and havdala
-#         days = [data.cl_1, data.cl_2, data.cl_3, data.havdala]  # todo test
-#
-#         for day in days:
-#             # if there is no third day (shabbos)
-#             if not day:
-#                 continue
-#
-#             self._draw_line((pos_x, pos_y), day.header, day.value)
-#             pos_y += y_offset_small
-#
-#         pos_y += y_offset
-#
-#         # draw hoshana raba
-#         self._draw_line((pos_x, pos_y), data.hoshana_raba.header, data.hoshana_raba.value)
-#
-#         return _convert_img_to_bytes_io(self._image)
-#
-#
-# class ShminiAtzeretPicture(BasePicture):
-#
-#     def __init__(self, lang: str, data: dict):
-#         self._background_path = 'res/image/backgrounds/shmini_atzeret.png'
-#         self._font_size = 45
-#         self._lang = lang
-#
-#         super().__init__()
-#
-#         localized_data = shmini_atzeres.get_translate(data, self._translator)
-#         self._data = localized_data.data
-#         self._draw_title(self._draw, localized_data.title, is_shmini_atzeres=True)
-#
-#     def draw_picture(self) -> BytesIO:
-#         pos_y = 400
-#         pos_x = 100
-#         y_offset = 100
-#         y_offset_small = 65
-#
-#         data = self._data
-#
-#         # draw the date
-#         self._draw_line((pos_x, pos_y), data.date.header, data.date.value)
-#         pos_y += y_offset + self._y_font_offset(data.date.value)
-#
-#         # draw candle lightings and havdala
-#         days = [data.cl_1, data.cl_2, data.cl_3, data.havdala]  # todo test
-#
-#         for day in days:
-#             # if there is no third day (shabbos)
-#             if not day:
-#                 continue
-#
-#             self._draw_line((pos_x, pos_y), day.header, day.value)
-#             pos_y += y_offset_small
-#
-#         return _convert_img_to_bytes_io(self._image)
-#
-#
-# class ChanukaPicture(BasePicture):
-#
-#     def __init__(self, lang: str, data: dict):
-#         self._background_path = 'res/image/backgrounds/chanuka.png'
-#         self._font_size = 60
-#         self._lang = lang
-#
-#         super().__init__()
-#
-#         localized_data = channukah.get_translate(data, self._translator)
-#         self._data = localized_data.date
-#         self._draw_title(self._draw, localized_data.title)
-#
-#     def draw_picture(self) -> BytesIO:
-#         pos_y = 450
-#         pos_x = 100
-#
-#         data = self._data
-#         self._draw_line((pos_x, pos_y), data.header, data.value)
-#         return _convert_img_to_bytes_io(self._image)
-#
-#
-# class TuBiShvatPicture(BasePicture):
-#
-#     def __init__(self, lang: str, data: dict):
-#         self._background_path = 'res/image/backgrounds/tubishvat.png'
-#         self._font_size = 70
-#         self._lang = lang
-#
-#         super().__init__()
-#
-#         localized_data = tu_bishvat.get_translate(data, self._translator)
-#         self._data = localized_data.date
-#         self._draw_title(self._draw, localized_data.title)
-#
-#     def draw_picture(self) -> BytesIO:
-#         pos_y = 450
-#         pos_x = 100
-#
-#         data = self._data
-#         self._draw_line((pos_x, pos_y), data.header, data.value)
-#         return _convert_img_to_bytes_io(self._image)
-#
-#
-# class PurimPicture(BasePicture):
-#
-#     def __init__(self, lang: str, data: dict):
-#         self._background_path = 'res/image/backgrounds/purim.png'
-#         self._font_size = 70
-#         self._lang = lang
-#
-#         super().__init__()
-#
-#         localized_data = purim.get_translate(data, self._translator)
-#         self._data = localized_data.date
-#         self._draw_title(self._draw, localized_data.title)
-#
-#     def draw_picture(self) -> BytesIO:
-#         pos_y = 450
-#         pos_x = 100
-#
-#         data = self._data
-#         self._draw_line((pos_x, pos_y), data.header, data.value)
-#         return _convert_img_to_bytes_io(self._image)
-#
-#
-# class PesahPicture(BasePicture):
-#
-#     def __init__(self, lang: str, data: dict):
-#         self._background_path = 'res/image/backgrounds/pesah.png'
-#         self._font_size = 43 if data['part_1']['day_3'] else 50
-#         self._lang = lang
-#
-#         super().__init__()
-#
-#         localized_data = pesach.get_translate(data, self._translator)
-#         self._data = localized_data.data
-#         self._draw_title(self._draw, localized_data.title)
-#
-#     def draw_picture(self) -> BytesIO:
-#         # shortcuts for code glance
-#         date = self._data.date
-#         part_1 = self._data.part_1
-#         part_2 = self._data.part_2
-#         draw = self._draw_line
-#
-#         pos_y = 250 if part_1.cl_3 else 270
-#         pos_x = 100
-#         y_offset = 70
-#         y_offset_small = 65
-#
-#         # draw the date
-#         draw((pos_x, pos_y), date.header, date.value)
-#         pos_y += y_offset + self._y_font_offset(date.value)
-#
-#         for part in part_1, part_2:
-#             lines = [part.cl_1, part.cl_2, part.cl_3, part.havdala]
-#             for line in lines:
-#                 if not line:
-#                     continue
-#                 draw((pos_x, pos_y), line.header, line.value)
-#                 pos_y += y_offset_small
-#             pos_y += y_offset
-#
-#         return _convert_img_to_bytes_io(self._image)
-#
-#
-# class LagBaomerPicture(BasePicture):
-#
-#     def __init__(self, lang: str, data: dict):
-#         self._background_path = 'res/image/backgrounds/lagbaomer.png'
-#         self._font_size = 70
-#         self._lang = lang
-#
-#         super().__init__()
-#
-#         localized_data = lag_baomer.get_translate(data, self._translator)
-#         self._data = localized_data.date
-#         self._draw_title(self._draw, localized_data.title)
-#
-#     def draw_picture(self):
-#         pos_y = 450
-#         pos_x = 100
-#
-#         data = self._data
-#         self._draw_line((pos_x, pos_y), data.header, data.value)
-#
-#         return _convert_img_to_bytes_io(self._image)
-#
-#
-# class ShavuotPicture(BasePicture):
-#
-#     def __init__(self, lang: str, data: dict):
-#         self._background_path = 'res/image/backgrounds/shavuot.png'
-#         self._font_size = 45
-#         self._lang = lang
-#
-#         super().__init__()
-#
-#         localized_data = yom_tov.get_translate(data, self._translator, 'shavuos')
-#         self._data = localized_data.data
-#         self._draw_title(self._draw, localized_data.title)
-#
-#     def draw_picture(self) -> BytesIO:
-#         pos_y = 400
-#         pos_x = 100
-#         y_offset = 95
-#         y_offset_small = 65
-#
-#         data = self._data
-#
-#         # draw the date
-#         self._draw_line((pos_x, pos_y), data.date.header, data.date.value)
-#         pos_y += y_offset + self._y_font_offset(data.date.value)
-#
-#         # draw candle lightings and havdala
-#         days = [data.cl_1, data.cl_2, data.cl_3, data.havdala]
-#         for day in days:
-#             # if there is no third day (shabbos)
-#             if not day:
-#                 continue
-#
-#             self._draw_line((pos_x, pos_y), day.header, day.value)
-#             pos_y += y_offset_small
-#
-#         return _convert_img_to_bytes_io(self._image)
-#
-#
-# class IsraelHolidaysPicture(BasePicture):
-#
-#     def __init__(self, lang: str, data: dict):
-#         self._background_path = 'res/image/backgrounds/israel_holidays.png'
-#         self._font_size = 50
-#         self._lang = lang
-#
-#         super().__init__()
-#
-#         localized_data = israel_holidays.get_translate(data, self._translator)
-#         self._data = localized_data
-#         self._draw_title(self._draw, localized_data.title)
-#
-#     def draw_picture(self):
-#         pos_y = 320
-#         pos_x = 100
-#         y_offset = 80
-#         y_offset_small = 60
-#
-#         data = self._data
-#
-#         holidays = [data.yom_hashoa, data.yom_hazikaron, data.yom_haatzmaaut,
-#                     data.yom_yerushalaim]
-#
-#         for holiday in holidays:
-#             self._draw_line((pos_x, pos_y), holiday.title, '')
-#             pos_y += y_offset_small
-#             self._draw_line((pos_x, pos_y), holiday.date.header, holiday.date.value)
-#             pos_y += y_offset
-#
-#         return _convert_img_to_bytes_io(self._image)
