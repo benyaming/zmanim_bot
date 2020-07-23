@@ -53,12 +53,12 @@ async def track_user_(user_id: int, first_name: str, last_name: Optional[str], u
     await _execute_query(query, args)
 
 
-async def get_lang(user_id: int) -> str:
+async def get_lang(user_id: int) -> Optional[str]:
     query = 'SELECT lang FROM public.lang WHERE user_id = %s'
 
     lang = await _execute_query(query, (user_id,), return_result=True)
     if len(lang) == 0:
-        raise NoLanguageException
+        return None
     return lang[0][0]
 
 

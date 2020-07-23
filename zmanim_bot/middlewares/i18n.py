@@ -2,10 +2,12 @@ from pathlib import Path
 from typing import Tuple, Any
 
 from aiogram.contrib.middlewares.i18n import I18nMiddleware
+from aiogram.types import Message
 
+from ..exceptions import NoLanguageException
 from ..misc import dp
 from ..api import get_or_set_lang
-from ..config import I18N_DOMAIN
+from ..config import I18N_DOMAIN, LANGUAGE_LIST
 
 
 LOCALES_DIR = Path(__file__).parent.parent / 'locales'
@@ -13,7 +15,18 @@ LOCALES_DIR = Path(__file__).parent.parent / 'locales'
 
 class I18N(I18nMiddleware):
     async def get_user_locale(self, action: str, args: Tuple[Any]) -> str:
-        return await get_or_set_lang()
+        locale = await get_or_set_lang()
+
+        if not locale:
+            if len(args) > 0 and isinstance(args[0], Message):
+                if args[0].text in LANGUAGE_LIST:
+                    locale = args[0].text
+                elif args[0].text == '/start':
+                    locale = ''
+            else:
+                raise NoLanguageException
+
+        return locale
 
 
 i18n_ = I18N(I18N_DOMAIN, LOCALES_DIR)

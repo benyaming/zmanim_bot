@@ -6,7 +6,8 @@ from aiogram.dispatcher import FSMContext
 from ..misc import dp
 from ..exceptions import NoLanguageException
 from ..api import track_user
-from .redirects import redirect_to_main_menu, redirect_to_request_location
+from .redirects import redirect_to_main_menu, redirect_to_request_location, \
+    redirect_to_request_language
 from ..texts.single import buttons
 
 
@@ -44,5 +45,5 @@ async def handle_start(msg: Message):
 @dp.message_handler(commands=['start'], state='*')
 async def handle_start(msg: Message, state: FSMContext):
     await state.finish()
-    await redirect_to_main_menu()
+    await redirect_to_request_language()
     create_task(track_user())

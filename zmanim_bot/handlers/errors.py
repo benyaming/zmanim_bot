@@ -12,9 +12,9 @@ async def no_location_exception_handler(update: Update, e: NoLocationException):
     return True
 
 
-@dp.errors_handler(exception=NoLanguageException)
+# @dp.errors_handler(exception=NoLanguageException)
 async def no_language_exception_handler(update: Update, e: NoLanguageException):
-    await redirect_to_request_language()
+    # await redirect_to_request_language()
     return True
 
 
