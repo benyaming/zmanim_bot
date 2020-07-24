@@ -1,7 +1,7 @@
 from io import BytesIO
 from pathlib import Path
 from datetime import datetime as dt, date, time
-from typing import Union, Dict, List, Any
+from typing import Union, Dict, List, Any, Tuple, Optional
 
 from babel.support import LazyProxy
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
@@ -12,8 +12,13 @@ from ...texts.single import names, headers, helpers
 from ...texts.plural import units
 
 
+IMG_SIZE = 1181
+Line = Tuple[str, str]
+
+
 def humanize_date(date_range: List[Union[date, AsurBeMelachaDay]], weekday_on_new_line: bool = False) -> str:
     """
+    Use this function for humanize date or date range
     Examples:
       2020-01-01 -> 1 January 2020, Wednesday
       2020-01-01, 2020-01-08 -> 1—7 January 2020, Wednesday-Tuesday
@@ -52,14 +57,8 @@ def humanize_date(date_range: List[Union[date, AsurBeMelachaDay]], weekday_on_ne
     return resp
 
 
-def get_header_with_date(header_type: str, date_: Union[date, dt], cl: bool = False) -> str:
-    """
-
-    :param header_type: `headers.cl` or `headers.havdala`
-    :param date_:
-    :param cl:
-    :return:
-    """
+def humanize_header_date(header_type: str, date_: Union[date, dt]) -> str:
+    """ Use this function for date header, not for date title  """
     if header_type == headers.cl and date_.weekday() == 4:
         shabbat = f' ({names.shabbat})'
     else:
@@ -69,13 +68,18 @@ def get_header_with_date(header_type: str, date_: Union[date, dt], cl: bool = Fa
     return resp
 
 
-def _format_value(value: Union[str, int, float, dt, date, time, LazyProxy]) -> str:
-    if isinstance(value, str):
-        return value
-    elif isinstance(value, LazyProxy):
-        return value.value
-    elif isinstance(value, float):
-        return str(round(value, 2))
+def humanize_time(time_: time) -> str:
+    """ Use this function for convert time to hh:mm """
+    if isinstance(time_, time):
+        return time_.isoformat(timespec='minutes')
+
+# def _format_value(value: Union[str, int, float, dt, date, time, LazyProxy]) -> str:
+#     if isinstance(value, str):
+#         return value
+#     elif isinstance(value, LazyProxy):
+#         return value.value
+#     elif isinstance(value, float):
+#         return str(round(value, 2))
 
 
 def _convert_img_to_bytes_io(img: PngImagePlugin.PngImageFile) -> BytesIO:
@@ -93,8 +97,8 @@ def _get_draw(background_path: str) -> ImageDraw:
 
 class BaseImage:
 
-    _font_path = Path(__file__).parent / 'src' / 'fonts' / 'gothic.TTF'
-    _bold_font_path = Path(__file__).parent / 'src' / 'fonts' / 'gothic-bold.TTF'
+    _font_path = Path(__file__).parent / 'res' / 'fonts' / 'gothic.TTF'
+    _bold_font_path = Path(__file__).parent / 'res' / 'fonts' / 'gothic-bold.TTF'
     _title_font = ImageFont.truetype(str(_bold_font_path), 60)
     # smaller font for shmini atzeres
     _title_font_sa = ImageFont.truetype(str(_bold_font_path), 55)
@@ -131,14 +135,14 @@ class BaseImage:
             self,
             x: int,
             y: int,
-            header: Union[LazyProxy, str],
-            value: Union[int, str, float, dt, date, time, LazyProxy],
+            header: str,
+            value: str,
             value_on_new_line: bool = False
     ):
-        if isinstance(value, time):
-            value = value.isoformat(timespec='minutes')
-        elif isinstance(value, date):
-            value = humanize_date([value], weekday_on_new_line=False)
+        # if isinstance(value, time):
+        #     value = value.isoformat(timespec='minutes')
+        # elif isinstance(value, date):
+        #     value = humanize_title_date([value], weekday_on_new_line=False)
         # elif isinstance(value, dt):
         #     value = f''
         # if isinstance(value, LazyProxy):
@@ -164,7 +168,7 @@ class BaseImage:
 class DafYomImage(BaseImage):
     def __init__(self):
         self._font_size = 90
-        self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / 'daf_yomi.png'
+        self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'daf_yomi.png'
 
         super().__init__()
         self._draw_title(self._draw, names.title_daf_yomi)
@@ -187,7 +191,7 @@ class DafYomImage(BaseImage):
 class RoshChodeshImage(BaseImage):
     def __init__(self):
         self._font_size = 46
-        self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / 'rosh_hodesh.png'
+        self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'rosh_hodesh.png'
 
         super().__init__()
         self._draw_title(self._draw, names.title_rosh_chodesh)
@@ -231,9 +235,9 @@ class ShabbatImage(BaseImage):
 
     def draw_picture(self, data: Shabbat):
         if not data.candle_lighting or data.late_cl_warning:
-            self._background_path: str = Path(__file__).parent / 'src' / 'backgrounds' / 'shabbos_attention.png'
+            self._background_path: str = Path(__file__).parent / 'res' / 'backgrounds' / 'shabbos_attention.png'
         else:
-            self._background_path: str = Path(__file__).parent / 'src' / 'backgrounds' / 'shabbos.png'
+            self._background_path: str = Path(__file__).parent / 'res' / 'backgrounds' / 'shabbos.png'
         self._image, self._draw = _get_draw(str(self._background_path))
 
         self._draw_title(self._draw, names.title_shabbath)
@@ -281,7 +285,7 @@ class ShabbatImage(BaseImage):
 class ZmanimImage(BaseImage):
 
     def __init__(self):
-        self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / 'zmanim.png'
+        self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'zmanim.png'
         super().__init__()
 
         self._draw_title(self._draw, names.title_zmanim, is_zmanim=True)
@@ -339,7 +343,7 @@ class ZmanimImage(BaseImage):
 class FastImage(BaseImage):
 
     def __init__(self):
-        self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / 'fast.png'
+        self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'fast.png'
         self._font_size = 60
 
         super().__init__()
@@ -391,7 +395,7 @@ class HolidayImage(BaseImage):
         }
         background, font_size = background_and_font_params[data.settings.holiday_name]
 
-        self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / background
+        self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / background
         self._font_size = font_size
 
         super().__init__()
@@ -421,7 +425,7 @@ class YomTovImage(BaseImage):
         }
         background, font_size = background_and_font_params[data.settings.yomtov_name]
 
-        self._background_path = Path(__file__).parent / 'src' / 'backgrounds' / background
+        self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / background
         self._font_size = font_size
 
         super().__init__()
@@ -429,11 +433,53 @@ class YomTovImage(BaseImage):
         self.data = data
         self._draw_title(self._draw, names.YOMTOVS_TITLES[data.settings.yomtov_name])
 
+    def _get_coordinats(self):
+        ...
+
+    def _prepare_lines(self) -> List[Optional[Line]]:
+        dates = [
+            self.data.pre_shabbat,
+            self.data.day_1,
+            self.data.day_2,
+            self.data.post_shabbat,
+            self.data.pesach_part_2_day_1,
+            self.data.pesach_part_2_day_2,
+            self.data.hoshana_rabba
+        ]
+        dates = [d for d in dates if d is not None]
+
+        lines = []
+
+        for date_ in dates:
+            if isinstance(date_, date):
+                header = str(headers.hoshana_raba)
+                value = f'{date_.day} {names.MONTH_NAMES_GENETIVE[date_.month]} {names.WEEKDAYS[date_.weekday()]}'
+                lines.append(None)
+                lines.append((header, value))
+                continue
+
+            if date_ == self.data.pesach_part_2_day_1:
+                lines.append(None)
+
+            if date_.candle_lighting:
+                header = humanize_header_date(headers.cl, date_.candle_lighting)
+                value = humanize_time(date_.candle_lighting.time())
+                lines.append((header, value))
+            if date_.havdala:
+                header = humanize_header_date(headers.havdala, date_.havdala)
+                value = humanize_time(date_.havdala.time())
+                lines.append((header, value))
+
+        return lines
+
     def get_image(self) -> BytesIO:
+        # todo case of date with post shabbat
         x = 80
         y = 250
         y_offset = 70
         y_offset_small = 65
+
+        lines = self._prepare_lines()
 
         dates = [
             self.data.pre_shabbat,
@@ -462,11 +508,11 @@ class YomTovImage(BaseImage):
                 y += y_offset_small
 
             if date_.candle_lighting:
-                header = get_header_with_date(headers.cl, date_.candle_lighting)
+                header = humanize_header_date(headers.cl, date_.candle_lighting)
                 self._draw_line(x, y, header, date_.candle_lighting.time())
                 y += y_offset_small
             if date_.havdala:
-                header = get_header_with_date(headers.havdala, date_.havdala)
+                header = humanize_header_date(headers.havdala, date_.havdala)
                 self._draw_line(x, y, header, date_.havdala.time())
                 y += y_offset * 1.5
 
