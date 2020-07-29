@@ -13,7 +13,8 @@ from ...texts.plural import units
 
 
 IMG_SIZE = 1181
-Line = Tuple[str, str]
+Line = Tuple[Optional[str], Optional[str], Optional[bool]]
+EMPTY_LINE = None, None, None
 
 
 def humanize_date(date_range: List[Union[date, AsurBeMelachaDay]], weekday_on_new_line: bool = False) -> str:
@@ -57,15 +58,18 @@ def humanize_date(date_range: List[Union[date, AsurBeMelachaDay]], weekday_on_ne
     return resp
 
 
-def humanize_header_date(header_type: str, date_: Union[date, dt]) -> str:
-    """ Use this function for date header, not for date title  """
+def humanize_header_date(header_type: str, date_: Union[date, dt]) -> Tuple[str, bool]:
+    """
+    Use this function for date header, not for date title.
+    :return header and flag indicates if it's two-lines height header
+    """
     if header_type == headers.cl and date_.weekday() == 4:
-        shabbat = f' ({names.shabbat})'
+        shabbat = f'\n({names.shabbat})'
     else:
         shabbat = ''
 
     resp = f'{header_type} {date_.day} {names.MONTH_NAMES_GENETIVE[date_.month]}{shabbat}'
-    return resp
+    return resp, bool(shabbat)
 
 
 def humanize_time(time_: time) -> str:
@@ -105,7 +109,10 @@ class BaseImage:
     _font_size = 0
     _warning_font_size = 0
     _background_path = None
-    _raw_data = None
+
+    _image: PngImagePlugin.PngImageFile
+    _draw: ImageDraw
+    # _raw_data = None
 
     def __init__(self):
         self._font = ImageFont.truetype(str(self._font_path), self._font_size)
@@ -114,8 +121,7 @@ class BaseImage:
         if self._background_path:
             self._image, self._draw = _get_draw(str(self._background_path))
 
-        self._warning_font = ImageFont.truetype(str(self._bold_font_path),
-                                                self._warning_font_size)
+        self._warning_font = ImageFont.truetype(str(self._bold_font_path), self._warning_font_size)
 
     def _draw_title(self, draw: ImageDraw, title: LazyProxy, is_zmanim: bool = False,
                     is_shmini_atzeres: bool = False) -> None:
@@ -125,7 +131,11 @@ class BaseImage:
 
     def _x_font_offset(self, text: str) -> int:
         """Returns size in px of given text in axys x"""
-        return self._bold_font.getsize(text)[0]
+        longest_line = sorted(text.split('\n'), key=len)[-1]
+        if '\n' in text:
+            longest_line = f'{longest_line}:'
+
+        return self._bold_font.getsize(longest_line)[0]
 
     def _y_font_offset(self, text: str) -> int:
         """Returns size in px of given text in axys y"""
@@ -139,24 +149,13 @@ class BaseImage:
             value: str,
             value_on_new_line: bool = False
     ):
-        # if isinstance(value, time):
-        #     value = value.isoformat(timespec='minutes')
-        # elif isinstance(value, date):
-        #     value = humanize_title_date([value], weekday_on_new_line=False)
-        # elif isinstance(value, dt):
-        #     value = f''
-        # if isinstance(value, LazyProxy):
-        #     value = value.value
-        # if isinstance(value, int):
-        #     value = str(value)
-
         header = f'{str(header)}: '
         self._draw.text((x, y), text=header, font=self._bold_font)
 
-        if not value_on_new_line:
-            x += self._x_font_offset(header)
-        else:
-            y += self._y_font_offset(header)
+        # if not value_on_new_line:
+        x += self._x_font_offset(header)
+        # else:
+        #     y += self._y_font_offset(header)
 
         # TODO: validate that value smaller them picture size
         self._draw.text((x, y), text=str(value), font=self._font)
@@ -321,7 +320,6 @@ class ZmanimImage(BaseImage):
         x = 250
         y = 130
         date_font = ImageFont.truetype(str(self._font_path), 40)
-
         self._draw.text((x, y), date_, font=date_font)
 
     def get_image(self, data: Zmanim) -> BytesIO:
@@ -415,28 +413,24 @@ class HolidayImage(BaseImage):
 class YomTovImage(BaseImage):
 
     def __init__(self, data: YomTov):
-        background_and_font_params = {
-            'rosh_hashana': ('rosh_hashana.png', 47),
-            'yom_kippur': ('yom_kippur.png', 55),
-            'succot': ('succos.png', 47),
-            'shmini_atzeres': ('shmini_atzeret.png', 45),
-            'pesach': ('pesah.png', 43 if data.post_shabbat or data.post_shabbat else 50),
-            'shavuot': ('shavuot.png', 45),
+        backgrounds = {
+            'rosh_hashana': 'rosh_hashana.png',
+            'yom_kippur': 'yom_kippur.png',
+            'succot': 'succos.png',
+            'shmini_atzeres': 'shmini_atzeret.png',
+            'pesach': 'pesah.png',
+            'shavuot': 'shavuot.png',
         }
-        background, font_size = background_and_font_params[data.settings.yomtov_name]
+        background = backgrounds[data.settings.yomtov_name]
 
         self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / background
-        self._font_size = font_size
 
         super().__init__()
 
         self.data = data
         self._draw_title(self._draw, names.YOMTOVS_TITLES[data.settings.yomtov_name])
 
-    def _get_coordinats(self):
-        ...
-
-    def _prepare_lines(self) -> List[Optional[Line]]:
+    def _prepare_lines(self) -> List[Line]:
         dates = [
             self.data.pre_shabbat,
             self.data.day_1,
@@ -454,91 +448,84 @@ class YomTovImage(BaseImage):
             if isinstance(date_, date):
                 header = str(headers.hoshana_raba)
                 value = f'{date_.day} {names.MONTH_NAMES_GENETIVE[date_.month]} {names.WEEKDAYS[date_.weekday()]}'
-                lines.append(None)
+                lines.append(EMPTY_LINE)
                 lines.append((header, value))
                 continue
 
             if date_ == self.data.pesach_part_2_day_1:
-                lines.append(None)
+                lines.append(EMPTY_LINE)
 
             if date_.candle_lighting:
-                header = humanize_header_date(headers.cl, date_.candle_lighting)
+                header, new_line = humanize_header_date(headers.cl, date_.candle_lighting)
                 value = humanize_time(date_.candle_lighting.time())
-                lines.append((header, value))
+                lines.append((header, value, new_line))
             if date_.havdala:
-                header = humanize_header_date(headers.havdala, date_.havdala)
+                header, new_line = humanize_header_date(headers.havdala, date_.havdala)
                 value = humanize_time(date_.havdala.time())
-                lines.append((header, value))
+                lines.append((header, value, new_line))
 
         return lines
+
+    @staticmethod
+    def _get_font_properties(number_of_lines: int) -> Tuple[int, int, int]:
+        p = {
+            # [font_size, y_offset, start_y_offset]
+            3: (58, 70, 420),
+            4: (58, 68, 180),
+            5: (58, 68, 160),
+            6: (58, 68, 140),
+            7: (58, 68, 100),
+            8: (58, 68, 85)
+        }
+        font_size, y_offset, start_position_y = p.get(number_of_lines)
+        return start_position_y, y_offset, font_size
 
     def get_image(self) -> BytesIO:
         # todo case of date with post shabbat
         x = 80
-        y = 250
-        y_offset = 70
-        y_offset_small = 65
 
         lines = self._prepare_lines()
+        y, y_offset, font_size = self._get_font_properties(len(lines))
+        self._font = ImageFont.truetype(str(self._font_path), size=font_size)
+        self._bold_font = ImageFont.truetype(str(self._bold_font_path), size=font_size)
 
-        dates = [
-            self.data.pre_shabbat,
-            self.data.day_1,
-            self.data.day_2,
-            self.data.post_shabbat,
-            self.data.pesach_part_2_day_1,
-            self.data.pesach_part_2_day_2,
-            self.data.hoshana_rabba
-        ]
-        dates = [d for d in dates if d is not None]
-
-        # draw the date
-        start_date = dates[0]
-        end_date = dates[-1]
-
-        self._draw_line(x, y, headers.date, humanize_date([start_date, end_date], weekday_on_new_line=True))
-        y += y_offset * 2
-
-        for i, date_ in enumerate(dates):
-            if isinstance(date_, date):
-                self._draw_line(x, y, headers.hoshana_raba, date_)
+        for header, value, new_line in lines:
+            if not header:
+                y += y_offset * 2
                 continue
 
-            if date_ == self.data.pesach_part_2_day_1:
-                y += y_offset_small
-
-            if date_.candle_lighting:
-                header = humanize_header_date(headers.cl, date_.candle_lighting)
-                self._draw_line(x, y, header, date_.candle_lighting.time())
-                y += y_offset_small
-            if date_.havdala:
-                header = humanize_header_date(headers.havdala, date_.havdala)
-                self._draw_line(x, y, header, date_.havdala.time())
-                y += y_offset * 1.5
+            self._draw_line(x, y, header, value)
+            if new_line:
+                y += self._y_font_offset(header)
+            y += y_offset
 
 
-        #
-        # for i, date_ in enumerate(dates):
-        #     if isinstance(date_, date):  # eve
-        #     #     header = get_header_with_date(headers.cl, date_)
-        #     #     self._draw_line(x, y, header, dates[i + 1])
-        #     #     y += y_offset_small
-        #         continue
-        #
-        #     if date_.candle_lighting:
-        #         header = get_header_with_date(headers.cl, date_.candle_lighting.date(), cl=True)
-        #         self._draw_line(x, y, header, date_.candle_lighting.time().isoformat('minutes'))
-        #         y += y_offset_small
-        #
-        #     if date_.havdala:
-        #         header = get_header_with_date(headers.havdala, date_.havdala.date())
-        #         self._draw_line(x, y, header, date_.havdala.time().isoformat('minutes'))
-        #         y += y_offset_small
+        self._image.save('test.png')
+        # return _convert_img_to_bytes_io(self._image)
 
 
-        ###
-        #
-        ###
-
-        return _convert_img_to_bytes_io(self._image)
-
+def test():
+    j = {
+      "settings": {
+        "date": date.fromisoformat("2020-07-29"),
+        "cl_offset": 15,
+        "havdala_opinion": "tzeis_5_95_degrees",
+        "coordinates": [
+          55.5,
+          37.7
+        ],
+        "elevation": 0,
+        "yomtov_name": "rosh_hashana"
+      },
+      "day_1": {
+        "date": "2020-09-19",
+        "candle_lighting": dt.fromisoformat("2020-09-18T18:22:52.909420+03:00")
+      },
+      "day_2": {
+        "date": "2020-09-20",
+        "candle_lighting": dt.fromisoformat("2020-09-19T19:11:37.756047+03:00"),
+        "havdala": dt.fromisoformat("2020-09-20T19:08:57.792389+03:00")
+      }
+    }
+    d = YomTov(**j)
+    YomTovImage(d).get_image()

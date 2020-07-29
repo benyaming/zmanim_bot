@@ -16,4 +16,6 @@ async def on_start(dispatcher: Dispatcher):
     dispatcher['db_pool'] = db_conn
 
 
-start_polling(dp, on_startup=on_start, skip_updates=True)
+# start_polling(dp, on_startup=on_start, skip_updates=True)
+from zmanim_bot.processors.image.image_processor import test
+test()
