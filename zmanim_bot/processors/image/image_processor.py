@@ -131,11 +131,9 @@ class BaseImage:
 
     def _x_font_offset(self, text: str) -> int:
         """Returns size in px of given text in axys x"""
-        longest_line = sorted(text.split('\n'), key=len)[-1]
-        if '\n' in text:
-            longest_line = f'{longest_line}:'
+        last_line = text.split('\n')[-1]
 
-        return self._bold_font.getsize(longest_line)[0]
+        return self._bold_font.getsize(last_line)[0]
 
     def _y_font_offset(self, text: str) -> int:
         """Returns size in px of given text in axys y"""
@@ -155,7 +153,8 @@ class BaseImage:
         # if not value_on_new_line:
         x += self._x_font_offset(header)
         # else:
-        #     y += self._y_font_offset(header)
+        if value_on_new_line:
+            y += self._y_font_offset(header.split('\n')[0])
 
         # TODO: validate that value smaller them picture size
         self._draw.text((x, y), text=str(value), font=self._font)
@@ -494,7 +493,7 @@ class YomTovImage(BaseImage):
                 y += y_offset * 2
                 continue
 
-            self._draw_line(x, y, header, value)
+            self._draw_line(x, y, header, value, new_line)
             if new_line:
                 y += self._y_font_offset(header)
             y += y_offset
