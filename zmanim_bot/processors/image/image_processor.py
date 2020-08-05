@@ -77,14 +77,6 @@ def humanize_time(time_: time) -> str:
     if isinstance(time_, time):
         return time_.isoformat(timespec='minutes')
 
-# def _format_value(value: Union[str, int, float, dt, date, time, LazyProxy]) -> str:
-#     if isinstance(value, str):
-#         return value
-#     elif isinstance(value, LazyProxy):
-#         return value.value
-#     elif isinstance(value, float):
-#         return str(round(value, 2))
-
 
 def _convert_img_to_bytes_io(img: PngImagePlugin.PngImageFile) -> BytesIO:
     bytes_io = BytesIO()
@@ -470,11 +462,11 @@ class YomTovImage(BaseImage):
         p = {
             # [font_size, y_offset, start_y_offset]
             3: (58, 70, 420),
-            4: (58, 68, 180),
-            5: (58, 68, 160),
-            6: (58, 68, 140),
-            7: (58, 68, 100),
-            8: (58, 68, 85)
+            4: (58, 70, 420),
+            5: (58, 70, 420),
+            6: (58, 70, 420),
+            7: (58, 70, 420),
+            8: (58, 70, 420)
         }
         font_size, y_offset, start_position_y = p.get(number_of_lines)
         return start_position_y, y_offset, font_size
@@ -505,26 +497,30 @@ class YomTovImage(BaseImage):
 
 def test():
     j = {
-      "settings": {
-        "date": date.fromisoformat("2020-07-29"),
-        "cl_offset": 15,
-        "havdala_opinion": "tzeis_5_95_degrees",
-        "coordinates": [
-          55.5,
-          37.7
-        ],
-        "elevation": 0,
-        "yomtov_name": "rosh_hashana"
-      },
-      "day_1": {
-        "date": "2020-09-19",
-        "candle_lighting": dt.fromisoformat("2020-09-18T18:22:52.909420+03:00")
-      },
-      "day_2": {
-        "date": "2020-09-20",
-        "candle_lighting": dt.fromisoformat("2020-09-19T19:11:37.756047+03:00"),
-        "havdala": dt.fromisoformat("2020-09-20T19:08:57.792389+03:00")
-      }
-    }
+  "settings": {
+    "date": "2022-04-15",
+    "cl_offset": 18,
+    "havdala_opinion": "tzeis_8_5_degrees",
+    "coordinates": [
+      55.5,
+      37.7
+    ],
+    "elevation": 0,
+    "yomtov_name": "shavuot"
+  },
+  "pre_shabbat": {
+    "date": "2022-06-04",
+    "candle_lighting": "2022-06-03T20:44:39.375578+03:00"
+  },
+  "day_1": {
+    "date": "2022-06-05",
+    "candle_lighting": "2022-06-04T22:36:39.212694+03:00"
+  },
+  "day_2": {
+    "date": "2022-06-06",
+    "candle_lighting": "2022-06-05T22:38:33.390085+03:00",
+    "havdala": "2022-06-06T22:40:23.180390+03:00"
+  }
+}
     d = YomTov(**j)
     YomTovImage(d).get_image()
