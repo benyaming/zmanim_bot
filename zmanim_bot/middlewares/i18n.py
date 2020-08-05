@@ -34,7 +34,8 @@ dp.middleware.setup(i18n_)
 gettext = i18n_.gettext
 lazy_gettext = i18n_.lazy_gettext
 
+# cd .\zmanim_bot\texts\single\
+#  pybabel extract ..\plural\units.py .\buttons.py .\headers.py .\helpers.py .\messages.py .\names.py .\zmanim.py  -o .\..\..\locales\zmanim_bot.pot
 
-# pybabel extract .\texts\buttons.py .\texts\messages.py -o .\locales\zmanim_bot.pot
 # pybabel init -i .\locales\zmanim_bot.pot -d .\locales\ -D zmanim_bot -l ru
 # pybabel compile -d .\locales\ -D zmanim_bot

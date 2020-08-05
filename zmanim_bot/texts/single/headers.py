@@ -3,7 +3,7 @@ from ..translators import lazy_gettext as _
 
 date = _('date')
 
-daf_masehet = _('daf')
+daf_masehet = _('masehet')
 daf_page = _('list')
 
 rh_duration = _('duration')

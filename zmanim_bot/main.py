@@ -22,5 +22,4 @@ start_polling(dp, on_startup=on_start, skip_updates=True)
 
 
 # ---------------
-# TODO date converter - jewish month and both weekdays not converts to string
 

@@ -204,7 +204,6 @@ class RoshChodeshImage(BaseImage):
 
         date_value = humanize_date([self.data.settings.date_])
         self._draw_line(x, y, headers.date, date_value)
-        y += y_offset  # todo test
 
         # draw molad string
         molad = self.data.molad[0]
@@ -322,7 +321,7 @@ class ZmanimImage(BaseImage):
         self._set_font_properties(len(zmanim))
         self._draw_date(humanize_date([self.data.settings.date_]))
 
-        y: int = 210 + self._start_y_offset  # todo test
+        y: int = 210 + self._start_y_offset
         x: int = 100
 
         # draw all image lines in cycle
@@ -356,7 +355,6 @@ class FastImage(BaseImage):
         fast_date, fast_weekday = humanize_date([self.data.fast_start]).split(', ')
         fast_start_value = f'{fast_date}\n{fast_weekday}, {self.data.fast_start.time().isoformat("minutes")}'
         self._draw_line(x, y, headers.fast_start, fast_start_value)
-        y += y_offset  # todo test
 
         # draw hatzot, if need
         if self.data.chatzot:
