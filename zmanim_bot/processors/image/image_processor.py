@@ -1,7 +1,7 @@
 from io import BytesIO
 from pathlib import Path
 from datetime import datetime as dt, date, time
-from typing import Union, Dict, List, Any, Tuple, Optional
+from typing import Union, Dict, List, Tuple, Optional
 
 from babel.support import LazyProxy
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
@@ -156,60 +156,62 @@ class BaseImage:
 
 
 class DafYomImage(BaseImage):
-    def __init__(self):
+    def __init__(self, data: DafYomi):
         self._font_size = 90
+        self.data = data
         self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'daf_yomi.png'
 
         super().__init__()
         self._draw_title(self._draw, names.title_daf_yomi)
 
-    def get_image(self, data: DafYomi) -> BytesIO:
+    def get_image(self) -> BytesIO:
         y = 470
         x = 100
         y_offset = 100
 
         # draw masehet
-        self._draw_line(x, y, headers.daf_masehet, data.masehet)
+        self._draw_line(x, y, headers.daf_masehet, self.data.masehet)
         y += y_offset
 
         # draw daf
-        self._draw_line(x, y, headers.daf_page, data.daf)
+        self._draw_line(x, y, headers.daf_page, str(self.data.daf))
 
         return _convert_img_to_bytes_io(self._image)
 
 
 class RoshChodeshImage(BaseImage):
-    def __init__(self):
+    def __init__(self, data: RoshChodesh):
+        self.data = data
         self._font_size = 46
         self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'rosh_hodesh.png'
 
         super().__init__()
         self._draw_title(self._draw, names.title_rosh_chodesh)
 
-    def get_image(self, data: RoshChodesh) -> BytesIO:
+    def get_image(self) -> BytesIO:
         y = 370
         x = 100
         y_offset = 80
 
         # draw month
-        self._draw_line(x, y, headers.rh_month, data.month_name)
+        self._draw_line(x, y, headers.rh_month, self.data.month_name)
         y += y_offset
 
         # draw duration
-        duration_value = f'{data.duration} {_("day", "days", data.duration)}'
+        duration_value = f'{self.data.duration} {_("day", "days", self.data.duration)}'
         self._draw_line(x, y, headers.rh_duration, duration_value)
         y += y_offset
 
-        date_value = humanize_date(data.settings.date_)
+        date_value = humanize_date([self.data.settings.date_])
         self._draw_line(x, y, headers.date, date_value)
         y += y_offset  # todo test
 
         # draw molad string
-        molad = data.molad[0]
+        molad = self.data.molad[0]
         molad_value = f'{molad.day} {names.MONTH_NAMES_GENETIVE[molad.month]}, {molad.year},\n' \
                       f'{molad.time().hour} {_(*units.tu_hour, molad.time().hour)} ' \
                       f'{molad.time().minute} {_(*units.tu_minute, molad.time().minute)} ' \
-                      f'{helpers.and_word} {data.molad[1]} {_(*units.tu_part, data.molad[1])}'
+                      f'{helpers.and_word} {self.data.molad[1]} {_(*units.tu_part, self.data.molad[1])}'
         self._draw_line(x, y, headers.rh_molad, molad_value)
 
         return _convert_img_to_bytes_io(self._image)
@@ -217,14 +219,15 @@ class RoshChodeshImage(BaseImage):
 
 class ShabbatImage(BaseImage):
 
-    def __init__(self):
+    def __init__(self, data: Shabbat):
+        self.data = data
         self._font_size = 60
         self._warning_font_size = 48
 
         super().__init__()
 
-    def draw_picture(self, data: Shabbat):
-        if not data.candle_lighting or data.late_cl_warning:
+    def draw_picture(self):
+        if not self.data.candle_lighting or self.data.late_cl_warning:
             self._background_path: str = Path(__file__).parent / 'res' / 'backgrounds' / 'shabbos_attention.png'
         else:
             self._background_path: str = Path(__file__).parent / 'res' / 'backgrounds' / 'shabbos.png'
@@ -232,16 +235,16 @@ class ShabbatImage(BaseImage):
 
         self._draw_title(self._draw, names.title_shabbath)
 
-        y = 400 if data.candle_lighting else 470
+        y = 400 if self.data.candle_lighting else 470
         x = 100
         y_offset: int = 80
 
         # draw parashat hashavua
-        self._draw_line(x, y, headers.parsha, data.torah_part)
+        self._draw_line(x, y, headers.parsha, self.data.torah_part)
         y += y_offset
 
         # if polar error, draw error message and return
-        if not data.candle_lighting:
+        if not self.data.candle_lighting:
             x = 100
             y = 840 if helpers.cl_error_warning.value.count('\n') < 2 else 810
 
@@ -249,21 +252,21 @@ class ShabbatImage(BaseImage):
             return _convert_img_to_bytes_io(self._image)
 
         # draw candle lighting
-        self._draw_line(x, y, headers.cl, data.candle_lighting.time())
+        self._draw_line(x, y, headers.cl, self.data.candle_lighting.time().isoformat('minutes'))
         y += y_offset
 
         # draw shekiah offset
-        cl_offset = data.settings.cl_offset
+        cl_offset = self.data.settings.cl_offset
         offset_value = f'({cl_offset} {_(*units.tu_minute, cl_offset)} {helpers.cl_offset})'
         self._draw.text((x, y), offset_value, font=self._font)
         y += y_offset
 
         # draw havdala
-        self._draw_line(x, y, headers.havdala, data.havdala.time())
+        self._draw_line(x, y, headers.havdala, self.data.havdala.time().isoformat('minutes'))
         y += y_offset
 
         # draw warning if need
-        if not data.late_cl_warning:
+        if not self.data.late_cl_warning:
             return _convert_img_to_bytes_io(self._image)
 
         x, y = 100, 840
@@ -274,7 +277,8 @@ class ShabbatImage(BaseImage):
 
 class ZmanimImage(BaseImage):
 
-    def __init__(self):
+    def __init__(self, data: Zmanim):
+        self.data = data
         self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'zmanim.png'
         super().__init__()
 
@@ -313,17 +317,17 @@ class ZmanimImage(BaseImage):
         date_font = ImageFont.truetype(str(self._font_path), 40)
         self._draw.text((x, y), date_, font=date_font)
 
-    def get_image(self, data: Zmanim) -> BytesIO:
-        zmanim: Dict[str, dt] = data.dict(exclude={'settings'}, exclude_none=True)
+    def get_image(self) -> BytesIO:
+        zmanim: Dict[str, dt] = self.data.dict(exclude={'settings'}, exclude_none=True)
         self._set_font_properties(len(zmanim))
-        self._draw_date(humanize_date(data.settings.date_))
+        self._draw_date(humanize_date([self.data.settings.date_]))
 
         y: int = 210 + self._start_y_offset  # todo test
         x: int = 100
 
         # draw all image lines in cycle
         for header, value in zmanim.items():
-            self._draw_line(x, y, _(header), value.time())
+            self._draw_line(x, y, _(header), value.time().isoformat('minutes'))
             y += self._y_offset
 
         return _convert_img_to_bytes_io(self._image)
@@ -331,14 +335,15 @@ class ZmanimImage(BaseImage):
 
 class FastImage(BaseImage):
 
-    def __init__(self):
+    def __init__(self, data: Fast):
+        self.data = data
         self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'fast.png'
         self._font_size = 60
 
         super().__init__()
 
-    def get_image(self, data: Fast) -> BytesIO:
-        self._draw_title(self._draw, names.FASTS_TITLES[data.settings.fast_name])
+    def get_image(self) -> BytesIO:
+        self._draw_title(self._draw, names.FASTS_TITLES[self.data.settings.fast_name])
 
         x = 100
         y = 450
@@ -348,21 +353,21 @@ class FastImage(BaseImage):
         y_offset_sep_small = 70
 
         # draw date and start time
-        fast_date, fast_weekday = humanize_date(data.fast_start).split(', ')
-        fast_start_value = f'{fast_date}\n{fast_weekday}, {data.fast_start.time().isoformat("minutes")}'
+        fast_date, fast_weekday = humanize_date([self.data.fast_start]).split(', ')
+        fast_start_value = f'{fast_date}\n{fast_weekday}, {self.data.fast_start.time().isoformat("minutes")}'
         self._draw_line(x, y, headers.fast_start, fast_start_value)
         y += y_offset  # todo test
 
         # draw hatzot, if need
-        if data.chatzot:
+        if self.data.chatzot:
             y += y_offset_sep_small
-            self._draw_line(x, y, headers.fast_chatzot, data.chatzot.time().isoformat('minutes'))
+            self._draw_line(x, y, headers.fast_chatzot, self.data.chatzot.time().isoformat('minutes'))
             y += y_offset + y_offset_sep_small
         else:
             y += y_offset_sep
 
         # draw havdala
-        self._draw_line(x, y, headers.fast_end, data.havdala.time())
+        self._draw_line(x, y, headers.fast_end, self.data.havdala.time().isoformat('minutes'))
 
         # timings = [data.tzeit_kochavim, data.sba_time, data.ssk_time, data.nvr_time]
         # for timing in timings:
@@ -375,6 +380,7 @@ class FastImage(BaseImage):
 class HolidayImage(BaseImage):
 
     def __init__(self, data: Holiday):
+        self.data = data
         background_and_font_params = {
             'chanukah': ('chanuka.png', 60),
             'tu_bi_shvat': ('tubishvat.png', 70),
@@ -389,7 +395,6 @@ class HolidayImage(BaseImage):
 
         super().__init__()
 
-        self._data = data
         self._draw_title(self._draw, names.HOLIDAYS_TITLES[data.settings.holiday_name])
 
     def get_image(self) -> BytesIO:
@@ -397,7 +402,7 @@ class HolidayImage(BaseImage):
         y = 450
 
         # TODO: add chanukah range days formatting
-        self._draw_line(x, y, headers.date, self._data.date)
+        self._draw_line(x, y, headers.date, humanize_date([self.data.date, self.data.date]))
         return _convert_img_to_bytes_io(self._image)
 
 
@@ -491,36 +496,36 @@ class YomTovImage(BaseImage):
             y += y_offset
 
 
-        self._image.save('test.png')
-        # return _convert_img_to_bytes_io(self._image)
+        # self._image.save('test.png')
+        return _convert_img_to_bytes_io(self._image)
 
 
-def test():
-    j = {
-  "settings": {
-    "date": "2022-04-15",
-    "cl_offset": 18,
-    "havdala_opinion": "tzeis_8_5_degrees",
-    "coordinates": [
-      55.5,
-      37.7
-    ],
-    "elevation": 0,
-    "yomtov_name": "shavuot"
-  },
-  "pre_shabbat": {
-    "date": "2022-06-04",
-    "candle_lighting": "2022-06-03T20:44:39.375578+03:00"
-  },
-  "day_1": {
-    "date": "2022-06-05",
-    "candle_lighting": "2022-06-04T22:36:39.212694+03:00"
-  },
-  "day_2": {
-    "date": "2022-06-06",
-    "candle_lighting": "2022-06-05T22:38:33.390085+03:00",
-    "havdala": "2022-06-06T22:40:23.180390+03:00"
-  }
-}
-    d = YomTov(**j)
-    YomTovImage(d).get_image()
+# def test():
+#     j = {
+#   "settings": {
+#     "date": "2022-04-15",
+#     "cl_offset": 18,
+#     "havdala_opinion": "tzeis_8_5_degrees",
+#     "coordinates": [
+#       55.5,
+#       37.7
+#     ],
+#     "elevation": 0,
+#     "yomtov_name": "shavuot"
+#   },
+#   "pre_shabbat": {
+#     "date": "2022-06-04",
+#     "candle_lighting": "2022-06-03T20:44:39.375578+03:00"
+#   },
+#   "day_1": {
+#     "date": "2022-06-05",
+#     "candle_lighting": "2022-06-04T22:36:39.212694+03:00"
+#   },
+#   "day_2": {
+#     "date": "2022-06-06",
+#     "candle_lighting": "2022-06-05T22:38:33.390085+03:00",
+#     "havdala": "2022-06-06T22:40:23.180390+03:00"
+#   }
+# }
+#     d = YomTov(**j)
+#     YomTovImage(d).get_image()

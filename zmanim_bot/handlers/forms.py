@@ -47,7 +47,7 @@ async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
     zmanim_settings = await api.get_or_set_zmanim()
 
     data = await get_zmanim(location, zmanim_settings, date)
-    pic = ZmanimImage().get_image(data)
+    pic = ZmanimImage(data).get_image()
     await msg.reply_photo(pic)
     await state.finish()
     await redirect_to_main_menu()
