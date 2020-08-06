@@ -1,6 +1,9 @@
+from os import getenv
+from json import dumps
+
 from aiogram.types import Update
 
-from ..misc import dp
+from ..misc import dp, bot, logger
 from .redirects import *
 from .warnings import *
 from ..exceptions import *
@@ -34,5 +37,21 @@ async def gregorian_date_exception_handler(update: Update, e: IncorrectGregorian
 async def jewish_date_exception_handler(update: Update, e: IncorrectJewishDateException):
     await incorrect_jew_date_warning()
     return True
+
+
+@dp.errors_handler(exception=Exception)
+async def main_errors_handler(update: Update, e: Exception):
+    msg = dumps({
+        'exception': repr(e),
+        'update': update.to_python()
+    }, indent=2)
+
+    if bool(getenv('ENABLE_CHANNEL_LOGGING')):
+        log_channel_id = getenv('ERROR_CHANNEL_ID')
+        await bot.send_message(log_channel_id, f'<code>{msg}</code>', 'HTML')
+
+    logger.exception(e)
+    return True
+
 
 

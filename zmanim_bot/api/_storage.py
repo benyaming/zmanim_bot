@@ -4,7 +4,7 @@ from json import dumps
 from aiopg import Pool
 from aiogram import Dispatcher
 
-from ..exceptions import NoLanguageException, NoLocationException
+from ..exceptions import NoLocationException
 
 
 __all__ = [
@@ -53,6 +53,11 @@ async def track_user_(user_id: int, first_name: str, last_name: Optional[str], u
     await _execute_query(query, args)
 
 
+async def create_default_settings(user_id: int):
+    query = 'INSERT INTO public.zmanim_settings (user_id) VALUES (%s)'
+    await _execute_query(query, (user_id,))
+
+
 async def get_lang(user_id: int) -> Optional[str]:
     query = 'SELECT lang FROM public.lang WHERE user_id = %s'
 
@@ -96,6 +101,10 @@ async def get_cl_offset(user_id: int) -> int:
     query = 'SELECT cl_offset FROM zmanim_settings WHERE user_id = %s'
     cl = await _execute_query(query, (user_id,), return_result=True)
 
+    if len(cl) == 0:
+        await create_default_settings(user_id)
+        return await get_cl_offset(user_id)
+
     return cl[0][0]
 
 
@@ -111,9 +120,13 @@ async def set_cl(user_id: int, cl: int):
 
 async def get_havdala(user_id: int) -> str:
     query = 'SELECT havdala_opinion FROM zmanim_settings WHERE user_id = %s'
-    cl = await _execute_query(query, (user_id,), return_result=True)
+    havdala = await _execute_query(query, (user_id,), return_result=True)
 
-    return cl[0][0]
+    if len(havdala) == 0:
+        await create_default_settings(user_id)
+        return await get_havdala(user_id)
+
+    return havdala[0][0]
 
 
 async def set_havdala(user_id: int, havdala: str):
@@ -129,6 +142,11 @@ async def set_havdala(user_id: int, havdala: str):
 async def get_zmanim(user_id: int) -> dict:
     query = 'SELECT zmanim FROM zmanim_settings WHERE user_id = %s'
     zmanim = await _execute_query(query, (user_id,), return_result=True)
+
+    if len(zmanim) == 0:
+        await create_default_settings(user_id)
+        return await get_zmanim(user_id)
+
     return zmanim[0][0]
 
 

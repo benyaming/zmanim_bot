@@ -15,10 +15,14 @@ LOCALES_DIR = Path(__file__).parent.parent / 'locales'
 
 class I18N(I18nMiddleware):
     async def get_user_locale(self, action: str, args: Tuple[Any]) -> str:
+        if isinstance(args[0], Message) and args[0].chat.type == 'channel':
+            return ''
+
         locale = await get_or_set_lang()
 
         if not locale:
             if len(args) > 0 and isinstance(args[0], Message):
+
                 if args[0].text in LANGUAGE_LIST:
                     locale = args[0].text
                 elif args[0].text == '/start':
