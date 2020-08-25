@@ -39,7 +39,7 @@ async def jewish_date_exception_handler(update: Update, e: IncorrectJewishDateEx
     return True
 
 
-@dp.errors_handler(exception=Exception)
+# @dp.errors_handler(exception=Exception)
 async def main_errors_handler(update: Update, e: Exception):
     msg = dumps({
         'exception': repr(e),
