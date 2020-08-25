@@ -15,9 +15,9 @@ async def no_location_exception_handler(update: Update, e: NoLocationException):
     return True
 
 
-# @dp.errors_handler(exception=NoLanguageException)
+@dp.errors_handler(exception=NoLanguageException)
 async def no_language_exception_handler(update: Update, e: NoLanguageException):
-    # await redirect_to_request_language()
+    await redirect_to_request_language()
     return True
 
 
@@ -50,7 +50,7 @@ async def main_errors_handler(update: Update, e: Exception):
         log_channel_id = getenv('ERROR_CHANNEL_ID')
         await bot.send_message(log_channel_id, f'<code>{msg}</code>', 'HTML')
 
-    logger.exception(e)
+        logger.exception(e)
     return True
 
 

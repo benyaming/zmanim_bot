@@ -45,5 +45,5 @@ async def handle_start(msg: Message):
 @dp.message_handler(commands=['start'], state='*')
 async def handle_start(msg: Message, state: FSMContext):
     await state.finish()
-    await redirect_to_request_language()
+    await redirect_to_main_menu()
     create_task(track_user())

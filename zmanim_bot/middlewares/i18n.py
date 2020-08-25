@@ -4,7 +4,6 @@ from typing import Tuple, Any
 from aiogram.contrib.middlewares.i18n import I18nMiddleware
 from aiogram.types import Message
 
-from ..exceptions import NoLanguageException
 from ..misc import dp
 from ..api import get_or_set_lang
 from ..config import I18N_DOMAIN, LANGUAGE_LIST
@@ -18,17 +17,10 @@ class I18N(I18nMiddleware):
         if isinstance(args[0], Message) and args[0].chat.type == 'channel':
             return ''
 
-        locale = await get_or_set_lang()
-
-        if not locale:
-            if len(args) > 0 and isinstance(args[0], Message):
-
-                if args[0].text in LANGUAGE_LIST:
-                    locale = args[0].text
-                elif args[0].text == '/start':
-                    locale = ''
-            else:
-                raise NoLanguageException
+        if len(args) > 0 and isinstance(args[0], Message) and args[0].text in LANGUAGE_LIST:
+            locale = args[0].text
+        else:
+            locale = await get_or_set_lang()
 
         return locale
 

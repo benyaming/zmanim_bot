@@ -4,8 +4,7 @@ from json import dumps
 from aiopg import Pool
 from aiogram import Dispatcher
 
-from ..exceptions import NoLocationException
-
+from ..exceptions import NoLocationException, NoLanguageException
 
 __all__ = [
     'track_user_',
@@ -63,7 +62,7 @@ async def get_lang(user_id: int) -> Optional[str]:
 
     lang = await _execute_query(query, (user_id,), return_result=True)
     if len(lang) == 0:
-        return None
+        raise NoLanguageException
     return lang[0][0]
 
 
