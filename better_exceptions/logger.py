@@ -4,10 +4,9 @@ from json import dumps
 from types import TracebackType
 from typing import Any
 
-from better_exceptions.better_exceptions import ExceptionFormatter
+# from loguru import logger
 
-LOG_FORMAT = '%(asctime)-15s [ %(levelname)s ] <|> %(message)s'
-DATETIME_FORMAT = '%d-%m-%Y > %H:%M:%S'
+from better_exceptions.better_exceptions import ExceptionFormatter
 
 
 NEW_LOG_FORMAT = '{asctime} {levelname} {thread} --- [{threadName}] {module}.{funcName}       : {message}'
@@ -102,6 +101,28 @@ class MyFormatter(logging.Formatter):
     def formatException(self, exc_info: TracebackType) -> str:
         return _get_detailed_traceback(exc_info)
 
+
+class InterceptHandler(logging.Handler):
+    def emit(self, record):
+        # Get corresponding Loguru level if it exists
+        try:
+            level = logger.level(record.levelname).name
+        except ValueError:
+            level = record.levelno
+
+        # Find caller from where originated the logged message
+        frame, depth = logging.currentframe(), 2
+        while frame.f_code.co_filename == logging.__file__:
+            frame = frame.f_back
+            depth += 1
+
+        logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
+
+
+# handler = InterceptHandler()
+# handler.setFormatter(MyFormatter())
+
+# logging.basicConfig(handlers=[handler], level=0)
 
 logger = logging.getLogger('bot')
 handler = logging.StreamHandler()

@@ -8,6 +8,8 @@ from .redirects import *
 from .warnings import *
 from ..exceptions import *
 
+from better_exceptions.logger import logger
+
 
 @dp.errors_handler(exception=NoLocationException)
 async def no_location_exception_handler(update: Update, e: NoLocationException):
@@ -39,18 +41,9 @@ async def jewish_date_exception_handler(update: Update, e: IncorrectJewishDateEx
     return True
 
 
-# @dp.errors_handler(exception=Exception)
+@dp.errors_handler(exception=Exception)
 async def main_errors_handler(update: Update, e: Exception):
-    msg = dumps({
-        'exception': repr(e),
-        'update': update.to_python()
-    }, indent=2)
-
-    if bool(getenv('ENABLE_CHANNEL_LOGGING')):
-        log_channel_id = getenv('ERROR_CHANNEL_ID')
-        await bot.send_message(log_channel_id, f'<code>{msg}</code>', 'HTML')
-
-        logger.exception(e)
+    logger.exception(e)
     return True
 
 
