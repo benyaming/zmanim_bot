@@ -326,7 +326,10 @@ class ZmanimImage(BaseImage):
 
         # draw all image lines in cycle
         for header, value in zmanim.items():
-            self._draw_line(x, y, _(header), value.time().isoformat('minutes'))
+            self._draw_line(
+                x, y, _(header),
+                value.time().isoformat('minutes') if isinstance(value, date) else value.isoformat('minutes')
+            )
             y += self._y_offset
 
         return _convert_img_to_bytes_io(self._image)
