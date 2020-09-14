@@ -76,7 +76,8 @@ async def get_generic_yomtov(
         'lng': str(location[1]),
         'yomtov_name': name,
         'cl': str(cl_offset),
-        'havdala': havdala_opinion
+        'havdala': havdala_opinion,
+        'date': '2020-01-01'
     }
 
     async with bot.session.get(url, params=params) as resp:
