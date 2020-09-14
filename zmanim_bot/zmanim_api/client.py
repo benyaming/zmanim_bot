@@ -105,4 +105,3 @@ async def get_generic_holiday(name: str) -> models.Holiday:
     async with bot.session.get(url, params=params) as resp:
         raw_resp = await resp.json()
         return models.Holiday(**raw_resp)
-

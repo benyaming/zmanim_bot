@@ -1,6 +1,6 @@
 from io import BytesIO
 from pathlib import Path
-from datetime import datetime as dt, date, time
+from datetime import datetime as dt, date, time, timedelta
 from typing import Union, Dict, List, Tuple, Optional
 
 from babel.support import LazyProxy
@@ -182,7 +182,7 @@ class DafYomImage(BaseImage):
 class RoshChodeshImage(BaseImage):
     def __init__(self, data: RoshChodesh):
         self.data = data
-        self._font_size = 46
+        self._font_size = 52
         self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'rosh_hodesh.png'
 
         super().__init__()
@@ -204,6 +204,7 @@ class RoshChodeshImage(BaseImage):
 
         date_value = humanize_date([self.data.settings.date_])
         self._draw_line(x, y, headers.date, date_value)
+        y += y_offset
 
         # draw molad string
         molad = self.data.molad[0]
@@ -409,7 +410,17 @@ class HolidayImage(BaseImage):
         y = 450
 
         # TODO: add chanukah range days formatting
-        self._draw_line(x, y, headers.date, humanize_date([self.data.date, self.data.date]))
+        holiday_last_date = self.data.date
+        line_break = False
+        if self.data.settings.holiday_name == 'chanukah':
+            holiday_last_date += timedelta(days=7)
+            line_break = True
+
+        self._draw_line(
+            x,
+            y,
+            headers.date,
+            humanize_date([self.data.date, holiday_last_date], weekday_on_new_line=line_break))
         return _convert_img_to_bytes_io(self._image)
 
 
@@ -484,27 +495,20 @@ class YomTovImage(BaseImage):
             5: (57, 80, 300),
             6: (58, 70, 300),
             7: (58, 70, 300),
-            8: (58, 70, 300),
-            9: (58, 70, 300),
+            8: (50, 50, 230),
+            9: (50, 50, 230),
             10: (50, 50, 230)
         }
         font_size, y_offset, start_position_y = p.get(number_of_lines)
         return start_position_y, y_offset, font_size
 
     def get_image(self) -> BytesIO:
-        # todo case of date with post shabbat
         x = 80
 
         lines = self._prepare_lines()
         y, y_offset, font_size = self._get_font_properties(len(lines))
         self._font = ImageFont.truetype(str(self._font_path), size=font_size)
         self._bold_font = ImageFont.truetype(str(self._bold_font_path), size=font_size)
-
-        # # draw the date
-        # first_day = self.data.pre_shabbat or self.data.day_1
-        # last_day = self.data.
-        # header = headers.date
-        # value = humanize_date()
 
         for header, value, new_line in lines:
             if not header:

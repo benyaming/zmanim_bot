@@ -22,6 +22,8 @@ async def handle_report(msg: Message):
     resp = f'REPORT:\n\n<i>{report_message}</i>'
     await FeedbackState.next()
     await bot.send_message(msg.from_user.id, resp)
+    # TODO ad success report message
+    await redirect_to_main_menu()
 
 
 @dp.message_handler(state=ConverterGregorianDateState.waiting_for_gregorian_date)
