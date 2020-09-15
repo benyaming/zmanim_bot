@@ -113,14 +113,10 @@ def get_havdala_keyboard(current_value: str) -> InlineKeyboardMarkup:
     return kb
 
 
-# ----------------------------------------- ZMANIM BUTTONS -------------------------------------- #
-
-
 def get_zman_button(name: str, status: bool) -> InlineKeyboardButton:
     button = InlineKeyboardButton(
         text=f'{"✅" if status else "❌"} {getattr(zmanim, name)}',
         callback_data=f'{CallbackPrefixes.zmanim}{name}'
-        # callback_data=f'{CallbackPrefixes.zmanim}{name}:{int(not status)}'
     )
     return button
 
@@ -135,4 +131,10 @@ def get_zmanim_settings_keyboard(zmanim_data: dict) -> InlineKeyboardMarkup:
             kb.row(*row)
             row = []
 
+    return kb
+
+
+def get_report_keyboard() -> ReplyKeyboardMarkup:
+    kb = ReplyKeyboardMarkup(resize_keyboard=True)
+    kb.row(buttons.cancel.value, buttons.done.value)
     return kb

@@ -15,3 +15,4 @@ class ZmanimGregorianDateState(StatesGroup):
 
 class FeedbackState(StatesGroup):
     waiting_for_feedback_text = State()
+    waiting_for_payload = State()

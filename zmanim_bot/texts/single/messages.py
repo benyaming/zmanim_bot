@@ -1,4 +1,4 @@
-from ..translators import lazy_gettext as _
+from ...middlewares.i18n import lazy_gettext as _
 
 
 init_bot = _('welcome to Zmanim bot!')
@@ -22,3 +22,9 @@ settings_zmanim = _('select zmanim')
 
 greg_date_request = _('input gregorian date in ISO format')
 jew_date_request = _('input jewish in ISO format')
+
+reports_text_received = _('your message successfully received. if you want, you can attach some '
+                          'screenshots. when you will finish, press "Done"')
+reports_media_received = _('Screenshot succesfully received.')
+reports_incorrect_media_type = _('Incorrect media type. Please, send your screenshot as photo.')
+reports_created = _('your report had ben sent to admin, you will receive notification with status')

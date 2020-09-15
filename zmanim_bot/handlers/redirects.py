@@ -12,10 +12,10 @@ __all__ = [
 ]
 
 
-async def redirect_to_main_menu():
+async def redirect_to_main_menu(text: str = None):
     user_id = User.get_current().id
     kb = keyboards.get_main_menu()
-    await bot.send_message(user_id, messages.init_main_menu, reply_markup=kb)
+    await bot.send_message(user_id, text or messages.init_main_menu, reply_markup=kb)
     
     
 async def redirect_to_request_location(with_back: bool = False):

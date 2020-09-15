@@ -2,8 +2,7 @@ from typing import Dict
 
 from babel.support import LazyProxy
 
-from ...zmanim_api.models import *
-from zmanim_bot.texts.translators import lazy_gettext as _
+from ...middlewares.i18n import lazy_gettext as _
 
 
 MONTH_NAMES_GENETIVE: Dict[int, LazyProxy] = {
@@ -70,9 +69,3 @@ YOMTOVS_TITLES = {
 }
 
 shabbat = _('shabbat')
-
-
-
-
-
-

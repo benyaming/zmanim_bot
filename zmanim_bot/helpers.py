@@ -67,6 +67,3 @@ def get_holiday_shrtcut(name: str) -> str:
         buttons.fm_av.value: 'fast_9_av',
     }
     return shortcusts[name]
-
-
-

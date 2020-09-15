@@ -1,4 +1,7 @@
-from aiogram.types import Message
+from asyncio import create_task
+from typing import Dict, Union, List
+
+from aiogram.types import Message, ContentType
 from aiogram.dispatcher import FSMContext
 
 from ..misc import dp, bot
@@ -14,17 +17,51 @@ from .redirects import redirect_to_main_menu
 from .. import api
 from ..zmanim_api import get_zmanim
 from ..processors.image.image_processor import ZmanimImage
+from ..texts.single import messages, buttons
+from ..keyboards import get_report_keyboard
+from ..admin.report_management import send_report_to_admins
+
+
+# REPORTS
+Report = Dict[str, Union[str, List[str]]]
 
 
 @dp.message_handler(state=FeedbackState.waiting_for_feedback_text)
-async def handle_report(msg: Message):
-    report_message = msg.text
-    resp = f'REPORT:\n\n<i>{report_message}</i>'
+async def handle_report(msg: Message, state: FSMContext):
+    report = {
+        'message': msg.text,
+        'message_id': msg.message_id,
+        'user_id': msg.from_user.id,
+        'screenshots_ids': []
+    }
+    await state.set_data(report)
     await FeedbackState.next()
-    await bot.send_message(msg.from_user.id, resp)
-    # TODO ad success report message
-    await redirect_to_main_menu()
 
+    kb = get_report_keyboard()
+    await bot.send_message(msg.chat.id, messages.reports_text_received, reply_markup=kb)
+
+
+@dp.message_handler(text=buttons.done, state=FeedbackState.waiting_for_payload)
+async def handle_done_report(msg: Message, state: FSMContext):
+    report: Report = await state.get_data()
+    await state.finish()
+    await redirect_to_main_menu(messages.reports_created)
+    create_task(send_report_to_admins(report))
+
+
+@dp.message_handler(content_types=ContentType.ANY, state=FeedbackState.waiting_for_payload)
+async def handle_report_payload(msg: Message, state: FSMContext):
+    if msg.content_type != ContentType.PHOTO:
+        return await msg.reply(messages.reports_incorrect_media_type)
+
+    report: Report = await state.get_data()
+    report['screenshots_ids'].append(msg.photo[-1].file_id)
+    await state.set_data(report)
+
+    await msg.reply(messages.reports_media_received)
+
+
+# CONVERTER #
 
 @dp.message_handler(state=ConverterGregorianDateState.waiting_for_gregorian_date)
 async def handle_converter_gregorian_date(msg: Message, state: FSMContext):
@@ -41,6 +78,8 @@ async def handle_converter_jewish_date(msg: Message, state: FSMContext):
     await state.finish()
     await redirect_to_main_menu()
 
+
+# ZMANIM #
 
 @dp.message_handler(state=ZmanimGregorianDateState.waiting_for_gregorian_date)
 async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):

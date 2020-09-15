@@ -1,5 +1,5 @@
 from os import getenv
-
+from typing import List
 
 I18N_DOMAIN = 'zmanim_bot'
 BOT_TOKEN = getenv('BOT_TOKEN')
@@ -22,3 +22,5 @@ REDIS_PORT = int(getenv('REDIS_PORT'))
 REDIS_DB = int(getenv('REDIS_DB'))
 
 ZMANIM_API_URL: str = getenv('ZMANIM_API_URL')
+
+REPORT_ADMIN_LIST: List[str] = [i for i in getenv('REPORT_ADMIN_LIST', '').split(', ')]
