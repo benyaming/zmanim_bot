@@ -17,7 +17,6 @@ def convert_heb_to_greg(date_: str) -> str:
     except ValueError:
         raise IncorrectJewishDateException
     gr_date = calendar.gregorian_date
-    # todo                 i18n                            i18n
     resp = f'{gr_date.day} {gr_date.month} {gr_date.year} {gr_date.weekday()}'
     return resp
 
@@ -29,7 +28,6 @@ def convert_greg_to_heb(date_: str) -> str:
         raise IncorrectGregorianDateException
 
     calendar = JewishCalendar.from_date(pydate)
-    #                                     todo i18n
     jewish_date = f'{calendar.jewish_day} {calendar.jewish_month_name()} {calendar.jewish_year},' \
                   f' {calendar.day_of_week}'
     return jewish_date

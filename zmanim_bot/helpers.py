@@ -31,10 +31,10 @@ def parse_coordinates(coordinates: str) -> Tuple[float, float]:
     try:
         lat, lng = map(float, coordinates.split(','))
     except ValueError:
-        raise IncorrectLocationException('Incorrect location format!')  # todo txt
+        raise IncorrectLocationException('Incorrect location format!')
 
     if lng > 180.0 or lng < -180.0 or lat > 90.0 or lat < -90.0:
-        raise IncorrectLocationException('Incorrect location value!')  # todo txt
+        raise IncorrectLocationException('Incorrect location value!')
 
     return lat, lng
 

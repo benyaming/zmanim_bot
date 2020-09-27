@@ -10,6 +10,7 @@ from ...middlewares.i18n import gettext as _
 from ...zmanim_api.models import *
 from ...texts.single import names, headers, helpers
 from ...texts.plural import units
+from ...zmanim_api.models import IsraelHolidays
 
 IMG_SIZE = 1181
 Line = Tuple[Optional[str], Optional[str], Optional[bool]]
@@ -148,7 +149,6 @@ class BaseImage:
         if value_on_new_line:
             y += self._y_font_offset(header.split('\n')[0])
 
-        # TODO: validate that value smaller them picture size
         self._draw.text((x, y), text=str(value), font=self._font)
 
     def get_image(self) -> BytesIO:
@@ -429,6 +429,32 @@ class HolidayImage(BaseImage):
             y,
             headers.date,
             date_value)
+        return _convert_img_to_bytes_io(self._image)
+
+
+class IsraelHolidaysImage(BaseImage):
+
+    def __init__(self, data: IsraelHolidays):
+        self.data = data
+        self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'israel_holidays.png'
+        self._font_size = 58
+
+        super().__init__()
+
+        self._draw_title(self._draw, names.HOLIDAYS_TITLES['israel_holidays'])
+
+    def get_image(self) -> BytesIO:
+        x = 100
+        y = 300
+        y_offset = 90
+        y_offset_small = 60
+
+        for holiday in self.data:
+            self._draw.text((x, y), f'{headers.israel_holidays[holiday[0]]}:', font=self._bold_font)
+            y += y_offset_small
+            self._draw_line(x, y, headers.date, humanize_header_date('', holiday[1])[0])
+            y += y_offset
+
         return _convert_img_to_bytes_io(self._image)
 
 

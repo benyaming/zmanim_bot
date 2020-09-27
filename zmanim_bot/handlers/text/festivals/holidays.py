@@ -3,7 +3,7 @@ from aiogram.types import Message
 from ....misc import dp
 from ....texts.single import buttons
 from .... import zmanim_api
-from ....processors.image.image_processor import HolidayImage
+from ....processors.image.image_processor import HolidayImage, IsraelHolidaysImage
 
 
 @dp.message_handler(text=buttons.hom_chanukah)
@@ -29,8 +29,8 @@ async def handle_purim(msg: Message):
 
 @dp.message_handler(text=buttons.hom_israel)
 async def handle_israel_holidays(msg: Message):
-    data = await zmanim_api.get_generic_holiday('israel_holidays')
-    pic = HolidayImage(data).get_image()
+    data = await zmanim_api.get_israel_holidays()
+    pic = IsraelHolidaysImage(data).get_image()
     await msg.reply_photo(pic)
 
 

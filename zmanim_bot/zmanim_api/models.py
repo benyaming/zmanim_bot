@@ -96,7 +96,7 @@ class Holiday(BaseModel):
     date: date
 
 
-IsraelHolidays = List[Dict[str, date]]
+IsraelHolidays = List[Tuple[str, date]]
 
 
 class YomTov(BaseModel):

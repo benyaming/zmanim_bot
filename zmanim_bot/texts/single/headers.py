@@ -21,3 +21,11 @@ fast_moved = _('Attention, moved fast!')
 fast_not_moved = _('Fast was\'nt moved')
 
 hoshana_raba = _('hoshana rabah')
+
+israel_holidays = {
+    'yom_hashoah': _('yom hashoah'),
+    'yom_hazikaron': _('yom hazikaron'),
+    'yom_haatzmaut': _('yom haatzmaut'),
+    'yom_yerushalaim': _('yom yerushalaim'),
+}
+

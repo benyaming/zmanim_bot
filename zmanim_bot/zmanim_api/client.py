@@ -1,3 +1,4 @@
+from datetime import date
 from typing import List, Dict
 
 from ..misc import bot
@@ -13,7 +14,8 @@ __all__ = [
     'get_rosh_chodesh',
     'get_generic_yomtov',
     'get_generic_holiday',
-    'get_generic_fast'
+    'get_generic_fast',
+    'get_israel_holidays'
 ]
 
 
@@ -118,6 +120,6 @@ async def get_israel_holidays() -> models.IsraelHolidays:
 
         async with bot.session.get(url, params=params) as resp:
             raw_resp = await resp.json()
-            result.append({name: raw_resp['date']})
+            result.append((name, date.fromisoformat(raw_resp['date'])))
 
     return result
