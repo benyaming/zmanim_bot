@@ -117,7 +117,7 @@ class BaseImage:
 
     def _draw_title(self, draw: ImageDraw, title: LazyProxy, is_zmanim: bool = False,
                     is_shmini_atzeres: bool = False) -> None:
-        coordinates = (250, 90) if not is_zmanim else (250, 65)
+        coordinates = (220, 30) if not is_zmanim else (250, 65)
         font = self._title_font if not is_shmini_atzeres else self._title_font_sa
         draw.text(coordinates, title.value, font=font)
 
@@ -353,26 +353,30 @@ class FastImage(BaseImage):
     def get_image(self) -> BytesIO:
         self._draw_title(self._draw, names.FASTS_TITLES[self.data.settings.fast_name])
 
+        # self.data.moved_fast = True
+        self._draw.text(
+            (233, 137),
+            headers.fast_moved.value if self.data.moved_fast else headers.fast_not_moved.value,
+            font=self._bold_font,
+            fill='#ff5959' if self.data.moved_fast else '#8bff59'
+        )
+
         x = 100
         y = 450
 
         y_offset = 80
-        y_offset_sep = 100
-        y_offset_sep_small = 70
+        y_offset_small = 70
 
         # draw date and start time
         fast_date, fast_weekday = humanize_date([self.data.fast_start]).split(', ')
         fast_start_value = f'{fast_date}\n{fast_weekday}, {self.data.fast_start.time().isoformat("minutes")}'
         self._draw_line(x, y, headers.fast_start, fast_start_value)
+        y += self._y_font_offset(fast_start_value) + y_offset
 
         # draw hatzot, if need
         if self.data.chatzot:
-            y += y_offset_sep_small
-            self._draw_line(x, y, headers.fast_chatzot,
-                            self.data.chatzot.time().isoformat('minutes'))
-            y += y_offset + y_offset_sep_small
-        else:
-            y += y_offset_sep
+            self._draw_line(x, y, headers.fast_chatzot, self.data.chatzot.time().isoformat('minutes'))
+            y += y_offset_small
 
         # draw havdala
         self._draw_line(x, y, headers.fast_end, self.data.havdala.time().isoformat('minutes'))
@@ -409,18 +413,22 @@ class HolidayImage(BaseImage):
         x = 100
         y = 450
 
-        # TODO: add chanukah range days formatting
         holiday_last_date = self.data.date
         line_break = False
         if self.data.settings.holiday_name == 'chanukah':
             holiday_last_date += timedelta(days=7)
             line_break = True
 
+        date_value = humanize_date([self.data.date, holiday_last_date], weekday_on_new_line=line_break)
+
+        if (x + self._x_font_offset(headers.date.value) + self._x_font_offset(date_value)) > IMG_SIZE:
+            date_value = humanize_date([self.data.date, holiday_last_date], weekday_on_new_line=True)
+
         self._draw_line(
             x,
             y,
             headers.date,
-            humanize_date([self.data.date, holiday_last_date], weekday_on_new_line=line_break))
+            date_value)
         return _convert_img_to_bytes_io(self._image)
 
 
@@ -522,33 +530,3 @@ class YomTovImage(BaseImage):
 
         # self._image.save('test.png')
         return _convert_img_to_bytes_io(self._image)
-
-# def test():
-#     j = {
-#   "settings": {
-#     "date": "2022-04-15",
-#     "cl_offset": 18,
-#     "havdala_opinion": "tzeis_8_5_degrees",
-#     "coordinates": [
-#       55.5,
-#       37.7
-#     ],
-#     "elevation": 0,
-#     "yomtov_name": "shavuot"
-#   },
-#   "pre_shabbat": {
-#     "date": "2022-06-04",
-#     "candle_lighting": "2022-06-03T20:44:39.375578+03:00"
-#   },
-#   "day_1": {
-#     "date": "2022-06-05",
-#     "candle_lighting": "2022-06-04T22:36:39.212694+03:00"
-#   },
-#   "day_2": {
-#     "date": "2022-06-06",
-#     "candle_lighting": "2022-06-05T22:38:33.390085+03:00",
-#     "havdala": "2022-06-06T22:40:23.180390+03:00"
-#   }
-# }
-#     d = YomTov(**j)
-#     YomTovImage(d).get_image()

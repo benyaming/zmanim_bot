@@ -17,5 +17,7 @@ havdala = _('havdala')
 fast_start = _('the fast begins')
 fast_end = _('the fast end')
 fast_chatzot = _('chatzot')
+fast_moved = _('Attention, moved fast!')
+fast_not_moved = _('Fast was\'nt moved')
 
 hoshana_raba = _('hoshana rabah')

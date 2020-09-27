@@ -1,3 +1,5 @@
+from typing import List, Dict
+
 from ..misc import bot
 from ..api import Location
 from . import models
@@ -105,3 +107,17 @@ async def get_generic_holiday(name: str) -> models.Holiday:
     async with bot.session.get(url, params=params) as resp:
         raw_resp = await resp.json()
         return models.Holiday(**raw_resp)
+
+
+async def get_israel_holidays() -> models.IsraelHolidays:
+    url = ZMANIM_API_URL.format('holiday')
+    result = []
+
+    for name in ['yom_hashoah', 'yom_hazikaron', 'yom_haatzmaut', 'yom_yerushalaim']:
+        params = {'holiday_name': name}
+
+        async with bot.session.get(url, params=params) as resp:
+            raw_resp = await resp.json()
+            result.append({name: raw_resp['date']})
+
+    return result

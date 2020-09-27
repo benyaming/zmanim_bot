@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Dict
 from datetime import datetime, time, date
 
 from pydantic import BaseModel
@@ -21,6 +21,7 @@ __all__ = [
 
 class SimpleSettings(BaseModel):
     date_: Optional[date] = None
+    jewish_date: Optional[str] = None
     holiday_name: Optional[str] = None
 
     class Config:
@@ -95,6 +96,9 @@ class Holiday(BaseModel):
     date: date
 
 
+IsraelHolidays = List[Dict[str, date]]
+
+
 class YomTov(BaseModel):
     settings: Settings
     pre_shabbat: Optional[AsurBeMelachaDay] = None
@@ -109,7 +113,7 @@ class YomTov(BaseModel):
 
 class Fast(BaseModel):
     settings: Settings
-    fast_deferred: Optional[bool] = False
+    moved_fast: Optional[bool] = False
     fast_start: Optional[datetime] = None
     chatzot: Optional[datetime] = None
     havdala: Optional[datetime] = None
