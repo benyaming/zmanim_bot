@@ -10,7 +10,6 @@ from ...middlewares.i18n import gettext as _
 from ...zmanim_api.models import *
 from ...texts.single import names, headers, helpers
 from ...texts.plural import units
-from ...zmanim_api.models import IsraelHolidays
 
 IMG_SIZE = 1181
 Line = Tuple[Optional[str], Optional[str], Optional[bool]]
@@ -96,8 +95,6 @@ class BaseImage:
     _font_path = Path(__file__).parent / 'res' / 'fonts' / 'gothic.TTF'
     _bold_font_path = Path(__file__).parent / 'res' / 'fonts' / 'gothic-bold.TTF'
     _title_font = ImageFont.truetype(str(_bold_font_path), 60)
-    # smaller font for shmini atzeres
-    _title_font_sa = ImageFont.truetype(str(_bold_font_path), 55)
     _font_size = 0
     _warning_font_size = 0
     _background_path = None
@@ -116,10 +113,9 @@ class BaseImage:
 
         self._warning_font = ImageFont.truetype(str(self._bold_font_path), self._warning_font_size)
 
-    def _draw_title(self, draw: ImageDraw, title: LazyProxy, is_zmanim: bool = False,
-                    is_shmini_atzeres: bool = False) -> None:
-        coordinates = (220, 30) if not is_zmanim else (250, 65)
-        font = self._title_font if not is_shmini_atzeres else self._title_font_sa
+    def _draw_title(self, draw: ImageDraw, title: LazyProxy) -> None:
+        coordinates = (180, 30)
+        font = self._title_font
         draw.text(coordinates, title.value, font=font)
 
     def _x_font_offset(self, text: str) -> int:
@@ -286,7 +282,7 @@ class ZmanimImage(BaseImage):
         self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'zmanim.png'
         super().__init__()
 
-        self._draw_title(self._draw, names.title_zmanim, is_zmanim=True)
+        self._draw_title(self._draw, names.title_zmanim)
 
     def _set_font_properties(self, number_of_lines: int):
         p = {
@@ -316,8 +312,8 @@ class ZmanimImage(BaseImage):
         self._bold_font = ImageFont.truetype(str(self._bold_font_path), size=self._font_size)
 
     def _draw_date(self, date_: str):
-        x = 250
-        y = 130
+        x = 180
+        y = 100
         date_font = ImageFont.truetype(str(self._font_path), 40)
         self._draw.text((x, y), date_, font=date_font)
 
@@ -353,7 +349,6 @@ class FastImage(BaseImage):
     def get_image(self) -> BytesIO:
         self._draw_title(self._draw, names.FASTS_TITLES[self.data.settings.fast_name])
 
-        # self.data.moved_fast = True
         self._draw.text(
             (233, 137),
             headers.fast_moved.value if self.data.moved_fast else headers.fast_not_moved.value,

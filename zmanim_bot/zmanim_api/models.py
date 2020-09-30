@@ -15,7 +15,8 @@ __all__ = [
     'YomTov',
     'Holiday',
     'Fast',
-    'Zmanim'
+    'Zmanim',
+    'IsraelHolidays'
 ]
 
 
