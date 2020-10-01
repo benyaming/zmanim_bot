@@ -31,7 +31,7 @@ gettext = i18n_.gettext
 lazy_gettext = i18n_.lazy_gettext
 
 # cd .\zmanim_bot\texts\single\
-#  pybabel extract ..\plural\units.py .\buttons.py .\headers.py .\helpers.py .\messages.py .\names.py .\zmanim.py  -o .\..\..\locales\zmanim_bot.pot
+#  pybabel extract ..\plural\units.py .\buttons.py .\headers.py .\helpers.py .\messages.py .\names.py .\zmanim.py  -o .\..\..\locales\zmanim_bot.pot -k __:1,2
 
 # pybabel init -i .\locales\zmanim_bot.pot -d .\locales\ -D zmanim_bot -l ru
-# pybabel compile -d .\locales\ -D zmanim_bot
+# pybabel compile -d ..\..\locales\ -D zmanim_bot

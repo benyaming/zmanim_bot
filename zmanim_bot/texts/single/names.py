@@ -175,3 +175,35 @@ GEMARA_BOOKS = {
     'Meilah': _('Meilah'),
     'Nidah': _('Nidah')
 }
+
+JEWISH_MONTHS = {
+    'nissan': _('nissan'),
+    'iyar': _('iyar'),
+    'sivan': _('sivan'),
+    'tammuz': _('tammuz'),
+    'av': _('av'),
+    'elul': _('elul'),
+    'tishrei': _('tishrei'),
+    'cheshvan': _('cheshvan'),
+    'kislev': _('kislev'),
+    'teves': _('teves'),
+    'shevat': _('shevat'),
+    'adar': _('adar'),
+    'adar_ii': _('adar_ii')
+}
+
+JEWISH_MONTHS_GENETIVE = {
+    'nissan': _('nissan-g'),
+    'iyar': _('iyar-g'),
+    'sivan': _('sivan-g'),
+    'tammuz': _('tammuz-g'),
+    'av': _('av-g'),
+    'elul': _('elul-g'),
+    'tishrei': _('tishrei-g'),
+    'cheshvan': _('cheshvan-g'),
+    'kislev': _('kislev-g'),
+    'teves': _('teves-g'),
+    'shevat': _('shevat-g'),
+    'adar': _('adar-g'),
+    'adar_ii': _('adar_ii-g')
+}

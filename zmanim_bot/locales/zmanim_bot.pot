@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-01 09:33+0300\n"
+"POT-Creation-Date: 2020-10-01 10:08+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,42 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
+
+#: ../plural/units.py:5
+msgid "year"
+msgid_plural "years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../plural/units.py:6 headers.py:10
+msgid "month"
+msgid_plural "months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../plural/units.py:7
+msgid "day"
+msgid_plural "days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../plural/units.py:8
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../plural/units.py:9
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../plural/units.py:10
+msgid "part"
+msgid_plural "parts"
+msgstr[0] ""
+msgstr[1] ""
 
 #: buttons.py:5
 msgid "send location"
@@ -195,10 +231,6 @@ msgstr ""
 
 #: headers.py:9
 msgid "duration"
-msgstr ""
-
-#: headers.py:10
-msgid "month"
 msgstr ""
 
 #: headers.py:11
@@ -935,6 +967,110 @@ msgstr ""
 
 #: names.py:176
 msgid "Nidah"
+msgstr ""
+
+#: names.py:180
+msgid "nissan"
+msgstr ""
+
+#: names.py:181
+msgid "iyar"
+msgstr ""
+
+#: names.py:182
+msgid "sivan"
+msgstr ""
+
+#: names.py:183
+msgid "tammuz"
+msgstr ""
+
+#: names.py:184
+msgid "av"
+msgstr ""
+
+#: names.py:185
+msgid "elul"
+msgstr ""
+
+#: names.py:186
+msgid "tishrei"
+msgstr ""
+
+#: names.py:187
+msgid "cheshvan"
+msgstr ""
+
+#: names.py:188
+msgid "kislev"
+msgstr ""
+
+#: names.py:189
+msgid "teves"
+msgstr ""
+
+#: names.py:190
+msgid "shevat"
+msgstr ""
+
+#: names.py:191
+msgid "adar"
+msgstr ""
+
+#: names.py:192
+msgid "adar_ii"
+msgstr ""
+
+#: names.py:196
+msgid "nissan-g"
+msgstr ""
+
+#: names.py:197
+msgid "iyar-g"
+msgstr ""
+
+#: names.py:198
+msgid "sivan-g"
+msgstr ""
+
+#: names.py:199
+msgid "tammuz-g"
+msgstr ""
+
+#: names.py:200
+msgid "av-g"
+msgstr ""
+
+#: names.py:201
+msgid "elul-g"
+msgstr ""
+
+#: names.py:202
+msgid "tishrei-g"
+msgstr ""
+
+#: names.py:203
+msgid "cheshvan-g"
+msgstr ""
+
+#: names.py:204
+msgid "kislev-g"
+msgstr ""
+
+#: names.py:205
+msgid "teves-g"
+msgstr ""
+
+#: names.py:206
+msgid "shevat-g"
+msgstr ""
+
+#: names.py:207
+msgid "adar-g"
+msgstr ""
+
+#: names.py:208
+msgid "adar_ii-g"
 msgstr ""
 
 #: zmanim.py:4

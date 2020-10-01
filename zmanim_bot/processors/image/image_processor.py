@@ -7,6 +7,7 @@ from babel.support import LazyProxy
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 
 from ...middlewares.i18n import gettext as _
+from ...texts.plural.units import tu_month
 from ...zmanim_api.models import *
 from ...texts.single import names, headers, helpers
 from ...texts.plural import units
@@ -190,11 +191,11 @@ class RoshChodeshImage(BaseImage):
         y_offset = 80
 
         # draw month
-        self._draw_line(x, y, headers.rh_month, self.data.month_name)
+        self._draw_line(x, y, _(*units.tu_month, 1).capitalize(), names.JEWISH_MONTHS[self.data.month_name])
         y += y_offset
 
         # draw duration
-        duration_value = f'{self.data.duration} {_("day", "days", self.data.duration)}'
+        duration_value = f'{self.data.duration} {_(*units.tu_day, self.data.duration)}'
         self._draw_line(x, y, headers.rh_duration, duration_value)
         y += y_offset
 
