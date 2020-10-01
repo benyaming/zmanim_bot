@@ -350,7 +350,7 @@ class FastImage(BaseImage):
         self._draw_title(self._draw, names.FASTS_TITLES[self.data.settings.fast_name])
 
         self._draw.text(
-            (233, 137),
+            (210, 125),
             headers.fast_moved.value if self.data.moved_fast else headers.fast_not_moved.value,
             font=self._bold_font,
             fill='#ff5959' if self.data.moved_fast else '#8bff59'

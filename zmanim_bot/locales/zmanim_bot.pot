@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-08-05 23:42+0300\n"
+"POT-Creation-Date: 2020-10-01 08:22+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,151 +29,155 @@ msgstr ""
 msgid "back"
 msgstr ""
 
-#: buttons.py:11
+#: buttons.py:8
+msgid "Done"
+msgstr ""
+
+#: buttons.py:12
 msgid "zmanim"
 msgstr ""
 
-#: buttons.py:12 names.py:72
+#: buttons.py:13 names.py:71
 msgid "shabbat"
 msgstr ""
 
-#: buttons.py:13
+#: buttons.py:14
 msgid "holidays"
 msgstr ""
 
-#: buttons.py:14
+#: buttons.py:15
 msgid "daf yomi"
 msgstr ""
 
-#: buttons.py:15
+#: buttons.py:16
 msgid "rosh chodesh"
 msgstr ""
 
-#: buttons.py:16
+#: buttons.py:17
 msgid "fast days"
 msgstr ""
 
-#: buttons.py:17
+#: buttons.py:18
 msgid "zmanim by the date"
 msgstr ""
 
-#: buttons.py:18
+#: buttons.py:19
 msgid "date converter"
 msgstr ""
 
-#: buttons.py:19
+#: buttons.py:20
 msgid "help"
 msgstr ""
 
-#: buttons.py:20
+#: buttons.py:21
 msgid "settings"
 msgstr ""
 
-#: buttons.py:24
+#: buttons.py:25
 msgid "F.A.Q."
 msgstr ""
 
-#: buttons.py:25
+#: buttons.py:26
 msgid "report a bug"
 msgstr ""
 
-#: buttons.py:29 messages.py:21
+#: buttons.py:30 messages.py:21
 msgid "select zmanim"
 msgstr ""
 
-#: buttons.py:30 headers.py:14
+#: buttons.py:31 headers.py:14
 msgid "candle lighting"
 msgstr ""
 
-#: buttons.py:31 headers.py:15
+#: buttons.py:32 headers.py:15
 msgid "havdala"
 msgstr ""
 
-#: buttons.py:32
+#: buttons.py:33
 msgid "language"
 msgstr ""
 
-#: buttons.py:33
+#: buttons.py:34
 msgid "location"
 msgstr ""
 
-#: buttons.py:37
+#: buttons.py:38
 msgid "more..."
 msgstr ""
 
-#: buttons.py:38
+#: buttons.py:39
 msgid "main holidays"
 msgstr ""
 
-#: buttons.py:40
+#: buttons.py:41
 msgid "rosh ha-shanah"
 msgstr ""
 
-#: buttons.py:41
+#: buttons.py:42
 msgid "yom kippur"
 msgstr ""
 
-#: buttons.py:42
+#: buttons.py:43
 msgid "succos"
 msgstr ""
 
-#: buttons.py:43
+#: buttons.py:44
 msgid "shmini atzeres"
 msgstr ""
 
-#: buttons.py:44
+#: buttons.py:45
 msgid "chanukah"
 msgstr ""
 
-#: buttons.py:45
+#: buttons.py:46
 msgid "purim"
 msgstr ""
 
-#: buttons.py:46
+#: buttons.py:47
 msgid "pesach"
 msgstr ""
 
-#: buttons.py:47
+#: buttons.py:48
 msgid "shavuos"
 msgstr ""
 
-#: buttons.py:48
+#: buttons.py:49
 msgid "tu bi-Shvat"
 msgstr ""
 
-#: buttons.py:49
+#: buttons.py:50
 msgid "lag ba-omer"
 msgstr ""
 
-#: buttons.py:50
+#: buttons.py:51
 msgid "israel holidays"
 msgstr ""
 
-#: buttons.py:54
+#: buttons.py:55
 msgid "fast of Gedaliah"
 msgstr ""
 
-#: buttons.py:55
+#: buttons.py:56
 msgid "10 of Tevet"
 msgstr ""
 
-#: buttons.py:56
+#: buttons.py:57
 msgid "fast of Esther"
 msgstr ""
 
-#: buttons.py:57
+#: buttons.py:58
 msgid "17 of Tammuz"
 msgstr ""
 
-#: buttons.py:58
+#: buttons.py:59
 msgid "9 of Av"
 msgstr ""
 
-#: buttons.py:67
+#: buttons.py:68
 msgid "greg to jew"
 msgstr ""
 
-#: buttons.py:68
+#: buttons.py:69
 msgid "jew to greg"
 msgstr ""
 
@@ -217,8 +221,32 @@ msgstr ""
 msgid "chatzot"
 msgstr ""
 
+#: headers.py:20
+msgid "Attention, moved fast!"
+msgstr ""
+
 #: headers.py:21
+msgid "Fast was'nt moved"
+msgstr ""
+
+#: headers.py:23
 msgid "hoshana rabah"
+msgstr ""
+
+#: headers.py:26
+msgid "yom hashoah"
+msgstr ""
+
+#: headers.py:27
+msgid "yom hazikaron"
+msgstr ""
+
+#: headers.py:28
+msgid "yom haatzmaut"
+msgstr ""
+
+#: headers.py:29
+msgid "yom yerushalaim"
 msgstr ""
 
 #: helpers.py:4
@@ -301,188 +329,612 @@ msgstr ""
 msgid "input jewish in ISO format"
 msgstr ""
 
-#: names.py:10
+#: messages.py:26
+msgid ""
+"your message successfully received. if you want, you can attach some "
+"screenshots. when you will finish, press \"Done\""
+msgstr ""
+
+#: messages.py:28
+msgid "Screenshot succesfully received."
+msgstr ""
+
+#: messages.py:29
+msgid "Incorrect media type. Please, send your screenshot as photo."
+msgstr ""
+
+#: messages.py:30
+msgid ""
+"your report had ben sent to admin, you will receive notification with "
+"status"
+msgstr ""
+
+#: names.py:9
 msgid "january-g"
 msgstr ""
 
-#: names.py:11
+#: names.py:10
 msgid "fubruary-g"
 msgstr ""
 
-#: names.py:12
+#: names.py:11
 msgid "march-g"
 msgstr ""
 
-#: names.py:13
+#: names.py:12
 msgid "april-g"
 msgstr ""
 
-#: names.py:14
+#: names.py:13
 msgid "may-g"
 msgstr ""
 
-#: names.py:15
+#: names.py:14
 msgid "june-g"
 msgstr ""
 
-#: names.py:16
+#: names.py:15
 msgid "july-g"
 msgstr ""
 
-#: names.py:17
+#: names.py:16
 msgid "august-g"
 msgstr ""
 
-#: names.py:18
+#: names.py:17
 msgid "september-g"
 msgstr ""
 
-#: names.py:19
+#: names.py:18
 msgid "october-g"
 msgstr ""
 
-#: names.py:20
+#: names.py:19
 msgid "november-g"
 msgstr ""
 
-#: names.py:21
+#: names.py:20
 msgid "december-g"
 msgstr ""
 
-#: names.py:25
-msgid "monday-g"
-msgstr ""
-
-#: names.py:26
-msgid "tuesday-g"
-msgstr ""
-
-#: names.py:27
-msgid "wednesday-g"
-msgstr ""
-
-#: names.py:28
-msgid "thursday-g"
-msgstr ""
-
-#: names.py:29
-msgid "friday-g"
-msgstr ""
-
-#: names.py:30
-msgid "saturday-g"
-msgstr ""
-
-#: names.py:31
-msgid "sunday-g"
-msgstr ""
-
-#: names.py:35
+#: names.py:34
 msgid "monday"
 msgstr ""
 
-#: names.py:36
+#: names.py:35
 msgid "tuesday"
 msgstr ""
 
-#: names.py:37
+#: names.py:36
 msgid "wednesday"
 msgstr ""
 
-#: names.py:38
+#: names.py:37
 msgid "thursday"
 msgstr ""
 
-#: names.py:39
+#: names.py:38
 msgid "friday"
 msgstr ""
 
-#: names.py:40
+#: names.py:39
 msgid "saturday"
 msgstr ""
 
-#: names.py:41
+#: names.py:40
 msgid "sunday"
 msgstr ""
 
-#: names.py:45
+#: names.py:44
 msgid "DAF YOMI"
 msgstr ""
 
-#: names.py:46
+#: names.py:45
 msgid "ROSH CHODESH"
 msgstr ""
 
-#: names.py:47
+#: names.py:46
 msgid "SHABBAT"
 msgstr ""
 
-#: names.py:48
+#: names.py:47
 msgid "ZMANIM"
 msgstr ""
 
-#: names.py:50
+#: names.py:49
 msgid "FAST OF GEDALIAH"
 msgstr ""
 
-#: names.py:51
+#: names.py:50
 msgid "FAST 10th OF TEVETH"
 msgstr ""
 
-#: names.py:52
+#: names.py:51
 msgid "FAST OF ESTHER"
 msgstr ""
 
-#: names.py:53
+#: names.py:52
 msgid "FAST 17th OF TAMMUZ"
 msgstr ""
 
-#: names.py:54
+#: names.py:53
 msgid "FAST 9th OF AV"
 msgstr ""
 
-#: names.py:57
+#: names.py:56
 msgid "CHANUKAH"
 msgstr ""
 
-#: names.py:58
+#: names.py:57
 msgid "TU BI-SHVAT"
 msgstr ""
 
-#: names.py:59
+#: names.py:58
 msgid "PURIM"
 msgstr ""
 
-#: names.py:60
+#: names.py:59
 msgid "LAG BA-OMER"
 msgstr ""
 
-#: names.py:61
+#: names.py:60
 msgid "ISRAEL HOLIDAYS"
 msgstr ""
 
-#: names.py:64
+#: names.py:63
 msgid "ROSH HA-SHANA"
 msgstr ""
 
-#: names.py:65
+#: names.py:64
 msgid "YOM KIPUR"
 msgstr ""
 
-#: names.py:66
+#: names.py:65
 msgid "SUCCOT"
 msgstr ""
 
-#: names.py:67
+#: names.py:66
 msgid "SHMINI ATZERES"
 msgstr ""
 
-#: names.py:68
+#: names.py:67
 msgid "PESACH"
 msgstr ""
 
-#: names.py:69
+#: names.py:68
 msgid "SHAVUOT"
+msgstr ""
+
+#: names.py:74
+msgid "bereishis"
+msgstr ""
+
+#: names.py:75
+msgid "noach"
+msgstr ""
+
+#: names.py:76
+msgid "lech_lecha"
+msgstr ""
+
+#: names.py:77
+msgid "vayeira"
+msgstr ""
+
+#: names.py:78
+msgid "chayei_sarah"
+msgstr ""
+
+#: names.py:79
+msgid "toldos"
+msgstr ""
+
+#: names.py:80
+msgid "vayeitzei"
+msgstr ""
+
+#: names.py:81
+msgid "vayishlach"
+msgstr ""
+
+#: names.py:82
+msgid "vayeishev"
+msgstr ""
+
+#: names.py:83
+msgid "mikeitz"
+msgstr ""
+
+#: names.py:84
+msgid "vayigash"
+msgstr ""
+
+#: names.py:85
+msgid "vayechi"
+msgstr ""
+
+#: names.py:86
+msgid "shemos"
+msgstr ""
+
+#: names.py:87
+msgid "vaeirah"
+msgstr ""
+
+#: names.py:88
+msgid "bo"
+msgstr ""
+
+#: names.py:89
+msgid "beshalach"
+msgstr ""
+
+#: names.py:90
+msgid "yisro"
+msgstr ""
+
+#: names.py:91
+msgid "mishpatim"
+msgstr ""
+
+#: names.py:92
+msgid "terumah"
+msgstr ""
+
+#: names.py:93
+msgid "tetzaveh"
+msgstr ""
+
+#: names.py:94
+msgid "ki_sisa"
+msgstr ""
+
+#: names.py:95
+msgid "vayakheil"
+msgstr ""
+
+#: names.py:96
+msgid "pekudei"
+msgstr ""
+
+#: names.py:97
+msgid "vayikra"
+msgstr ""
+
+#: names.py:98
+msgid "tzav"
+msgstr ""
+
+#: names.py:99
+msgid "shemini"
+msgstr ""
+
+#: names.py:100
+msgid "tazria"
+msgstr ""
+
+#: names.py:101
+msgid "metzora"
+msgstr ""
+
+#: names.py:102
+msgid "acharei"
+msgstr ""
+
+#: names.py:103
+msgid "kedoshim"
+msgstr ""
+
+#: names.py:104
+msgid "emor"
+msgstr ""
+
+#: names.py:105
+msgid "behar"
+msgstr ""
+
+#: names.py:106
+msgid "bechukosai"
+msgstr ""
+
+#: names.py:107
+msgid "bamidbar"
+msgstr ""
+
+#: names.py:108
+msgid "naso"
+msgstr ""
+
+#: names.py:109
+msgid "behaalosecha"
+msgstr ""
+
+#: names.py:110
+msgid "shelach"
+msgstr ""
+
+#: names.py:111
+msgid "korach"
+msgstr ""
+
+#: names.py:112
+msgid "chukas"
+msgstr ""
+
+#: names.py:113
+msgid "balak"
+msgstr ""
+
+#: names.py:114
+msgid "pinchas"
+msgstr ""
+
+#: names.py:115
+msgid "matos"
+msgstr ""
+
+#: names.py:116
+msgid "masei"
+msgstr ""
+
+#: names.py:117
+msgid "devarim"
+msgstr ""
+
+#: names.py:118
+msgid "vaeschanan"
+msgstr ""
+
+#: names.py:119
+msgid "eikev"
+msgstr ""
+
+#: names.py:120
+msgid "reei"
+msgstr ""
+
+#: names.py:121
+msgid "shoftim"
+msgstr ""
+
+#: names.py:122
+msgid "ki_seitzei"
+msgstr ""
+
+#: names.py:123
+msgid "ki_savo"
+msgstr ""
+
+#: names.py:124
+msgid "nitzavim"
+msgstr ""
+
+#: names.py:125
+msgid "vayeilech"
+msgstr ""
+
+#: names.py:126
+msgid "haazinu"
+msgstr ""
+
+#: names.py:127
+msgid "vezos_haberacha"
+msgstr ""
+
+#: names.py:129
+msgid "vayakheil - pikudei"
+msgstr ""
+
+#: names.py:130
+msgid "tazria - metzora"
+msgstr ""
+
+#: names.py:131
+msgid "acharei - kedoshim"
+msgstr ""
+
+#: names.py:132
+msgid "behar - bechukosai"
+msgstr ""
+
+#: names.py:133
+msgid "chukas - balak"
+msgstr ""
+
+#: names.py:134
+msgid "matos - masei"
+msgstr ""
+
+#: names.py:135
+msgid "nitzavim - vayeilech"
+msgstr ""
+
+#: names.py:137
+msgid "shabbat_rosh_hashana"
+msgstr ""
+
+#: names.py:138
+msgid "shabbat_yom_kippur"
+msgstr ""
+
+#: names.py:139
+msgid "shabbat_succos"
+msgstr ""
+
+#: names.py:140
+msgid "shabbat_chol_hamoed_succos"
+msgstr ""
+
+#: names.py:141
+msgid "shabbat_hoshana_rabbah"
+msgstr ""
+
+#: names.py:142
+msgid "shabbat_shemini_atzeres"
+msgstr ""
+
+#: names.py:143
+msgid "shabbat_simchas_torah"
+msgstr ""
+
+#: names.py:144
+msgid "shabbat_pesach"
+msgstr ""
+
+#: names.py:145
+msgid "shabbat_chol_hamoed_pesach"
+msgstr ""
+
+#: names.py:146
+msgid "shabbat_shavuos"
+msgstr ""
+
+#: names.py:150
+msgid "Brachos"
+msgstr ""
+
+#: names.py:151
+msgid "Shabbos"
+msgstr ""
+
+#: names.py:152
+msgid "Eruvin"
+msgstr ""
+
+#: names.py:153
+msgid "Pesachim"
+msgstr ""
+
+#: names.py:154
+msgid "Shekalim"
+msgstr ""
+
+#: names.py:155
+msgid "Yoma"
+msgstr ""
+
+#: names.py:156
+msgid "Sukah"
+msgstr ""
+
+#: names.py:157
+msgid "Beitzah"
+msgstr ""
+
+#: names.py:158
+msgid "Rosh Hashana"
+msgstr ""
+
+#: names.py:159
+msgid "Taanis"
+msgstr ""
+
+#: names.py:160
+msgid "Megilah"
+msgstr ""
+
+#: names.py:161
+msgid "Moed Katan"
+msgstr ""
+
+#: names.py:162
+msgid "Chagigah"
+msgstr ""
+
+#: names.py:163
+msgid "Yevamos"
+msgstr ""
+
+#: names.py:164
+msgid "Kesuvos"
+msgstr ""
+
+#: names.py:165
+msgid "Nedarim"
+msgstr ""
+
+#: names.py:166
+msgid "Nazir"
+msgstr ""
+
+#: names.py:167
+msgid "Sotah"
+msgstr ""
+
+#: names.py:168
+msgid "Gitin"
+msgstr ""
+
+#: names.py:169
+msgid "Kidushin"
+msgstr ""
+
+#: names.py:170
+msgid "Bava Kama"
+msgstr ""
+
+#: names.py:171
+msgid "Bava Metzia"
+msgstr ""
+
+#: names.py:172
+msgid "Bava Basra"
+msgstr ""
+
+#: names.py:173
+msgid "Sanhedrin"
+msgstr ""
+
+#: names.py:174
+msgid "Makos"
+msgstr ""
+
+#: names.py:175
+msgid "Shevuos"
+msgstr ""
+
+#: names.py:176
+msgid "Avodah Zarah"
+msgstr ""
+
+#: names.py:177
+msgid "Horayos"
+msgstr ""
+
+#: names.py:178
+msgid "Zevachim"
+msgstr ""
+
+#: names.py:179
+msgid "Menachos"
+msgstr ""
+
+#: names.py:180
+msgid "Chulin"
+msgstr ""
+
+#: names.py:181
+msgid "Bechoros"
+msgstr ""
+
+#: names.py:182
+msgid "Erchin"
+msgstr ""
+
+#: names.py:183
+msgid "Temurah"
+msgstr ""
+
+#: names.py:184
+msgid "Kerisos"
+msgstr ""
+
+#: names.py:185
+msgid "Meilah"
+msgstr ""
+
+#: names.py:186
+msgid "Nidah"
 msgstr ""
 
 #: zmanim.py:4

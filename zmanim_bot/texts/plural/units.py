@@ -1,4 +1,4 @@
-from ..translators import fake_gettext as _, fake_gettext_plural as __
+from ..translators import fake_gettext_plural as __
 
 
 # Time units
