@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-01 08:22+0300\n"
+"POT-Creation-Date: 2020-10-01 09:33+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgstr ""
 msgid "zmanim"
 msgstr ""
 
-#: buttons.py:13 names.py:71
+#: buttons.py:13 names.py:61
 msgid "shabbat"
 msgstr ""
 
@@ -397,543 +397,543 @@ msgstr ""
 msgid "december-g"
 msgstr ""
 
-#: names.py:34
+#: names.py:24
 msgid "monday"
 msgstr ""
 
-#: names.py:35
+#: names.py:25
 msgid "tuesday"
 msgstr ""
 
-#: names.py:36
+#: names.py:26
 msgid "wednesday"
 msgstr ""
 
-#: names.py:37
+#: names.py:27
 msgid "thursday"
 msgstr ""
 
-#: names.py:38
+#: names.py:28
 msgid "friday"
 msgstr ""
 
-#: names.py:39
+#: names.py:29
 msgid "saturday"
 msgstr ""
 
-#: names.py:40
+#: names.py:30
 msgid "sunday"
 msgstr ""
 
-#: names.py:44
+#: names.py:34
 msgid "DAF YOMI"
 msgstr ""
 
-#: names.py:45
+#: names.py:35
 msgid "ROSH CHODESH"
 msgstr ""
 
-#: names.py:46
+#: names.py:36
 msgid "SHABBAT"
 msgstr ""
 
-#: names.py:47
+#: names.py:37
 msgid "ZMANIM"
 msgstr ""
 
-#: names.py:49
+#: names.py:39
 msgid "FAST OF GEDALIAH"
 msgstr ""
 
-#: names.py:50
+#: names.py:40
 msgid "FAST 10th OF TEVETH"
 msgstr ""
 
-#: names.py:51
+#: names.py:41
 msgid "FAST OF ESTHER"
 msgstr ""
 
-#: names.py:52
+#: names.py:42
 msgid "FAST 17th OF TAMMUZ"
 msgstr ""
 
-#: names.py:53
+#: names.py:43
 msgid "FAST 9th OF AV"
 msgstr ""
 
-#: names.py:56
+#: names.py:46
 msgid "CHANUKAH"
 msgstr ""
 
-#: names.py:57
+#: names.py:47
 msgid "TU BI-SHVAT"
 msgstr ""
 
-#: names.py:58
+#: names.py:48
 msgid "PURIM"
 msgstr ""
 
-#: names.py:59
+#: names.py:49
 msgid "LAG BA-OMER"
 msgstr ""
 
-#: names.py:60
+#: names.py:50
 msgid "ISRAEL HOLIDAYS"
 msgstr ""
 
-#: names.py:63
+#: names.py:53
 msgid "ROSH HA-SHANA"
 msgstr ""
 
-#: names.py:64
+#: names.py:54
 msgid "YOM KIPUR"
 msgstr ""
 
-#: names.py:65
+#: names.py:55
 msgid "SUCCOT"
 msgstr ""
 
-#: names.py:66
+#: names.py:56
 msgid "SHMINI ATZERES"
 msgstr ""
 
-#: names.py:67
+#: names.py:57
 msgid "PESACH"
 msgstr ""
 
-#: names.py:68
+#: names.py:58
 msgid "SHAVUOT"
 msgstr ""
 
-#: names.py:74
+#: names.py:64
 msgid "bereishis"
 msgstr ""
 
-#: names.py:75
+#: names.py:65
 msgid "noach"
 msgstr ""
 
-#: names.py:76
+#: names.py:66
 msgid "lech_lecha"
 msgstr ""
 
-#: names.py:77
+#: names.py:67
 msgid "vayeira"
 msgstr ""
 
-#: names.py:78
+#: names.py:68
 msgid "chayei_sarah"
 msgstr ""
 
-#: names.py:79
+#: names.py:69
 msgid "toldos"
 msgstr ""
 
-#: names.py:80
+#: names.py:70
 msgid "vayeitzei"
 msgstr ""
 
-#: names.py:81
+#: names.py:71
 msgid "vayishlach"
 msgstr ""
 
-#: names.py:82
+#: names.py:72
 msgid "vayeishev"
 msgstr ""
 
-#: names.py:83
+#: names.py:73
 msgid "mikeitz"
 msgstr ""
 
-#: names.py:84
+#: names.py:74
 msgid "vayigash"
 msgstr ""
 
-#: names.py:85
+#: names.py:75
 msgid "vayechi"
 msgstr ""
 
-#: names.py:86
+#: names.py:76
 msgid "shemos"
 msgstr ""
 
-#: names.py:87
+#: names.py:77
 msgid "vaeirah"
 msgstr ""
 
-#: names.py:88
+#: names.py:78
 msgid "bo"
 msgstr ""
 
-#: names.py:89
+#: names.py:79
 msgid "beshalach"
 msgstr ""
 
-#: names.py:90
+#: names.py:80
 msgid "yisro"
 msgstr ""
 
-#: names.py:91
+#: names.py:81
 msgid "mishpatim"
 msgstr ""
 
-#: names.py:92
+#: names.py:82
 msgid "terumah"
 msgstr ""
 
-#: names.py:93
+#: names.py:83
 msgid "tetzaveh"
 msgstr ""
 
-#: names.py:94
+#: names.py:84
 msgid "ki_sisa"
 msgstr ""
 
-#: names.py:95
+#: names.py:85
 msgid "vayakheil"
 msgstr ""
 
-#: names.py:96
+#: names.py:86
 msgid "pekudei"
 msgstr ""
 
-#: names.py:97
+#: names.py:87
 msgid "vayikra"
 msgstr ""
 
-#: names.py:98
+#: names.py:88
 msgid "tzav"
 msgstr ""
 
-#: names.py:99
+#: names.py:89
 msgid "shemini"
 msgstr ""
 
-#: names.py:100
+#: names.py:90
 msgid "tazria"
 msgstr ""
 
-#: names.py:101
+#: names.py:91
 msgid "metzora"
 msgstr ""
 
-#: names.py:102
+#: names.py:92
 msgid "acharei"
 msgstr ""
 
-#: names.py:103
+#: names.py:93
 msgid "kedoshim"
 msgstr ""
 
-#: names.py:104
+#: names.py:94
 msgid "emor"
 msgstr ""
 
-#: names.py:105
+#: names.py:95
 msgid "behar"
 msgstr ""
 
-#: names.py:106
+#: names.py:96
 msgid "bechukosai"
 msgstr ""
 
-#: names.py:107
+#: names.py:97
 msgid "bamidbar"
 msgstr ""
 
-#: names.py:108
+#: names.py:98
 msgid "naso"
 msgstr ""
 
-#: names.py:109
+#: names.py:99
 msgid "behaalosecha"
 msgstr ""
 
-#: names.py:110
+#: names.py:100
 msgid "shelach"
 msgstr ""
 
-#: names.py:111
+#: names.py:101
 msgid "korach"
 msgstr ""
 
-#: names.py:112
+#: names.py:102
 msgid "chukas"
 msgstr ""
 
-#: names.py:113
+#: names.py:103
 msgid "balak"
 msgstr ""
 
-#: names.py:114
+#: names.py:104
 msgid "pinchas"
 msgstr ""
 
-#: names.py:115
+#: names.py:105
 msgid "matos"
 msgstr ""
 
-#: names.py:116
+#: names.py:106
 msgid "masei"
 msgstr ""
 
-#: names.py:117
+#: names.py:107
 msgid "devarim"
 msgstr ""
 
-#: names.py:118
+#: names.py:108
 msgid "vaeschanan"
 msgstr ""
 
-#: names.py:119
+#: names.py:109
 msgid "eikev"
 msgstr ""
 
-#: names.py:120
+#: names.py:110
 msgid "reei"
 msgstr ""
 
-#: names.py:121
+#: names.py:111
 msgid "shoftim"
 msgstr ""
 
-#: names.py:122
+#: names.py:112
 msgid "ki_seitzei"
 msgstr ""
 
-#: names.py:123
+#: names.py:113
 msgid "ki_savo"
 msgstr ""
 
-#: names.py:124
+#: names.py:114
 msgid "nitzavim"
 msgstr ""
 
-#: names.py:125
+#: names.py:115
 msgid "vayeilech"
 msgstr ""
 
-#: names.py:126
+#: names.py:116
 msgid "haazinu"
 msgstr ""
 
-#: names.py:127
+#: names.py:117
 msgid "vezos_haberacha"
 msgstr ""
 
-#: names.py:129
+#: names.py:119
 msgid "vayakheil - pikudei"
 msgstr ""
 
-#: names.py:130
+#: names.py:120
 msgid "tazria - metzora"
 msgstr ""
 
-#: names.py:131
+#: names.py:121
 msgid "acharei - kedoshim"
 msgstr ""
 
-#: names.py:132
+#: names.py:122
 msgid "behar - bechukosai"
 msgstr ""
 
-#: names.py:133
+#: names.py:123
 msgid "chukas - balak"
 msgstr ""
 
-#: names.py:134
+#: names.py:124
 msgid "matos - masei"
 msgstr ""
 
-#: names.py:135
+#: names.py:125
 msgid "nitzavim - vayeilech"
 msgstr ""
 
-#: names.py:137
+#: names.py:127
 msgid "shabbat_rosh_hashana"
 msgstr ""
 
-#: names.py:138
+#: names.py:128
 msgid "shabbat_yom_kippur"
 msgstr ""
 
-#: names.py:139
+#: names.py:129
 msgid "shabbat_succos"
 msgstr ""
 
-#: names.py:140
+#: names.py:130
 msgid "shabbat_chol_hamoed_succos"
 msgstr ""
 
-#: names.py:141
+#: names.py:131
 msgid "shabbat_hoshana_rabbah"
 msgstr ""
 
-#: names.py:142
+#: names.py:132
 msgid "shabbat_shemini_atzeres"
 msgstr ""
 
-#: names.py:143
+#: names.py:133
 msgid "shabbat_simchas_torah"
 msgstr ""
 
-#: names.py:144
+#: names.py:134
 msgid "shabbat_pesach"
 msgstr ""
 
-#: names.py:145
+#: names.py:135
 msgid "shabbat_chol_hamoed_pesach"
 msgstr ""
 
-#: names.py:146
+#: names.py:136
 msgid "shabbat_shavuos"
 msgstr ""
 
-#: names.py:150
+#: names.py:140
 msgid "Brachos"
 msgstr ""
 
-#: names.py:151
+#: names.py:141
 msgid "Shabbos"
 msgstr ""
 
-#: names.py:152
+#: names.py:142
 msgid "Eruvin"
 msgstr ""
 
-#: names.py:153
+#: names.py:143
 msgid "Pesachim"
 msgstr ""
 
-#: names.py:154
+#: names.py:144
 msgid "Shekalim"
 msgstr ""
 
-#: names.py:155
+#: names.py:145
 msgid "Yoma"
 msgstr ""
 
-#: names.py:156
+#: names.py:146
 msgid "Sukah"
 msgstr ""
 
-#: names.py:157
+#: names.py:147
 msgid "Beitzah"
 msgstr ""
 
-#: names.py:158
+#: names.py:148
 msgid "Rosh Hashana"
 msgstr ""
 
-#: names.py:159
+#: names.py:149
 msgid "Taanis"
 msgstr ""
 
-#: names.py:160
+#: names.py:150
 msgid "Megilah"
 msgstr ""
 
-#: names.py:161
+#: names.py:151
 msgid "Moed Katan"
 msgstr ""
 
-#: names.py:162
+#: names.py:152
 msgid "Chagigah"
 msgstr ""
 
-#: names.py:163
+#: names.py:153
 msgid "Yevamos"
 msgstr ""
 
-#: names.py:164
+#: names.py:154
 msgid "Kesuvos"
 msgstr ""
 
-#: names.py:165
+#: names.py:155
 msgid "Nedarim"
 msgstr ""
 
-#: names.py:166
+#: names.py:156
 msgid "Nazir"
 msgstr ""
 
-#: names.py:167
+#: names.py:157
 msgid "Sotah"
 msgstr ""
 
-#: names.py:168
+#: names.py:158
 msgid "Gitin"
 msgstr ""
 
-#: names.py:169
+#: names.py:159
 msgid "Kidushin"
 msgstr ""
 
-#: names.py:170
+#: names.py:160
 msgid "Bava Kama"
 msgstr ""
 
-#: names.py:171
+#: names.py:161
 msgid "Bava Metzia"
 msgstr ""
 
-#: names.py:172
+#: names.py:162
 msgid "Bava Basra"
 msgstr ""
 
-#: names.py:173
+#: names.py:163
 msgid "Sanhedrin"
 msgstr ""
 
-#: names.py:174
+#: names.py:164
 msgid "Makos"
 msgstr ""
 
-#: names.py:175
+#: names.py:165
 msgid "Shevuos"
 msgstr ""
 
-#: names.py:176
+#: names.py:166
 msgid "Avodah Zarah"
 msgstr ""
 
-#: names.py:177
+#: names.py:167
 msgid "Horayos"
 msgstr ""
 
-#: names.py:178
+#: names.py:168
 msgid "Zevachim"
 msgstr ""
 
-#: names.py:179
+#: names.py:169
 msgid "Menachos"
 msgstr ""
 
-#: names.py:180
+#: names.py:170
 msgid "Chulin"
 msgstr ""
 
-#: names.py:181
+#: names.py:171
 msgid "Bechoros"
 msgstr ""
 
-#: names.py:182
+#: names.py:172
 msgid "Erchin"
 msgstr ""
 
-#: names.py:183
+#: names.py:173
 msgid "Temurah"
 msgstr ""
 
-#: names.py:184
+#: names.py:174
 msgid "Kerisos"
 msgstr ""
 
-#: names.py:185
+#: names.py:175
 msgid "Meilah"
 msgstr ""
 
-#: names.py:186
+#: names.py:176
 msgid "Nidah"
 msgstr ""
 
