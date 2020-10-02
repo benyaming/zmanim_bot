@@ -288,25 +288,25 @@ class ZmanimImage(BaseImage):
     def _set_font_properties(self, number_of_lines: int):
         p = {
             # [font_size, y_offset, start_y_offset
-            1: [58, 68, 300],
-            2: [58, 68, 270],
-            3: [58, 68, 220],
-            4: [58, 68, 180],
-            5: [58, 68, 160],
-            6: [58, 68, 140],
-            7: [58, 68, 100],
-            8: [58, 68, 85],
-            9: [58, 68, 85],
-            10: [59, 68, 40],
-            11: [57, 66, 20],
-            12: [55, 64, 20],
-            13: [52, 58, 20],
-            14: [45, 52, 20],
-            15: [43, 50, 10],
-            16: [41, 48, 10],
-            17: [39, 46, 0],
-            18: [37, 44, 0],
-            19: [35, 42, 0]
+            1: [45, 53, 300],
+            2: [45, 53, 270],
+            3: [45, 53, 220],
+            4: [45, 53, 180],
+            5: [45, 53, 160],
+            6: [45, 53, 140],
+            7: [45, 53, 100],
+            8: [45, 53, 85],
+            9: [45, 53, 85],
+            10: [45, 53, 40],
+            11: [45, 53, 20],
+            12: [45, 53, 15],
+            13: [45, 53, 20],
+            14: [45, 53, 20],
+            15: [45, 53, 10],
+            16: [40, 45, 0],
+            17: [40, 45, 0],
+            18: [40, 45, 0],
+            19: [40, 45, 0]
         }
         self._font_size, self._y_offset, self._start_y_offset = p.get(number_of_lines)
         self._font = ImageFont.truetype(str(self._font_path), size=self._font_size)
@@ -324,7 +324,7 @@ class ZmanimImage(BaseImage):
         self._draw_date(humanize_date([self.data.settings.date_]))
 
         y: int = 210 + self._start_y_offset
-        x: int = 100
+        x: int = 50
 
         # draw all image lines in cycle
         for header, value in zmanim.items():

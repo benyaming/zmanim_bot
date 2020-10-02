@@ -1049,7 +1049,7 @@ msgstr "Шкия (закат)"
 
 #: zmanim.py:16
 msgid "tzeis_8_5_degrees"
-msgstr "Вызод звезд [8.5 градусов за горизонтом]"
+msgstr "Выход звезд [8.5 градусов за горизонтом]"
 
 #: zmanim.py:17
 msgid "tzeis_72_minutes"
