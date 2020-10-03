@@ -135,15 +135,15 @@ class BaseImage:
             y: int,
             header: str,
             value: str,
-            value_on_new_line: bool = False
+            value_on_new_line: bool = False,
+            value_without_x_offset: bool = False
     ):
         header = f'{str(header)}: '
         self._draw.text((x, y), text=header, font=self._bold_font)
 
-        # if not value_on_new_line:
-        x += self._x_font_offset(header)
-        # else:
-        if value_on_new_line:
+        if not value_without_x_offset:
+            x += self._x_font_offset(header)
+        if value_on_new_line or value_without_x_offset:
             y += self._y_font_offset(header.split('\n')[0])
 
         self._draw.text((x, y), text=str(value), font=self._font)
@@ -239,8 +239,15 @@ class ShabbatImage(BaseImage):
         y_offset: int = 80
 
         # draw parashat hashavua
-        self._draw_line(x, y, headers.parsha, self.data.torah_part)
-        y += y_offset
+        torah_part = names.TORAH_PARTS.get(self.data.torah_part, '')
+        if (self._x_font_offset(headers.parsha.value) + self._x_font_offset(torah_part) + x) > IMG_SIZE:
+            value_on_new_line = True
+        else:
+            value_on_new_line = False
+
+        self._draw_line(x, y, headers.parsha, torah_part, value_without_x_offset=value_on_new_line)
+        y += y_offset if not value_on_new_line else y_offset * 2
+
 
         # if polar error, draw error message and return
         if not self.data.candle_lighting:
@@ -288,21 +295,21 @@ class ZmanimImage(BaseImage):
     def _set_font_properties(self, number_of_lines: int):
         p = {
             # [font_size, y_offset, start_y_offset
-            1: [45, 53, 300],
-            2: [45, 53, 270],
-            3: [45, 53, 220],
-            4: [45, 53, 180],
-            5: [45, 53, 160],
-            6: [45, 53, 140],
-            7: [45, 53, 100],
-            8: [45, 53, 85],
-            9: [45, 53, 85],
-            10: [45, 53, 40],
-            11: [45, 53, 20],
-            12: [45, 53, 15],
-            13: [45, 53, 20],
-            14: [45, 53, 20],
-            15: [45, 53, 10],
+            1: [44, 53, 300],
+            2: [44, 53, 270],
+            3: [44, 53, 220],
+            4: [44, 53, 180],
+            5: [44, 53, 160],
+            6: [44, 53, 140],
+            7: [44, 53, 100],
+            8: [44, 53, 85],
+            9: [44, 53, 85],
+            10: [44, 53, 40],
+            11: [44, 53, 20],
+            12: [44, 53, 15],
+            13: [44, 53, 20],
+            14: [44, 53, 20],
+            15: [44, 53, 10],
             16: [40, 45, 0],
             17: [40, 45, 0],
             18: [40, 45, 0],
