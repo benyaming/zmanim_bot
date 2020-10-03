@@ -30,7 +30,7 @@ async def handle_report(msg: Message, state: FSMContext):
         'message': msg.text,
         'message_id': msg.message_id,
         'user_id': msg.from_user.id,
-        'screenshots_ids': []
+        'media_ids': []
     }
     await state.set_data(report)
     await FeedbackState.next()

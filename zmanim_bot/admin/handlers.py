@@ -4,6 +4,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, Message, ContentType
 
 from .report_management import send_response_to_user
+from ..handlers.redirects import redirect_to_main_menu
 from ..helpers import CallbackPrefixes
 from ..misc import dp, bot
 from ..config import REPORT_ADMIN_LIST
@@ -53,7 +54,7 @@ async def handle_report_response(msg: Message, state: FSMContext):
 async def handle_done_report(msg: Message, state: FSMContext):
     response = await state.get_data()
     await state.finish()
-    await msg.reply('Succesfully sent')
+    await redirect_to_main_menu('Succesfully sent')
     create_task(send_response_to_user(response))
 
 
