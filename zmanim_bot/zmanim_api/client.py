@@ -1,5 +1,4 @@
 from datetime import date
-from typing import List, Dict
 
 from ..misc import bot
 from ..api import Location
