@@ -1,36 +1,75 @@
 import json
-from typing import Union
 
 from aiogram import types
-from aiogram.types import InputMediaPhoto
+# from aiogram.types import InputMediaPhoto, User, InlineKeyboardMarkup, InlineKeyboardButton
 
 from ..config import REPORT_ADMIN_LIST
+from ..exceptions import NoLocationException
+from ..helpers import CallbackPrefixes
 from ..misc import bot
+from ..api import get_or_set_location
 
 
-async def compose_report(report: dict) -> Union[types.MediaGroup, str]:
-    screenshots_ids = report.pop('screenshots_ids')
-    report_text = json.dumps(report, indent=2, ensure_ascii=False)
+async def _compose_report_text(report: dict) -> str:
+    try:
+        location = await get_or_set_location()
+    except NoLocationException:
+        location = None
+
+    report_data = {
+        'text': report['message'],
+        'meta': {
+            'user_id': types.User.get_current().id,
+            'user_location': location
+        }
+    }
+    report_text = json.dumps(report_data, indent=2, ensure_ascii=False)
     text = f'<b>NEW REPORT!</b>\n\n<code>{report_text}</code>'
+    return text
 
-    if not screenshots_ids:
-        return text
+
+async def _compose_media_group(report: dict) -> types.MediaGroup:
+    media_ids = report['media_ids']
 
     media_photos = []
-    for file_id in screenshots_ids:
+    for file_id, file_type in media_ids:
+        media_types = {
+            'photo': types.InputMediaPhoto,
+            'video': types.InputMediaVideo
+        }
         file = await bot.get_file(file_id)
         url = bot.get_file_url(file.file_path)
-        media_photos.append(InputMediaPhoto(types.InputFile.from_url(url)))
+        media_photos.append(media_types[file_type](types.InputFile.from_url(url)))
 
-    media_photos[0].caption = text
     return types.MediaGroup(media_photos)
 
 
 async def send_report_to_admins(report: dict):
-    composed_report = await compose_report(report)
+    button_data = f'{CallbackPrefixes.report}{report["message_id"]}:{report["user_id"]}'
+    button = types.InlineKeyboardMarkup().row(
+        types.InlineKeyboardButton('Reply to report', callback_data=button_data)
+    )
+    report_text = await _compose_report_text(report)
+    report_media = await _compose_media_group(report) if report['media_ids'] else None
 
     for admin_id in REPORT_ADMIN_LIST:
-        if isinstance(composed_report, types.MediaGroup):
-            await bot.send_media_group(admin_id, composed_report)
-        elif isinstance(composed_report, str):
-            await bot.send_message(admin_id, composed_report)
+        if report_media:
+            msg = await bot.send_media_group(admin_id, report_media)
+            await bot.send_message(admin_id, report_text, reply_markup=button, reply_to_message_id=msg[0].message_id)
+        else:
+            await bot.send_message(admin_id, report_text, reply_markup=button)
+
+
+async def send_response_to_user(response: dict):
+    response_text = response['response']
+    response_media = await _compose_media_group(response) if response['media_ids'] else None
+
+    msg = await bot.send_message(
+        response['user_id'],
+        response_text,
+        reply_to_message_id=response['message_id']
+    )
+    if response_media:
+        await bot.send_media_group(response['user_id'], response_media, reply_to_message_id=msg.message_id)
+
+

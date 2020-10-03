@@ -43,6 +43,9 @@ async def jewish_date_exception_handler(update: Update, e: IncorrectJewishDateEx
 
 @dp.errors_handler(exception=Exception)
 async def main_errors_handler(update: Update, e: Exception):
+    if e.__class__ in (NoLanguageException, NoLocationException, IncorrectTextException,
+                       IncorrectGregorianDateException, IncorrectJewishDateException):
+        return True
     logger.exception(e)
     return True
 

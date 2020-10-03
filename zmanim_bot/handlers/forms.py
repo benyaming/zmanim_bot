@@ -1,5 +1,4 @@
 from asyncio import create_task
-from typing import Dict, Union, List
 
 from aiogram.types import Message, ContentType
 from aiogram.dispatcher import FSMContext
@@ -23,7 +22,6 @@ from ..admin.report_management import send_report_to_admins
 
 
 # REPORTS
-Report = Dict[str, Union[str, List[str]]]
 
 
 @dp.message_handler(state=FeedbackState.waiting_for_feedback_text)
@@ -43,7 +41,7 @@ async def handle_report(msg: Message, state: FSMContext):
 
 @dp.message_handler(text=buttons.done, state=FeedbackState.waiting_for_payload)
 async def handle_done_report(msg: Message, state: FSMContext):
-    report: Report = await state.get_data()
+    report = await state.get_data()
     await state.finish()
     await redirect_to_main_menu(messages.reports_created)
     create_task(send_report_to_admins(report))
@@ -54,8 +52,8 @@ async def handle_report_payload(msg: Message, state: FSMContext):
     if msg.content_type != ContentType.PHOTO:
         return await msg.reply(messages.reports_incorrect_media_type)
 
-    report: Report = await state.get_data()
-    report['screenshots_ids'].append(msg.photo[-1].file_id)
+    report = await state.get_data()
+    report['media_ids'].append((msg.photo[-1].file_id, 'photo'))
     await state.set_data(report)
 
     await msg.reply(messages.reports_media_received)

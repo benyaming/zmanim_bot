@@ -126,8 +126,7 @@ def get_zmanim_settings_keyboard(zmanim_data: dict) -> InlineKeyboardMarkup:
     # row = []
 
     for name, status in zmanim_data.items():
-        row = []
-        row.append(get_zman_button(name, status))
+        row = [get_zman_button(name, status)]
         kb.row(*row)
         # if sum([len(button.text) for button in row]) > 30:
         #     kb.row(*row)
