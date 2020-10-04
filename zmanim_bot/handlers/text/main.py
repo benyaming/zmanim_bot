@@ -7,9 +7,11 @@ from ... import api
 from ... import zmanim_api
 from ...states import ZmanimGregorianDateState
 from ...processors.image import image_processor as ip
+from ...tracking import track
 
 
 @dp.message_handler(text=buttons.mm_zmanim)
+@track('Zmanim')
 async def handle_zmanim(msg: Message):
     location = await api.get_or_set_location()
     zmanim_settings = await api.get_or_set_zmanim()
@@ -20,6 +22,7 @@ async def handle_zmanim(msg: Message):
 
 
 @dp.message_handler(text=buttons.mm_shabbat)
+@track('Shabbat')
 async def handle_shabbat(msg: Message):
     location = await api.get_or_set_location()
     cl = await api.get_or_set_cl()
@@ -31,6 +34,7 @@ async def handle_shabbat(msg: Message):
 
 
 @dp.message_handler(text=buttons.mm_daf_yomi)
+@track('Daf yomi')
 async def handle_daf_yomi(msg: Message):
     data = await zmanim_api.get_daf_yomi()
     pic = ip.DafYomImage(data).get_image()
@@ -38,6 +42,7 @@ async def handle_daf_yomi(msg: Message):
 
 
 @dp.message_handler(text=buttons.mm_rh)
+@track('Rosh chodesh')
 async def handle_rosh_chodesh(msg: Message):
     data = await zmanim_api.get_rosh_chodesh()
     pic = ip.RoshChodeshImage(data).get_image()
@@ -45,6 +50,7 @@ async def handle_rosh_chodesh(msg: Message):
 
 
 @dp.message_handler(text=buttons.mm_zmanim_by_date)
+@track('Zmanim by date')
 async def handle_zmanim_by_date(msg: Message):
     await ZmanimGregorianDateState().waiting_for_gregorian_date.set()
     kb = keyboards.get_cancel_keyboard()

@@ -6,15 +6,15 @@ from ..misc import bot
 
 
 __all__ = [
-    'incorrect_text_warning',
+    # 'incorrect_text_warning',
     'incorrect_greg_date_warning',
     'incorrect_jew_date_warning'
 ]
 
 
-async def incorrect_text_warning():
-    user_id = User.get_current().id
-    await bot.send_message(user_id, messages.incorrect_text)
+# async def incorrect_text_warning():
+#     user_id = User.get_current().id
+#     await bot.send_message(user_id, messages.incorrect_text)
 
 
 async def incorrect_greg_date_warning():
