@@ -1,17 +1,13 @@
-from asyncio import create_task
-
 import posthog
 from aiogram.types import Message
 from aiogram.dispatcher import FSMContext
 
 from ..keyboards.menus import get_cancel_keyboard
 from ..misc import dp
-from ..api import track_user
 from .redirects import redirect_to_main_menu, redirect_to_request_location, \
     redirect_to_request_language
 from ..states import FeedbackState
 from ..texts.single import buttons, messages
-from ..texts.single.messages import init_help
 from ..tracking import track
 
 
@@ -46,4 +42,3 @@ async def handle_start(msg: Message, state):
     await state.finish()
     await redirect_to_main_menu()
     posthog.identify(msg.from_user.id, message_id=msg.message_id)
-    create_task(track_user())

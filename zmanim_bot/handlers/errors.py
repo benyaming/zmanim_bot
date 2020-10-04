@@ -1,9 +1,9 @@
-from os import getenv
-from json import dumps
+from asyncio.tasks import create_task
 
 from aiogram.types import Update
 
-from ..misc import dp, bot, logger
+from ..api import track_user
+from ..misc import dp, logger
 from .redirects import *
 from .warnings import *
 from ..exceptions import *
@@ -20,6 +20,7 @@ async def no_location_exception_handler(update: Update, e: NoLocationException):
 @dp.errors_handler(exception=NoLanguageException)
 async def no_language_exception_handler(update: Update, e: NoLanguageException):
     await redirect_to_request_language()
+    create_task(track_user())
     return True
 
 
