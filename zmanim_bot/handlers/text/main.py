@@ -1,5 +1,6 @@
 from aiogram.types import Message
 
+import zmanim_bot.keyboards.menus
 from ...misc import dp
 from ...texts.single import buttons, messages
 from ... import keyboards
@@ -53,5 +54,5 @@ async def handle_rosh_chodesh(msg: Message):
 @track('Zmanim by date')
 async def handle_zmanim_by_date(msg: Message):
     await ZmanimGregorianDateState().waiting_for_gregorian_date.set()
-    kb = keyboards.get_cancel_keyboard()
+    kb = zmanim_bot.keyboards.menus.get_cancel_keyboard()
     await msg.reply(messages.greg_date_request, reply_markup=kb)

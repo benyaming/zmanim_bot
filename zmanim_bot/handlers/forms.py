@@ -17,7 +17,7 @@ from .. import api
 from ..zmanim_api import get_zmanim
 from ..processors.image.image_processor import ZmanimImage
 from ..texts.single import messages, buttons
-from ..keyboards import get_report_keyboard
+from ..keyboards.menus import get_report_keyboard
 from ..admin.report_management import send_report_to_admins
 
 

@@ -4,11 +4,13 @@ import posthog
 from aiogram.types import Message
 from aiogram.dispatcher import FSMContext
 
+from ..keyboards.menus import get_help_menu
 from ..misc import dp
 from ..api import track_user
 from .redirects import redirect_to_main_menu, redirect_to_request_location, \
     redirect_to_request_language
 from ..texts.single import buttons
+from ..texts.single.messages import init_help
 from ..tracking import track
 
 
@@ -32,10 +34,10 @@ async def handle_start(msg: Message):
     await redirect_to_request_location(with_back=True)
 
 
-# @dp.message_handler(commands=['help'])
-# async def handle_start(msg: Message):
-#     response = 'help'
-#     await bot.send_message(msg.chat.id, response)
+@dp.message_handler(commands=['help'])
+async def handle_start(msg: Message):
+    kb = get_help_menu()
+    await msg.reply(init_help, reply_markup=kb)
 
 
 @dp.message_handler(commands=['start'])

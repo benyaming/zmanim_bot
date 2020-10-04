@@ -9,7 +9,7 @@ from ..helpers import CallbackPrefixes
 from ..misc import dp, bot
 from ..config import REPORT_ADMIN_LIST
 from .states import AdminReportResponse
-from ..keyboards import get_report_keyboard, get_cancel_keyboard
+from ..keyboards.menus import get_cancel_keyboard, get_report_keyboard
 from ..texts.single import messages, buttons
 
 

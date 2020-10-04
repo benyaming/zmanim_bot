@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-10-01 08:22+0300\n"
-"PO-Revision-Date: 2020-10-04 00:28+0300\n"
+"PO-Revision-Date: 2020-10-04 13:53+0300\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -213,11 +213,11 @@ msgstr "9th of Av"
 
 #: buttons.py:68
 msgid "greg to jew"
-msgstr ""
+msgstr "Gregorian ➡ Jewish"
 
 #: buttons.py:69
 msgid "jew to greg"
-msgstr ""
+msgstr "Jewish ➡ Gregorian"
 
 #: headers.py:4
 msgid "date"
@@ -257,11 +257,11 @@ msgstr "Chatzot"
 
 #: headers.py:20
 msgid "Attention, moved fast!"
-msgstr ""
+msgstr "Attention! Fast has been moved!"
 
 #: headers.py:21
 msgid "Fast was'nt moved"
-msgstr ""
+msgstr "Fast hasn’t been moved."
 
 #: headers.py:23
 msgid "hoshana rabah"
@@ -292,12 +292,16 @@ msgid ""
 "For this location image is impossible\n"
 "to determine because of polar night/day."
 msgstr ""
+"It is impossible to compute Zmanim for your location. Most likely it is "
+"because of Midnight Sun or polar night."
 
 #: helpers.py:9
 msgid ""
 "Notice! You should specify time of candle\n"
 " lighting with the rabbi of your community!"
 msgstr ""
+"Notice! it is recommended to clarify time of take of Sabbath in your "
+"community."
 
 #: helpers.py:12
 msgid "before sunset"
@@ -325,62 +329,83 @@ msgstr "Please, describe your problem:"
 
 #: messages.py:9
 msgid "welcome to converter, select:"
-msgstr ""
+msgstr "Choose the way of conversion:"
 
 #: messages.py:10
 msgid "choose"
-msgstr ""
+msgstr "Choose:"
 
 #: messages.py:13
 msgid "request language"
-msgstr ""
+msgstr "Select your language:"
 
 #: messages.py:14
 msgid "request location"
 msgstr ""
+"Please share your location by pressing the button.\n"
+"<b>Warning!</b> Desktop version of Telegram doesn’t support this type of "
+"location sharing. To share you location from PC/Mac send them in comma "
+"separated text (example: <code>55.5, 37.7</code>) or send a geotag message "
+"here."
 
 #: messages.py:16
 msgid "Incorrect command. Please, choose one of the options on the buttons"
 msgstr ""
+"I’m not aware of such command 🤖\n"
+"Would you choose something from the menu:"
 
 #: messages.py:17
 msgid "Incorrect gregorian date... plz try again"
 msgstr ""
+"Incorrect/Illegal date format. Take a look at the correct one: <code>YYYY-"
+"MM-DD</code>"
 
 #: messages.py:18
 msgid "Incorrect jewish date... plz try again"
 msgstr ""
+"Incorrect/Illegal date format. Take a look at the correct one: <code>YYYY-"
+"MM-DD</code> (Nisan - 1, Adar - 12 or 13)"
 
 #: messages.py:20
 msgid "select cl offset"
-msgstr ""
+msgstr "How long before shkiya do you light candles?"
 
 #: messages.py:23
 msgid "input gregorian date in ISO format"
 msgstr ""
+"Please enter Gregorian date in following format: <code>YYYY-MM-DD</code>"
 
 #: messages.py:24
 msgid "input jewish in ISO format"
 msgstr ""
+"Please enter Jewish date in following format: <code>YYYY-MM-DD</code> (Nisan "
+"- 1, Adar - 12 or 13)"
 
 #: messages.py:26
 msgid ""
 "your message successfully received. if you want, you can attach some "
 "screenshots. when you will finish, press \"Done\""
 msgstr ""
+"Your message has been saved for sending. You can attach screenshots or "
+"videos of your choice. Once done, click the Done button."
 
 #: messages.py:28
 msgid "Screenshot succesfully received."
-msgstr ""
+msgstr "File added successfully. Add another one or click Done."
 
 #: messages.py:29
 msgid "Incorrect media type. Please, send your screenshot as photo."
 msgstr ""
+"Unsupported message format. You can attach screenshots or videos by sending "
+"a photo, picture or video."
 
 #: messages.py:30
 msgid ""
 "your report had ben sent to admin, you will receive notification with status"
 msgstr ""
+"Your message has been sent to the developer. He will fix the problem soon "
+"and you will receive a notification.\n"
+"Thanks for your feedback!"
 
 #: names.py:9
 msgid "january-g"
