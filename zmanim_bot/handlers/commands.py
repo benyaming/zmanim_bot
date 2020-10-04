@@ -4,12 +4,13 @@ import posthog
 from aiogram.types import Message
 from aiogram.dispatcher import FSMContext
 
-from ..keyboards.menus import get_help_menu
+from ..keyboards.menus import get_cancel_keyboard
 from ..misc import dp
 from ..api import track_user
 from .redirects import redirect_to_main_menu, redirect_to_request_location, \
     redirect_to_request_language
-from ..texts.single import buttons
+from ..states import FeedbackState
+from ..texts.single import buttons, messages
 from ..texts.single.messages import init_help
 from ..tracking import track
 
@@ -34,10 +35,10 @@ async def handle_start(msg: Message):
     await redirect_to_request_location(with_back=True)
 
 
-@dp.message_handler(commands=['help'])
+@dp.message_handler(commands=['report'])
 async def handle_start(msg: Message):
-    kb = get_help_menu()
-    await msg.reply(init_help, reply_markup=kb)
+    await FeedbackState.waiting_for_feedback_text.set()
+    await msg.reply(messages.init_report, reply_markup=get_cancel_keyboard())
 
 
 @dp.message_handler(commands=['start'])
