@@ -3,6 +3,9 @@ from typing import List
 
 I18N_DOMAIN = 'zmanim_bot'
 BOT_TOKEN = getenv('BOT_TOKEN')
+POSTHOG_API_KEY = getenv('POSTHOG_API_KEY')
+
+IS_PROD = bool(getenv('IS_PROD', 'True'))
 
 LANGUAGE_LIST = ['English', 'Русский']
 LANGUAGE_SHORTCUTS = {

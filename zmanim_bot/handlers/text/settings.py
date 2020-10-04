@@ -4,9 +4,11 @@ from zmanim_bot import api
 from zmanim_bot import keyboards
 from zmanim_bot.misc import dp
 from zmanim_bot.texts.single import buttons, messages
+from zmanim_bot.tracking import track
 
 
 @dp.message_handler(text=buttons.sm_candle)
+@track('Candle lighting selection')
 async def settings_menu_cl(msg: Message):
     current_cl = await api.get_or_set_cl()
     kb = keyboards.get_cl_keyboard(current_cl)
@@ -14,6 +16,7 @@ async def settings_menu_cl(msg: Message):
 
 
 @dp.message_handler(text=buttons.sm_havdala)
+@track('Havdala selection')
 async def settings_menu_havdala(msg: Message):
     current_havdala = await api.get_or_set_havdala()
     kb = keyboards.get_havdala_keyboard(current_havdala)
@@ -21,6 +24,7 @@ async def settings_menu_havdala(msg: Message):
 
 
 @dp.message_handler(text=buttons.sm_zmanim)
+@track('Zmanim selection')
 async def settings_menu_zmanim(msg: Message):
     current_zmanim = await api.get_or_set_zmanim()
     kb = keyboards.get_zmanim_settings_keyboard(current_zmanim)

@@ -23,10 +23,10 @@ async def no_language_exception_handler(update: Update, e: NoLanguageException):
     return True
 
 
-@dp.errors_handler(exception=IncorrectTextException)
-async def no_language_exception_handler(update: Update, e: IncorrectTextException):
-    await incorrect_text_warning()
-    return True
+# @dp.errors_handler(exception=IncorrectTextException)
+# async def no_language_exception_handler(update: Update, e: IncorrectTextException):
+#     await incorrect_text_warning()
+#     return True
 
 
 @dp.errors_handler(exception=IncorrectGregorianDateException)
