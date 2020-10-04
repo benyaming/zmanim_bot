@@ -6,7 +6,7 @@ BOT_TOKEN = getenv('BOT_TOKEN')
 POSTHOG_API_KEY = getenv('POSTHOG_API_KEY')
 
 IS_PROD = bool(getenv('IS_PROD', False))
-WEBHOOK_PATH = getenv('WEBHOOK_PATH', '/zmanim_api')
+WEBHOOK_PATH = getenv('WEBHOOK_PATH', '/zmanim_bot')
 
 LANGUAGE_LIST = ['English', 'Русский']
 LANGUAGE_SHORTCUTS = {

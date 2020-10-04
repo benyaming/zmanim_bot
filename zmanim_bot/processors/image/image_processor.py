@@ -198,9 +198,10 @@ class RoshChodeshImage(BaseImage):
         self._draw_line(x, y, headers.rh_duration, duration_value)
         y += y_offset
 
-        date_value = humanize_date([self.data.settings.date_])
+        # draw date
+        date_value = humanize_date(self.data.days, weekday_on_new_line=len(self.data.days) > 1)
         self._draw_line(x, y, headers.date, date_value)
-        y += y_offset
+        y += y_offset if len(self.data.days) == 1 else y_offset * 2
 
         # draw molad string
         molad = self.data.molad[0]
@@ -246,7 +247,6 @@ class ShabbatImage(BaseImage):
 
         self._draw_line(x, y, headers.parsha, torah_part, value_without_x_offset=value_on_new_line)
         y += y_offset if not value_on_new_line else y_offset * 2
-
 
         # if polar error, draw error message and return
         if not self.data.candle_lighting:
