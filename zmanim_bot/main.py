@@ -1,9 +1,9 @@
 import aiopg
 from aiogram import Dispatcher
-from aiogram.utils.executor import start_polling
+from aiogram.utils.executor import start_polling, start_webhook
 
 import zmanim_bot.handlers
-from zmanim_bot.config import DSN
+from zmanim_bot.config import DSN, IS_PROD, WEBHOOK_PATH
 from zmanim_bot.misc import dp
 from better_exceptions.logger import logger
 
@@ -18,10 +18,9 @@ async def on_start(dispatcher: Dispatcher):
     logger.info('Starting zmanim bot...')
 
 
-start_polling(dp, on_startup=on_start, skip_updates=True)
-# from zmanim_bot.processors.image.image_processor import test
-# test()
-
-
-# ---------------
+if __name__ == '__main__':
+    if IS_PROD:
+        start_webhook(dp, WEBHOOK_PATH, on_startup=on_start)
+    else:
+        start_polling(dp, on_startup=on_start, skip_updates=True)
 
