@@ -7,7 +7,6 @@ from babel.support import LazyProxy
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 
 from ...middlewares.i18n import gettext as _
-from ...texts.plural.units import tu_month
 from ...zmanim_api.models import *
 from ...texts.single import names, headers, helpers
 from ...texts.plural import units
@@ -167,7 +166,7 @@ class DafYomImage(BaseImage):
         y_offset = 100
 
         # draw masehet
-        self._draw_line(x, y, headers.daf_masehet, self.data.masehet)
+        self._draw_line(x, y, headers.daf_masehet, names.GEMARA_BOOKS.get(self.data.masehet, ''))
         y += y_offset
 
         # draw daf
@@ -205,7 +204,7 @@ class RoshChodeshImage(BaseImage):
 
         # draw molad string
         molad = self.data.molad[0]
-        molad_value = f'{molad.day} {names.MONTH_NAMES_GENETIVE[molad.month]}, {molad.year},\n' \
+        molad_value = f'{molad.day} {names.MONTH_NAMES_GENETIVE[molad.month]} {molad.year},\n' \
                       f'{molad.time().hour} {_(*units.tu_hour, molad.time().hour)} ' \
                       f'{molad.time().minute} {_(*units.tu_minute, molad.time().minute)} ' \
                       f'{helpers.and_word} {self.data.molad[1]} {_(*units.tu_part, self.data.molad[1])}'
@@ -372,7 +371,7 @@ class FastImage(BaseImage):
 
         # draw date and start time
         fast_date, fast_weekday = humanize_date([self.data.fast_start]).split(', ')
-        fast_start_value = f'{fast_date}\n{fast_weekday}, {self.data.fast_start.time().isoformat("minutes")}'
+        fast_start_value = f'{fast_date},\n{fast_weekday}, {self.data.fast_start.time().isoformat("minutes")}'
         self._draw_line(x, y, headers.fast_start, fast_start_value)
         y += self._y_font_offset(fast_start_value) + y_offset
 
