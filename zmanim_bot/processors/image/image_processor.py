@@ -439,14 +439,14 @@ class IsraelHolidaysImage(BaseImage):
     def __init__(self, data: IsraelHolidays):
         self.data = data
         self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'israel_holidays.png'
-        self._font_size = 58
+        self._font_size = 53
 
         super().__init__()
 
         self._draw_title(self._draw, names.HOLIDAYS_TITLES['israel_holidays'])
 
     def get_image(self) -> BytesIO:
-        x = 100
+        x = 80
         y = 300
         y_offset = 90
         y_offset_small = 60
