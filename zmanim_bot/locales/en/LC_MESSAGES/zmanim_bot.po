@@ -123,6 +123,9 @@ msgstr "Report a problem"
 msgid "select zmanim"
 msgstr "Select zmanim"
 
+msgid "select havdala"
+msgstr "Select your opinion for havdala:"
+
 #: buttons.py:31 headers.py:14
 msgid "candle lighting"
 msgstr "Candle lighting"

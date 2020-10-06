@@ -19,6 +19,7 @@ incorrect_jew_date = _('Incorrect jewish date... plz try again')
 
 settings_cl = _('select cl offset')
 settings_zmanim = _('select zmanim')
+settings_havdala = _('select havdala')
 
 greg_date_request = _('input gregorian date in ISO format')
 jew_date_request = _('input jewish in ISO format')

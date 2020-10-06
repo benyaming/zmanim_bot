@@ -134,6 +134,9 @@ msgstr "Выбрать зманим"
 msgid "candle lighting"
 msgstr "Зажигание свечей"
 
+msgid "select havdala"
+msgstr "Выберите ваше мнения для авдалы:"
+
 #: buttons.py:32 headers.py:15
 msgid "havdala"
 msgstr "Авдала"

@@ -121,6 +121,10 @@ msgstr ""
 msgid "select zmanim"
 msgstr ""
 
+#: messages.py:22
+msgid "select havdala"
+msgstr ""
+
 #: buttons.py:31 headers.py:14
 msgid "candle lighting"
 msgstr ""

@@ -2,7 +2,6 @@ from aiogram.types import Message
 
 import zmanim_bot.keyboards.inline
 from zmanim_bot import api
-from zmanim_bot import keyboards
 from zmanim_bot.misc import dp
 from zmanim_bot.texts.single import buttons, messages
 from zmanim_bot.tracking import track
@@ -21,7 +20,7 @@ async def settings_menu_cl(msg: Message):
 async def settings_menu_havdala(msg: Message):
     current_havdala = await api.get_or_set_havdala()
     kb = zmanim_bot.keyboards.inline.get_havdala_settings_keyboard(current_havdala)
-    await msg.reply(messages.settings_cl, reply_markup=kb)
+    await msg.reply(messages.settings_havdala, reply_markup=kb)
 
 
 @dp.message_handler(text=buttons.sm_zmanim)
