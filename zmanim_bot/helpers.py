@@ -1,7 +1,10 @@
 from typing import Tuple
 from datetime import date
 
+from zmanim.hebrew_calendar.jewish_date import JewishDate
+
 from .texts.single import buttons
+from .texts.single.names import JEWISH_MONTHS_GENETIVE
 from .exceptions import IncorrectLocationException, IncorrectGregorianDateException
 
 
@@ -68,3 +71,8 @@ def get_holiday_shrtcut(name: str) -> str:
         buttons.fm_av.value: 'fast_9_av',
     }
     return shortcusts[name]
+
+
+def parse_jewish_date(date_str: str) -> str:
+    year, month, day = date_str.split('-')
+    return f'{day} {JEWISH_MONTHS_GENETIVE.get(list(JewishDate.MONTHS)[int(month) - 1].name)} {year}'

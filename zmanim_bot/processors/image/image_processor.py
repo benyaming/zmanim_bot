@@ -6,6 +6,7 @@ from typing import Union, Dict, List, Tuple, Optional
 from babel.support import LazyProxy
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 
+from ...helpers import parse_jewish_date
 from ...middlewares.i18n import gettext as _
 from ...zmanim_api.models import *
 from ...texts.single import names, headers, helpers
@@ -327,7 +328,9 @@ class ZmanimImage(BaseImage):
     def get_image(self) -> BytesIO:
         zmanim: Dict[str, dt] = self.data.dict(exclude={'settings'}, exclude_none=True)
         self._set_font_properties(len(zmanim))
-        self._draw_date(humanize_date([self.data.settings.date_]))
+        zmanim_date = f'{humanize_date([self.data.settings.date_])} / ' \
+                      f'{parse_jewish_date(self.data.settings.jewish_date)}'
+        self._draw_date(zmanim_date)
 
         y: int = 210 + self._start_y_offset
         x: int = 50
@@ -454,7 +457,7 @@ class IsraelHolidaysImage(BaseImage):
         for holiday in self.data:
             self._draw.text((x, y), f'{headers.israel_holidays[holiday[0]]}:', font=self._bold_font)
             y += y_offset_small
-            self._draw_line(x, y, headers.date, humanize_header_date('', holiday[1])[0])
+            self._draw_line(x, y, headers.date, humanize_date([holiday[1]]))
             y += y_offset
 
         return _convert_img_to_bytes_io(self._image)
