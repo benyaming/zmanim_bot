@@ -18,22 +18,26 @@ __all__ = [
 ]
 
 
-async def get_zmanim(location: Location, zmanim_settings: dict, date: str = None) -> models.Zmanim:
+async def get_zmanim(location: Location, zmanim_settings: dict, date_: str = None) -> models.Zmanim:
     url = ZMANIM_API_URL.format('zmanim')
     params = {
         'lat': str(location[0]),
         'lng': str(location[1]),
     }
-    if date:
-        params['date'] = date
+    if date_:
+        params['date'] = date_
 
     async with bot.session.post(url, params=params, json=zmanim_settings) as resp:
         raw_resp = await resp.json()
         return models.Zmanim(**raw_resp)
 
 
-async def get_shabbat(location: Location, cl_offset: int, havdala_opinion: str,
-                      date: str = None) -> models.Shabbat:
+async def get_shabbat(
+        location: Location,
+        cl_offset: int,
+        havdala_opinion: str,
+        date_: str = None
+) -> models.Shabbat:
     url = ZMANIM_API_URL.format('shabbat')
     params = {
         'lat': str(location[0]),
@@ -41,26 +45,26 @@ async def get_shabbat(location: Location, cl_offset: int, havdala_opinion: str,
         'cl_offset': str(cl_offset),
         'havdala': havdala_opinion
     }
-    if date:
-        params['date'] = date
+    if date_:
+        params['date'] = date_
 
     async with bot.session.get(url, params=params) as resp:
         raw_resp = await resp.json()
         return models.Shabbat(**raw_resp)
 
 
-async def get_daf_yomi(date=None) -> models.DafYomi:
+async def get_daf_yomi(date_=None) -> models.DafYomi:
     url = ZMANIM_API_URL.format('daf_yomi')
-    params = None if not date else {'date': date}
+    params = None if not date_ else {'date': date_}
 
     async with bot.session.get(url, params=params) as resp:
         raw_resp = await resp.json()
         return models.DafYomi(**raw_resp)
 
 
-async def get_rosh_chodesh(date=None) -> models.RoshChodesh:
+async def get_rosh_chodesh(date_=None) -> models.RoshChodesh:
     url = ZMANIM_API_URL.format('rosh_chodesh')
-    params = None if not date else {'date': date}
+    params = None if not date_ else {'date': date_}
 
     async with bot.session.get(url, params=params) as resp:
         raw_resp = await resp.json()
