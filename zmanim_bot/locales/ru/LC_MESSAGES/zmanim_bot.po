@@ -1019,7 +1019,7 @@ msgid "sof_zman_tefila_ma"
 msgstr "Зман тфила (время молитвы) [МА]"
 
 #: zmanim.py:8
-msgid "talis_ma"
+msgid "misheyakir_10_2"
 msgstr "Мишеякир (время Талита и Тфилин) "
 
 #: zmanim.py:9

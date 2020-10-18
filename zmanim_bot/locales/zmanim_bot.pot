@@ -1094,7 +1094,7 @@ msgid "sof_zman_tefila_ma"
 msgstr ""
 
 #: zmanim.py:8
-msgid "talis_ma"
+msgid "misheyakir_10_2"
 msgstr ""
 
 #: zmanim.py:9

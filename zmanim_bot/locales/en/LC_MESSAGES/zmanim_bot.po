@@ -1015,7 +1015,7 @@ msgid "sof_zman_tefila_ma"
 msgstr "Sof zman tfila [MA]"
 
 #: zmanim.py:8
-msgid "talis_ma"
+msgid "misheyakir_10_2"
 msgstr "Misheyakir (zman tallit and tfilin)"
 
 #: zmanim.py:9
