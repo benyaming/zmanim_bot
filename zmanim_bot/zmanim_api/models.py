@@ -41,8 +41,8 @@ class Settings(SimpleSettings):
 class Zmanim(BaseModel):
     settings: Settings
     alos: Optional[datetime] = None
+    misheyakir_10_2: Optional[datetime] = None
     sunrise: Optional[datetime] = None
-    talis_ma: Optional[datetime] = None  # todo
     sof_zman_shema_ma: Optional[datetime] = None
     sof_zman_shema_gra: Optional[datetime] = None
     sof_zman_tefila_ma: Optional[datetime] = None
