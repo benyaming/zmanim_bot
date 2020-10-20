@@ -103,8 +103,6 @@ class BaseImage:
     _image: PngImagePlugin.PngImageFile
     _draw: ImageDraw
 
-    # _raw_data = None
-
     def __init__(self):
         self._font = ImageFont.truetype(str(self._font_path), self._font_size)
         self._bold_font = ImageFont.truetype(str(self._bold_font_path), self._font_size)
@@ -118,6 +116,28 @@ class BaseImage:
         coordinates = (180, 30)
         font = self._title_font
         draw.text(coordinates, title.value, font=font)
+
+    def _draw_date(
+            self,
+            greg_date: List[Union[date, dt]],
+            jewish_date: Optional[str] = None,
+            no_weekday: bool = False
+    ):
+        x = 180
+        y = 100
+
+        greg_date_str = humanize_date(greg_date)
+        if no_weekday:
+            greg_date_str = greg_date_str.split(', ')[0]
+
+        jewish_date_str = f' / {parse_jewish_date(jewish_date)}' if jewish_date else ''
+        date_str = f'{greg_date_str}{jewish_date_str}'
+
+        date_font = ImageFont.truetype(str(self._font_path), 40)
+        self._draw.text((x, y), date_str, font=date_font)
+
+    def _draw_location(self):
+        ...
 
     def _x_font_offset(self, text: str) -> int:
         """Returns size in px of given text in axys x"""
@@ -160,6 +180,7 @@ class DafYomImage(BaseImage):
 
         super().__init__()
         self._draw_title(self._draw, names.title_daf_yomi)
+        self._draw_date([self.data.settings.date_], self.data.settings.jewish_date)
 
     def get_image(self) -> BytesIO:
         y = 470
@@ -184,6 +205,7 @@ class RoshChodeshImage(BaseImage):
 
         super().__init__()
         self._draw_title(self._draw, names.title_rosh_chodesh)
+        self._draw_date(self.data.days, self.data.settings.jewish_date)
 
     def get_image(self) -> BytesIO:
         y = 370
@@ -199,10 +221,10 @@ class RoshChodeshImage(BaseImage):
         self._draw_line(x, y, headers.rh_duration, duration_value)
         y += y_offset
 
-        # draw date
-        date_value = humanize_date(self.data.days, weekday_on_new_line=len(self.data.days) > 1)
-        self._draw_line(x, y, headers.date, date_value)
-        y += y_offset if len(self.data.days) == 1 else y_offset * 2
+        # # draw date
+        # date_value = humanize_date(self.data.days, weekday_on_new_line=len(self.data.days) > 1)
+        # self._draw_line(x, y, headers.date, date_value)
+        # y += y_offset if len(self.data.days) == 1 else y_offset * 2
 
         # draw molad string
         molad = self.data.molad[0]
@@ -234,6 +256,7 @@ class ShabbatImage(BaseImage):
         self._image, self._draw = _get_draw(str(self._background_path))
 
         self._draw_title(self._draw, names.title_shabbath)
+        self._draw_date([self.data.havdala.date()], no_weekday=True)
 
         y = 400 if self.data.candle_lighting else 470
         x = 100
@@ -291,6 +314,7 @@ class ZmanimImage(BaseImage):
         super().__init__()
 
         self._draw_title(self._draw, names.title_zmanim)
+        self._draw_date([self.data.settings.date_], self.data.settings.jewish_date)
 
     def _set_font_properties(self, number_of_lines: int):
         p = {
@@ -319,18 +343,9 @@ class ZmanimImage(BaseImage):
         self._font = ImageFont.truetype(str(self._font_path), size=self._font_size)
         self._bold_font = ImageFont.truetype(str(self._bold_font_path), size=self._font_size)
 
-    def _draw_date(self, date_: str):
-        x = 180
-        y = 100
-        date_font = ImageFont.truetype(str(self._font_path), 40)
-        self._draw.text((x, y), date_, font=date_font)
-
     def get_image(self) -> BytesIO:
         zmanim: Dict[str, dt] = self.data.dict(exclude={'settings'}, exclude_none=True)
         self._set_font_properties(len(zmanim))
-        zmanim_date = f'{humanize_date([self.data.settings.date_])} / ' \
-                      f'{parse_jewish_date(self.data.settings.jewish_date)}'
-        self._draw_date(zmanim_date)
 
         y: int = 210 + self._start_y_offset
         x: int = 50
@@ -454,7 +469,7 @@ class IsraelHolidaysImage(BaseImage):
         y_offset = 90
         y_offset_small = 60
 
-        for holiday in self.data:
+        for holiday in self.data.holiday_list:
             self._draw.text((x, y), f'{headers.israel_holidays[holiday[0]]}:', font=self._bold_font)
             y += y_offset_small
             self._draw_line(x, y, headers.date, humanize_date([holiday[1]]))
@@ -498,9 +513,10 @@ class YomTovImage(BaseImage):
         lines = []
 
         yomtov_last_day = self.data.pesach_part_2_day_2 or self.data.pesach_part_2_day_1 or self.data.day_2 or self.data.day_1
-        dates_range = humanize_date([self.data.day_1, yomtov_last_day], weekday_on_new_line=True)
-        lines.append((headers.date, dates_range, False))
-        lines.append(EMPTY_LINE)
+        self._draw_date([self.data.day_1.date, yomtov_last_day.date])
+        # dates_range = humanize_date([self.data.day_1, yomtov_last_day], weekday_on_new_line=True)
+        # lines.append((headers.date, dates_range, False))
+        # lines.append(EMPTY_LINE)
 
         for date_ in dates:
             if isinstance(date_, date):  # hoshana rabbah case
@@ -528,13 +544,13 @@ class YomTovImage(BaseImage):
     def _get_font_properties(number_of_lines: int) -> Tuple[int, int, int]:
         p = {
             # [font_size, y_offset, start_y_position]
-            2: (58, 70, 300),
-            3: (58, 70, 300),
-            4: (58, 70, 300),
-            5: (57, 80, 300),
-            6: (58, 70, 300),
-            7: (58, 70, 300),
-            8: (50, 50, 230),
+            2: (58, 70, 400),
+            3: (57, 70, 400),
+            4: (55, 70, 400),
+            5: (55, 80, 400),
+            6: (55, 70, 400),
+            7: (55, 70, 400),
+            8: (55, 60, 260),
             9: (50, 50, 230),
             10: (50, 50, 230)
         }
