@@ -1,4 +1,4 @@
-name: Zmanim bot CI
+name: Zmanim bot master CI
 
 on:
   push:
