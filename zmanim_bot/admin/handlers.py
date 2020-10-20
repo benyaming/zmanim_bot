@@ -28,7 +28,7 @@ async def handle_report(call: CallbackQuery, state: FSMContext):
     await AdminReportResponse().waiting_for_response_text.set()
     await state.set_data(report_data)
 
-    resp = 'Wrete your response:'
+    resp = 'Write your response:'
     kb = get_cancel_keyboard()
 
     await bot.send_message(call.from_user.id, resp, reply_markup=kb)

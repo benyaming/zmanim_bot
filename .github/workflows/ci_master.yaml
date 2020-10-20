@@ -3,7 +3,7 @@ name: Zmanim bot CI
 on:
   push:
     branches:
-      - master
+      - develop
 #   pull_request:
 #     branches:
 #       - master
@@ -20,8 +20,8 @@ jobs:
       - name: Tags
         run: |
           docker tag zmanim-bot ${{ secrets.DOCKER_USER }}/zmanim-bot:${{ github.sha }}
-          docker tag zmanim-bot ${{ secrets.DOCKER_USER }}/zmanim-bot:latest
+          docker tag zmanim-bot ${{ secrets.DOCKER_USER }}/zmanim-bot:develop
       - name: Push
         run: |
           docker push ${{ secrets.DOCKER_USER }}/zmanim-bot:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_USER }}/zmanim-bot:latest
+          docker push ${{ secrets.DOCKER_USER }}/zmanim-bot:develop
