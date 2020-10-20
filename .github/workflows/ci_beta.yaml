@@ -20,8 +20,8 @@ jobs:
       - name: Tags
         run: |
           docker tag zmanim-bot ${{ secrets.DOCKER_USER }}/zmanim-bot:${{ github.sha }}
-          docker tag zmanim-bot ${{ secrets.DOCKER_USER }}/zmanim-bot:latest
+          docker tag zmanim-bot ${{ secrets.DOCKER_USER }}/zmanim-bot:beta
       - name: Push
         run: |
           docker push ${{ secrets.DOCKER_USER }}/zmanim-bot:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_USER }}/zmanim-bot:latest
+          docker push ${{ secrets.DOCKER_USER }}/zmanim-bot:beta
