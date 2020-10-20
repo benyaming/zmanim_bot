@@ -1,8 +1,18 @@
-from aiogram.dispatcher.filters.state import StatesGroup, State
+from aiogram.dispatcher.filters.state import State, StatesGroup
 
 
-class UserStates(StatesGroup):
-    Menus = State()
-    GregToHeb = State()
-    HebToGreg = State()
-    Zmanim = State()
+class ConverterGregorianDateState(StatesGroup):
+    waiting_for_gregorian_date = State()
+
+
+class ConverterJewishDateState(StatesGroup):
+    waiting_for_jewish_date = State()
+
+
+class ZmanimGregorianDateState(StatesGroup):
+    waiting_for_gregorian_date = State()
+
+
+class FeedbackState(StatesGroup):
+    waiting_for_feedback_text = State()
+    waiting_for_payload = State()

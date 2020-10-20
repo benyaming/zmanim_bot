@@ -1,0 +1,1183 @@
+# Translations template for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-10-01 08:22+0300\n"
+"PO-Revision-Date: 2020-10-01 10:13+0300\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+"X-Generator: Poedit 2.4.1\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Language: ru\n"
+
+#: ../plural/units.py:5
+msgid "year"
+msgid_plural "years"
+msgstr[0] "год"
+msgstr[1] "года"
+msgstr[2] "лет"
+
+#: ../plural/units.py:6 headers.py:10
+msgid "month"
+msgid_plural "months"
+msgstr[0] "месяц"
+msgstr[1] "месяца"
+msgstr[2] "месяцев"
+
+#: ../plural/units.py:7
+msgid "day"
+msgid_plural "days"
+msgstr[0] "день"
+msgstr[1] "дня"
+msgstr[2] "дней"
+
+#: ../plural/units.py:8
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "час"
+msgstr[1] "часа"
+msgstr[2] "часов"
+
+#: ../plural/units.py:9
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "минута"
+msgstr[1] "минуты"
+msgstr[2] "минут"
+
+#: ../plural/units.py:10
+msgid "part"
+msgid_plural "parts"
+msgstr[0] "часть"
+msgstr[1] "части"
+msgstr[2] "частей"
+
+#: buttons.py:5
+msgid "send location"
+msgstr "Отправить координаты"
+
+#: buttons.py:6
+msgid "cancel"
+msgstr "Отмена"
+
+#: buttons.py:7
+msgid "back"
+msgstr "Назад"
+
+#: buttons.py:8
+msgid "Done"
+msgstr "Готово"
+
+#: buttons.py:12
+msgid "zmanim"
+msgstr "Зманим"
+
+#: buttons.py:13 names.py:71
+msgid "shabbat"
+msgstr "Шаббат"
+
+#: buttons.py:14
+msgid "holidays"
+msgstr "Праздники"
+
+#: buttons.py:15
+msgid "daf yomi"
+msgstr "Даф йоми"
+
+#: buttons.py:16
+msgid "rosh chodesh"
+msgstr "Рош Ходеш"
+
+#: buttons.py:17
+msgid "fast days"
+msgstr "Посты"
+
+#: buttons.py:18
+msgid "zmanim by the date"
+msgstr "Зманим на дату"
+
+#: buttons.py:19
+msgid "date converter"
+msgstr "Конвертер дат"
+
+#: buttons.py:20
+msgid "help"
+msgstr "Помощь"
+
+#: buttons.py:21
+msgid "settings"
+msgstr "Настройки"
+
+#: buttons.py:25
+msgid "F.A.Q."
+msgstr "ЧаВо"
+
+#: buttons.py:26
+msgid "report a bug"
+msgstr "Сообщить о проблеме"
+
+#: buttons.py:30 messages.py:21
+msgid "select zmanim"
+msgstr "Выбрать зманим"
+
+#: buttons.py:31 headers.py:14
+msgid "candle lighting"
+msgstr "Зажигание свечей"
+
+msgid "select havdala"
+msgstr "Выберите ваше мнения для авдалы:"
+
+#: buttons.py:32 headers.py:15
+msgid "havdala"
+msgstr "Авдала"
+
+#: buttons.py:33
+msgid "language"
+msgstr "Язык"
+
+#: buttons.py:34
+msgid "location"
+msgstr "Локация"
+
+#: buttons.py:38
+msgid "more..."
+msgstr "Еще..."
+
+#: buttons.py:39
+msgid "main holidays"
+msgstr "Основные праздники"
+
+#: buttons.py:41
+msgid "rosh ha-shanah"
+msgstr "Рош а-Шана"
+
+#: buttons.py:42
+msgid "yom kippur"
+msgstr "Йом Киппур"
+
+#: buttons.py:43
+msgid "succos"
+msgstr "Суккот"
+
+#: buttons.py:44
+msgid "shmini atzeres"
+msgstr "Шмини Ацерет"
+
+#: buttons.py:45
+msgid "chanukah"
+msgstr "Ханука"
+
+#: buttons.py:46
+msgid "purim"
+msgstr "Пурим"
+
+#: buttons.py:47
+msgid "pesach"
+msgstr "Песах"
+
+#: buttons.py:48
+msgid "shavuos"
+msgstr "Шавуот"
+
+#: buttons.py:49
+msgid "tu bi-Shvat"
+msgstr "Ту би-Шват"
+
+#: buttons.py:50
+msgid "lag ba-omer"
+msgstr "Лаг ба-Омер"
+
+#: buttons.py:51
+msgid "israel holidays"
+msgstr "Израильские выходные"
+
+#: buttons.py:55
+msgid "fast of Gedaliah"
+msgstr "Пост Гедалии"
+
+#: buttons.py:56
+msgid "10 of Tevet"
+msgstr "10-е Тевета"
+
+#: buttons.py:57
+msgid "fast of Esther"
+msgstr "Пост Эстер"
+
+#: buttons.py:58
+msgid "17 of Tammuz"
+msgstr "17-е Таммуза"
+
+#: buttons.py:59
+msgid "9 of Av"
+msgstr "9-е Ава"
+
+#: buttons.py:68
+msgid "greg to jew"
+msgstr "Григорианский ➡ Еврейский"
+
+#: buttons.py:69
+msgid "jew to greg"
+msgstr "Еврейский ➡ Григорианский"
+
+#: headers.py:4
+msgid "date"
+msgstr "Дата"
+
+#: headers.py:6
+msgid "masehet"
+msgstr "Трактат"
+
+#: headers.py:7
+msgid "list"
+msgstr "Лист"
+
+#: headers.py:9
+msgid "duration"
+msgstr "Продолжительность"
+
+#: headers.py:11
+msgid "molad"
+msgstr "Молад"
+
+#: headers.py:13
+msgid "torah part"
+msgstr "Недельная глава"
+
+#: headers.py:17
+msgid "the fast begins"
+msgstr "Начало поста"
+
+#: headers.py:18
+msgid "the fast end"
+msgstr "Конец поста"
+
+#: headers.py:19
+msgid "chatzot"
+msgstr "Хацот"
+
+#: headers.py:20
+msgid "Attention, moved fast!"
+msgstr "Внимание, пост перенесён!"
+
+#: headers.py:21
+msgid "Fast was'nt moved"
+msgstr "Пост не перенесен"
+
+#: headers.py:23
+msgid "hoshana rabah"
+msgstr "Ошана Раба"
+
+#: headers.py:26
+msgid "yom hashoah"
+msgstr "День памяти Катастрофы и героизма"
+
+#: headers.py:27
+msgid "yom hazikaron"
+msgstr "День памяти павших в войнах Израиля"
+
+#: headers.py:28
+msgid "yom haatzmaut"
+msgstr "День независимости Израиля"
+
+#: headers.py:29
+msgid "yom yerushalaim"
+msgstr "День Иерусалима"
+
+#: helpers.py:4
+msgid "and"
+msgstr "и"
+
+#: helpers.py:7
+msgid ""
+"For this location image is impossible\n"
+"to determine because of polar night/day."
+msgstr ""
+"Для вашего местоположения невозможно посчитать зманим. Скорее всего, это "
+"связано с полярным днем или полярной ночью."
+
+#: helpers.py:9
+msgid ""
+"Notice! You should specify time of candle\n"
+" lighting with the rabbi of your community!"
+msgstr ""
+"Внимание! Рекомендуем уточнить, во сколько ваша община принимает шаббат!"
+
+#: helpers.py:12
+msgid "before sunset"
+msgstr "до шкии"
+
+#: messages.py:4
+msgid "welcome to Zmanim bot!"
+msgstr "Добро пожаловать в Зманим-бот!"
+
+#: messages.py:5
+msgid "Welcome to the main menu!"
+msgstr "Вы в главном меню:"
+
+#: messages.py:6
+msgid "how can I help you?"
+msgstr "Чем вам помочь?"
+
+#: messages.py:7
+msgid "welcome to settings!"
+msgstr "Вы в настройках:"
+
+#: messages.py:8
+msgid "describe your problem"
+msgstr "Расскажите, что случилось:"
+
+#: messages.py:9
+msgid "welcome to converter, select:"
+msgstr "Выберите направление конвертации:"
+
+#: messages.py:10
+msgid "choose"
+msgstr "Выберите:"
+
+#: messages.py:13
+msgid "request language"
+msgstr "Выберите язык:"
+
+#: messages.py:14
+msgid "request location"
+msgstr ""
+"Пожалуйста, предоставьте координаты, нажав на кнопку.\n"
+"<b>Внимание!</b> Telegram на ПК пока что не поддерживает отправку координат "
+"таким способом. Чтобы отправить координаты с ПК, отправьте их в текстовом "
+"виде через запятую, например \"<code>55.5, 37.7</code>\", либо перешлите "
+"сюда сообщение с геометкой."
+
+#: messages.py:16
+msgid "Incorrect command. Please, choose one of the options on the buttons"
+msgstr "Я не знаю таких команд 🤖\nВыберите что-нибудь из кнопок в меню:"
+
+#: messages.py:17
+msgid "Incorrect gregorian date... plz try again"
+msgstr ""
+"Неправильный формат даты. \nОбратите внимание, как правильно: <code>ГГГГ-ММ-"
+"ДД</code>"
+
+#: messages.py:18
+msgid "Incorrect jewish date... plz try again"
+msgstr ""
+"Неправильный формат даты.\nОбратите внимание, как правильно: <code>ГГГГ-ММ-ДД</"
+"code> (нисан — 1, адар — 12 или 13)"
+
+#: messages.py:20
+msgid "select cl offset"
+msgstr "За сколько времени до шкии вы зажинаете свечи?"
+
+#: messages.py:23
+msgid "input gregorian date in ISO format"
+msgstr "Введите грегорианскую дату в формате <code>ГГГГ-ММ-ДД</code>:"
+
+#: messages.py:24
+msgid "input jewish in ISO format"
+msgstr ""
+"Введите еврейскую дату в формате <code>ГГГГ-ММ-ДД</code> (нисан — 1, адар — 12 "
+"или 13)"
+
+#: messages.py:26
+msgid ""
+"your message successfully received. if you want, you can attach some "
+"screenshots. when you will finish, press \"Done\""
+msgstr ""
+"Ваше обращение сохранено для отправки. Если хотите, можете прикрепить "
+"скриншоты или видео. Когда закончите, нажмите кнопку \"Готово\"."
+
+#: messages.py:28
+msgid "Screenshot succesfully received."
+msgstr ""
+"Файл успешно добавлен. Добавьте еще один или нажмите кнопку \"Готово\"."
+
+#: messages.py:29
+msgid "Incorrect media type. Please, send your screenshot as photo."
+msgstr ""
+"Неподдерживаемый формат сообщения. Вы можете прикрепить скриншоты или видео, для "
+"этого пошлите фотографию, картинку или видеозапись."
+
+#: messages.py:30
+msgid ""
+"your report had ben sent to admin, you will receive notification with status"
+msgstr ""
+"Ваше обращение отправлено разработчику. Скоро он решит проблему и вы "
+"получите уведомление.\n"
+"Спасибо за обратную связь!"
+
+#: names.py:9
+msgid "january-g"
+msgstr "Января"
+
+#: names.py:10
+msgid "fubruary-g"
+msgstr "Февраля"
+
+#: names.py:11
+msgid "march-g"
+msgstr "Марта"
+
+#: names.py:12
+msgid "april-g"
+msgstr "Апреля"
+
+#: names.py:13
+msgid "may-g"
+msgstr "Мая"
+
+#: names.py:14
+msgid "june-g"
+msgstr "Июня"
+
+#: names.py:15
+msgid "july-g"
+msgstr "Июля"
+
+#: names.py:16
+msgid "august-g"
+msgstr "Августа"
+
+#: names.py:17
+msgid "september-g"
+msgstr "Сентября"
+
+#: names.py:18
+msgid "october-g"
+msgstr "Октября"
+
+#: names.py:19
+msgid "november-g"
+msgstr "Ноября"
+
+#: names.py:20
+msgid "december-g"
+msgstr "Декабря"
+
+#: names.py:34
+msgid "monday"
+msgstr "Понедельник"
+
+#: names.py:35
+msgid "tuesday"
+msgstr "Вторник"
+
+#: names.py:36
+msgid "wednesday"
+msgstr "Среда"
+
+#: names.py:37
+msgid "thursday"
+msgstr "Четверг"
+
+#: names.py:38
+msgid "friday"
+msgstr "Пятница"
+
+#: names.py:39
+msgid "saturday"
+msgstr "Суббота"
+
+#: names.py:40
+msgid "sunday"
+msgstr "Воскресенье"
+
+#: names.py:44
+msgid "DAF YOMI"
+msgstr "ДАФ ЙОМИ"
+
+#: names.py:45
+msgid "ROSH CHODESH"
+msgstr "РОШ ХОДЕШ"
+
+#: names.py:46
+msgid "SHABBAT"
+msgstr "ШАББАТ"
+
+#: names.py:47
+msgid "ZMANIM"
+msgstr "ЗМАНИМ"
+
+#: names.py:49
+msgid "FAST OF GEDALIAH"
+msgstr "ПОСТ ГЕДАЛИИ"
+
+#: names.py:50
+msgid "FAST 10th OF TEVETH"
+msgstr "ПОСТ 10-Е ТЕВЕТА"
+
+#: names.py:51
+msgid "FAST OF ESTHER"
+msgstr "ПОСТ ЭСТЕР"
+
+#: names.py:52
+msgid "FAST 17th OF TAMMUZ"
+msgstr "ПОСТ 17-Е ТАММУЗА"
+
+#: names.py:53
+msgid "FAST 9th OF AV"
+msgstr "ПОСТ 9-Е АВА"
+
+#: names.py:56
+msgid "CHANUKAH"
+msgstr "ХАНУКА"
+
+#: names.py:57
+msgid "TU BI-SHVAT"
+msgstr "ТУ БИ-ШВАТ"
+
+#: names.py:58
+msgid "PURIM"
+msgstr "ПУРИМ"
+
+#: names.py:59
+msgid "LAG BA-OMER"
+msgstr "ЛАГ БА-ОМЕР"
+
+#: names.py:60
+msgid "ISRAEL HOLIDAYS"
+msgstr "ИЗРАИЛЬСКИЕ ПРАЗДНИКИ"
+
+#: names.py:63
+msgid "ROSH HA-SHANA"
+msgstr "РОШ А-ШАНА"
+
+#: names.py:64
+msgid "YOM KIPUR"
+msgstr "ЙОМ КИППУР"
+
+#: names.py:65
+msgid "SUCCOT"
+msgstr "СУККОТ"
+
+#: names.py:66
+msgid "SHMINI ATZERES"
+msgstr "ШМИНИ АЦЕРЕТ"
+
+#: names.py:67
+msgid "PESACH"
+msgstr "ПЕСАХ"
+
+#: names.py:68
+msgid "SHAVUOT"
+msgstr "ШАВУОТ"
+
+#: names.py:74
+msgid "bereishis"
+msgstr "Берешит"
+
+#: names.py:75
+msgid "noach"
+msgstr "Ноах"
+
+#: names.py:76
+msgid "lech_lecha"
+msgstr "Лех-Леха"
+
+#: names.py:77
+msgid "vayeira"
+msgstr "Ваейра"
+
+#: names.py:78
+msgid "chayei_sarah"
+msgstr "Хаей-Сара"
+
+#: names.py:79
+msgid "toldos"
+msgstr "Толдот"
+
+#: names.py:80
+msgid "vayeitzei"
+msgstr "Ваеце"
+
+#: names.py:81
+msgid "vayishlach"
+msgstr "Ваишлах"
+
+#: names.py:82
+msgid "vayeishev"
+msgstr "Ваешев"
+
+#: names.py:83
+msgid "mikeitz"
+msgstr "Микец"
+
+#: names.py:84
+msgid "vayigash"
+msgstr "Ваигаш"
+
+#: names.py:85
+msgid "vayechi"
+msgstr "Ваехи"
+
+#: names.py:86
+msgid "shemos"
+msgstr "Шмот"
+
+#: names.py:87
+msgid "vaeirah"
+msgstr "Ваира"
+
+#: names.py:88
+msgid "bo"
+msgstr "Бо"
+
+#: names.py:89
+msgid "beshalach"
+msgstr "Бешалах"
+
+#: names.py:90
+msgid "yisro"
+msgstr "Итро"
+
+#: names.py:91
+msgid "mishpatim"
+msgstr "Мишпатим"
+
+#: names.py:92
+msgid "terumah"
+msgstr "Трума"
+
+#: names.py:93
+msgid "tetzaveh"
+msgstr "Тецаве"
+
+#: names.py:94
+msgid "ki_sisa"
+msgstr "Ки-Тиса"
+
+#: names.py:95
+msgid "vayakheil"
+msgstr "Ваякхель"
+
+#: names.py:96
+msgid "pekudei"
+msgstr "Пекудей"
+
+#: names.py:97
+msgid "vayikra"
+msgstr "Ваикра"
+
+#: names.py:98
+msgid "tzav"
+msgstr "Цав"
+
+#: names.py:99
+msgid "shemini"
+msgstr "Шмини"
+
+#: names.py:100
+msgid "tazria"
+msgstr "Тазриа"
+
+#: names.py:101
+msgid "metzora"
+msgstr "Мецара"
+
+#: names.py:102
+msgid "acharei"
+msgstr "Ахарей-Мот"
+
+#: names.py:103
+msgid "kedoshim"
+msgstr "Кдошим"
+
+#: names.py:104
+msgid "emor"
+msgstr "Эмор"
+
+#: names.py:105
+msgid "behar"
+msgstr "Бехар"
+
+#: names.py:106
+msgid "bechukosai"
+msgstr "Бехукотай"
+
+#: names.py:107
+msgid "bamidbar"
+msgstr "Бемидбар"
+
+#: names.py:108
+msgid "naso"
+msgstr "Насо"
+
+#: names.py:109
+msgid "behaalosecha"
+msgstr "Бехаалатха"
+
+#: names.py:110
+msgid "shelach"
+msgstr "Шлах"
+
+#: names.py:111
+msgid "korach"
+msgstr "Корах"
+
+#: names.py:112
+msgid "chukas"
+msgstr "Хукат"
+
+#: names.py:113
+msgid "balak"
+msgstr "Балак"
+
+#: names.py:114
+msgid "pinchas"
+msgstr "Пинхас"
+
+#: names.py:115
+msgid "matos"
+msgstr "Матот"
+
+#: names.py:116
+msgid "masei"
+msgstr "Масей"
+
+#: names.py:117
+msgid "devarim"
+msgstr "Дварим"
+
+#: names.py:118
+msgid "vaeschanan"
+msgstr "Ваэтханан"
+
+#: names.py:119
+msgid "eikev"
+msgstr "Экев"
+
+#: names.py:120
+msgid "reei"
+msgstr "Рээ"
+
+#: names.py:121
+msgid "shoftim"
+msgstr "Шофтим"
+
+#: names.py:122
+msgid "ki_seitzei"
+msgstr "Ки-Теце"
+
+#: names.py:123
+msgid "ki_savo"
+msgstr "Ки-Таво"
+
+#: names.py:124
+msgid "nitzavim"
+msgstr "Ницавим"
+
+#: names.py:125
+msgid "vayeilech"
+msgstr "Ваейлех"
+
+#: names.py:126
+msgid "haazinu"
+msgstr "Хаазину"
+
+#: names.py:127
+msgid "vezos_haberacha"
+msgstr "Везот-Абраха"
+
+#: names.py:129
+msgid "vayakheil - pikudei"
+msgstr "Ваякхель - Пекудей"
+
+#: names.py:130
+msgid "tazria - metzora"
+msgstr "Тазриа - Мецара"
+
+#: names.py:131
+msgid "acharei - kedoshim"
+msgstr "Ахарей Мот - Кдошим"
+
+#: names.py:132
+msgid "behar - bechukosai"
+msgstr "Бехар - Бехукотай"
+
+#: names.py:133
+msgid "chukas - balak"
+msgstr "Хукат - Балак"
+
+#: names.py:134
+msgid "matos - masei"
+msgstr "Матот - Масей"
+
+#: names.py:135
+msgid "nitzavim - vayeilech"
+msgstr "Ницавим - Ваейлех"
+
+#: names.py:137
+msgid "shabbat_rosh_hashana"
+msgstr "Шаббат Рош-а-Шана"
+
+#: names.py:138
+msgid "shabbat_yom_kippur"
+msgstr "Шаббат Йом Киппур"
+
+#: names.py:139
+msgid "shabbat_succos"
+msgstr "Шаббат суккот"
+
+#: names.py:140
+msgid "shabbat_chol_hamoed_succos"
+msgstr "Шаббат Холь-а-Моэд Суккот"
+
+#: names.py:141
+msgid "shabbat_hoshana_rabbah"
+msgstr "Шаббат Холь-а-Моэд Суккот"
+
+#: names.py:142
+msgid "shabbat_shemini_atzeres"
+msgstr "Шаббат Шмини Ацерет"
+
+#: names.py:143
+msgid "shabbat_simchas_torah"
+msgstr "Шаббат Симхат Тора"
+
+#: names.py:144
+msgid "shabbat_pesach"
+msgstr "Шаббат Песах"
+
+#: names.py:145
+msgid "shabbat_chol_hamoed_pesach"
+msgstr "Шаббат Холь-а-Моэд Песах"
+
+#: names.py:146
+msgid "shabbat_shavuos"
+msgstr "Шаббат Шавуот"
+
+#: names.py:150
+msgid "Brachos"
+msgstr "Брахот"
+
+#: names.py:151
+msgid "Shabbos"
+msgstr "Шаббат"
+
+#: names.py:152
+msgid "Eruvin"
+msgstr "Эрувин"
+
+#: names.py:153
+msgid "Pesachim"
+msgstr "Псахим"
+
+#: names.py:154
+msgid "Shekalim"
+msgstr "Шкалим"
+
+#: names.py:155
+msgid "Yoma"
+msgstr "Йома"
+
+#: names.py:156
+msgid "Sukah"
+msgstr "Сукка"
+
+#: names.py:157
+msgid "Beitzah"
+msgstr "Бейца"
+
+#: names.py:158
+msgid "Rosh Hashana"
+msgstr "Рош а-Шана"
+
+#: names.py:159
+msgid "Taanis"
+msgstr "Таанит"
+
+#: names.py:160
+msgid "Megilah"
+msgstr "Мегила"
+
+#: names.py:161
+msgid "Moed Katan"
+msgstr "Моэд Катан"
+
+#: names.py:162
+msgid "Chagigah"
+msgstr "Хагига"
+
+#: names.py:163
+msgid "Yevamos"
+msgstr "Йевамот"
+
+#: names.py:164
+msgid "Kesuvos"
+msgstr "Ктувот"
+
+#: names.py:165
+msgid "Nedarim"
+msgstr "Недарим"
+
+#: names.py:166
+msgid "Nazir"
+msgstr "Назир"
+
+#: names.py:167
+msgid "Sotah"
+msgstr "Сота"
+
+#: names.py:168
+msgid "Gitin"
+msgstr "Гитин"
+
+#: names.py:169
+msgid "Kidushin"
+msgstr "Кидушин"
+
+#: names.py:170
+msgid "Bava Kama"
+msgstr "Баба Кама"
+
+#: names.py:171
+msgid "Bava Metzia"
+msgstr "Баба Мециа"
+
+#: names.py:172
+msgid "Bava Basra"
+msgstr "Баба Батра"
+
+#: names.py:173
+msgid "Sanhedrin"
+msgstr "Санхедрин"
+
+#: names.py:174
+msgid "Makos"
+msgstr "Макот"
+
+#: names.py:175
+msgid "Shevuos"
+msgstr "Шевуот"
+
+#: names.py:176
+msgid "Avodah Zarah"
+msgstr "Авода Зара"
+
+#: names.py:177
+msgid "Horayos"
+msgstr "Орайот"
+
+#: names.py:178
+msgid "Zevachim"
+msgstr "Зевахим"
+
+#: names.py:179
+msgid "Menachos"
+msgstr "Менахот"
+
+#: names.py:180
+msgid "Chulin"
+msgstr "Хулин"
+
+#: names.py:181
+msgid "Bechoros"
+msgstr "Бехорот"
+
+#: names.py:182
+msgid "Erchin"
+msgstr "Эрхин"
+
+#: names.py:183
+msgid "Temurah"
+msgstr "Трума"
+
+#: names.py:184
+msgid "Kerisos"
+msgstr "Керисот"
+
+#: names.py:185
+msgid "Meilah"
+msgstr "Меила"
+
+#: names.py:186
+msgid "Nidah"
+msgstr "Нида"
+
+#: zmanim.py:4
+msgid "sunrise"
+msgstr "А-нец а-хама (восход)"
+
+#: zmanim.py:5
+msgid "alos"
+msgstr "Алот а-шахар (заря)"
+
+#: zmanim.py:6
+msgid "sof_zman_tefila_gra"
+msgstr "Зман тфила (время молитвы) [АГРО]"
+
+#: zmanim.py:7
+msgid "sof_zman_tefila_ma"
+msgstr "Зман тфила (время молитвы) [МА]"
+
+#: zmanim.py:8
+msgid "misheyakir_10_2"
+msgstr "Мишеякир (время Талита и Тфилин) "
+
+#: zmanim.py:9
+msgid "sof_zman_shema_gra"
+msgstr "Зман Шма (время Шма) [АГРО]"
+
+#: zmanim.py:10
+msgid "sof_zman_shema_ma"
+msgstr "Зман Шма (время Шма) [МА]"
+
+#: zmanim.py:11
+msgid "chatzos"
+msgstr "Хацот (полдень)"
+
+#: zmanim.py:12
+msgid "mincha_ketana"
+msgstr "Минха ктана"
+
+#: zmanim.py:13
+msgid "mincha_gedola"
+msgstr "Минха гдола"
+
+#: zmanim.py:14
+msgid "plag_mincha"
+msgstr "Плаг минха"
+
+#: zmanim.py:15
+msgid "sunset"
+msgstr "Шкия (закат)"
+
+#: zmanim.py:16
+msgid "tzeis_8_5_degrees"
+msgstr "Выход звезд [8.5 градусов за горизонтом]"
+
+#: zmanim.py:17
+msgid "tzeis_72_minutes"
+msgstr "Выход звезд [72 минуты после заката]"
+
+#: zmanim.py:18
+msgid "tzeis_42_minutes"
+msgstr "Выход звезд [42 минуты после заката]"
+
+#: zmanim.py:19
+msgid "tzeis_5_95_degrees"
+msgstr "Выход звезд [5.95 градусов за горизонтом]"
+
+#: zmanim.py:20
+msgid "chatzot_laila"
+msgstr "Хацот лайла (полночь)"
+
+#: zmanim.py:21
+msgid "astronomical_hour_ma"
+msgstr "Шаа зманит (астрономический час) [МА]"
+
+#: zmanim.py:22
+msgid "astronomical_hour_gra"
+msgstr "Шаа зманит (астрономический час) [АГРО]"
+
+#: names.py:180
+msgid "nissan"
+msgstr "Нисан"
+
+#: names.py:181
+msgid "iyar"
+msgstr "Ияр"
+
+#: names.py:182
+msgid "sivan"
+msgstr "Сиван"
+
+#: names.py:183
+msgid "tammuz"
+msgstr "Таммуз"
+
+#: names.py:184
+msgid "av"
+msgstr "Ав"
+
+#: names.py:185
+msgid "elul"
+msgstr "Элуль"
+
+#: names.py:186
+msgid "tishrei"
+msgstr "Тишрей"
+
+#: names.py:187
+msgid "cheshvan"
+msgstr "Хешван"
+
+#: names.py:188
+msgid "kislev"
+msgstr "Кислев"
+
+#: names.py:189
+msgid "teves"
+msgstr "Тевет"
+
+#: names.py:190
+msgid "shevat"
+msgstr "Шват"
+
+#: names.py:191
+msgid "adar"
+msgstr "Адар"
+
+#: names.py:192
+msgid "adar_ii"
+msgstr "Адар II"
+
+#: names.py:196
+msgid "nissan-g"
+msgstr "Нисана"
+
+#: names.py:197
+msgid "iyar-g"
+msgstr "Ияра"
+
+#: names.py:198
+msgid "sivan-g"
+msgstr "Сивана"
+
+#: names.py:199
+msgid "tammuz-g"
+msgstr "Таммуза"
+
+#: names.py:200
+msgid "av-g"
+msgstr "Ава"
+
+#: names.py:201
+msgid "elul-g"
+msgstr "Элуля"
+
+#: names.py:202
+msgid "tishrei-g"
+msgstr "Тишрея"
+
+#: names.py:203
+msgid "cheshvan-g"
+msgstr "Хешвана"
+
+#: names.py:204
+msgid "kislev-g"
+msgstr "Кислева"
+
+#: names.py:205
+msgid "teves-g"
+msgstr "Тевета"
+
+#: names.py:206
+msgid "shevat-g"
+msgstr "Швата"
+
+#: names.py:207
+msgid "adar-g"
+msgstr "Адара"
+
+#: names.py:208
+msgid "adar_ii-g"
+msgstr "Адара II"
