@@ -15,8 +15,8 @@ async def handle_fast_gedaliah(msg: Message):
     havdala = await api.get_or_set_havdala()
 
     data = await zmanim_api.get_generic_fast('fast_gedalia', location, havdala)
-    pic = FastImage(data).get_image()
-    await msg.reply_photo(pic)
+    pic, kb = FastImage(data).get_image()
+    await msg.reply_photo(pic, reply_markup=kb)
 
 
 @dp.message_handler(text=buttons.fm_tevet)
@@ -26,8 +26,8 @@ async def handle_fast_tevet(msg: Message):
     havdala = await api.get_or_set_havdala()
 
     data = await zmanim_api.get_generic_fast('fast_10_teves', location, havdala)
-    pic = FastImage(data).get_image()
-    await msg.reply_photo(pic)
+    pic, kb = FastImage(data).get_image()
+    await msg.reply_photo(pic, reply_markup=kb)
 
 
 @dp.message_handler(text=buttons.fm_esther)
@@ -37,8 +37,8 @@ async def handle_fast_esther(msg: Message):
     havdala = await api.get_or_set_havdala()
 
     data = await zmanim_api.get_generic_fast('fast_esther', location, havdala)
-    pic = FastImage(data).get_image()
-    await msg.reply_photo(pic)
+    pic, kb = FastImage(data).get_image()
+    await msg.reply_photo(pic, reply_markup=kb)
 
 
 @dp.message_handler(text=buttons.fm_tammuz)
@@ -48,8 +48,8 @@ async def handle_fast_tammuz(msg: Message):
     havdala = await api.get_or_set_havdala()
 
     data = await zmanim_api.get_generic_fast('fast_17_tammuz', location, havdala)
-    pic = FastImage(data).get_image()
-    await msg.reply_photo(pic)
+    pic, kb = FastImage(data).get_image()
+    await msg.reply_photo(pic, reply_markup=kb)
 
 
 @dp.message_handler(text=buttons.fm_av)
@@ -59,5 +59,5 @@ async def handle_fast_av(msg: Message):
     havdala = await api.get_or_set_havdala()
 
     data = await zmanim_api.get_generic_fast('fast_9_av', location, havdala)
-    pic = FastImage(data).get_image()
-    await msg.reply_photo(pic)
+    pic, kb = FastImage(data).get_image()
+    await msg.reply_photo(pic, reply_markup=kb)

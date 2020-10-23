@@ -30,8 +30,8 @@ async def handle_shabbat(msg: Message):
     havdala = await api.get_or_set_havdala()
     data = await zmanim_api.get_shabbat(location, cl, havdala)
 
-    pic = ip.ShabbatImage(data).draw_picture()
-    await msg.reply_photo(pic)
+    pic, kb = ip.ShabbatImage(data).draw_picture()
+    await msg.reply_photo(pic, reply_markup=kb)
 
 
 @dp.message_handler(text=buttons.mm_daf_yomi)

@@ -1,12 +1,15 @@
 from io import BytesIO
 from pathlib import Path
-from datetime import datetime as dt, date, time, timedelta
+from datetime import datetime as dt, date, timedelta
 from typing import Union, Dict, List, Tuple, Optional
 
+from aiogram.types import InlineKeyboardMarkup
 from babel.support import LazyProxy
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 
+from ..text_utils import humanize_date, humanize_time
 from ...helpers import parse_jewish_date
+from ...keyboards.inline import get_zmanim_by_date_buttons
 from ...middlewares.i18n import gettext as _
 from ...zmanim_api.models import *
 from ...texts.single import names, headers, helpers
@@ -15,68 +18,6 @@ from ...texts.plural import units
 IMG_SIZE = 1181
 Line = Tuple[Optional[str], Optional[str], Optional[bool]]
 EMPTY_LINE = None, None, None
-
-
-def humanize_date(date_range: List[Union[date, AsurBeMelachaDay]],
-                  weekday_on_new_line: bool = False) -> str:
-    """
-    Use this function for humanize date or date range
-    Examples:
-      2020-01-01 -> 1 January 2020, Wednesday
-      2020-01-01, 2020-01-08 -> 1—7 January 2020, Wednesday-Tuesday
-      2020-01-31, 2020-02-1 -> 31 January—1 February 2020, Friday-Saturday
-      2019-12-25, 2020-01-03 -> 25 December 2019—3 January 2020, Wednesday-Friday
-    """
-    weekday_sep = '\n' if weekday_on_new_line else ' '
-    months = names.MONTH_NAMES_GENETIVE
-    weekdays = names.WEEKDAYS
-
-    d1 = date_range[0]
-    d2 = date_range[1] if (len(date_range) > 1) and (date_range[0] != date_range[1]) else None
-
-    if isinstance(d1, AsurBeMelachaDay):
-        d1 = d1.date
-    if isinstance(d2, AsurBeMelachaDay):
-        d2 = d2.date
-
-    if not d2:
-        d = d1
-        resp = f'{d.day} {months[d.month]} {d.year},{weekday_sep}{weekdays[d.weekday()]}'
-
-    elif d1.year != d2.year:
-        resp = f'{d1.day} {months[d1.month]} {d1.year} — ' \
-               f'{d2.day} {months[d2.month]} {d2.year}, ' \
-               f'{weekdays[d1.weekday()]}-{weekdays[d2.weekday()]}'
-
-    elif d1.month != d2.month:
-        resp = f'{d1.day} {months[d1.month]} — {d2.day} {months[d2.month]} {d1.year},{weekday_sep}' \
-               f'{weekdays[d1.weekday()]}-{weekdays[d2.weekday()]}'
-
-    else:
-        resp = f'{d1.day}-{d2.day} {months[d1.month]} {d1.year},{weekday_sep}' \
-               f'{weekdays[d1.weekday()]}-{weekdays[d2.weekday()]}'
-
-    return resp
-
-
-def humanize_header_date(header_type: str, date_: Union[date, dt]) -> Tuple[str, bool]:
-    """
-    Use this function for date header, not for date title.
-    :return header and flag indicates if it's two-lines height header
-    """
-    if header_type == headers.cl and date_.weekday() == 4:
-        shabbat = f'\n({names.shabbat})'
-    else:
-        shabbat = ''
-
-    resp = f'{header_type} {date_.day} {names.MONTH_NAMES_GENETIVE[date_.month]}{shabbat}'
-    return resp, bool(shabbat)
-
-
-def humanize_time(time_: time) -> str:
-    """ Use this function for convert time to hh:mm """
-    if isinstance(time_, time):
-        return time_.isoformat(timespec='minutes')
 
 
 def _convert_img_to_bytes_io(img: PngImagePlugin.PngImageFile) -> BytesIO:
@@ -168,7 +109,7 @@ class BaseImage:
 
         self._draw.text((x, y), text=str(value), font=self._font)
 
-    def get_image(self) -> BytesIO:
+    def get_image(self):
         raise NotImplemented
 
 
@@ -213,7 +154,8 @@ class RoshChodeshImage(BaseImage):
         y_offset = 80
 
         # draw month
-        self._draw_line(x, y, _(*units.tu_month, 1).capitalize(), names.JEWISH_MONTHS[self.data.month_name])
+        self._draw_line(x, y, _(*units.tu_month, 1).capitalize(),
+                        names.JEWISH_MONTHS[self.data.month_name])
         y += y_offset
 
         # draw duration
@@ -246,7 +188,7 @@ class ShabbatImage(BaseImage):
 
         super().__init__()
 
-    def draw_picture(self):
+    def draw_picture(self) -> Tuple[BytesIO, Optional[InlineKeyboardMarkup]]:
         if not self.data.candle_lighting or self.data.late_cl_warning:
             self._background_path: str = Path(
                 __file__).parent / 'res' / 'backgrounds' / 'shabbos_attention.png'
@@ -264,7 +206,8 @@ class ShabbatImage(BaseImage):
 
         # draw parashat hashavua
         torah_part = names.TORAH_PARTS.get(self.data.torah_part, '')
-        if (self._x_font_offset(headers.parsha.value) + self._x_font_offset(torah_part) + x) > IMG_SIZE:
+        if (self._x_font_offset(headers.parsha.value) + self._x_font_offset(
+                torah_part) + x) > IMG_SIZE:
             value_on_new_line = True
         else:
             value_on_new_line = False
@@ -279,7 +222,7 @@ class ShabbatImage(BaseImage):
 
             self._draw.text((x, y), helpers.cl_error_warning.value, font=self._warning_font,
                             fill='#ff5959')
-            return _convert_img_to_bytes_io(self._image)
+            return _convert_img_to_bytes_io(self._image), None
 
         # draw candle lighting
         self._draw_line(x, y, headers.cl, self.data.candle_lighting.time().isoformat('minutes'))
@@ -295,15 +238,17 @@ class ShabbatImage(BaseImage):
         self._draw_line(x, y, headers.havdala, self.data.havdala.time().isoformat('minutes'))
         y += y_offset
 
+        kb = get_zmanim_by_date_buttons([self.data.havdala.date()])
+
         # draw warning if need
         if not self.data.late_cl_warning:
-            return _convert_img_to_bytes_io(self._image)
+            return _convert_img_to_bytes_io(self._image), kb
 
         x, y = 100, 840
         self._draw.text((x, y), helpers.cl_late_warning.value, font=self._warning_font,
                         fill='#ff5959')
 
-        return _convert_img_to_bytes_io(self._image)
+        return _convert_img_to_bytes_io(self._image), kb
 
 
 class ZmanimImage(BaseImage):
@@ -371,7 +316,7 @@ class FastImage(BaseImage):
 
         super().__init__()
 
-    def get_image(self) -> BytesIO:
+    def get_image(self) -> Tuple[BytesIO, InlineKeyboardMarkup]:
         self._draw_title(self._draw, names.FASTS_TITLES[self.data.settings.fast_name])
 
         self._draw.text(
@@ -395,7 +340,8 @@ class FastImage(BaseImage):
 
         # draw hatzot, if need
         if self.data.chatzot:
-            self._draw_line(x, y, headers.fast_chatzot, self.data.chatzot.time().isoformat('minutes'))
+            self._draw_line(x, y, headers.fast_chatzot,
+                            self.data.chatzot.time().isoformat('minutes'))
             y += y_offset_small
 
         # draw havdala
@@ -406,7 +352,8 @@ class FastImage(BaseImage):
         #     self._draw_line((pos_x, pos_y), timing.header, timing.value)
         #     pos_y += y_offset
 
-        return _convert_img_to_bytes_io(self._image)
+        kb = get_zmanim_by_date_buttons([self.data.havdala.date()])
+        return _convert_img_to_bytes_io(self._image), kb
 
 
 class HolidayImage(BaseImage):
@@ -439,10 +386,13 @@ class HolidayImage(BaseImage):
             holiday_last_date += timedelta(days=7)
             line_break = True
 
-        date_value = humanize_date([self.data.date, holiday_last_date], weekday_on_new_line=line_break)
+        date_value = humanize_date([self.data.date, holiday_last_date],
+                                   weekday_on_new_line=line_break)
 
-        if (x + self._x_font_offset(headers.date.value) + self._x_font_offset(date_value)) > IMG_SIZE:
-            date_value = humanize_date([self.data.date, holiday_last_date], weekday_on_new_line=True)
+        if (x + self._x_font_offset(headers.date.value) + self._x_font_offset(
+                date_value)) > IMG_SIZE:
+            date_value = humanize_date([self.data.date, holiday_last_date],
+                                       weekday_on_new_line=True)
 
         self._draw_line(
             x,
@@ -456,7 +406,8 @@ class IsraelHolidaysImage(BaseImage):
 
     def __init__(self, data: IsraelHolidays):
         self.data = data
-        self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'israel_holidays.png'
+        self._background_path = Path(
+            __file__).parent / 'res' / 'backgrounds' / 'israel_holidays.png'
         self._font_size = 53
 
         super().__init__()
@@ -470,7 +421,8 @@ class IsraelHolidaysImage(BaseImage):
         y_offset_small = 60
 
         for holiday in self.data.holiday_list:
-            self._draw.text((x, y), f'{headers.israel_holidays[holiday[0]]}:', font=self._bold_font)
+            self._draw.text((x, y), f'{headers.israel_holidays[holiday[0]]}:',
+                            font=self._bold_font)
             y += y_offset_small
             self._draw_line(x, y, headers.date, humanize_date([holiday[1]]))
             y += y_offset
@@ -498,7 +450,21 @@ class YomTovImage(BaseImage):
         self.data = data
         self._draw_title(self._draw, names.YOMTOVS_TITLES[data.settings.yomtov_name])
 
-    def _prepare_lines(self) -> List[Line]:
+    @staticmethod
+    def _humanize_header_date(header_type: str, date_: Union[date, dt]) -> Tuple[str, bool]:
+        """
+        Use this function for date header, not for date title.
+        :return header and flag indicates if it's two-lines height header
+        """
+        if header_type == headers.cl and date_.weekday() == 4:
+            shabbat = f'\n({names.shabbat})'
+        else:
+            shabbat = ''
+
+        resp = f'{header_type} {date_.day} {names.MONTH_NAMES_GENETIVE[date_.month]}{shabbat}'
+        return resp, bool(shabbat)
+
+    def _get_dates(self) -> List[Union[AsurBeMelachaDay, date]]:
         dates = [
             self.data.pre_shabbat,
             self.data.day_1,
@@ -508,11 +474,15 @@ class YomTovImage(BaseImage):
             self.data.pesach_part_2_day_2,
             self.data.hoshana_rabba
         ]
-        dates = [d for d in dates if d is not None]
+        return [d for d in dates if d is not None]
 
+    def _prepare_lines(self, dates: List[Union[AsurBeMelachaDay, date]]) -> List[Line]:
         lines = []
 
-        yomtov_last_day = self.data.pesach_part_2_day_2 or self.data.pesach_part_2_day_1 or self.data.day_2 or self.data.day_1
+        yomtov_last_day = self.data.pesach_part_2_day_2 \
+                          or self.data.pesach_part_2_day_1 \
+                          or self.data.day_2 \
+                          or self.data.day_1
         self._draw_date([self.data.day_1.date, yomtov_last_day.date])
         # dates_range = humanize_date([self.data.day_1, yomtov_last_day], weekday_on_new_line=True)
         # lines.append((headers.date, dates_range, False))
@@ -530,11 +500,11 @@ class YomTovImage(BaseImage):
                 lines.append(EMPTY_LINE)
 
             if date_.candle_lighting:
-                header, new_line = humanize_header_date(headers.cl, date_.candle_lighting)
+                header, new_line = self._humanize_header_date(headers.cl, date_.candle_lighting)
                 value = humanize_time(date_.candle_lighting.time())
                 lines.append((header, value, new_line))
             if date_.havdala:
-                header, new_line = humanize_header_date(headers.havdala, date_.havdala)
+                header, new_line = self._humanize_header_date(headers.havdala, date_.havdala)
                 value = humanize_time(date_.havdala.time())
                 lines.append((header, value, new_line))
 
@@ -557,10 +527,11 @@ class YomTovImage(BaseImage):
         font_size, y_offset, start_position_y = p.get(number_of_lines)
         return start_position_y, y_offset, font_size
 
-    def get_image(self) -> BytesIO:
+    def get_image(self) -> Tuple[BytesIO, Optional[InlineKeyboardMarkup]]:
         x = 80
 
-        lines = self._prepare_lines()
+        dates = self._get_dates()
+        lines = self._prepare_lines(dates)
         y, y_offset, font_size = self._get_font_properties(len(lines))
         self._font = ImageFont.truetype(str(self._font_path), size=font_size)
         self._bold_font = ImageFont.truetype(str(self._bold_font_path), size=font_size)
@@ -575,5 +546,10 @@ class YomTovImage(BaseImage):
                 y += self._y_font_offset(header)
             y += y_offset
 
-        # self._image.save('test.png')
-        return _convert_img_to_bytes_io(self._image)
+        kb = get_zmanim_by_date_buttons(
+            list(map(
+                lambda d: d.date if isinstance(d, AsurBeMelachaDay) else d,
+                dates
+            ))
+        )
+        return _convert_img_to_bytes_io(self._image), kb

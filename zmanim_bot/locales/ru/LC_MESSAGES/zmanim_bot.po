@@ -375,7 +375,7 @@ msgstr ""
 
 #: messages.py:20
 msgid "select cl offset"
-msgstr "За сколько времени до шкии вы зажинаете свечи?"
+msgstr "За сколько времени до шкии вы зажигаете свечи?"
 
 #: messages.py:23
 msgid "input gregorian date in ISO format"
@@ -1181,3 +1181,6 @@ msgstr "Адара"
 #: names.py:208
 msgid "adar_ii-g"
 msgstr "Адара II"
+
+msgid "Zmanim for"
+msgstr "Зманим на"

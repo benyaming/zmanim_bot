@@ -67,3 +67,5 @@ FASTS = [fm_gedaliah, fm_tevet, fm_esther, fm_tammuz, fm_av]
 # converter
 conv_greg_to_jew = _('greg to jew')
 conv_jew_to_greg = _('jew to greg')
+
+zmanim_for = _('Zmanim for')
