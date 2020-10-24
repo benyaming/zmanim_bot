@@ -7,6 +7,7 @@ from zmanim_bot.texts.single import buttons, messages
 from zmanim_bot.tracking import track
 
 
+@dp.message_handler(commands=['report'])
 @dp.message_handler(text=buttons.hm_report)
 @track('Init report')
 async def help_menu_report(msg: Message):

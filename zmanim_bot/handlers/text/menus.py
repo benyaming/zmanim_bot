@@ -3,7 +3,6 @@ from aiogram.types import Message
 import zmanim_bot.keyboards.menus
 from ...misc import dp
 from ...texts.single import buttons, messages
-from ... import keyboards
 from ...tracking import track
 
 
@@ -28,13 +27,14 @@ async def handle_fasts_menu(msg: Message):
     await msg.reply(messages.select, reply_markup=kb)
 
 
-@dp.message_handler(text=buttons.mm_help)
-@track('Help menu')
-async def handle_help_menu(msg: Message):
-    kb = zmanim_bot.keyboards.menus.get_help_menu()
-    await msg.reply(messages.init_help, reply_markup=kb)
+# @dp.message_handler(text=buttons.mm_help)
+# @track('Help menu')
+# async def handle_help_menu(msg: Message):
+#     kb = zmanim_bot.keyboards.menus.get_help_menu()
+#     await msg.reply(messages.init_help, reply_markup=kb)
 
 
+@dp.message_handler(commands=['settings'])
 @dp.message_handler(text=buttons.mm_settings)
 @track('Settings menu')
 async def handle_settings_menu(msg: Message):

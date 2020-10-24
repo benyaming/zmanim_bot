@@ -2,12 +2,12 @@ from aiogram.types import Message
 
 import zmanim_bot.keyboards.menus
 from ...misc import dp
-from ... import keyboards
 from ...tracking import track
 from ...texts.single import buttons, messages
 from ..forms import ConverterGregorianDateState, ConverterJewishDateState
 
 
+@dp.message_handler(commands=['converter'])
 @dp.message_handler(text=buttons.mm_converter)
 @track('Entry to converter')
 async def handle_converter_entry(msg: Message):

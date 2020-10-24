@@ -63,16 +63,18 @@ async def handle_report_payload(msg: Message, state: FSMContext):
 
 @dp.message_handler(state=ConverterGregorianDateState.waiting_for_gregorian_date)
 async def handle_converter_gregorian_date(msg: Message, state: FSMContext):
-    resp = converter.convert_greg_to_heb(msg.text)
+    resp, kb = converter.convert_greg_to_heb(msg.text)
     await state.finish()
-    await redirect_to_main_menu(resp)
+    await msg.reply(resp, reply_markup=kb)
+    await redirect_to_main_menu()
 
 
 @dp.message_handler(state=ConverterJewishDateState.waiting_for_jewish_date)
 async def handle_converter_jewish_date(msg: Message, state: FSMContext):
-    resp = converter.convert_heb_to_greg(msg.text)
+    resp, kb = converter.convert_heb_to_greg(msg.text)
     await state.finish()
-    await redirect_to_main_menu(resp)
+    await msg.reply(resp, reply_markup=kb)
+    await redirect_to_main_menu()
 
 
 # ZMANIM #
