@@ -25,7 +25,7 @@ async def get_or_set_lang(lang: str = None) -> Optional[str]:
     return await get_lang(user.id) if not lang else await set_lang(user.id, lang)
 
 
-Location = Tuple[float, float]
+Location = Tuple[float, float, str]
 
 
 async def get_or_set_location(location: Location = None) -> Optional[Location]:

@@ -76,24 +76,31 @@ async def set_lang(user_id: int, lang: str):
     await _execute_query(query, args)
 
 
-async def get_location(user_id: int) -> Tuple[float, float]:
-    query = 'SELECT latitude, longitude from public.locations WHERE user_id = %s'
+async def get_location(user_id: int) -> Tuple[float, float, str]:
+    query = 'SELECT latitude, longitude, name ' \
+            'from public.locations ' \
+            'WHERE user_id = %s AND is_current = TRUE'
     location = await _execute_query(query, (user_id,), return_result=True)
 
     if len(location) == 0:
         raise NoLocationException
-    return location[0][0], location[0][1]
+    return location[0][0], location[0][1], location[0][2]
 
 
-async def set_location(user_id: int, location: Tuple[float, float]):
-    query = 'INSERT INTO public.locations ' \
-            'VALUES (%s, %s, %s) ' \
+async def set_location(user_id: int, location: Tuple[float, float, str]):
+    query = 'INSERT INTO public.locations (user_id, latitude, longitude, )' \
+            'VALUES (%s, %s, %s, %s, %s) ' \
             'ON CONFLICT (user_id) DO UPDATE ' \
             '  SET user_id = excluded.user_id, ' \
             '      latitude = excluded.latitude,' \
-            '      longitude = excluded.longitude;'
+            '      longitude = excluded.longitude,' \
+            '      name = excluded.name,' \
+            '      is_current = TRUE;'
     args = (user_id, *location)
     await _execute_query(query, args)
+
+
+async def update_location_name(user_id: int, l)
 
 
 async def get_cl_offset(user_id: int) -> int:
