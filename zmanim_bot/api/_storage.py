@@ -18,6 +18,8 @@ __all__ = [
     'set_havdala',
     'set_lang',
     'set_location',
+    'get_processor_type',
+    'set_processor_type'
 ]
 
 
@@ -158,3 +160,10 @@ async def set_zmanim(user_id: int, zmanim: dict):
     args = (user_id, dumps(zmanim))
     await _execute_query(query, args)
 
+
+async def get_processor_type(user_id: int) -> str:
+    return 'image'
+
+
+async def set_processor_type(user_id: int, processor_type: str):
+    pass

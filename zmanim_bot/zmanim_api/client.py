@@ -1,5 +1,7 @@
 from datetime import date
+from typing import Optional
 
+from .models import SimpleSettings
 from ..misc import bot
 from ..api import Location
 from . import models
@@ -117,6 +119,7 @@ async def get_generic_holiday(name: str) -> models.Holiday:
 async def get_israel_holidays() -> models.IsraelHolidays:
     url = ZMANIM_API_URL.format('holiday')
     result = []
+    settings: Optional[SimpleSettings] = None
 
     for name in ['yom_hashoah', 'yom_hazikaron', 'yom_haatzmaut', 'yom_yerushalaim']:
         params = {'holiday_name': name}
@@ -125,4 +128,7 @@ async def get_israel_holidays() -> models.IsraelHolidays:
             raw_resp = await resp.json()
             result.append((name, date.fromisoformat(raw_resp['date'])))
 
-    return result
+            if not settings:
+                settings = raw_resp['settings']
+
+    return models.IsraelHolidays(settings=settings, holiday_list=result)

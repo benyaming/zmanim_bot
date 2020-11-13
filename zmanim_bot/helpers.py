@@ -29,6 +29,7 @@ class CallbackPrefixes:
     zmanim = 'zmanim:'
     havdala = 'havdala:'
     report = 'report:'
+    zmanim_by_date = 'zbd:'
 
 
 def parse_coordinates(coordinates: str) -> Tuple[float, float]:
@@ -51,26 +52,26 @@ def parse_date(date_: str) -> str:
     return date_
 
 
-def get_holiday_shrtcut(name: str) -> str:
-    shortcusts = {
-        buttons.hom_rosh_hashana.value: 'rosh_hashana',
-        buttons.hom_yom_kippur.value: 'yom_kippur',
-        buttons.hom_succot.value: 'succot',
-        buttons.hom_shmini_atzeret.value: 'shmini_atzeres',
-        buttons.hom_chanukah.value: 'chanukah',
-        buttons.hom_purim.value: 'purim',
-        buttons.hom_pesach.value: 'pesach',
-        buttons.hom_shavuot.value: 'shavuot',
-        buttons.hom_tu_bishvat.value: 'tu_bi_shvat',
-        buttons.hom_lag_baomer.value: 'lag_baomer',
-        buttons.hom_israel.value: '',
-        buttons.fm_gedaliah.value: 'fast_gedalia',
-        buttons.fm_tevet.value: 'fast_10_teves',
-        buttons.fm_esther.value: 'fast_esther',
-        buttons.fm_tammuz.value: 'fast_17_tammuz',
-        buttons.fm_av.value: 'fast_9_av',
-    }
-    return shortcusts[name]
+# def get_holiday_shrtcut(name: str) -> str:
+#     shortcusts = {
+#         buttons.hom_rosh_hashana.value: 'rosh_hashana',
+#         buttons.hom_yom_kippur.value: 'yom_kippur',
+#         buttons.hom_succot.value: 'succot',
+#         buttons.hom_shmini_atzeret.value: 'shmini_atzeres',
+#         buttons.hom_chanukah.value: 'chanukah',
+#         buttons.hom_purim.value: 'purim',
+#         buttons.hom_pesach.value: 'pesach',
+#         buttons.hom_shavuot.value: 'shavuot',
+#         buttons.hom_tu_bishvat.value: 'tu_bi_shvat',
+#         buttons.hom_lag_baomer.value: 'lag_baomer',
+#         buttons.hom_israel.value: '',
+#         buttons.fm_gedaliah.value: 'fast_gedalia',
+#         buttons.fm_tevet.value: 'fast_10_teves',
+#         buttons.fm_esther.value: 'fast_esther',
+#         buttons.fm_tammuz.value: 'fast_17_tammuz',
+#         buttons.fm_av.value: 'fast_9_av',
+#     }
+#     return shortcusts[name]
 
 
 def parse_jewish_date(date_str: str) -> str:

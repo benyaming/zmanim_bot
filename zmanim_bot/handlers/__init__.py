@@ -24,6 +24,7 @@ from .text import converter
 
 # Callbacks
 from .callback import settings
+from .callback import zmanim
 
 # For admins
 from ..admin.handlers import (

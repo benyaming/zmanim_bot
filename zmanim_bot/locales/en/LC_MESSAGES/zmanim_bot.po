@@ -1177,3 +1177,6 @@ msgstr "Adar"
 #: names.py:208
 msgid "adar_ii-g"
 msgstr "Adar II"
+
+msgid "Zmanim for"
+msgstr "Zmanim for"

@@ -6,9 +6,11 @@ from ...api import get_or_set_lang
 from ...handlers.redirects import redirect_to_main_menu
 from ...middlewares.i18n import i18n_
 from ...tracking import track
+from ...utils import chat_action
 
 
 @dp.message_handler(text=LANGUAGE_LIST)
+@chat_action('text')
 @track('Language selected', attach_message_text=True)
 async def language_handler(msg: Message):
     lang = LANGUAGE_SHORTCUTS[msg.text]

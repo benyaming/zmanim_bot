@@ -8,8 +8,6 @@ from .redirects import *
 from .warnings import *
 from ..exceptions import *
 
-from better_exceptions.logger import logger
-
 
 @dp.errors_handler(exception=NoLocationException)
 async def no_location_exception_handler(update: Update, e: NoLocationException):
@@ -22,12 +20,6 @@ async def no_language_exception_handler(update: Update, e: NoLanguageException):
     await redirect_to_request_language()
     create_task(track_user())
     return True
-
-
-# @dp.errors_handler(exception=IncorrectTextException)
-# async def no_language_exception_handler(update: Update, e: IncorrectTextException):
-#     await incorrect_text_warning()
-#     return True
 
 
 @dp.errors_handler(exception=IncorrectGregorianDateException)
