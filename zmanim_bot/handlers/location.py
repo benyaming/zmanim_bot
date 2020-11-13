@@ -7,9 +7,11 @@ from ..api import get_or_set_location
 from ..helpers import LOCATION_PATTERN, parse_coordinates
 from .redirects import redirect_to_main_menu
 from ..tracking import track
+from ..utils import chat_action
 
 
 @dp.message_handler(regexp=LOCATION_PATTERN)
+@chat_action('text')
 @track('Location regexp')
 @dp.message_handler(content_types=[ContentType.LOCATION, ContentType.VENUE])
 async def handle_location(msg: Message):

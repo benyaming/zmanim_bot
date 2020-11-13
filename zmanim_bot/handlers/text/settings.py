@@ -7,9 +7,11 @@ from zmanim_bot.handlers.redirects import redirect_to_request_language, \
 from zmanim_bot.misc import dp
 from zmanim_bot.texts.single import buttons, messages
 from zmanim_bot.tracking import track
+from zmanim_bot.utils import chat_action
 
 
 @dp.message_handler(text=buttons.sm_candle)
+@chat_action('text')
 @track('Candle lighting selection')
 async def settings_menu_cl(msg: Message):
     current_cl = await api.get_or_set_cl()
@@ -18,6 +20,7 @@ async def settings_menu_cl(msg: Message):
 
 
 @dp.message_handler(text=buttons.sm_havdala)
+@chat_action('text')
 @track('Havdala selection')
 async def settings_menu_havdala(msg: Message):
     current_havdala = await api.get_or_set_havdala()
@@ -35,6 +38,7 @@ async def settings_menu_zmanim(msg: Message):
 
 @dp.message_handler(commands=['language'])
 @dp.message_handler(text=buttons.sm_lang)
+@chat_action('text')
 @track('Language command')
 async def handle_language_request(msg: Message):
     await redirect_to_request_language()
@@ -42,6 +46,7 @@ async def handle_language_request(msg: Message):
 
 @dp.message_handler(commands=['location'])
 @dp.message_handler(text=buttons.sm_location)
+@chat_action('text')
 @track('Location command')
 async def handle_start(msg: Message):
     await redirect_to_request_location(with_back=True)

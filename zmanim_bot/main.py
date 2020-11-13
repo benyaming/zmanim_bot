@@ -4,8 +4,7 @@ from aiogram.utils.executor import start_polling, start_webhook
 
 import zmanim_bot.handlers
 from zmanim_bot.config import DSN, IS_PROD, WEBHOOK_PATH
-from zmanim_bot.misc import dp
-from better_exceptions.logger import logger
+from zmanim_bot.misc import dp, logger
 
 
 def fix_imports():

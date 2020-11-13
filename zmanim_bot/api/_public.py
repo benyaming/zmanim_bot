@@ -11,7 +11,8 @@ __all__ = [
     'get_or_set_cl',
     'get_or_set_lang',
     'get_or_set_havdala',
-    'get_or_set_location'
+    'get_or_set_location',
+    'get_or_set_processor_type'
 ]
 
 
@@ -47,3 +48,8 @@ async def get_or_set_havdala(havdala: str = None) -> Optional[str]:
     user = User.get_current()
     return await get_havdala(user.id) if not havdala else await set_havdala(user.id, havdala)
 
+
+async def get_or_set_processor_type(processor_type: Optional[str] = None) -> Optional[str]:
+    user = User.get_current()
+    return await get_processor_type(user.id) if not processor_type \
+        else set_processor_type(user.id, processor_type)

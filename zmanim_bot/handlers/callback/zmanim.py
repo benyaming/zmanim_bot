@@ -1,12 +1,14 @@
 from aiogram.types import CallbackQuery
 
 from ... import api, zmanim_api
-from ...helpers import CallbackPrefixes, CALL_ANSWER_OK
+from ...helpers import CallbackPrefixes
 from ...misc import dp, bot
 from ...processors.image.image_processor import ZmanimImage
+from ...utils import chat_action
 
 
 @dp.callback_query_handler(text_startswith=CallbackPrefixes.zmanim_by_date)
+@chat_action()
 async def handle_cl_call(call: CallbackQuery):
     date = call.data.split(CallbackPrefixes.zmanim_by_date)[1]
     await call.answer()

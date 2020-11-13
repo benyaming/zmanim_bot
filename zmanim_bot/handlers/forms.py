@@ -14,6 +14,7 @@ from .. import converter
 from ..helpers import parse_date
 from .redirects import redirect_to_main_menu
 from .. import api
+from ..utils import chat_action
 from ..zmanim_api import get_zmanim
 from ..processors.image.image_processor import ZmanimImage
 from ..texts.single import messages, buttons
@@ -25,6 +26,7 @@ from ..admin.report_management import send_report_to_admins
 
 
 @dp.message_handler(state=FeedbackState.waiting_for_feedback_text)
+@chat_action('text')
 async def handle_report(msg: Message, state: FSMContext):
     report = {
         'message': msg.text,
@@ -40,6 +42,7 @@ async def handle_report(msg: Message, state: FSMContext):
 
 
 @dp.message_handler(text=buttons.done, state=FeedbackState.waiting_for_payload)
+@chat_action('text')
 async def handle_done_report(msg: Message, state: FSMContext):
     report = await state.get_data()
     await state.finish()
@@ -48,6 +51,7 @@ async def handle_done_report(msg: Message, state: FSMContext):
 
 
 @dp.message_handler(content_types=ContentType.ANY, state=FeedbackState.waiting_for_payload)
+@chat_action('text')
 async def handle_report_payload(msg: Message, state: FSMContext):
     if msg.content_type != ContentType.PHOTO:
         return await msg.reply(messages.reports_incorrect_media_type)
@@ -62,6 +66,7 @@ async def handle_report_payload(msg: Message, state: FSMContext):
 # CONVERTER #
 
 @dp.message_handler(state=ConverterGregorianDateState.waiting_for_gregorian_date)
+@chat_action('text')
 async def handle_converter_gregorian_date(msg: Message, state: FSMContext):
     resp, kb = converter.convert_greg_to_heb(msg.text)
     await state.finish()
@@ -70,6 +75,7 @@ async def handle_converter_gregorian_date(msg: Message, state: FSMContext):
 
 
 @dp.message_handler(state=ConverterJewishDateState.waiting_for_jewish_date)
+@chat_action('text')
 async def handle_converter_jewish_date(msg: Message, state: FSMContext):
     resp, kb = converter.convert_heb_to_greg(msg.text)
     await state.finish()
@@ -80,6 +86,7 @@ async def handle_converter_jewish_date(msg: Message, state: FSMContext):
 # ZMANIM #
 
 @dp.message_handler(state=ZmanimGregorianDateState.waiting_for_gregorian_date)
+@chat_action('text')
 async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
     date = parse_date(msg.text)
     location = await api.get_or_set_location()

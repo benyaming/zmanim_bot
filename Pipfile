@@ -13,6 +13,7 @@ aiopg = "*"
 pydantic = "*"
 aioredis = "*"
 posthog = "*"
+betterlogging = "*"
 
 [requires]
 python_version = "3.7"
