@@ -2,12 +2,17 @@ from typing import Tuple, Optional, List
 from json import dumps
 
 from aiopg import Pool
-from aiogram import Dispatcher
+from aiogram import Dispatcher, types
 
-from ..exceptions import NoLocationException, NoLanguageException
+from ..config import LOCATION_NUMBER_LIMIT
+from ..exceptions import NoLocationException, NoLanguageException, NonUniqueLocatioinException, \
+    MaxLocationLimitException
+from ..misc import db_engine
+from .models import User, UserInfo, Location
+
 
 __all__ = [
-    'track_user_',
+    'get_or_create_user',
     'get_cl_offset',
     'get_zmanim',
     'get_havdala',
@@ -43,15 +48,21 @@ async def _execute_query(query: str, args: tuple, *, return_result: bool = False
             return ret
 
 
-async def track_user_(user_id: int, first_name: str, last_name: Optional[str], username: Optional[str]):
-    query = 'INSERT INTO public.users VALUES (%s, %s, %s, %s) ' \
-            'ON CONFLICT (user_id) DO UPDATE ' \
-            'SET user_id = excluded.user_id,' \
-            '    first_name = excluded.first_name,'\
-            '    last_name = excluded.last_name,'\
-            '    username = excluded.username;'
-    args = (user_id, first_name, last_name, username)
-    await _execute_query(query, args)
+async def get_or_create_user(user_id: int, first_name: str = None, last_name: str = None, username: str = None) -> User:
+    user = await db_engine.find_one(User, User.user_id == user_id)
+
+    if not user:
+        user = User(
+            user_id=user_id,
+            personal_info=UserInfo(
+                first_name=first_name,
+                last_name=last_name,
+                username=username
+            )
+        )
+        await db_engine.save(user)
+
+    return user
 
 
 async def create_default_settings(user_id: int):
@@ -60,22 +71,17 @@ async def create_default_settings(user_id: int):
 
 
 async def get_lang(user_id: int) -> Optional[str]:
-    query = 'SELECT lang FROM public.lang WHERE user_id = %s'
-
-    lang = await _execute_query(query, (user_id,), return_result=True)
-    if len(lang) == 0:
+    user = await get_or_create_user(user_id)
+    lang = user.language
+    if not lang:
         raise NoLanguageException
-    return lang[0][0]
+    return lang
 
 
 async def set_lang(user_id: int, lang: str):
-    query = 'INSERT INTO public.lang ' \
-            'VALUES (%s, %s) ' \
-            'ON CONFLICT (user_id) DO UPDATE ' \
-            '  SET user_id = excluded.user_id, ' \
-            '      lang = excluded.lang;'
-    args = (user_id, lang)
-    await _execute_query(query, args)
+    user = await get_or_create_user(user_id)
+    user.language = lang
+    await db_engine.save(user)
 
 
 async def get_location(user_id: int) -> Tuple[float, float]:
@@ -87,15 +93,33 @@ async def get_location(user_id: int) -> Tuple[float, float]:
     return location[0][0], location[0][1]
 
 
+def validate_location(location: Location, locations: List[Location]):
+    if len(locations) >= LOCATION_NUMBER_LIMIT:
+        raise MaxLocationLimitException
+
+    for loc in locations:
+        if loc.lat == location.lat and loc.lng == location.lng:
+            raise NonUniqueLocatioinException
+
+
 async def set_location(user_id: int, location: Tuple[float, float]):
-    query = 'INSERT INTO public.locations ' \
-            'VALUES (%s, %s, %s) ' \
-            'ON CONFLICT (user_id) DO UPDATE ' \
-            '  SET user_id = excluded.user_id, ' \
-            '      latitude = excluded.latitude,' \
-            '      longitude = excluded.longitude;'
-    args = (user_id, *location)
-    await _execute_query(query, args)
+    location_obj = Location(
+        lat=location[0],
+        lng=location[1],
+        name='main_loc',
+        is_active=True
+    )
+
+    user = await get_or_create_user(user_id)
+    validate_location(location_obj, user.location_list)
+
+    for i in range(len(user.location_list)):
+        user.location_list[i].is_active = False
+
+    user.location_list.append(location_obj)
+    await db_engine.save(user)
+
+
 
 
 async def get_cl_offset(user_id: int) -> int:

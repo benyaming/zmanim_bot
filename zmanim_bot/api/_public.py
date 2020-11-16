@@ -18,7 +18,7 @@ __all__ = [
 
 async def track_user():
     user = User.get_current()
-    return await track_user_(user.id, user.first_name, user.last_name, user.username)
+    return await get_or_create_user(user.id, user.first_name, user.last_name, user.username)
 
 
 async def get_or_set_lang(lang: str = None) -> Optional[str]:

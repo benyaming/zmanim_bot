@@ -21,6 +21,11 @@ DSN = f'dbname={getenv("DB_NAME")} ' \
       f'host={getenv("DB_HOST")} ' \
       f'port={getenv("DB_PORT")}'
 
+DB_HOST = getenv('DB_HOST')
+DB_PORT = getenv('DB_PORT')
+DB_NAME = getenv('DB_NAME')
+DB_COLLECTION_NAME = getenv('DB_COLLECTION_NAME')
+
 REDIS_HOST = getenv('REDIS_HOST')
 REDIS_PORT = int(getenv('REDIS_PORT'))
 REDIS_DB = int(getenv('REDIS_DB'))
@@ -28,3 +33,5 @@ REDIS_DB = int(getenv('REDIS_DB'))
 ZMANIM_API_URL: str = getenv('ZMANIM_API_URL')
 
 REPORT_ADMIN_LIST: List[int] = [int(i) for i in getenv('REPORT_ADMIN_LIST', '').split(', ')]
+
+LOCATION_NUMBER_LIMIT: int = int(getenv('LOCATION_NUMBER_LIMIT', 5))

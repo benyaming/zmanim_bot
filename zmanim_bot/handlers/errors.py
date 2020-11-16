@@ -19,7 +19,7 @@ async def no_location_exception_handler(update: Update, e: NoLocationException):
 async def no_language_exception_handler(update: Update, e: NoLanguageException):
     await redirect_to_request_language()
     create_task(track_user())
-    return True
+    # return True
 
 
 @dp.errors_handler(exception=IncorrectGregorianDateException)

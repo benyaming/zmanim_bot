@@ -14,6 +14,9 @@ pydantic = "*"
 aioredis = "*"
 posthog = "*"
 betterlogging = "*"
+umongo = { version = "*", extras = ['motor'] }
+odmantic = "*"
+motor = "*"
 
 [requires]
 python_version = "3.7"
