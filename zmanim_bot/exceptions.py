@@ -5,7 +5,8 @@ __all__ = [
     'IncorrectTextException',
     'IncorrectGregorianDateException',
     'IncorrectJewishDateException',
-    'NonUniqueLocatioinException'
+    'NonUniqueLocatioinException',
+    'MaxLocationLimitException'
 ]
 
 

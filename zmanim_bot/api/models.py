@@ -13,7 +13,7 @@ typing.TYPE_CHECKING = True
 
 
 class UserInfo(EmbeddedModel, ABC):
-    first_name: str
+    first_name: Optional[str] = None
     last_name: Optional[str] = None
     username: Optional[str] = None
 
@@ -56,6 +56,7 @@ class User(Model, ABC):
     cl_offset: int = 18
     havdala_opinion: str = 'tzeis_8_5_degrees'
     zmanim_settings: ZmanimSettings = Field(default_factory=ZmanimSettings)
+    processor_type: str = 'image'
 
     class Config:
         collection = DB_COLLECTION_NAME
