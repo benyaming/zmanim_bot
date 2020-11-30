@@ -8,12 +8,15 @@ verify_ssl = true
 [packages]
 pillow = "*"
 aiogram = "*"
+aiohttp = "*"
 zmanim = {git = "https://github.com/pinnymz/python-zmanim.git"}
 aiopg = "*"
 pydantic = "*"
 aioredis = "*"
 posthog = "*"
 betterlogging = "*"
+odmantic = "*"
+motor = "*"
 
 [requires]
 python_version = "3.7"
