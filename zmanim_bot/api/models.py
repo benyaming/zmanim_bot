@@ -60,11 +60,3 @@ class User(Model, ABC):
 
     class Config:
         collection = DB_COLLECTION_NAME
-
-
-class Address(EmbeddedModel, ABC):
-    address: str
-
-
-class TestUser(Model, ABC):
-    addresses: List[Address]

@@ -1,8 +1,6 @@
 from typing import Tuple, Optional, List
 
 from aiogram.types import User
-from aiopg import Pool
-from aiogram import Dispatcher, types
 
 from ..config import LOCATION_NUMBER_LIMIT
 from ..exceptions import NoLocationException, NoLanguageException, NonUniqueLocatioinException, \
