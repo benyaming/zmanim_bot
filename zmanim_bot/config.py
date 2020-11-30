@@ -14,15 +14,7 @@ LANGUAGE_SHORTCUTS = {
     'Русский': 'ru'
 }
 
-
-DSN = f'dbname={getenv("DB_NAME")} ' \
-      f'user={getenv("DB_USER")} ' \
-      f'password={getenv("DB_PASSWORD")} ' \
-      f'host={getenv("DB_HOST")} ' \
-      f'port={getenv("DB_PORT")}'
-
-DB_HOST = getenv('DB_HOST')
-DB_PORT = getenv('DB_PORT')
+DB_URL = getenv('DB_URL')
 DB_NAME = getenv('DB_NAME')
 DB_COLLECTION_NAME = getenv('DB_COLLECTION_NAME')
 
