@@ -50,9 +50,11 @@ async def get_or_create_user(tg_user: types.User) -> User:
     elif user.personal_info.first_name != tg_user.first_name or \
          user.personal_info.last_name != tg_user.last_name or \
          user.personal_info.username != tg_user.username:
-        user.personal_info.first_name = tg_user.first_name
-        user.personal_info.last_name = tg_user.last_name
-        user.personal_info.username = tg_user.username
+        user.personal_info = UserInfo(
+                first_name=tg_user.first_name,
+                last_name=tg_user.last_name,
+                username=tg_user.username
+            )
         await db_engine.save(user)
 
     return user

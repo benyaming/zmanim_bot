@@ -9,7 +9,7 @@ verify_ssl = true
 pillow = "*"
 aiogram = "*"
 aiohttp = "*"
-zmanim = {git = "https://github.com/pinnymz/python-zmanim.git"}
+zmanim = "*"
 aiopg = "*"
 pydantic = "*"
 aioredis = "*"

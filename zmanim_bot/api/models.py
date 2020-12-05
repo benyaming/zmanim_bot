@@ -8,10 +8,6 @@ from zmanim_bot.config import DB_COLLECTION_NAME
 HAVDALA_OPINIONS = ['tzeis_5_95_degrees', 'tzeis_8_5_degrees', 'tzeis_42_minutes', 'tzeis_72_minutes']
 
 
-import typing
-typing.TYPE_CHECKING = True
-
-
 class UserInfo(EmbeddedModel, ABC):
     first_name: Optional[str] = None
     last_name: Optional[str] = None
@@ -49,7 +45,7 @@ class ZmanimSettings(EmbeddedModel, ABC):
 
 class User(Model, ABC):
     user_id: int
-    personal_info: UserInfo
+    personal_info: UserInfo = Field(default_factory=UserInfo)
 
     language: Optional[str] = None
     location_list: List[Location] = Field(default_factory=list)
