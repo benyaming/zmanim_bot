@@ -18,12 +18,12 @@ __all__ = [
 
 async def track_user():
     user = User.get_current()
-    return await get_or_create_user(user.id, user.first_name, user.last_name, user.username)
+    return await get_or_create_user(user)
 
 
 async def get_or_set_lang(lang: str = None) -> Optional[str]:
     user = User.get_current()
-    return await get_lang(user.id) if not lang else await set_lang(user.id, lang)
+    return await get_lang(user) if not lang else await set_lang(user, lang)
 
 
 Location = Tuple[float, float]
@@ -31,25 +31,25 @@ Location = Tuple[float, float]
 
 async def get_or_set_location(location: Location = None) -> Optional[Location]:
     user = User.get_current()
-    return await get_location(user.id) if not location else await set_location(user.id, location)
+    return await get_location(user) if not location else await set_location(user, location)
 
 
 async def get_or_set_cl(cl: int = None) -> Optional[int]:
     user = User.get_current()
-    return await get_cl_offset(user.id) if not cl else await set_cl(user.id, cl)
+    return await get_cl_offset(user) if not cl else await set_cl(user, cl)
 
 
 async def get_or_set_zmanim(zmanim: dict = None) -> Optional[dict]:
     user = User.get_current()
-    return await get_zmanim(user.id) if not zmanim else await set_zmanim(user.id, zmanim)
+    return await get_zmanim(user) if not zmanim else await set_zmanim(user, zmanim)
 
 
 async def get_or_set_havdala(havdala: str = None) -> Optional[str]:
     user = User.get_current()
-    return await get_havdala(user.id) if not havdala else await set_havdala(user.id, havdala)
+    return await get_havdala(user) if not havdala else await set_havdala(user, havdala)
 
 
 async def get_or_set_processor_type(processor_type: Optional[str] = None) -> Optional[str]:
     user = User.get_current()
-    return await get_processor_type(user.id) if not processor_type \
-        else set_processor_type(user.id, processor_type)
+    return await get_processor_type(user) if not processor_type \
+        else set_processor_type(user, processor_type)
