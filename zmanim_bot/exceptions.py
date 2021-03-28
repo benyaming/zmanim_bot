@@ -5,6 +5,8 @@ __all__ = [
     'IncorrectTextException',
     'IncorrectGregorianDateException',
     'IncorrectJewishDateException',
+    'NonUniqueLocatioinException',
+    'MaxLocationLimitException'
 ]
 
 
@@ -31,3 +33,10 @@ class IncorrectGregorianDateException(Exception):
 class IncorrectJewishDateException(Exception):
     ...
 
+
+class NonUniqueLocatioinException(Exception):
+    ...
+
+
+class MaxLocationLimitException(Exception):
+    ...

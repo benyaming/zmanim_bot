@@ -1,10 +1,10 @@
-import aiopg
 from aiogram import Dispatcher
 from aiogram.utils.executor import start_polling, start_webhook
 
 import zmanim_bot.handlers
-from zmanim_bot.config import DSN, IS_PROD, WEBHOOK_PATH
+from zmanim_bot.config import IS_PROD, WEBHOOK_PATH
 from zmanim_bot.misc import dp, logger
+from zmanim_bot.utils import ensure_mongo_index
 
 
 def fix_imports():
@@ -12,8 +12,7 @@ def fix_imports():
 
 
 async def on_start(dispatcher: Dispatcher):
-    db_conn = await aiopg.create_pool(DSN)
-    dispatcher['db_pool'] = db_conn
+    await ensure_mongo_index()
     logger.info('Starting zmanim bot...')
 
 
