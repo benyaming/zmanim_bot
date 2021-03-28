@@ -32,6 +32,7 @@ sm_candle = _('candle lighting')
 sm_havdala = _('havdala')
 sm_lang = _('language')
 sm_location = _('location')
+sm_omer = _('omer')
 
 
 # Holidays
