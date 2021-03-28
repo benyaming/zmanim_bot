@@ -348,6 +348,20 @@ msgstr "Выберите:"
 msgid "request language"
 msgstr "Выберите язык:"
 
+msgid "Here you can enable or disable notifications about the <i>Omer</i> count."
+msgstr "Здесь вы можете включить или выключить оповещения о счёте <i>Омера</i>."
+
+msgid "omer"
+msgstr "Счёт Омера"
+
+msgid "enabled"
+msgstr "включено"
+
+msgid "disabled"
+msgstr "выключено"
+
+
+
 #: messages.py:14
 msgid "request location"
 msgstr ""

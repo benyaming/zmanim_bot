@@ -5,7 +5,8 @@ from aiogram.types import CallbackQuery
 from ...keyboards.inline import (
     get_zmanim_settings_keyboard,
     get_havdala_settings_keyboard,
-    get_cl_settings_keyboard
+    get_cl_settings_keyboard,
+    get_omer_kb,
 )
 from ... import api
 from ...misc import dp, bot
@@ -28,6 +29,15 @@ async def handle_havdala_call(call: CallbackQuery):
     kb = get_havdala_settings_keyboard(havdala)
     await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
     asyncio.create_task(api.get_or_set_havdala(havdala))
+
+
+@dp.callback_query_handler(text_startswith=CallbackPrefixes.omer)
+async def handle_omer_call(call: CallbackQuery):
+    omer_flag = not bool(int(call.data.split(CallbackPrefixes.omer)[1]))
+    await call.answer(CALL_ANSWER_OK)
+    kb = get_omer_kb(omer_flag)
+    await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
+    asyncio.create_task(api.get_or_set_omer_flag(omer_flag))
 
 
 @dp.callback_query_handler(text_startswith=CallbackPrefixes.zmanim)

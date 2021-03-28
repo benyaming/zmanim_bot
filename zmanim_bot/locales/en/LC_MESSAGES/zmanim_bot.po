@@ -342,6 +342,18 @@ msgstr "Choose:"
 msgid "request language"
 msgstr "Select your language:"
 
+msgid "Here you can enable or disable notifications about the <i>Omer</i> count."
+msgstr "Here you can enable or disable notifications about the <i>Omer</i> count."
+
+msgid "omer"
+msgstr "Omer count"
+
+msgid "enabled"
+msgstr "enabled"
+
+msgid "disabled"
+msgstr "disabled"
+
 #: messages.py:14
 msgid "request location"
 msgstr ""
