@@ -29,7 +29,7 @@ def get_main_menu() -> ReplyKeyboardMarkup:
 def get_settings_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     kb.row(buttons.sm_zmanim.value, buttons.sm_candle.value, buttons.sm_havdala.value)
-    kb.row(buttons.sm_lang.value, buttons.sm_location.value, buttons.back.value)
+    kb.row(buttons.sm_lang.value, buttons.sm_omer.value, buttons.sm_location.value, buttons.back.value)
     return kb
 
 

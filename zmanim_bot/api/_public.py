@@ -12,7 +12,8 @@ __all__ = [
     'get_or_set_lang',
     'get_or_set_havdala',
     'get_or_set_location',
-    'get_or_set_processor_type'
+    'get_or_set_processor_type',
+    'get_or_set_omer_flag',
 ]
 
 
@@ -52,4 +53,9 @@ async def get_or_set_havdala(havdala: str = None) -> Optional[str]:
 async def get_or_set_processor_type(processor_type: Optional[str] = None) -> Optional[str]:
     user = User.get_current()
     return await get_processor_type(user) if not processor_type \
-        else set_processor_type(user, processor_type)
+        else await set_processor_type(user, processor_type)
+
+
+async def get_or_set_omer_flag(omer_flag: Optional[bool] = None) -> Optional[bool]:
+    user = User.get_current()
+    return await get_omer_flag(user) if omer_flag is None else await set_omer_flag(user, omer_flag)

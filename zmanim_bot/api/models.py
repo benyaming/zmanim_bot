@@ -53,6 +53,7 @@ class User(Model, ABC):
     havdala_opinion: str = 'tzeis_8_5_degrees'
     zmanim_settings: ZmanimSettings = Field(default_factory=ZmanimSettings)
     processor_type: str = 'image'
+    is_omer_enabled: bool = False
 
     class Config:
         collection = DB_COLLECTION_NAME

@@ -21,7 +21,9 @@ __all__ = [
     'set_lang',
     'set_location',
     'get_processor_type',
-    'set_processor_type'
+    'set_processor_type',
+    'get_omer_flag',
+    'set_omer_flag',
 ]
 
 
@@ -143,4 +145,15 @@ async def get_processor_type(tg_user: types.User) -> str:
 async def set_processor_type(tg_user: types.User, processor_type: str):
     user = await get_or_create_user(tg_user)
     user.processor_type = processor_type
+    await db_engine.save(user)
+
+
+async def get_omer_flag(tg_user: types.User) -> bool:
+    user = await get_or_create_user(tg_user)
+    return user.is_omer_enabled
+
+
+async def set_omer_flag(tg_user: types.User, omer_flag: bool):
+    user = await get_or_create_user(tg_user)
+    user.is_omer_enabled = omer_flag
     await db_engine.save(user)

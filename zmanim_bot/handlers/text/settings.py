@@ -44,6 +44,15 @@ async def handle_language_request(msg: Message):
     await redirect_to_request_language()
 
 
+@dp.message_handler(text=buttons.sm_omer)
+@chat_action('omer')
+@track('Omer Settings')
+async def handle_omer_settings(msg: Message):
+    is_omer_enabled = await api.get_or_set_omer_flag()
+    kb = zmanim_bot.keyboards.inline.get_omer_kb(is_omer_enabled)
+    await msg.reply(messages.settings_omer, reply_markup=kb)
+
+
 @dp.message_handler(commands=['location'])
 @dp.message_handler(text=buttons.sm_location)
 @chat_action('text')

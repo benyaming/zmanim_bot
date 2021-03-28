@@ -5,6 +5,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from ..processors.text_utils import humanize_date
 from ..texts.single import zmanim
+from ..texts.single import messages
 from ..helpers import CL_OFFET_OPTIONS, HAVDALA_OPINION_OPTIONS, CallbackPrefixes
 from ..texts.single.buttons import zmanim_for
 
@@ -54,6 +55,18 @@ def get_zmanim_settings_keyboard(zmanim_data: dict) -> InlineKeyboardMarkup:
         row = [get_zman_button(name, status)]
         kb.row(*row)
 
+    return kb
+
+
+def get_omer_kb(status: bool) -> InlineKeyboardMarkup:
+    kb = InlineKeyboardMarkup()
+    kb.row(
+        InlineKeyboardButton(
+            text=f'✅   {messages.settings_enabled}' if status
+            else f'❌   {messages.settings_disabled}',
+            callback_data=f'{CallbackPrefixes.omer}{int(status)}'
+        )
+    )
     return kb
 
 
