@@ -1,4 +1,5 @@
 from abc import ABC
+from datetime import datetime
 from typing import Optional, List
 
 from odmantic import Model, EmbeddedModel, Field
@@ -19,6 +20,12 @@ class Location(EmbeddedModel, ABC):
     lng: float
     name: str
     is_active: bool
+
+
+class OmerSettings(EmbeddedModel, ABC):
+    is_enabled: bool = False
+    is_sent_today: Optional[bool]
+    notification_time: Optional[str]
 
 
 class ZmanimSettings(EmbeddedModel, ABC):
@@ -53,7 +60,7 @@ class User(Model, ABC):
     havdala_opinion: str = 'tzeis_8_5_degrees'
     zmanim_settings: ZmanimSettings = Field(default_factory=ZmanimSettings)
     processor_type: str = 'image'
-    is_omer_enabled: bool = False
+    omer: OmerSettings = Field(default_factory=OmerSettings)
 
     class Config:
         collection = DB_COLLECTION_NAME
