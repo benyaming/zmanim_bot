@@ -150,10 +150,10 @@ async def set_processor_type(tg_user: types.User, processor_type: str):
 
 async def get_omer_flag(tg_user: types.User) -> bool:
     user = await get_or_create_user(tg_user)
-    return user.is_omer_enabled
+    return user.omer.is_enabled
 
 
 async def set_omer_flag(tg_user: types.User, omer_flag: bool):
     user = await get_or_create_user(tg_user)
-    user.is_omer_enabled = omer_flag
+    user.omer.is_enabled = omer_flag
     await db_engine.save(user)
