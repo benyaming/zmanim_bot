@@ -1,4 +1,4 @@
-from typing import Tuple, Optional
+from typing import Tuple, Optional, Any
 
 from aiogram.types import User
 
@@ -56,6 +56,12 @@ async def get_or_set_processor_type(processor_type: Optional[str] = None) -> Opt
         else await set_processor_type(user, processor_type)
 
 
-async def get_or_set_omer_flag(omer_flag: Optional[bool] = None) -> Optional[bool]:
+async def get_or_set_omer_flag(
+        omer_flag: Optional[bool] = None,
+        zmanim: Optional[Any] = None  # todo circullar import problem, refactor needed
+) -> Optional[bool]:
     user = User.get_current()
-    return await get_omer_flag(user) if omer_flag is None else await set_omer_flag(user, omer_flag)
+    if omer_flag:
+        omer_time = zmanim and zmanim.tzeis_8_5_degrees.isoformat()
+        return await set_omer_flag(user, omer_flag, omer_time)
+    return await get_omer_flag(user)
