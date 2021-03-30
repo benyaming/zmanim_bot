@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from typing import Tuple, Optional, List
 
 from aiogram import types
@@ -155,5 +156,12 @@ async def get_omer_flag(tg_user: types.User) -> bool:
 
 async def set_omer_flag(tg_user: types.User, omer_flag: bool):
     user = await get_or_create_user(tg_user)
+
+    today = date.today()
+    omer_time = datetime(today.year, today.month, today.day, 20, 0).isoformat()
+
     user.omer.is_enabled = omer_flag
+    user.omer.is_sent_today = False
+    user.omer.notification_time = omer_time
+
     await db_engine.save(user)
