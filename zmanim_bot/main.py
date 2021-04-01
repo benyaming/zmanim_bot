@@ -13,7 +13,7 @@ def fix_imports():
 
 async def on_start(dispatcher: Dispatcher):
     await ensure_mongo_index()
-    logger.info('Starting zmanim bot...')
+    logger.info('Starting zmanim_api bot...')
 
 
 if __name__ == '__main__':

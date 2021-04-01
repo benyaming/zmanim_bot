@@ -1,9 +1,9 @@
 from aiogram.types import User
 
-from ..keyboards import menus
-from ..misc import bot
+from zmanim_bot.keyboards import menus
+from zmanim_bot.misc import bot
 
-from ..texts.single import messages
+from zmanim_bot.texts.single import messages
 
 __all__ = [
     'redirect_to_main_menu',

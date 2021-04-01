@@ -7,13 +7,13 @@ from aiogram.types import InlineKeyboardMarkup
 from babel.support import LazyProxy
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 
-from ..text_utils import humanize_date, humanize_time
-from ...helpers import parse_jewish_date
-from ...keyboards.inline import get_zmanim_by_date_buttons
-from ...middlewares.i18n import gettext as _
-from ...zmanim_api.models import *
-from ...texts.single import names, headers, helpers
-from ...texts.plural import units
+from zmanim_bot.processors.text_utils import humanize_date, humanize_time
+from zmanim_bot.helpers import parse_jewish_date
+from zmanim_bot.keyboards.inline import get_zmanim_by_date_buttons
+from zmanim_bot.middlewares.i18n import gettext as _
+from zmanim_bot.texts.single import names, headers, helpers
+from zmanim_bot.texts.plural import units
+from zmanim_bot.api.zmanim_api.models import *
 
 IMG_SIZE = 1181
 Line = Tuple[Optional[str], Optional[str], Optional[bool]]
@@ -188,7 +188,7 @@ class ShabbatImage(BaseImage):
 
         super().__init__()
 
-    def draw_picture(self) -> Tuple[BytesIO, Optional[InlineKeyboardMarkup]]:
+    def get_image(self) -> Tuple[BytesIO, Optional[InlineKeyboardMarkup]]:
         if not self.data.candle_lighting or self.data.late_cl_warning:
             self._background_path: str = Path(
                 __file__).parent / 'res' / 'backgrounds' / 'shabbos_attention.png'

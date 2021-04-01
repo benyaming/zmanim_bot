@@ -3,23 +3,20 @@ from asyncio import create_task
 from aiogram.types import Message, ContentType
 from aiogram.dispatcher import FSMContext
 
-from ..misc import dp, bot
-from ..states import (
+from zmanim_bot.misc import dp, bot
+from zmanim_bot.states import (
     ConverterGregorianDateState,
     ConverterJewishDateState,
     FeedbackState,
     ZmanimGregorianDateState
 )
-from .. import converter
-from ..helpers import parse_date
-from .redirects import redirect_to_main_menu
-from .. import api
-from ..utils import chat_action
-from ..zmanim_api import get_zmanim
-from ..processors.image.image_processor import ZmanimImage
-from ..texts.single import messages, buttons
-from ..keyboards.menus import get_report_keyboard
-from ..admin.report_management import send_report_to_admins
+from zmanim_bot.helpers import check_date
+from zmanim_bot.utils import chat_action
+from zmanim_bot.texts.single import messages, buttons
+from zmanim_bot.keyboards.menus import get_report_keyboard
+from zmanim_bot.handlers.utils.redirects import redirect_to_main_menu
+from zmanim_bot.service import converter_service, zmanim_service
+from zmanim_bot.admin.report_management import send_report_to_admins
 
 
 # REPORTS
@@ -68,7 +65,7 @@ async def handle_report_payload(msg: Message, state: FSMContext):
 @dp.message_handler(state=ConverterGregorianDateState.waiting_for_gregorian_date)
 @chat_action('text')
 async def handle_converter_gregorian_date(msg: Message, state: FSMContext):
-    resp, kb = converter.convert_greg_to_heb(msg.text)
+    resp, kb = converter_service.convert_greg_to_heb(msg.text)
     await state.finish()
     await msg.reply(resp, reply_markup=kb)
     await redirect_to_main_menu()
@@ -77,7 +74,7 @@ async def handle_converter_gregorian_date(msg: Message, state: FSMContext):
 @dp.message_handler(state=ConverterJewishDateState.waiting_for_jewish_date)
 @chat_action('text')
 async def handle_converter_jewish_date(msg: Message, state: FSMContext):
-    resp, kb = converter.convert_heb_to_greg(msg.text)
+    resp, kb = converter_service.convert_heb_to_greg(msg.text)
     await state.finish()
     await msg.reply(resp, reply_markup=kb)
     await redirect_to_main_menu()
@@ -88,12 +85,8 @@ async def handle_converter_jewish_date(msg: Message, state: FSMContext):
 @dp.message_handler(state=ZmanimGregorianDateState.waiting_for_gregorian_date)
 @chat_action('text')
 async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
-    date = parse_date(msg.text)
-    location = await api.get_or_set_location()
-    zmanim_settings = await api.get_or_set_zmanim()
-
-    data = await get_zmanim(location, zmanim_settings, date)
-    pic = ZmanimImage(data).get_image()
-    await msg.reply_photo(pic)
+    check_date(msg.text)
+    resp = await zmanim_service.get_zmanim_by_date(date=msg.text)
+    await msg.reply_photo(resp)
     await state.finish()
     await redirect_to_main_menu()

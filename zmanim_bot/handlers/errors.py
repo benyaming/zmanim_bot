@@ -1,12 +1,11 @@
-from asyncio.tasks import create_task
+from aiogram import Bot
+from aiogram.types import Update, User
 
-from aiogram.types import Update
-
-from ..api import track_user
-from ..misc import dp, logger
-from .redirects import *
-from .warnings import *
-from ..exceptions import *
+from zmanim_bot.misc import dp, logger
+from zmanim_bot.exceptions import *
+from zmanim_bot.texts.single.messages import error_occured
+from zmanim_bot.handlers.utils.redirects import *
+from zmanim_bot.handlers.utils.warnings import *
 
 
 @dp.errors_handler(exception=NoLocationException)
@@ -18,7 +17,7 @@ async def no_location_exception_handler(update: Update, e: NoLocationException):
 @dp.errors_handler(exception=NoLanguageException)
 async def no_language_exception_handler(update: Update, e: NoLanguageException):
     await redirect_to_request_language()
-    create_task(track_user())
+    # create_task(get_or_create_user())  # todo test
     # return True
 
 
@@ -36,9 +35,13 @@ async def jewish_date_exception_handler(update: Update, e: IncorrectJewishDateEx
 
 @dp.errors_handler(exception=Exception)
 async def main_errors_handler(update: Update, e: Exception):
-    if e.__class__ in (NoLanguageException, NoLocationException, IncorrectTextException,
-                       IncorrectGregorianDateException, IncorrectJewishDateException):
+    if isinstance(e, (NoLanguageException, NoLocationException, IncorrectTextException,
+                      IncorrectGregorianDateException, IncorrectJewishDateException)):
         return True
+    user = User.get_current()
+    bot = Bot.get_current()
+    await bot.send_message(user.id, error_occured)
+
     logger.exception(e)
     return True
 

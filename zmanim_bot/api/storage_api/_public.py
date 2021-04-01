@@ -3,10 +3,11 @@ from typing import Tuple, Optional, Any
 from aiogram.types import User
 
 from ._storage import *
+from .models import User as BotUser
 
 __all__ = [
     'Location',
-    'track_user',
+    'get_or_create_user',
     'get_or_set_zmanim',
     'get_or_set_cl',
     'get_or_set_lang',
@@ -17,9 +18,9 @@ __all__ = [
 ]
 
 
-async def track_user():
+async def get_or_create_user() -> BotUser:
     user = User.get_current()
-    return await get_or_create_user(user)
+    return await _get_or_create_user(user)
 
 
 async def get_or_set_lang(lang: str = None) -> Optional[str]:

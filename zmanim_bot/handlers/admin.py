@@ -3,14 +3,14 @@ from asyncio.tasks import create_task
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, Message, ContentType
 
-from .report_management import send_response_to_user
-from ..handlers.redirects import redirect_to_main_menu
-from ..helpers import CallbackPrefixes
-from ..misc import dp, bot
-from ..config import REPORT_ADMIN_LIST
-from .states import AdminReportResponse
-from ..keyboards.menus import get_cancel_keyboard, get_report_keyboard
-from ..texts.single import messages, buttons
+from zmanim_bot.admin.report_management import send_response_to_user
+from zmanim_bot.handlers.utils.redirects import redirect_to_main_menu
+from zmanim_bot.helpers import CallbackPrefixes
+from zmanim_bot.misc import dp, bot
+from zmanim_bot.config import REPORT_ADMIN_LIST
+from zmanim_bot.admin.states import AdminReportResponse
+from zmanim_bot.keyboards.menus import get_cancel_keyboard, get_report_keyboard
+from zmanim_bot.texts.single import messages, buttons
 
 
 @dp.callback_query_handler(

@@ -2,7 +2,7 @@ from datetime import date, time
 from typing import List, Union
 
 from ..texts.single import names
-from ..zmanim_api.models import AsurBeMelachaDay
+from zmanim_bot.api.zmanim_api import AsurBeMelachaDay
 
 
 def humanize_date(date_range: List[Union[date, AsurBeMelachaDay]],
@@ -51,5 +51,3 @@ def humanize_time(time_: time) -> str:
     """ Use this function for convert time to hh:mm """
     if isinstance(time_, time):
         return time_.isoformat(timespec='minutes')
-
-
