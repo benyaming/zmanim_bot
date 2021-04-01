@@ -32,3 +32,5 @@ reports_text_received = _('your message successfully received. if you want, you 
 reports_media_received = _('Screenshot succesfully received.')
 reports_incorrect_media_type = _('Incorrect media type. Please, send your screenshot as photo.')
 reports_created = _('your report had ben sent to admin, you will receive notification with status')
+
+error_occured = _('Looks like an error occured... The Bot\'s developer already working on it...')

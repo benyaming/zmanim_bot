@@ -8,10 +8,10 @@ from ..forms import ConverterGregorianDateState, ConverterJewishDateState
 from ...utils import chat_action
 
 
-@dp.message_handler(commands=['converter'])
+@dp.message_handler(commands=['converter_api'])
 @dp.message_handler(text=buttons.mm_converter)
 @chat_action('text')
-@track('Entry to converter')
+@track('Entry to converter_api')
 async def handle_converter_entry(msg: Message):
     kb = zmanim_bot.keyboards.menus.get_converter_menu()
     await msg.reply(messages.init_converter, reply_markup=kb)

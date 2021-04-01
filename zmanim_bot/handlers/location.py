@@ -3,7 +3,7 @@ from asyncio import create_task
 from aiogram.types import ContentType, Message
 
 from ..misc import dp
-from ..api import get_or_set_location
+from zmanim_bot.api.storage_api import get_or_set_location
 from ..helpers import LOCATION_PATTERN, parse_coordinates
 from .redirects import redirect_to_main_menu
 from ..tracking import track

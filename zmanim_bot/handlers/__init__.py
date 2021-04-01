@@ -35,3 +35,9 @@ from ..admin.handlers import (
 
 # incorrect messages handler. SHOULD BE IMPORTED LAST!
 from .text.incorrect_text import handle_incorrect_text
+
+
+def _fix_import():
+    handle_report()
+    handle_report_payload()
+    handle_report_response()

@@ -2,7 +2,7 @@ from aiogram.types import Message
 
 from ...misc import dp
 from ...config import LANGUAGE_LIST, LANGUAGE_SHORTCUTS
-from ...api import get_or_set_lang
+from zmanim_bot.api.storage_api import get_or_set_lang
 from ...handlers.redirects import redirect_to_main_menu
 from ...middlewares.i18n import i18n_
 from ...tracking import track

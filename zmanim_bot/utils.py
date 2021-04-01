@@ -1,11 +1,9 @@
 import inspect
 
 from aiogram.types import ChatActions
-from motor.core import AgnosticCollection
 from pymongo import IndexModel
-from pymongo import ASCENDING
 
-from .api import get_or_set_processor_type
+from zmanim_bot.api.storage_api import get_or_set_processor_type
 from .misc import collection
 
 
@@ -33,5 +31,3 @@ def chat_action(action: str = None):
 async def ensure_mongo_index():
     index = IndexModel('user_id', unique=True)
     await collection.create_indexes([index])
-
-

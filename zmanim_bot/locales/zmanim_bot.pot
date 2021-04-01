@@ -70,7 +70,7 @@ msgid "Done"
 msgstr ""
 
 #: buttons.py:12
-msgid "zmanim"
+msgid "zmanim_api"
 msgstr ""
 
 #: buttons.py:13 names.py:61
@@ -94,11 +94,11 @@ msgid "fast days"
 msgstr ""
 
 #: buttons.py:18
-msgid "zmanim by the date"
+msgid "zmanim_api by the date"
 msgstr ""
 
 #: buttons.py:19
-msgid "date converter"
+msgid "date converter_api"
 msgstr ""
 
 #: buttons.py:20
@@ -118,7 +118,7 @@ msgid "report a bug"
 msgstr ""
 
 #: buttons.py:30 messages.py:21
-msgid "select zmanim"
+msgid "select zmanim_api"
 msgstr ""
 
 #: buttons.py:31 headers.py:14
@@ -330,7 +330,7 @@ msgid "describe your problem"
 msgstr ""
 
 #: messages.py:9
-msgid "welcome to converter, select:"
+msgid "welcome to converter_api, select:"
 msgstr ""
 
 #: messages.py:10

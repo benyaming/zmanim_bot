@@ -1,11 +1,11 @@
 from aiogram.types import Message
 
-from ....misc import dp
-from ....texts.single import buttons
-from .... import zmanim_api
-from ....processors.image.image_processor import HolidayImage, IsraelHolidaysImage
-from ....tracking import track
-from ....utils import chat_action
+from zmanim_bot.misc import dp
+from zmanim_bot.texts.single import buttons
+from zmanim_bot.api import zmanim_api
+from zmanim_bot.processors.image.image_processor import HolidayImage, IsraelHolidaysImage
+from zmanim_bot.tracking import track
+from zmanim_bot.utils import chat_action
 
 
 @dp.message_handler(text=buttons.hom_chanukah)

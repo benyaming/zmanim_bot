@@ -1,7 +1,6 @@
 from aiogram.types import User
 
 import zmanim_bot.keyboards.menus
-from .. import keyboards
 from ..texts.single import messages
 from ..misc import bot
 

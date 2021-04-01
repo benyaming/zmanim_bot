@@ -79,7 +79,7 @@ msgid "Done"
 msgstr "Готово"
 
 #: buttons.py:12
-msgid "zmanim"
+msgid "zmanim_api"
 msgstr "Зманим"
 
 #: buttons.py:13 names.py:71
@@ -103,11 +103,11 @@ msgid "fast days"
 msgstr "Посты"
 
 #: buttons.py:18
-msgid "zmanim by the date"
+msgid "zmanim_api by the date"
 msgstr "Зманим на дату"
 
 #: buttons.py:19
-msgid "date converter"
+msgid "date converter_api"
 msgstr "Конвертер дат"
 
 #: buttons.py:20
@@ -127,7 +127,7 @@ msgid "report a bug"
 msgstr "Сообщить о проблеме"
 
 #: buttons.py:30 messages.py:21
-msgid "select zmanim"
+msgid "select zmanim_api"
 msgstr "Выбрать зманим"
 
 #: buttons.py:31 headers.py:14
@@ -337,7 +337,7 @@ msgid "describe your problem"
 msgstr "Расскажите, что случилось:"
 
 #: messages.py:9
-msgid "welcome to converter, select:"
+msgid "welcome to converter_api, select:"
 msgstr "Выберите направление конвертации:"
 
 #: messages.py:10

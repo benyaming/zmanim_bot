@@ -1,11 +1,11 @@
 from datetime import date
 from typing import Optional
 
-from .models import SimpleSettings
-from ..misc import bot
-from ..api import Location
 from . import models
-from ..config import ZMANIM_API_URL
+from .models import SimpleSettings
+from zmanim_bot.misc import bot
+from zmanim_bot.api.storage_api import Location
+from zmanim_bot.config import ZMANIM_API_URL
 
 
 __all__ = [

@@ -1,10 +1,10 @@
 from abc import ABC
-from datetime import datetime
-from typing import Optional, List
+from typing import Optional, List, Tuple
 
 from odmantic import Model, EmbeddedModel, Field
 
 from zmanim_bot.config import DB_COLLECTION_NAME
+from zmanim_bot.exceptions import NoLocationException
 
 HAVDALA_OPINIONS = ['tzeis_5_95_degrees', 'tzeis_8_5_degrees', 'tzeis_42_minutes', 'tzeis_72_minutes']
 
@@ -64,3 +64,9 @@ class User(Model, ABC):
 
     class Config:
         collection = DB_COLLECTION_NAME
+
+    def get_active_location(self) -> Tuple[float, float]:
+        loc = list(filter(lambda l: l.is_active, self.location_list))
+        if not loc:
+            raise NoLocationException
+        return loc[0].lat, loc[0].lng

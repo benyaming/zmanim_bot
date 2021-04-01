@@ -4,9 +4,9 @@ from typing import Tuple
 from aiogram.types import InlineKeyboardMarkup
 from zmanim.hebrew_calendar.jewish_calendar import JewishCalendar
 
-from ..keyboards.inline import get_zmanim_by_date_buttons
-from ..texts.single.names import JEWISH_MONTHS_GENETIVE, MONTH_NAMES_GENETIVE, WEEKDAYS
-from ..exceptions import IncorrectGregorianDateException, IncorrectJewishDateException
+from zmanim_bot.keyboards.inline import get_zmanim_by_date_buttons
+from zmanim_bot.texts.single.names import JEWISH_MONTHS_GENETIVE, MONTH_NAMES_GENETIVE, WEEKDAYS
+from zmanim_bot.exceptions import IncorrectGregorianDateException, IncorrectJewishDateException
 
 
 def convert_heb_to_greg(date_: str) -> Tuple[str, InlineKeyboardMarkup]:
