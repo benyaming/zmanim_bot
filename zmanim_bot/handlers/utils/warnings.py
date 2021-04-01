@@ -1,20 +1,14 @@
 from aiogram.types import User
 
 import zmanim_bot.keyboards.menus
-from ..texts.single import messages
-from ..misc import bot
+from zmanim_bot.texts.single import messages
+from zmanim_bot.misc import bot
 
 
 __all__ = [
-    # 'incorrect_text_warning',
     'incorrect_greg_date_warning',
     'incorrect_jew_date_warning'
 ]
-
-
-# async def incorrect_text_warning():
-#     user_id = User.get_current().id
-#     await bot.send_message(user_id, messages.incorrect_text)
 
 
 async def incorrect_greg_date_warning():

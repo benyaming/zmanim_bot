@@ -44,12 +44,11 @@ def parse_coordinates(coordinates: str) -> Tuple[float, float]:
     return lat, lng
 
 
-def parse_date(date_: str) -> str:
+def check_date(date_: str):
     try:
         date.fromisoformat(date_)
     except ValueError:
         raise IncorrectGregorianDateException
-    return date_
 
 
 def parse_jewish_date(date_str: str) -> str:

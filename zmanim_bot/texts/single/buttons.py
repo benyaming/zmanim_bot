@@ -59,9 +59,8 @@ fm_esther = _('fast of Esther')
 fm_tammuz = _('17 of Tammuz')
 fm_av = _('9 of Av')
 
-HOLIDAYS = [hom_rosh_hashana, hom_yom_kippur, hom_succot, hom_shmini_atzeret, hom_chanukah,
-            hom_purim, hom_pesach, hom_shavuot, hom_tu_bishvat, hom_lag_baomer, hom_israel]
-NON_YOM_TOV_HOLIDAYS = [hom_chanukah, hom_purim, hom_tu_bishvat, hom_lag_baomer, hom_israel]
+YOMTOVS = [hom_rosh_hashana, hom_yom_kippur, hom_succot, hom_shmini_atzeret, hom_pesach, hom_shavuot]
+HOLIDAYS = [hom_chanukah, hom_purim, hom_tu_bishvat, hom_lag_baomer, hom_israel]
 FASTS = [fm_gedaliah, fm_tevet, fm_esther, fm_tammuz, fm_av]
 
 

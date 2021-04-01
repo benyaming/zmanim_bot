@@ -4,9 +4,9 @@ from typing import Tuple, Any
 from aiogram.contrib.middlewares.i18n import I18nMiddleware
 from aiogram.types import Message
 
-from ..misc import dp
+from zmanim_bot.misc import dp
 from zmanim_bot.api.storage_api import get_or_set_lang
-from ..config import I18N_DOMAIN, LANGUAGE_LIST
+from zmanim_bot.config import I18N_DOMAIN, LANGUAGE_LIST
 
 
 LOCALES_DIR = Path(__file__).parent.parent / 'locales'

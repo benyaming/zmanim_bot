@@ -1,43 +1,12 @@
-from . import errors
+from . import reset_handler # ----- SHOULD BE IMPORTED FIRST
 
-# Commands
-from . import commands
-
-# User inputs
+from . import main
 from . import forms
+from . import menus
+from . import admin
+from . import errors
+from . import settings
+from . import converter
+from . import festivals
 
-# Service handlers
-from . import location
-from .text import language_selection
-
-# Menus handlers
-from .text import help
-from .text import menus
-from .text import settings
-
-# Main handlers
-from .text import main
-from .text.festivals import holidays
-from .text.festivals import yom_tovs
-from .text.festivals import fasts
-from .text import converter
-
-# Callbacks
-from .callback import settings
-from .callback import zmanim
-
-# For admins
-from ..admin.handlers import (
-    handle_report,
-    handle_report_payload,
-    handle_report_response
-)
-
-# incorrect messages handler. SHOULD BE IMPORTED LAST!
-from .text.incorrect_text import handle_incorrect_text
-
-
-def _fix_import():
-    handle_report()
-    handle_report_payload()
-    handle_report_response()
+from . import incorrect_text_handler  # ----- SHOULD BE IMPORTED LAST

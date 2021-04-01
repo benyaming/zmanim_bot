@@ -4,6 +4,7 @@ from typing import Tuple, Optional
 from aiogram.types import InlineKeyboardMarkup
 
 from zmanim_bot.api import storage_api, zmanim_api
+from zmanim_bot.helpers import CallbackPrefixes
 from zmanim_bot.states import ZmanimGregorianDateState
 from zmanim_bot.processors.image import image_processor as ip
 
@@ -13,6 +14,21 @@ async def get_zmanim() -> BytesIO:
     data = await zmanim_api.get_zmanim(
         user.get_active_location(),
         user.zmanim_settings.dict()
+    )
+
+    return ip.ZmanimImage(data).get_image()
+
+
+async def get_zmanim_by_date(*, date: str = None, call_data: str = None) -> BytesIO:
+    if call_data:
+        date = call_data.split(CallbackPrefixes.zmanim_by_date)[1]
+
+    user = await storage_api.get_or_create_user()
+
+    data = await zmanim_api.get_zmanim(
+        user.get_active_location(),
+        user.zmanim_settings.dict(),
+        date_=date
     )
 
     return ip.ZmanimImage(data).get_image()
