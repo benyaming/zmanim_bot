@@ -1,15 +1,3 @@
-__all__ = [
-    'NoLanguageException',
-    'NoLocationException',
-    'IncorrectLocationException',
-    'IncorrectTextException',
-    'IncorrectGregorianDateException',
-    'IncorrectJewishDateException',
-    'NonUniqueLocatioinException',
-    'MaxLocationLimitException'
-]
-
-
 class NoLanguageException(Exception):
     ...
 
@@ -34,9 +22,26 @@ class IncorrectJewishDateException(Exception):
     ...
 
 
-class NonUniqueLocatioinException(Exception):
+class NonUniqueLocationException(Exception):
+    ...
+
+
+class NonUniqueLocationNameException(Exception):
     ...
 
 
 class MaxLocationLimitException(Exception):
     ...
+
+
+KNOWN_EXCEPTIONS = (
+    NoLanguageException,
+    NoLocationException,
+    IncorrectLocationException,
+    IncorrectTextException,
+    IncorrectGregorianDateException,
+    IncorrectJewishDateException,
+    NonUniqueLocationException,
+    NonUniqueLocationNameException,
+    MaxLocationLimitException,
+)

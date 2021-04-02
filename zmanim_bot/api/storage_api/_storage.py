@@ -3,9 +3,14 @@ from typing import Tuple, Optional, List
 from aiogram import types
 
 from zmanim_bot.config import LOCATION_NUMBER_LIMIT
-from zmanim_bot.exceptions import NoLocationException, NoLanguageException, NonUniqueLocatioinException, \
-    MaxLocationLimitException
+from zmanim_bot.exceptions import (
+    NoLocationException,
+    NoLanguageException,
+    NonUniqueLocationException,
+    MaxLocationLimitException, NonUniqueLocationNameException
+)
 from zmanim_bot.misc import db_engine
+from zmanim_bot.integrations.geo_client import get_location_name
 from .models import User, UserInfo, Location, ZmanimSettings
 
 __all__ = [
@@ -20,6 +25,7 @@ __all__ = [
     'set_havdala',
     'set_lang',
     'set_location',
+    'set_location_name_',
     'get_processor_type',
     'set_processor_type',
     'get_omer_flag',
@@ -27,13 +33,19 @@ __all__ = [
 ]
 
 
-def validate_location(location: Location, locations: List[Location]):
+def validate_location_coordinates(location: Location, locations: List[Location]):
     if len(locations) >= LOCATION_NUMBER_LIMIT:
         raise MaxLocationLimitException
 
     for loc in locations:
         if loc.lat == location.lat and loc.lng == location.lng:
-            raise NonUniqueLocatioinException
+            raise NonUniqueLocationException
+
+
+def validate_location_name(new_name: str, locations: List[Location]):
+    for loc in locations:
+        if loc.name == new_name:
+            raise NonUniqueLocationNameException
 
 
 async def _get_or_create_user(tg_user: types.User) -> User:
@@ -85,21 +97,37 @@ async def get_location(tg_user: types.User) -> Tuple[float, float]:
     return location[0].lat, location[0].lng
 
 
-async def set_location(tg_user: types.User, location: Tuple[float, float]):
+async def set_location(tg_user: types.User, location: Tuple[float, float]) -> Location:
+    user = await _get_or_create_user(tg_user)
+    location_name = await get_location_name(location[0], location[1], user.language)
     location_obj = Location(
         lat=location[0],
         lng=location[1],
-        name='main_loc',
+        name=location_name,
         is_active=True
     )
-
-    user = await _get_or_create_user(tg_user)
-    validate_location(location_obj, user.location_list)
+    validate_location_coordinates(location_obj, user.location_list)
 
     for i in range(len(user.location_list)):
         user.location_list[i].is_active = False
 
     user.location_list.append(location_obj)
+    await db_engine.save(user)
+    return location_obj
+
+
+async def set_location_name_(tg_user: types.User, new_name: str, old_name: str):
+    user = await _get_or_create_user(tg_user)
+    location = list(filter(lambda l: l.name == old_name, user.location_list))
+
+    if len(location) == 0:
+        raise ValueError('Unknown old location name!')
+    validate_location_name(new_name, user.location_list)
+    location = location[0]
+    location.name = new_name
+
+    location_index = user.location_list.index(location)
+    user.location_list[location_index] = location
     await db_engine.save(user)
 
 

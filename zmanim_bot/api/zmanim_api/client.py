@@ -1,10 +1,9 @@
 from datetime import date
-from typing import Optional
+from typing import Optional, Tuple
 
 from . import models
 from .models import SimpleSettings
 from zmanim_bot.misc import bot
-from zmanim_bot.api.storage_api import Location
 from zmanim_bot.config import ZMANIM_API_URL
 
 
@@ -20,7 +19,7 @@ __all__ = [
 ]
 
 
-async def get_zmanim(location: Location, zmanim_settings: dict, date_: str = None) -> models.Zmanim:
+async def get_zmanim(location: Tuple[float, float], zmanim_settings: dict, date_: str = None) -> models.Zmanim:
     url = ZMANIM_API_URL.format('zmanim')
     params = {
         'lat': str(location[0]),
@@ -35,7 +34,7 @@ async def get_zmanim(location: Location, zmanim_settings: dict, date_: str = Non
 
 
 async def get_shabbat(
-        location: Location,
+        location: Tuple[float, float],
         cl_offset: int,
         havdala_opinion: str,
         date_: str = None
@@ -75,7 +74,7 @@ async def get_rosh_chodesh(date_=None) -> models.RoshChodesh:
 
 async def get_generic_yomtov(
         name: str,
-        location: Location,
+        location: Tuple[float, float],
         cl_offset: int,
         havdala_opinion: str
 ) -> models.YomTov:
@@ -93,7 +92,7 @@ async def get_generic_yomtov(
         return models.YomTov(**raw_resp)
 
 
-async def get_generic_fast(name: str, location: Location, havdala_opinion: str) -> models.Fast:
+async def get_generic_fast(name: str, location: Tuple[float, float], havdala_opinion: str) -> models.Fast:
     url = ZMANIM_API_URL.format('fast')
     params = {
         'lat': str(location[0]),

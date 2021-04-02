@@ -8,14 +8,14 @@ from zmanim_bot.states import (
     ConverterGregorianDateState,
     ConverterJewishDateState,
     FeedbackState,
-    ZmanimGregorianDateState
+    ZmanimGregorianDateState, LocationNameState
 )
 from zmanim_bot.helpers import check_date
 from zmanim_bot.utils import chat_action
 from zmanim_bot.texts.single import messages, buttons
 from zmanim_bot.keyboards.menus import get_report_keyboard
 from zmanim_bot.handlers.utils.redirects import redirect_to_main_menu
-from zmanim_bot.service import converter_service, zmanim_service
+from zmanim_bot.service import converter_service, zmanim_service, settings_service
 from zmanim_bot.admin.report_management import send_report_to_admins
 
 
@@ -90,3 +90,22 @@ async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
     await msg.reply_photo(resp)
     await state.finish()
     await redirect_to_main_menu()
+
+
+# LOCATIONS #
+
+@dp.message_handler(state=LocationNameState.waiting_for_location_name_state, text=buttons.done)
+@chat_action('text')
+async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
+    await state.finish()
+    await redirect_to_main_menu()
+
+
+@dp.message_handler(state=LocationNameState.waiting_for_location_name_state)
+@chat_action('text')
+async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
+    old_name = (await state.get_data()).get('location_name')
+    await settings_service.update_location_name(new_name=msg.text, old_name=old_name)
+    await state.finish()
+    await redirect_to_main_menu()
+

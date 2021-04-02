@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Optional
 
 from aiogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup
 
@@ -77,8 +77,21 @@ async def set_language(lang: str):
     i18n_.ctx_locale.set(lang)
 
 
-async def set_location(lat: float, lng: float):
-    await storage_api.get_or_set_location((lat, lng))
+async def set_location(lat: float, lng: float) -> Tuple[str, ReplyKeyboardMarkup, str]:
+
+    location = await storage_api.get_or_set_location((lat, lng))
+    kb = keyboards.menus.get_done_keyboard()
+    resp = f'current name: {location.name}. If yoy want, you can write custom name for the ' \
+           f'location or press "Done" button.'  # todo translate
+    return resp, kb, location.name
+
+
+async def update_location_name(new_name: str, old_name: Optional[str]):
+    if not old_name:
+        raise ValueError('There is no old location name!')
+
+    await storage_api.set_location_name(new_name=new_name, old_name=old_name)
+    return f'Location "{new_name}" successfully saved!'  # todo translate
 
 
 async def init_report() -> Tuple[str, ReplyKeyboardMarkup]:

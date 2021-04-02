@@ -16,3 +16,7 @@ class ZmanimGregorianDateState(StatesGroup):
 class FeedbackState(StatesGroup):
     waiting_for_feedback_text = State()
     waiting_for_payload = State()
+
+
+class LocationNameState(StatesGroup):
+    waiting_for_location_name_state = State()

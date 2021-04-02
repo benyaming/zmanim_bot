@@ -1,3 +1,4 @@
+from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, CallbackQuery, ContentType
 
 from zmanim_bot.config import LANGUAGE_LIST
@@ -6,6 +7,7 @@ from zmanim_bot.handlers.utils.redirects import redirect_to_request_language, \
 from zmanim_bot.helpers import CallbackPrefixes, CALL_ANSWER_OK, LOCATION_PATTERN, \
     parse_coordinates
 from zmanim_bot.misc import dp, bot
+from zmanim_bot.states import LocationNameState
 from zmanim_bot.tracking import track
 from zmanim_bot.utils import chat_action
 from zmanim_bot.texts.single import buttons
@@ -100,18 +102,19 @@ async def location_request(msg: Message):
 
 
 @dp.message_handler(regexp=LOCATION_PATTERN)
-@chat_action('text')
 @track('Location regexp')
 @dp.message_handler(content_types=[ContentType.LOCATION, ContentType.VENUE])
-async def handle_location(msg: Message):
+async def handle_location(msg: Message, state: FSMContext):
     if msg.location:
         lat = msg.location.latitude
         lng = msg.location.longitude
     else:
         lat, lng = parse_coordinates(msg.text)
 
-    await settings_service.set_location(lat, lng)
-    return await redirect_to_main_menu()
+    resp, kb, location_name = await settings_service.set_location(lat, lng)
+    await LocationNameState().waiting_for_location_name_state.set()
+    await state.set_data({'location_name': location_name})
+    await msg.reply(resp, reply_markup=kb)
 
 
 @dp.message_handler(commands=['report'])
