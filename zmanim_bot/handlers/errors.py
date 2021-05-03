@@ -32,6 +32,14 @@ async def non_unique_location_name_exception_handler(update: Update, e: NonUniqu
     return True
 
 
+@dp.errors_handler(exception=MaxLocationLimitException)
+async def non_unique_location_name_exception_handler(update: Update, e: NonUniqueLocationException):
+    resp = 'Too many locations, please, delete some before!'  # todo translate
+    user = User.get_current()
+    bot = Bot.get_current()
+    await bot.send_message(user.id, resp)
+    return True
+
 
 @dp.errors_handler(exception=NoLanguageException)
 async def no_language_exception_handler(update: Update, e: NoLanguageException):

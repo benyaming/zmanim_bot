@@ -6,6 +6,7 @@ from zmanim_bot import keyboards
 from zmanim_bot import texts
 from zmanim_bot.api import storage_api
 from zmanim_bot.config import LANGUAGE_SHORTCUTS
+from zmanim_bot.exceptions import ActiveLocationException
 from zmanim_bot.helpers import CallbackPrefixes
 from zmanim_bot.middlewares.i18n import i18n_
 from zmanim_bot.service import zmanim_service
@@ -77,13 +78,32 @@ async def set_language(lang: str):
     i18n_.ctx_locale.set(lang)
 
 
-async def set_location(lat: float, lng: float) -> Tuple[str, ReplyKeyboardMarkup, str]:
+async def get_locations_menu() -> Tuple[str, InlineKeyboardMarkup]:
+    user = await storage_api.get_or_create_user()
+    msg = 'Activate, edit or send new location:'  # todo translate
+    kb = keyboards.inline.get_location_options_menu(user.location_list)
 
+    return msg, kb
+
+
+async def set_location(lat: float, lng: float) -> Tuple[str, ReplyKeyboardMarkup, str]:
     location = await storage_api.get_or_set_location((lat, lng))
     kb = keyboards.menus.get_done_keyboard()
     resp = f'current name: {location.name}. If yoy want, you can write custom name for the ' \
            f'location or press "Done" button.'  # todo translate
     return resp, kb, location.name
+
+
+async def delete_location(location_name: str) -> Tuple[str, Optional[InlineKeyboardMarkup]]:
+    try:
+        location_list = await storage_api.delete_location(location_name)
+        kb = keyboards.inline.get_location_options_menu(location_list)
+        msg = 'Successfully deleted'  # todo translate
+    except ActiveLocationException:
+        kb = None
+        msg = 'Unable to delete active location!'
+
+    return msg, kb
 
 
 async def update_location_name(new_name: str, old_name: Optional[str]):
@@ -98,3 +118,5 @@ async def init_report() -> Tuple[str, ReplyKeyboardMarkup]:
     await FeedbackState.waiting_for_feedback_text.set()
     kb = keyboards.menus.get_cancel_keyboard()
     return texts.single.messages.init_report, kb
+
+

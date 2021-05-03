@@ -3,6 +3,7 @@ from typing import List
 
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+from ..api.storage_api import Location
 from ..processors.text_utils import humanize_date
 from ..texts.single import zmanim
 from ..texts.single import messages
@@ -77,4 +78,21 @@ def get_zmanim_by_date_buttons(dates: List[date]) -> InlineKeyboardMarkup:
             text=f'{zmanim_for} {humanize_date([d])}',
             callback_data=f'{CallbackPrefixes.zmanim_by_date}{d.isoformat()}'
         ))
+    return kb
+
+
+def get_location_options_menu(location_list: List[Location]) -> InlineKeyboardMarkup:
+    kb = InlineKeyboardMarkup()
+
+    for location in location_list:
+        status = '🔘' if location.is_active else '⚪️'
+        kb.row(InlineKeyboardButton(
+            text=f'{status} {location.name}',
+            callback_data=f'{CallbackPrefixes.location_toggle}{location.name}'
+        ))
+        kb.row(
+            InlineKeyboardButton(text='✏️', callback_data=f'{CallbackPrefixes.location_edit}{location.name}'),
+            InlineKeyboardButton(text='❌', callback_data=f'{CallbackPrefixes.location_delete}{location.name}')
+        )
+
     return kb

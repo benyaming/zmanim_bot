@@ -34,6 +34,10 @@ class MaxLocationLimitException(Exception):
     ...
 
 
+class ActiveLocationException(Exception):
+    ...
+
+
 KNOWN_EXCEPTIONS = (
     NoLanguageException,
     NoLocationException,
@@ -44,4 +48,5 @@ KNOWN_EXCEPTIONS = (
     NonUniqueLocationException,
     NonUniqueLocationNameException,
     MaxLocationLimitException,
+    ActiveLocationException
 )

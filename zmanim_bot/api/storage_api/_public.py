@@ -1,4 +1,4 @@
-from typing import Tuple, Optional, Any
+from typing import Tuple, Optional, Any, List
 
 from aiogram.types import User
 
@@ -14,6 +14,7 @@ __all__ = [
     'get_or_set_havdala',
     'get_or_set_location',
     'set_location_name',
+    'delete_location',
     'get_or_set_processor_type',
     'get_or_set_omer_flag',
 ]
@@ -36,7 +37,12 @@ async def get_or_set_location(location: Tuple[float, float] = None) -> Location:
 
 async def set_location_name(new_name: str, old_name: str):
     user = User.get_current()
-    return await set_location_name_(user, new_name=new_name, old_name=old_name)
+    return await do_set_location_name(user, new_name=new_name, old_name=old_name)
+
+
+async def delete_location(name: str) -> List[Location]:
+    user = User.get_current()
+    return await do_delete_location(user, name)
 
 
 async def get_or_set_cl(cl: int = None) -> Optional[int]:

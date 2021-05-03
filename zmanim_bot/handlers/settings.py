@@ -62,7 +62,7 @@ async def set_zmanim(call: CallbackQuery):
 
 
 @dp.message_handler(text=buttons.sm_omer)
-@chat_action('omer')
+@chat_action('text')
 @track('Omer Settings')
 async def handle_omer_settings(msg: Message):
     resp, kb = await settings_service.get_current_havdala()
@@ -96,9 +96,20 @@ async def set_language(msg: Message):
 @dp.message_handler(commands=['location'])
 @dp.message_handler(text=buttons.sm_location)
 @chat_action('text')
-@track('Location command')
+@track('Location menu')
 async def location_request(msg: Message):
-    await redirect_to_request_location(with_back=True)
+    resp, kb = await settings_service.get_locations_menu()
+    await msg.reply(resp, reply_markup=kb)
+
+
+@dp.callback_query_handler(text_startswith=CallbackPrefixes.location_delete)
+async def handle_delete_location(call: CallbackQuery):
+    location_name = call.data.split(CallbackPrefixes.location_delete)[1]
+    alert_text, kb = await settings_service.delete_location(location_name)
+    await call.answer(alert_text, show_alert=True)
+
+    if kb:
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
 
 
 @dp.message_handler(regexp=LOCATION_PATTERN)
@@ -124,3 +135,4 @@ async def handle_location(msg: Message, state: FSMContext):
 async def help_menu_report(msg: Message):
     resp, kb = await settings_service.init_report()
     await msg.reply(resp, reply_markup=kb)
+

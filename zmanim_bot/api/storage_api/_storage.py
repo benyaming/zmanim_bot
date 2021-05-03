@@ -7,7 +7,7 @@ from zmanim_bot.exceptions import (
     NoLocationException,
     NoLanguageException,
     NonUniqueLocationException,
-    MaxLocationLimitException, NonUniqueLocationNameException
+    MaxLocationLimitException, NonUniqueLocationNameException, ActiveLocationException
 )
 from zmanim_bot.misc import db_engine
 from zmanim_bot.integrations.geo_client import get_location_name
@@ -25,7 +25,8 @@ __all__ = [
     'set_havdala',
     'set_lang',
     'set_location',
-    'set_location_name_',
+    'do_set_location_name',
+    'do_delete_location',
     'get_processor_type',
     'set_processor_type',
     'get_omer_flag',
@@ -98,6 +99,7 @@ async def get_location(tg_user: types.User) -> Tuple[float, float]:
 
 
 async def set_location(tg_user: types.User, location: Tuple[float, float]) -> Location:
+    # todo max name length 30
     user = await _get_or_create_user(tg_user)
     location_name = await get_location_name(location[0], location[1], user.language)
     location_obj = Location(
@@ -116,7 +118,7 @@ async def set_location(tg_user: types.User, location: Tuple[float, float]) -> Lo
     return location_obj
 
 
-async def set_location_name_(tg_user: types.User, new_name: str, old_name: str):
+async def do_set_location_name(tg_user: types.User, new_name: str, old_name: str):
     user = await _get_or_create_user(tg_user)
     location = list(filter(lambda l: l.name == old_name, user.location_list))
 
@@ -129,6 +131,20 @@ async def set_location_name_(tg_user: types.User, new_name: str, old_name: str):
     location_index = user.location_list.index(location)
     user.location_list[location_index] = location
     await db_engine.save(user)
+
+
+async def do_delete_location(tg_user: types.User, name: str) -> List[Location]:
+    user = await _get_or_create_user(tg_user)
+    location = list(filter(lambda l: l.name == name, user.location_list))
+
+    if len(location) == 0:
+        raise ValueError('Unknown location name!')
+    if location[0].is_active:
+        raise ActiveLocationException()
+
+    user.location_list.remove(location[0])
+    await db_engine.save(user)
+    return user.location_list
 
 
 async def get_cl_offset(tg_user: types.User) -> int:
