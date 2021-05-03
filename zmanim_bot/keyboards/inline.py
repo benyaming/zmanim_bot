@@ -88,7 +88,7 @@ def get_location_options_menu(location_list: List[Location]) -> InlineKeyboardMa
         status = '🔘' if location.is_active else '⚪️'
         kb.row(InlineKeyboardButton(
             text=f'{status} {location.name}',
-            callback_data=f'{CallbackPrefixes.location_toggle}{location.name}'
+            callback_data=f'{CallbackPrefixes.location_activate}{location.name}'
         ))
         kb.row(
             InlineKeyboardButton(text='✏️', callback_data=f'{CallbackPrefixes.location_edit}{location.name}'),

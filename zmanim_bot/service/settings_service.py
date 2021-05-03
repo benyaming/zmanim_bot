@@ -94,6 +94,12 @@ async def set_location(lat: float, lng: float) -> Tuple[str, ReplyKeyboardMarkup
     return resp, kb, location.name
 
 
+async def activate_location(location_name: str) -> InlineKeyboardMarkup:
+    location_list = await storage_api.activate_location(location_name)
+    kb = keyboards.inline.get_location_options_menu(location_list)
+    return kb
+
+
 async def delete_location(location_name: str) -> Tuple[str, Optional[InlineKeyboardMarkup]]:
     try:
         location_list = await storage_api.delete_location(location_name)
@@ -101,7 +107,7 @@ async def delete_location(location_name: str) -> Tuple[str, Optional[InlineKeybo
         msg = 'Successfully deleted'  # todo translate
     except ActiveLocationException:
         kb = None
-        msg = 'Unable to delete active location!'
+        msg = 'Unable to delete active location!'  # todo translate
 
     return msg, kb
 

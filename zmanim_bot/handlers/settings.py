@@ -102,6 +102,15 @@ async def location_request(msg: Message):
     await msg.reply(resp, reply_markup=kb)
 
 
+@dp.callback_query_handler(text_startswith=CallbackPrefixes.location_activate)
+async def handle_activate_location(call: CallbackQuery):
+    location_name = call.data.split(CallbackPrefixes.location_activate)[1]
+    kb = await settings_service.activate_location(location_name)
+    await call.answer()
+
+    await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
+
+
 @dp.callback_query_handler(text_startswith=CallbackPrefixes.location_delete)
 async def handle_delete_location(call: CallbackQuery):
     location_name = call.data.split(CallbackPrefixes.location_delete)[1]

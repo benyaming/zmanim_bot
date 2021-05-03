@@ -26,6 +26,7 @@ __all__ = [
     'set_lang',
     'set_location',
     'do_set_location_name',
+    'do_activate_location',
     'do_delete_location',
     'get_processor_type',
     'set_processor_type',
@@ -131,6 +132,26 @@ async def do_set_location_name(tg_user: types.User, new_name: str, old_name: str
     location_index = user.location_list.index(location)
     user.location_list[location_index] = location
     await db_engine.save(user)
+
+
+async def do_activate_location(tg_user: types.User, name: str) -> List[Location]:
+    user = await _get_or_create_user(tg_user)
+
+    if len(user.location_list) == 1:
+        return user.location_list
+
+    for location in user.location_list:
+        location.is_active = False
+
+    location = list(filter(lambda l: l.name == name, user.location_list))
+    if len(location) == 0:
+        raise ValueError('Unknown location name!')
+
+    index = user.location_list.index(location[0])
+    user.location_list[index].is_active = True
+
+    await db_engine.save(user)
+    return user.location_list
 
 
 async def do_delete_location(tg_user: types.User, name: str) -> List[Location]:
