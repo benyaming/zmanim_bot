@@ -14,7 +14,7 @@ from zmanim_bot.helpers import check_date
 from zmanim_bot.utils import chat_action
 from zmanim_bot.texts.single import messages, buttons
 from zmanim_bot.keyboards.menus import get_report_keyboard
-from zmanim_bot.handlers.utils.redirects import redirect_to_main_menu
+from zmanim_bot.handlers.utils.redirects import redirect_to_main_menu, redirect_to_settings_menu
 from zmanim_bot.service import converter_service, zmanim_service, settings_service
 from zmanim_bot.admin.report_management import send_report_to_admins
 
@@ -104,8 +104,23 @@ async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
 @dp.message_handler(state=LocationNameState.waiting_for_location_name_state)
 @chat_action('text')
 async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
-    old_name = (await state.get_data()).get('location_name')
-    await settings_service.update_location_name(new_name=msg.text, old_name=old_name)
-    await state.finish()
-    await redirect_to_main_menu()
+    state_data = await state.get_data()
 
+    old_name = state_data.get('location_name')
+    redirect_target = state_data.get('redirect_target', 'main')
+    redirect_message = state_data.get('redirect_message')
+    origin_message_id = state_data.get('origin_message_id')
+
+    location_kb = await settings_service.update_location_name(new_name=msg.text, old_name=old_name)
+
+    if origin_message_id:
+        await bot.edit_message_reply_markup(msg.from_user.id, origin_message_id, reply_markup=location_kb)
+
+    targets = {
+        'main': redirect_to_main_menu,
+        'settings': redirect_to_settings_menu
+    }
+    redirect = targets[redirect_target]
+
+    await state.finish()
+    await redirect(redirect_message)

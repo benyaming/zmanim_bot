@@ -31,7 +31,7 @@ class CallbackPrefixes:
     zmanim_by_date = 'zbd:'
     omer = 'omer:'
     location_activate = 'loc_a:'
-    location_edit = 'loc_e:'
+    location_rename = 'loc_r:'
     location_delete = 'loc_d:'
 
 

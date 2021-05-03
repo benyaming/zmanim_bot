@@ -36,7 +36,7 @@ async def get_or_set_location(location: Tuple[float, float] = None) -> Location:
     return await get_location(user) if not location else await set_location(user, location)
 
 
-async def set_location_name(new_name: str, old_name: str):
+async def set_location_name(new_name: str, old_name: str) -> List[Location]:
     user = User.get_current()
     return await do_set_location_name(user, new_name=new_name, old_name=old_name)
 

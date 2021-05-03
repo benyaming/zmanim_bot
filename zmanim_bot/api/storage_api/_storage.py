@@ -119,7 +119,7 @@ async def set_location(tg_user: types.User, location: Tuple[float, float]) -> Lo
     return location_obj
 
 
-async def do_set_location_name(tg_user: types.User, new_name: str, old_name: str):
+async def do_set_location_name(tg_user: types.User, new_name: str, old_name: str) -> List[Location]:
     user = await _get_or_create_user(tg_user)
     location = list(filter(lambda l: l.name == old_name, user.location_list))
 
@@ -132,6 +132,7 @@ async def do_set_location_name(tg_user: types.User, new_name: str, old_name: str
     location_index = user.location_list.index(location)
     user.location_list[location_index] = location
     await db_engine.save(user)
+    return user.location_list
 
 
 async def do_activate_location(tg_user: types.User, name: str) -> List[Location]:

@@ -1,10 +1,11 @@
-from typing import Tuple, Optional
+from typing import Tuple, Optional, List
 
 from aiogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup
 
 from zmanim_bot import keyboards
 from zmanim_bot import texts
 from zmanim_bot.api import storage_api
+from zmanim_bot.api.storage_api import Location
 from zmanim_bot.config import LANGUAGE_SHORTCUTS
 from zmanim_bot.exceptions import ActiveLocationException
 from zmanim_bot.helpers import CallbackPrefixes
@@ -112,12 +113,14 @@ async def delete_location(location_name: str) -> Tuple[str, Optional[InlineKeybo
     return msg, kb
 
 
-async def update_location_name(new_name: str, old_name: Optional[str]):
+async def update_location_name(new_name: str, old_name: Optional[str]) -> InlineKeyboardMarkup:
     if not old_name:
         raise ValueError('There is no old location name!')
 
-    await storage_api.set_location_name(new_name=new_name, old_name=old_name)
-    return f'Location "{new_name}" successfully saved!'  # todo translate
+    location_list = await storage_api.set_location_name(new_name=new_name, old_name=old_name)
+    kb = keyboards.inline.get_location_options_menu(location_list)
+    return kb
+    # return f'Location "{new_name}" successfully saved!'  # todo translate
 
 
 async def init_report() -> Tuple[str, ReplyKeyboardMarkup]:

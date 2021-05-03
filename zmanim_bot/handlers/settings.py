@@ -2,10 +2,8 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, CallbackQuery, ContentType
 
 from zmanim_bot.config import LANGUAGE_LIST
-from zmanim_bot.handlers.utils.redirects import redirect_to_request_language, \
-    redirect_to_request_location, redirect_to_main_menu
-from zmanim_bot.helpers import CallbackPrefixes, CALL_ANSWER_OK, LOCATION_PATTERN, \
-    parse_coordinates
+from zmanim_bot.handlers.utils.redirects import redirect_to_request_language, redirect_to_main_menu
+from zmanim_bot.helpers import CallbackPrefixes, CALL_ANSWER_OK, LOCATION_PATTERN, parse_coordinates
 from zmanim_bot.misc import dp, bot
 from zmanim_bot.states import LocationNameState
 from zmanim_bot.tracking import track
@@ -111,6 +109,25 @@ async def handle_activate_location(call: CallbackQuery):
     await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
 
 
+@dp.callback_query_handler(text_startswith=CallbackPrefixes.location_rename)
+async def init_location_raname(call: CallbackQuery, state: FSMContext):
+    await LocationNameState.waiting_for_location_name_state.set()
+    location_name = call.data.split(CallbackPrefixes.location_rename)[1]
+
+    state_data = {
+        'location_name': location_name,
+        'redirect_target': 'settings',
+        'redirect_message': 'Successfully renamed!',  # todo translate
+        'origin_message_id': call.message.message_id
+    }
+
+    await state.set_data(state_data)
+    await call.answer()
+
+    resp = f'Write new location name for {location_name}:'
+    await bot.send_message(call.from_user.id, resp)
+
+
 @dp.callback_query_handler(text_startswith=CallbackPrefixes.location_delete)
 async def handle_delete_location(call: CallbackQuery):
     location_name = call.data.split(CallbackPrefixes.location_delete)[1]
@@ -144,4 +161,3 @@ async def handle_location(msg: Message, state: FSMContext):
 async def help_menu_report(msg: Message):
     resp, kb = await settings_service.init_report()
     await msg.reply(resp, reply_markup=kb)
-

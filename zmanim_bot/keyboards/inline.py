@@ -91,7 +91,7 @@ def get_location_options_menu(location_list: List[Location]) -> InlineKeyboardMa
             callback_data=f'{CallbackPrefixes.location_activate}{location.name}'
         ))
         kb.row(
-            InlineKeyboardButton(text='✏️', callback_data=f'{CallbackPrefixes.location_edit}{location.name}'),
+            InlineKeyboardButton(text='✏️', callback_data=f'{CallbackPrefixes.location_rename}{location.name}'),
             InlineKeyboardButton(text='❌', callback_data=f'{CallbackPrefixes.location_delete}{location.name}')
         )
 
