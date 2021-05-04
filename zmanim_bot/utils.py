@@ -3,8 +3,8 @@ import inspect
 from aiogram.types import ChatActions
 from pymongo import IndexModel
 
-from zmanim_bot.api.storage_api import get_or_set_processor_type
-from .misc import collection
+from zmanim_bot.repository.bot_repository import get_or_set_processor_type
+from zmanim_bot.misc import collection
 
 
 def chat_action(action: str = None):

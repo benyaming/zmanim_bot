@@ -63,7 +63,7 @@ async def set_zmanim(call: CallbackQuery):
 @chat_action('text')
 @track('Omer Settings')
 async def handle_omer_settings(msg: Message):
-    resp, kb = await settings_service.get_current_havdala()
+    resp, kb = await settings_service.get_current_omer()
     await msg.reply(resp, reply_markup=kb)
 
 

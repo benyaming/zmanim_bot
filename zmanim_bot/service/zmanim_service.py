@@ -3,15 +3,16 @@ from typing import Tuple, Optional
 
 from aiogram.types import InlineKeyboardMarkup
 
-from zmanim_bot.api import storage_api, zmanim_api
+from zmanim_bot.repository import bot_repository
+from zmanim_bot.integrations import zmanim_api_client
 from zmanim_bot.helpers import CallbackPrefixes
 from zmanim_bot.states import ZmanimGregorianDateState
 from zmanim_bot.processors.image import image_processor as ip
 
 
 async def get_zmanim() -> BytesIO:
-    user = await storage_api.get_or_create_user()
-    data = await zmanim_api.get_zmanim(
+    user = await bot_repository.get_or_create_user()
+    data = await zmanim_api_client.get_zmanim(
         user.get_active_location(),
         user.zmanim_settings.dict()
     )
@@ -23,9 +24,9 @@ async def get_zmanim_by_date(*, date: str = None, call_data: str = None) -> Byte
     if call_data:
         date = call_data.split(CallbackPrefixes.zmanim_by_date)[1]
 
-    user = await storage_api.get_or_create_user()
+    user = await bot_repository.get_or_create_user()
 
-    data = await zmanim_api.get_zmanim(
+    data = await zmanim_api_client.get_zmanim(
         user.get_active_location(),
         user.zmanim_settings.dict(),
         date_=date
@@ -39,8 +40,8 @@ async def init_zmanim_by_date():
 
 
 async def get_shabbat() -> Tuple[BytesIO, Optional[InlineKeyboardMarkup]]:
-    user = await storage_api.get_or_create_user()
-    data = await zmanim_api.get_shabbat(
+    user = await bot_repository.get_or_create_user()
+    data = await zmanim_api_client.get_shabbat(
         location=user.get_active_location(),
         cl_offset=user.cl_offset,
         havdala_opinion=user.havdala_opinion
@@ -50,12 +51,10 @@ async def get_shabbat() -> Tuple[BytesIO, Optional[InlineKeyboardMarkup]]:
 
 
 async def get_daf_yomi() -> BytesIO:
-    data = await zmanim_api.get_daf_yomi()
+    data = await zmanim_api_client.get_daf_yomi()
     return ip.DafYomImage(data).get_image()
 
 
 async def get_rosh_chodesh() -> BytesIO:
-    data = await zmanim_api.get_rosh_chodesh()
+    data = await zmanim_api_client.get_rosh_chodesh()
     return ip.RoshChodeshImage(data).get_image()
-
-

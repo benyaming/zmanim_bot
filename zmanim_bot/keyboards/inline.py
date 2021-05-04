@@ -3,12 +3,12 @@ from typing import List
 
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from ..api.storage_api import Location
-from ..processors.text_utils import humanize_date
-from ..texts.single import zmanim
-from ..texts.single import messages
-from ..helpers import CL_OFFET_OPTIONS, HAVDALA_OPINION_OPTIONS, CallbackPrefixes
-from ..texts.single.buttons import zmanim_for
+from zmanim_bot.repository.bot_repository import Location
+from zmanim_bot.processors.text_utils import humanize_date
+from zmanim_bot.texts.single import zmanim
+from zmanim_bot.texts.single import messages
+from zmanim_bot.helpers import CL_OFFET_OPTIONS, HAVDALA_OPINION_OPTIONS, CallbackPrefixes
+from zmanim_bot.texts.single.buttons import zmanim_for
 
 
 def get_cl_settings_keyboard(current_value: int) -> InlineKeyboardMarkup:

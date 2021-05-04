@@ -13,7 +13,7 @@ from zmanim_bot.keyboards.inline import get_zmanim_by_date_buttons
 from zmanim_bot.middlewares.i18n import gettext as _
 from zmanim_bot.texts.single import names, headers, helpers
 from zmanim_bot.texts.plural import units
-from zmanim_bot.api.zmanim_api.models import *
+from zmanim_bot.integrations.zmanim_models import *
 
 IMG_SIZE = 1181
 Line = Tuple[Optional[str], Optional[str], Optional[bool]]

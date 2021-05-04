@@ -1,8 +1,7 @@
 from datetime import date
 from typing import Optional, Tuple
 
-from . import models
-from .models import SimpleSettings
+from zmanim_bot.integrations.zmanim_models import *
 from zmanim_bot.misc import bot
 from zmanim_bot.config import ZMANIM_API_URL
 
@@ -19,7 +18,7 @@ __all__ = [
 ]
 
 
-async def get_zmanim(location: Tuple[float, float], zmanim_settings: dict, date_: str = None) -> models.Zmanim:
+async def get_zmanim(location: Tuple[float, float], zmanim_settings: dict, date_: str = None) -> Zmanim:
     url = ZMANIM_API_URL.format('zmanim')
     params = {
         'lat': str(location[0]),
@@ -30,7 +29,7 @@ async def get_zmanim(location: Tuple[float, float], zmanim_settings: dict, date_
 
     async with bot.session.post(url, params=params, json=zmanim_settings) as resp:
         raw_resp = await resp.json()
-        return models.Zmanim(**raw_resp)
+        return Zmanim(**raw_resp)
 
 
 async def get_shabbat(
@@ -38,7 +37,7 @@ async def get_shabbat(
         cl_offset: int,
         havdala_opinion: str,
         date_: str = None
-) -> models.Shabbat:
+) -> Shabbat:
     url = ZMANIM_API_URL.format('shabbat')
     params = {
         'lat': str(location[0]),
@@ -51,25 +50,25 @@ async def get_shabbat(
 
     async with bot.session.get(url, params=params) as resp:
         raw_resp = await resp.json()
-        return models.Shabbat(**raw_resp)
+        return Shabbat(**raw_resp)
 
 
-async def get_daf_yomi(date_=None) -> models.DafYomi:
+async def get_daf_yomi(date_=None) -> DafYomi:
     url = ZMANIM_API_URL.format('daf_yomi')
     params = None if not date_ else {'date': date_}
 
     async with bot.session.get(url, params=params) as resp:
         raw_resp = await resp.json()
-        return models.DafYomi(**raw_resp)
+        return DafYomi(**raw_resp)
 
 
-async def get_rosh_chodesh(date_=None) -> models.RoshChodesh:
+async def get_rosh_chodesh(date_=None) -> RoshChodesh:
     url = ZMANIM_API_URL.format('rosh_chodesh')
     params = None if not date_ else {'date': date_}
 
     async with bot.session.get(url, params=params) as resp:
         raw_resp = await resp.json()
-        return models.RoshChodesh(**raw_resp)
+        return RoshChodesh(**raw_resp)
 
 
 async def get_generic_yomtov(
@@ -77,7 +76,7 @@ async def get_generic_yomtov(
         location: Tuple[float, float],
         cl_offset: int,
         havdala_opinion: str
-) -> models.YomTov:
+) -> YomTov:
     url = ZMANIM_API_URL.format('yom_tov')
     params = {
         'lat': str(location[0]),
@@ -89,10 +88,10 @@ async def get_generic_yomtov(
 
     async with bot.session.get(url, params=params) as resp:
         raw_resp = await resp.json()
-        return models.YomTov(**raw_resp)
+        return YomTov(**raw_resp)
 
 
-async def get_generic_fast(name: str, location: Tuple[float, float], havdala_opinion: str) -> models.Fast:
+async def get_generic_fast(name: str, location: Tuple[float, float], havdala_opinion: str) -> Fast:
     url = ZMANIM_API_URL.format('fast')
     params = {
         'lat': str(location[0]),
@@ -103,19 +102,19 @@ async def get_generic_fast(name: str, location: Tuple[float, float], havdala_opi
 
     async with bot.session.get(url, params=params) as resp:
         raw_resp = await resp.json()
-        return models.Fast(**raw_resp)
+        return Fast(**raw_resp)
 
 
-async def get_generic_holiday(name: str) -> models.Holiday:
+async def get_generic_holiday(name: str) -> Holiday:
     url = ZMANIM_API_URL.format('holiday')
     params = {'holiday_name': name}
 
     async with bot.session.get(url, params=params) as resp:
         raw_resp = await resp.json()
-        return models.Holiday(**raw_resp)
+        return Holiday(**raw_resp)
 
 
-async def get_israel_holidays() -> models.IsraelHolidays:
+async def get_israel_holidays() -> IsraelHolidays:
     url = ZMANIM_API_URL.format('holiday')
     result = []
     settings: Optional[SimpleSettings] = None
@@ -130,4 +129,4 @@ async def get_israel_holidays() -> models.IsraelHolidays:
             if not settings:
                 settings = raw_resp['settings']
 
-    return models.IsraelHolidays(settings=settings, holiday_list=result)
+    return IsraelHolidays(settings=settings, holiday_list=result)
