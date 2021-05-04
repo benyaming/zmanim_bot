@@ -35,6 +35,9 @@ __all__ = [
 ]
 
 
+MAX_LOCATION_NAME_SIZE = 30
+
+
 def validate_location_coordinates(location: Location, locations: List[Location]):
     if len(locations) >= LOCATION_NUMBER_LIMIT:
         raise MaxLocationLimitException
@@ -100,9 +103,11 @@ async def get_location(tg_user: types.User) -> Tuple[float, float]:
 
 
 async def set_location(tg_user: types.User, location: Tuple[float, float]) -> Location:
-    # todo max name length 30
     user = await _get_or_create_user(tg_user)
     location_name = await get_location_name(location[0], location[1], user.language)
+    if len(location_name) > MAX_LOCATION_NAME_SIZE:
+        location_name = f'{location_name[MAX_LOCATION_NAME_SIZE:]}...'
+
     location_obj = Location(
         lat=location[0],
         lng=location[1],
@@ -126,6 +131,10 @@ async def do_set_location_name(tg_user: types.User, new_name: str, old_name: str
     if len(location) == 0:
         raise ValueError('Unknown old location name!')
     validate_location_name(new_name, user.location_list)
+
+    if len(new_name) > MAX_LOCATION_NAME_SIZE:
+        new_name = f'{new_name[MAX_LOCATION_NAME_SIZE:]}...'
+
     location = location[0]
     location.name = new_name
 
