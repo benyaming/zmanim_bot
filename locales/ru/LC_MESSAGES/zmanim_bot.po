@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-05-09 00:51+0300\n"
-"PO-Revision-Date: 2021-05-09 00:52+0300\n"
+"POT-Creation-Date: 2021-05-09 01:57+0300\n"
+"PO-Revision-Date: 2021-05-09 01:57+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
 "Language-Team: ru <LL@li.org>\n"
@@ -378,11 +378,15 @@ msgstr ""
 msgid "Here you can enable or disable notifications about the <i>Omer</i> count."
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:17
-msgid "Select your language:"
+#: zmanim_bot/texts/single/messages.py:16
+msgid "Here you can activate, edit or send new location:"
 msgstr ""
 
 #: zmanim_bot/texts/single/messages.py:18
+msgid "Select your language:"
+msgstr ""
+
+#: zmanim_bot/texts/single/messages.py:20
 msgid ""
 "Please share your location by pressing the button.\n"
 "<b>Warning!</b> Desktop version of Telegram doesn’t support this type of "
@@ -391,23 +395,71 @@ msgid ""
 "message here."
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:23
+#: zmanim_bot/texts/single/messages.py:24
+msgid "You sent incorrect coordinates. Please check and re-send them!"
+msgstr ""
+
+#: zmanim_bot/texts/single/messages.py:25
+msgid "This location alredy exists in your saved locations!"
+msgstr ""
+
+#: zmanim_bot/texts/single/messages.py:26
+msgid "This location name alredy exists in your saved locations!"
+msgstr ""
+
+#: zmanim_bot/texts/single/messages.py:27
+msgid ""
+"You saved too many locations, please remove some of them before saving "
+"new one!"
+msgstr ""
+
+#: zmanim_bot/texts/single/messages.py:28
+msgid ""
+"Automatic location name: {}.\n"
+"You can write custom name for the location or press \"Done\" button."
+msgstr ""
+
+#: zmanim_bot/texts/single/messages.py:30
+msgid "Location successfully deleted!"
+msgstr ""
+
+#: zmanim_bot/texts/single/messages.py:31
+msgid "Location successfully renamed!"
+msgstr ""
+
+#: zmanim_bot/texts/single/messages.py:32
+msgid "Location successfully saved!"
+msgstr ""
+
+#: zmanim_bot/texts/single/messages.py:33
+msgid "It is unable to delete active location!"
+msgstr ""
+
+#: zmanim_bot/texts/single/messages.py:34
+msgid "Please, write here new location name for {}:"
+msgstr ""
+
+#: zmanim_bot/texts/single/messages.py:35
+msgid "{} selected!"
+msgstr ""
+
+#: zmanim_bot/texts/single/messages.py:37
 msgid ""
 "\"I’m not aware of such command 🤖\n"
 "Would you choose something from the menu:"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:26
+#: zmanim_bot/texts/single/messages.py:40
 msgid "Please enter Gregorian date in following format: <code>YYYY-MM-DD</code>"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:27
+#: zmanim_bot/texts/single/messages.py:41
 msgid ""
 "Incorrect/Illegal date format. Take a look at the correct one: <code"
 ">YYYY-MM-DD</code>"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:29
+#: zmanim_bot/texts/single/messages.py:43
 msgid ""
 "Please enter Jewish date in following format: \n"
 "<code>YYYY-MM-DD\n"
@@ -426,7 +478,7 @@ msgid ""
 "13 Adar II</code>"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:43
+#: zmanim_bot/texts/single/messages.py:57
 msgid ""
 "Incorrect/Illegal date format. Take a look at the correct one: \n"
 "<code>YYYY-MM-DD\n"
@@ -445,30 +497,30 @@ msgid ""
 "13 Adar II</code>"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:59
+#: zmanim_bot/texts/single/messages.py:73
 msgid ""
 "Your message has been saved for sending. You can attach screenshots or "
 "videos of your choice. Once done, click the Done button."
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:61
+#: zmanim_bot/texts/single/messages.py:75
 msgid "File added successfully. Add another one or click Done."
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:62
+#: zmanim_bot/texts/single/messages.py:76
 msgid ""
 "Unsupported message format. You can attach screenshots or videos by "
 "sending a photo, picture or video."
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:64
+#: zmanim_bot/texts/single/messages.py:78
 msgid ""
 "Your message has been sent to the Bot's developer. He will fix the "
 "problem soon and you will receive a notification.\n"
 "Thanks for your feedback!"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:68
+#: zmanim_bot/texts/single/messages.py:82
 msgid ""
 "Looks like an error occured... The Bot's developer already working on "
 "it..."
