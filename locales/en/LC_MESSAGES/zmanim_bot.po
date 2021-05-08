@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-05-09 01:57+0300\n"
-"PO-Revision-Date: 2021-05-09 01:57+0300\n"
+"POT-Creation-Date: 2021-05-09 02:34+0300\n"
+"PO-Revision-Date: 2021-05-09 02:34+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
@@ -74,7 +74,7 @@ msgstr ""
 msgid "Zmanim"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:13 zmanim_bot/texts/single/names.py:154
+#: zmanim_bot/texts/single/buttons.py:13
 msgid "Shabbat"
 msgstr ""
 
@@ -975,285 +975,290 @@ msgstr ""
 msgid "Brachot"
 msgstr ""
 
+#. NOTE masehet name; It is very important to add space after the month name!!
 #: zmanim_bot/texts/single/names.py:155
-msgid "Eruvin"
+msgid "Shabbat "
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:156
-msgid "Pesachim"
+msgid "Eruvin"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:157
-msgid "Shekalim"
+msgid "Pesachim"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:158
-msgid "Yoma"
+msgid "Shekalim"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:159
-msgid "Sukah"
+msgid "Yoma"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:160
-msgid "Beitzah"
+msgid "Sukah"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:161
-msgid "Rosh Hashana"
+msgid "Beitzah"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:162
-msgid "Taanit"
+msgid "Rosh Hashana"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:163
-msgid "Megilah"
+msgid "Taanit"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:164
-msgid "Moed Katan"
+msgid "Megilah"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:165
-msgid "Chagigah"
+msgid "Moed Katan"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:166
-msgid "Yevamot"
+msgid "Chagigah"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:167
-msgid "Kesuvot"
+msgid "Yevamot"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:168
-msgid "Nedarim"
+msgid "Kesuvot"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:169
-msgid "Nazir"
+msgid "Nedarim"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:170
-msgid "Sotah"
+msgid "Nazir"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:171
-msgid "Gitin"
+msgid "Sotah"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:172
-msgid "Kidushin"
+msgid "Gitin"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:173
-msgid "Bava Kama"
+msgid "Kidushin"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:174
-msgid "Bava Metzia"
+msgid "Bava Kama"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:175
-msgid "Bava Batra"
+msgid "Bava Metzia"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:176
-msgid "Sanhedrin"
+msgid "Bava Batra"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:177
-msgid "Makot"
+msgid "Sanhedrin"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:178
-msgid "Shevuot"
+msgid "Makot"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:179
-msgid "Avodah Zarah"
+msgid "Shevuot"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:180
-msgid "Horayot"
+msgid "Avodah Zarah"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:181
-msgid "Zevachim"
+msgid "Horayot"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:182
-msgid "Menachot"
+msgid "Zevachim"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:183
-msgid "Chulin"
+msgid "Menachot"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:184
-msgid "Bechorot"
+msgid "Chulin"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:185
-msgid "Erchin"
+msgid "Bechorot"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:186
-msgid "Temurah"
+msgid "Erchin"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:187
-msgid "Kerisot"
+msgid "Temurah"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:188
-msgid "Meilah"
+msgid "Kerisot"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:189
-msgid "Kinnim"
+msgid "Meilah"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:190
-msgid "Tamid"
+msgid "Kinnim"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:191
-msgid "Midot"
+msgid "Tamid"
 msgstr ""
 
 #: zmanim_bot/texts/single/names.py:192
+msgid "Midot"
+msgstr ""
+
+#: zmanim_bot/texts/single/names.py:193
 msgid "Nidah"
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:197
+#: zmanim_bot/texts/single/names.py:198
 msgid "Nisan "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:199
+#: zmanim_bot/texts/single/names.py:200
 msgid "Iyar "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:201
+#: zmanim_bot/texts/single/names.py:202
 msgid "Sivan "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:203
+#: zmanim_bot/texts/single/names.py:204
 msgid "Tammuz "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:205
+#: zmanim_bot/texts/single/names.py:206
 msgid "Av "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:207
+#: zmanim_bot/texts/single/names.py:208
 msgid "Elul "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:209
+#: zmanim_bot/texts/single/names.py:210
 msgid "Tishrei "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:211
+#: zmanim_bot/texts/single/names.py:212
 msgid "Cheshvan "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:213
+#: zmanim_bot/texts/single/names.py:214
 msgid "Kislev "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:215
+#: zmanim_bot/texts/single/names.py:216
 msgid "Tevet "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:217
+#: zmanim_bot/texts/single/names.py:218
 msgid "Shevat "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:219
+#: zmanim_bot/texts/single/names.py:220
 msgid "Adar "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:221
+#: zmanim_bot/texts/single/names.py:222
 msgid "Adar II "
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:226
+#: zmanim_bot/texts/single/names.py:227
 msgid "Nisan"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:228
+#: zmanim_bot/texts/single/names.py:229
 msgid "Iyar"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:230
+#: zmanim_bot/texts/single/names.py:231
 msgid "Sivan"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:232
+#: zmanim_bot/texts/single/names.py:233
 msgid "Tammuz"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:234
+#: zmanim_bot/texts/single/names.py:235
 msgid "Av"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:236
+#: zmanim_bot/texts/single/names.py:237
 msgid "Elul"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:238
+#: zmanim_bot/texts/single/names.py:239
 msgid "Tishrei"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:240
+#: zmanim_bot/texts/single/names.py:241
 msgid "Cheshvan"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:242
+#: zmanim_bot/texts/single/names.py:243
 msgid "Kislev"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:244
+#: zmanim_bot/texts/single/names.py:245
 msgid "Tevet"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:246
+#: zmanim_bot/texts/single/names.py:247
 msgid "Shevat"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:248
+#: zmanim_bot/texts/single/names.py:249
 msgid "Adar"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:250
+#: zmanim_bot/texts/single/names.py:251
 msgid "Adar II"
 msgstr ""
 

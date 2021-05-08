@@ -22,369 +22,367 @@ msgstr ""
 #: zmanim_bot/texts/plural/units.py:5
 msgid "year"
 msgid_plural "years"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "год"
+msgstr[1] "года"
+msgstr[2] "лет"
 
 #: zmanim_bot/texts/plural/units.py:6
 msgid "month"
 msgid_plural "months"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "месяц"
+msgstr[1] "месяца"
+msgstr[2] "месяцев"
 
 #: zmanim_bot/texts/plural/units.py:7
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "день"
+msgstr[1] "дня"
+msgstr[2] "дней"
 
 #: zmanim_bot/texts/plural/units.py:8
 msgid "hour"
 msgid_plural "hours"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "час"
+msgstr[1] "часа"
+msgstr[2] "часов"
 
 #: zmanim_bot/texts/plural/units.py:9
 msgid "minute"
 msgid_plural "minutes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "минута"
+msgstr[1] "минуты"
+msgstr[2] "минут"
 
 #: zmanim_bot/texts/plural/units.py:10
 msgid "part"
 msgid_plural "parts"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "часть"
+msgstr[1] "части"
+msgstr[2] "частей"
 
 #: zmanim_bot/texts/single/buttons.py:5
 msgid "Send location"
-msgstr ""
+msgstr "Отправить координаты"
 
 #: zmanim_bot/texts/single/buttons.py:6
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #: zmanim_bot/texts/single/buttons.py:7
 msgid "Back"
-msgstr ""
+msgstr "Назад"
 
 #: zmanim_bot/texts/single/buttons.py:8
 msgid "Done"
-msgstr ""
+msgstr "Готово"
 
 #: zmanim_bot/texts/single/buttons.py:12
 msgid "Zmanim"
-msgstr ""
+msgstr "Зманим"
 
 #: zmanim_bot/texts/single/buttons.py:13 zmanim_bot/texts/single/names.py:154
 msgid "Shabbat"
-msgstr ""
+msgstr "Шаббат"
 
 #: zmanim_bot/texts/single/buttons.py:14
 msgid "Holidays"
-msgstr ""
+msgstr "Праздники"
 
 #: zmanim_bot/texts/single/buttons.py:15
 msgid "Daf yomi"
-msgstr ""
+msgstr "Даф йоми"
 
 #: zmanim_bot/texts/single/buttons.py:16
 msgid "Rosh chodesh"
-msgstr ""
+msgstr "Рош Ходеш"
 
 #: zmanim_bot/texts/single/buttons.py:17
 msgid "Fast days"
-msgstr ""
+msgstr "Посты"
 
 #: zmanim_bot/texts/single/buttons.py:18
 msgid "Zmanim by the date"
-msgstr ""
+msgstr "Зманим на дату"
 
 #: zmanim_bot/texts/single/buttons.py:19
 msgid "Date converter"
-msgstr ""
+msgstr "Конвертер дат"
 
 #: zmanim_bot/texts/single/buttons.py:20
 msgid "Help"
-msgstr ""
+msgstr "Помощь"
 
 #: zmanim_bot/texts/single/buttons.py:21
 msgid "Settings"
-msgstr ""
+msgstr "Настройки"
 
 #: zmanim_bot/texts/single/buttons.py:25
 msgid "F.A.Q."
-msgstr ""
+msgstr "ЧаВо"
 
 #: zmanim_bot/texts/single/buttons.py:26
 msgid "Report a problem"
-msgstr ""
+msgstr "Сообщить о проблеме"
 
 #: zmanim_bot/texts/single/buttons.py:30
 msgid "Select zmanim"
-msgstr ""
+msgstr "Выбрать зманим"
 
 #: zmanim_bot/texts/single/buttons.py:31
 msgid "Candle lighting"
-msgstr ""
+msgstr "Зажигание свечей"
 
 #: zmanim_bot/texts/single/buttons.py:32 zmanim_bot/texts/single/headers.py:15
 msgid "Havdala"
-msgstr ""
+msgstr "Авдала"
 
 #: zmanim_bot/texts/single/buttons.py:33
 msgid "Language"
-msgstr ""
+msgstr "Язык"
 
 #: zmanim_bot/texts/single/buttons.py:34
 msgid "location"
-msgstr ""
+msgstr "Локация"
 
 #: zmanim_bot/texts/single/buttons.py:35
 msgid "Omer count"
-msgstr ""
+msgstr "Счёт Омера"
 
 #: zmanim_bot/texts/single/buttons.py:37
 msgid "enabled"
-msgstr ""
+msgstr "включено"
 
 #: zmanim_bot/texts/single/buttons.py:38
 msgid "disabled"
-msgstr ""
+msgstr "выключено"
 
 #: zmanim_bot/texts/single/buttons.py:41
 msgid "More..."
-msgstr ""
+msgstr "Еще..."
 
 #: zmanim_bot/texts/single/buttons.py:42
 msgid "Main holidays"
-msgstr ""
+msgstr "Основные праздники"
 
 #: zmanim_bot/texts/single/buttons.py:44
 msgid "Rosh ha-Shanah"
-msgstr ""
+msgstr "Рош а-Шана"
 
 #: zmanim_bot/texts/single/buttons.py:45
 msgid "Yom Kippur"
-msgstr ""
+msgstr "Йом Киппур"
 
 #: zmanim_bot/texts/single/buttons.py:46
 msgid "Succot"
-msgstr ""
+msgstr "Суккот"
 
 #: zmanim_bot/texts/single/buttons.py:47
 msgid "Shmini Atzeres"
-msgstr ""
+msgstr "Шмини Ацерет"
 
 #: zmanim_bot/texts/single/buttons.py:48
 msgid "Chanukah"
-msgstr ""
+msgstr "Ханука"
 
 #: zmanim_bot/texts/single/buttons.py:49
 msgid "Purim"
-msgstr ""
+msgstr "Пурим"
 
 #: zmanim_bot/texts/single/buttons.py:50
 msgid "Pesach"
-msgstr ""
+msgstr "Песах"
 
 #: zmanim_bot/texts/single/buttons.py:51
 msgid "Shavuot"
-msgstr ""
+msgstr "Шавуот"
 
 #: zmanim_bot/texts/single/buttons.py:52
 msgid "Tu bi-Shvat"
-msgstr ""
+msgstr "Ту би-Шват"
 
 #: zmanim_bot/texts/single/buttons.py:53
 msgid "Lag ba-Omer"
-msgstr ""
+msgstr "Лаг ба-Омер"
 
 #: zmanim_bot/texts/single/buttons.py:54
 msgid "Israel holidays"
-msgstr ""
+msgstr "Израильские выходные"
 
 #: zmanim_bot/texts/single/buttons.py:58
 msgid "Fast of Gedaliah"
-msgstr ""
+msgstr "Пост Гедалии"
 
 #: zmanim_bot/texts/single/buttons.py:59
 msgid "10th of Tevet"
-msgstr ""
+msgstr "10-е Тевета"
 
 #: zmanim_bot/texts/single/buttons.py:60
 msgid "Fast of Ester"
-msgstr ""
+msgstr "Пост Эстер"
 
 #: zmanim_bot/texts/single/buttons.py:61
 msgid "17th of Tammuz"
-msgstr ""
+msgstr "17-е Таммуза"
 
 #: zmanim_bot/texts/single/buttons.py:62
 msgid "9th of Av"
-msgstr ""
+msgstr "9-е Ава"
 
 #: zmanim_bot/texts/single/buttons.py:70
 msgid "Gregorian ➡ Jewish"
-msgstr ""
+msgstr "Григорианский ➡ Еврейский"
 
 #: zmanim_bot/texts/single/buttons.py:71
 msgid "Jewish ➡ Gregorian"
-msgstr ""
+msgstr "Еврейский ➡ Григорианский"
 
 #. NOTE prefix for button "Zmanim for {date}"
 #: zmanim_bot/texts/single/buttons.py:74
 msgid "Zmanim for"
-msgstr ""
+msgstr "Зманим на"
 
 #: zmanim_bot/texts/single/headers.py:4
 msgid "Date"
-msgstr ""
+msgstr "Дата"
 
 #: zmanim_bot/texts/single/headers.py:6
 msgid "Masechet"
-msgstr ""
+msgstr "Трактат"
 
 #: zmanim_bot/texts/single/headers.py:7
 msgid "Sheet"
-msgstr ""
+msgstr "Лист"
 
 #: zmanim_bot/texts/single/headers.py:9
 msgid "Duration"
-msgstr ""
+msgstr "Продолжительность"
 
 #: zmanim_bot/texts/single/headers.py:10
 msgid "Мonth"
-msgstr ""
+msgstr "Месяц"
 
 #: zmanim_bot/texts/single/headers.py:11
 msgid "Molad"
-msgstr ""
+msgstr "Молад"
 
 #: zmanim_bot/texts/single/headers.py:13
 msgid "Parshat ha-shavuah"
-msgstr ""
+msgstr "Недельная глава"
 
 #: zmanim_bot/texts/single/headers.py:14
 msgid "Candle Lighting"
-msgstr ""
+msgstr "Зажигание свечей"
 
 #: zmanim_bot/texts/single/headers.py:17
 msgid "Fast begins"
-msgstr ""
+msgstr "Начало поста"
 
 #: zmanim_bot/texts/single/headers.py:18
 msgid "Fast ends"
-msgstr ""
-
-#: zmanim_bot/texts/single/headers.py:19 zmanim_bot/texts/single/zmanim.py:11
-msgid "Chatzot"
-msgstr ""
+msgstr "Конец поста"
 
 #: zmanim_bot/texts/single/headers.py:20
 msgid "Attention! Fast has been moved!"
-msgstr ""
+msgstr "Внимание, пост перенесён!"
 
 #: zmanim_bot/texts/single/headers.py:21
 msgid "Fast hasn’t been moved."
-msgstr ""
+msgstr "Пост не перенесен"
 
 #: zmanim_bot/texts/single/headers.py:23
 msgid "Hoshana Rabbah"
-msgstr ""
+msgstr "Ошана Раба"
 
 #: zmanim_bot/texts/single/headers.py:26
 msgid "Yom ha-Shoah"
-msgstr ""
+msgstr "День памяти Катастрофы и героизма"
 
 #: zmanim_bot/texts/single/headers.py:27
 msgid "Yom ha-Zikaron"
-msgstr ""
+msgstr "День памяти павших в войнах Израиля"
 
 #: zmanim_bot/texts/single/headers.py:28
 msgid "Yom ha-Atzmaut"
-msgstr ""
+msgstr "День независимости Израиля"
 
 #: zmanim_bot/texts/single/headers.py:29
 msgid "Yom Yerushalaim"
-msgstr ""
+msgstr "День Иерусалима"
 
 #: zmanim_bot/texts/single/helpers.py:4
 msgid "and"
-msgstr ""
+msgstr "и"
 
 #: zmanim_bot/texts/single/helpers.py:6
 msgid ""
 "It is impossible to compute Zmanim for your location. Most likely it is "
 "because of Midnight Sun or polar night."
 msgstr ""
+"Для вашего местоположения невозможно посчитать зманим. Скорее всего, это "
+"связано с полярным днем или полярной ночью."
 
 #: zmanim_bot/texts/single/helpers.py:8
 msgid ""
 "Notice! it is recommended to clarify time of take of Sabbath in your "
 "community."
-msgstr ""
+msgstr "Внимание! Рекомендуем уточнить, во сколько ваша община принимает шаббат!"
 
 #: zmanim_bot/texts/single/helpers.py:10
 msgid "before sunset"
-msgstr ""
+msgstr "до шкии"
 
 #: zmanim_bot/texts/single/messages.py:4
 msgid "Welcome to zmanim bot!"
-msgstr ""
+msgstr "Добро пожаловать в Зманим-бот!"
 
 #: zmanim_bot/texts/single/messages.py:5
 msgid "You are in the main menu:"
-msgstr ""
+msgstr "Вы в главном меню:"
 
 #: zmanim_bot/texts/single/messages.py:6
 msgid "How can I help you?"
-msgstr ""
+msgstr "Чем вам помочь?"
 
 #: zmanim_bot/texts/single/messages.py:7
 msgid "You are in the settings:"
-msgstr ""
+msgstr "Вы в настройках:"
 
 #: zmanim_bot/texts/single/messages.py:8
 msgid "Please, describe your problem:"
-msgstr ""
+msgstr "Расскажите, что случилось:"
 
 #: zmanim_bot/texts/single/messages.py:9
 msgid "Choose the way of conversion:"
-msgstr ""
+msgstr "Выберите направление конвертации:"
 
 #: zmanim_bot/texts/single/messages.py:10
 msgid "Choose:"
-msgstr ""
+msgstr "Выберите:"
 
 #: zmanim_bot/texts/single/messages.py:12
 msgid "How long before shkiya do you light candles?"
-msgstr ""
+msgstr "За сколько времени до шкии вы зажигаете свечи?"
 
 #: zmanim_bot/texts/single/messages.py:13
 msgid "Select zmanim that you want to receive:"
-msgstr ""
+msgstr "Выберите зманим, которые вы хотите получать:"
 
 #: zmanim_bot/texts/single/messages.py:14
 msgid "Select your opinion for havdala:"
-msgstr ""
+msgstr "Выберите ваше мнения для авдалы:"
 
 #: zmanim_bot/texts/single/messages.py:15
 msgid "Here you can enable or disable notifications about the <i>Omer</i> count."
-msgstr ""
+msgstr "Здесь вы можете включить или выключить оповещения о счёте <i>Омера</i>."
 
 #: zmanim_bot/texts/single/messages.py:16
 msgid "Here you can activate, edit or send new location:"
-msgstr ""
+msgstr "Здесь вы можете выбрать, изменить или добавить новую локацию:"
 
 #: zmanim_bot/texts/single/messages.py:18
 msgid "Select your language:"
-msgstr ""
+msgstr "Выберите язык:"
 
 #: zmanim_bot/texts/single/messages.py:20
 msgid ""
@@ -394,70 +392,78 @@ msgid ""
 "separated text (example: <code>55.5, 37.7</code>) or send a geotag "
 "message here."
 msgstr ""
+"Пожалуйста, предоставьте координаты, нажав на кнопку.\n"
+"<b>Внимание!</b> Telegram на ПК пока что не поддерживает отправку координат "
+"таким способом. Чтобы отправить координаты с ПК, отправьте их в текстовом "
+"виде через запятую, например \"<code>55.5, 37.7</code>\", либо перешлите "
+"сюда сообщение с геометкой."
 
 #: zmanim_bot/texts/single/messages.py:24
 msgid "You sent incorrect coordinates. Please check and re-send them!"
-msgstr ""
+msgstr "Вы прислали некорректные координаты. Пожалуйста, перепроверьте их и пришлите еще раз!"
 
 #: zmanim_bot/texts/single/messages.py:25
 msgid "This location alredy exists in your saved locations!"
-msgstr ""
+msgstr "Эта локация уже сохранена в вашем списке локаций!"
 
 #: zmanim_bot/texts/single/messages.py:26
 msgid "This location name alredy exists in your saved locations!"
-msgstr ""
+msgstr "Это имя уже существует в вашем списке локаций!"
 
 #: zmanim_bot/texts/single/messages.py:27
 msgid ""
 "You saved too many locations, please remove some of them before saving "
 "new one!"
-msgstr ""
+msgstr "Вы добавили слишком много локаций, пожалуйста, удалите часть перед тем, как добавлять новую!"
 
 #: zmanim_bot/texts/single/messages.py:28
 msgid ""
 "Automatic location name: {}.\n"
 "You can write custom name for the location or press \"Done\" button."
-msgstr ""
+msgstr "Автоматическое название локации: {}.\n"
+"Вы можете написать свое название, или нажать на кнопку \"Готово\"."
 
 #: zmanim_bot/texts/single/messages.py:30
 msgid "Location successfully deleted!"
-msgstr ""
+msgstr "Локация успешно удалена!"
 
 #: zmanim_bot/texts/single/messages.py:31
 msgid "Location successfully renamed!"
-msgstr ""
+msgstr "Локация успешно переименована!"
 
 #: zmanim_bot/texts/single/messages.py:32
 msgid "Location successfully saved!"
-msgstr ""
+msgstr "Локация успешно сохранена!"
 
 #: zmanim_bot/texts/single/messages.py:33
 msgid "It is unable to delete active location!"
-msgstr ""
+msgstr "Нельзя удалить активную локацию!"
 
 #: zmanim_bot/texts/single/messages.py:34
 msgid "Please, write here new location name for {}:"
-msgstr ""
+msgstr "Напишите новое название для локации {}:"
 
 #: zmanim_bot/texts/single/messages.py:35
 msgid "{} selected!"
-msgstr ""
+msgstr "Локация {} выбрана!"
 
 #: zmanim_bot/texts/single/messages.py:37
 msgid ""
 "\"I’m not aware of such command 🤖\n"
 "Would you choose something from the menu:"
-msgstr ""
+msgstr "Я не знаю таких команд 🤖\nВыберите что-нибудь из кнопок в меню:"
 
 #: zmanim_bot/texts/single/messages.py:40
 msgid "Please enter Gregorian date in following format: <code>YYYY-MM-DD</code>"
-msgstr ""
+msgstr "Введите грегорианскую дату в формате <code>ГГГГ-ММ-ДД</code>:"
 
 #: zmanim_bot/texts/single/messages.py:41
 msgid ""
 "Incorrect/Illegal date format. Take a look at the correct one: <code"
 ">YYYY-MM-DD</code>"
 msgstr ""
+"Неправильный формат даты. \nОбратите внимание, как правильно: <code>ГГГГ-ММ-"
+"ДД</code>"
 
 #: zmanim_bot/texts/single/messages.py:43
 msgid ""
@@ -477,6 +483,20 @@ msgid ""
 "12 Adar/Adar\n"
 "13 Adar II</code>"
 msgstr ""
+"Введите еврейскую дату в формате \n<code>ГГГГ-ММ-ДД\n"
+"1 Нисан\n"
+"2 Ияр\n"
+"3 Сиван\n"
+"4 Тамуз\n"
+"5 Ав\n"
+"6 Элуль\n"
+"7 Тишрей\n"
+"8 Хещван\n"
+"9 Кислев\n"
+"10 Тевет\n"
+"11 Шват\n"
+"12 Адар/Адар I\n"
+"13 Адар II</code>"
 
 #: zmanim_bot/texts/single/messages.py:57
 msgid ""
@@ -496,843 +516,870 @@ msgid ""
 "12 Adar/Adar\n"
 "13 Adar II</code>"
 msgstr ""
+"Неправильный формат даты.\nОбратите внимание, как правильно: \n<code>ГГГГ-ММ-ДД\n"
+"1 Нисан\n"
+"2 Ияр\n"
+"3 Сиван\n"
+"4 Тамуз\n"
+"5 Ав\n"
+"6 Элуль\n"
+"7 Тишрей\n"
+"8 Хещван\n"
+"9 Кислев\n"
+"10 Тевет\n"
+"11 Шват\n"
+"12 Адар/Адар I\n"
+"13 Адар II</code>"
 
 #: zmanim_bot/texts/single/messages.py:73
 msgid ""
 "Your message has been saved for sending. You can attach screenshots or "
 "videos of your choice. Once done, click the Done button."
-msgstr ""
+msgstr "Ваше обращение сохранено для отправки. Если хотите, можете прикрепить "
+"скриншоты или видео. Когда закончите, нажмите кнопку \"Готово\"."
 
 #: zmanim_bot/texts/single/messages.py:75
 msgid "File added successfully. Add another one or click Done."
-msgstr ""
+msgstr "Файл успешно добавлен. Добавьте еще один или нажмите кнопку \"Готово\"."
 
 #: zmanim_bot/texts/single/messages.py:76
 msgid ""
 "Unsupported message format. You can attach screenshots or videos by "
 "sending a photo, picture or video."
-msgstr ""
+msgstr "Неподдерживаемый формат сообщения. Вы можете прикрепить скриншоты или видео, для "
+"этого пошлите фотографию, картинку или видеозапись."
 
 #: zmanim_bot/texts/single/messages.py:78
 msgid ""
 "Your message has been sent to the Bot's developer. He will fix the "
 "problem soon and you will receive a notification.\n"
 "Thanks for your feedback!"
-msgstr ""
+msgstr "Ваше обращение отправлено разработчику. Скоро он решит проблему и вы "
+"получите уведомление.\n"
+"Спасибо за обратную связь!"
 
 #: zmanim_bot/texts/single/messages.py:82
 msgid ""
 "Looks like an error occured... The Bot's developer already working on "
 "it..."
-msgstr ""
+msgstr "Кажется, возникла ошибка... Разработчик бота уже занимается ее решением..."
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:10
 msgid "January"
-msgstr ""
+msgstr "Января"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:12
 msgid "February"
-msgstr ""
+msgstr "Февраля"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:14
 msgid "March"
-msgstr ""
+msgstr "Марта"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:16
 msgid "April"
-msgstr ""
+msgstr "Апреля"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:18
 msgid "May"
-msgstr ""
+msgstr "Мая"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:20
 msgid "June"
-msgstr ""
+msgstr "Июня"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:22
 msgid "July"
-msgstr ""
+msgstr "Июля"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:24
 msgid "August"
-msgstr ""
+msgstr "Августа"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:26
 msgid "September"
-msgstr ""
+msgstr "Сентября"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:28
 msgid "October"
-msgstr ""
+msgstr "Октября"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:30
 msgid "November"
-msgstr ""
+msgstr "Ноября"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:32
 msgid "December"
-msgstr ""
+msgstr "Декабря"
 
 #: zmanim_bot/texts/single/names.py:37
 msgid "Monday"
-msgstr ""
+msgstr "Понедельник"
 
 #: zmanim_bot/texts/single/names.py:38
 msgid "Tuesday"
-msgstr ""
+msgstr "Вторник"
 
 #: zmanim_bot/texts/single/names.py:39
 msgid "Wednesday"
-msgstr ""
+msgstr "Среда"
 
 #: zmanim_bot/texts/single/names.py:40
 msgid "Thursday"
-msgstr ""
+msgstr "Четверг"
 
 #: zmanim_bot/texts/single/names.py:41
 msgid "Friday"
-msgstr ""
+msgstr "Пятница"
 
 #: zmanim_bot/texts/single/names.py:42
 msgid "Saturday"
-msgstr ""
+msgstr "Суббота"
 
 #: zmanim_bot/texts/single/names.py:43
 msgid "Sunday"
-msgstr ""
+msgstr "Воскресенье"
 
 #: zmanim_bot/texts/single/names.py:47
 msgid "DAF YOMI"
-msgstr ""
+msgstr "ДАФ ЙОМИ"
 
 #: zmanim_bot/texts/single/names.py:48
 msgid "ROSH CHODESH"
-msgstr ""
+msgstr "РОШ ХОДЕШ"
 
 #: zmanim_bot/texts/single/names.py:49
 msgid "SHABBAT"
-msgstr ""
+msgstr "ШАББАТ"
 
 #: zmanim_bot/texts/single/names.py:50
 msgid "ZMANIM"
-msgstr ""
+msgstr "ЗМАНИМ"
 
 #: zmanim_bot/texts/single/names.py:52
 msgid "FAST OF GEDALIAH"
-msgstr ""
+msgstr "ПОСТ ГЕДАЛИИ"
 
 #: zmanim_bot/texts/single/names.py:53
 msgid "10th OF TEVET"
-msgstr ""
+msgstr "ПОСТ 10-Е ТЕВЕТА"
 
 #: zmanim_bot/texts/single/names.py:54
 msgid "FAST OF ESTHER"
-msgstr ""
+msgstr "ПОСТ ЭСТЕР"
 
 #: zmanim_bot/texts/single/names.py:55
 msgid "17th OF TAMMUZ"
-msgstr ""
+msgstr "ПОСТ 17-Е ТАММУЗА"
 
 #: zmanim_bot/texts/single/names.py:56
 msgid "9th OF AV"
-msgstr ""
+msgstr "ПОСТ 9-Е АВА"
 
 #: zmanim_bot/texts/single/names.py:59
 msgid "CHANUKAH"
-msgstr ""
+msgstr "ХАНУКА"
 
 #: zmanim_bot/texts/single/names.py:60
 msgid "TU BI-SHVAT"
-msgstr ""
+msgstr "ТУ БИ-ШВАТ"
 
 #: zmanim_bot/texts/single/names.py:61
 msgid "PURIM"
-msgstr ""
+msgstr "ПУРИМ"
 
 #: zmanim_bot/texts/single/names.py:62
 msgid "LAG BA-OMER"
-msgstr ""
+msgstr "ЛАГ БА-ОМЕР"
 
 #: zmanim_bot/texts/single/names.py:63
 msgid "ISRAEL HOLIDAYS"
-msgstr ""
+msgstr "ИЗРАИЛЬСКИЕ ПРАЗДНИКИ"
 
 #: zmanim_bot/texts/single/names.py:66
 msgid "ROSH HA-SHANA"
-msgstr ""
+msgstr "РОШ А-ШАНА"
 
 #: zmanim_bot/texts/single/names.py:67
 msgid "YOM KIPUR"
-msgstr ""
+msgstr "ЙОМ КИППУР"
 
 #: zmanim_bot/texts/single/names.py:68
 msgid "SUCCOT"
-msgstr ""
+msgstr "СУККОТ"
 
 #: zmanim_bot/texts/single/names.py:69
 msgid "SHMINI ATZERET"
-msgstr ""
+msgstr "ШМИНИ АЦЕРЕТ"
 
 #: zmanim_bot/texts/single/names.py:70
 msgid "PESACH"
-msgstr ""
+msgstr "ПЕСАХ"
 
 #: zmanim_bot/texts/single/names.py:71
 msgid "SHAVUOT"
-msgstr ""
+msgstr "ШАВУОТ"
 
 #: zmanim_bot/texts/single/names.py:74
 msgid "shabbat"
-msgstr ""
+msgstr "шаббат"
 
 #: zmanim_bot/texts/single/names.py:77
 msgid "Bereshit"
-msgstr ""
+msgstr "Берешит"
 
 #: zmanim_bot/texts/single/names.py:78
 msgid "Noach"
-msgstr ""
+msgstr "Ноах"
 
 #: zmanim_bot/texts/single/names.py:79
 msgid "Lech-Lecha"
-msgstr ""
+msgstr "Лех-Леха"
 
 #: zmanim_bot/texts/single/names.py:80
 msgid "Vayeira"
-msgstr ""
+msgstr "Ваейра"
 
 #: zmanim_bot/texts/single/names.py:81
 msgid "Chayei Sarah"
-msgstr ""
+msgstr "Хаей-Сара"
 
 #: zmanim_bot/texts/single/names.py:82
 msgid "Toledot"
-msgstr ""
+msgstr "Толдот"
 
 #: zmanim_bot/texts/single/names.py:83
 msgid "Vayetze"
-msgstr ""
+msgstr "Ваеце"
 
 #: zmanim_bot/texts/single/names.py:84
 msgid "Vayishlach"
-msgstr ""
+msgstr "Ваишлах"
 
 #: zmanim_bot/texts/single/names.py:85
 msgid "Vayeshev"
-msgstr ""
+msgstr "Ваешев"
 
 #: zmanim_bot/texts/single/names.py:86
 msgid "Miketz"
-msgstr ""
+msgstr "Микец"
 
 #: zmanim_bot/texts/single/names.py:87
 msgid "Vayigash"
-msgstr ""
+msgstr "Ваигаш"
 
 #: zmanim_bot/texts/single/names.py:88
 msgid "Vayechi"
-msgstr ""
+msgstr "Ваехи"
 
 #: zmanim_bot/texts/single/names.py:89
 msgid "Shemot"
-msgstr ""
+msgstr "Шмот"
 
 #: zmanim_bot/texts/single/names.py:90
 msgid "Va'eira"
-msgstr ""
+msgstr "Ваира"
 
 #: zmanim_bot/texts/single/names.py:91
 msgid "Bo"
-msgstr ""
+msgstr "Бо"
 
 #: zmanim_bot/texts/single/names.py:92
 msgid "Beshalach"
-msgstr ""
+msgstr "Бешалах"
 
 #: zmanim_bot/texts/single/names.py:93
 msgid "Yitro"
-msgstr ""
+msgstr "Итро"
 
 #: zmanim_bot/texts/single/names.py:94
 msgid "Mishpatim"
-msgstr ""
+msgstr "Мишпатим"
 
 #: zmanim_bot/texts/single/names.py:95
 msgid "Terumah"
-msgstr ""
+msgstr "Трума"
 
 #: zmanim_bot/texts/single/names.py:96
 msgid "Tetzaveh"
-msgstr ""
+msgstr "Тецаве"
 
 #: zmanim_bot/texts/single/names.py:97
 msgid "Ki Tisa"
-msgstr ""
+msgstr "Ки-Тиса"
 
 #: zmanim_bot/texts/single/names.py:98
 msgid "Vayakhel"
-msgstr ""
+msgstr "Ваякхель"
 
 #: zmanim_bot/texts/single/names.py:99
 msgid "Pekudei"
-msgstr ""
+msgstr "Пекудей"
 
 #: zmanim_bot/texts/single/names.py:100
 msgid "Vayikra"
-msgstr ""
+msgstr "Ваикра"
 
 #: zmanim_bot/texts/single/names.py:101
 msgid "Tzav"
-msgstr ""
+msgstr "Цав"
 
 #: zmanim_bot/texts/single/names.py:102
 msgid "Shemini"
-msgstr ""
+msgstr "Шмини"
 
 #: zmanim_bot/texts/single/names.py:103
 msgid "Tazria"
-msgstr ""
+msgstr "Тазриа"
 
 #: zmanim_bot/texts/single/names.py:104
 msgid "Metzora"
-msgstr ""
+msgstr "Мецара"
 
 #: zmanim_bot/texts/single/names.py:105
 msgid "Acharei Mot"
-msgstr ""
+msgstr "Ахарей-Мот"
 
 #: zmanim_bot/texts/single/names.py:106
 msgid "Kedoshim"
-msgstr ""
+msgstr "Кдошим"
 
 #: zmanim_bot/texts/single/names.py:107
 msgid "Emor"
-msgstr ""
+msgstr "Эмор"
 
 #: zmanim_bot/texts/single/names.py:108
 msgid "Behar"
-msgstr ""
+msgstr "Бехар"
 
 #: zmanim_bot/texts/single/names.py:109
 msgid "Bechukotai"
-msgstr ""
+msgstr "Бехукотай"
 
 #: zmanim_bot/texts/single/names.py:110
 msgid "Bamidbar"
-msgstr ""
+msgstr "Бемидбар"
 
 #: zmanim_bot/texts/single/names.py:111
 msgid "Naso"
-msgstr ""
+msgstr "Насо"
 
 #: zmanim_bot/texts/single/names.py:112
 msgid "Behaalotecha"
-msgstr ""
+msgstr "Бехаалатха"
 
 #: zmanim_bot/texts/single/names.py:113
 msgid "Shlach"
-msgstr ""
+msgstr "Шлах"
 
 #: zmanim_bot/texts/single/names.py:114
 msgid "Korach"
-msgstr ""
+msgstr "Корах"
 
 #: zmanim_bot/texts/single/names.py:115
 msgid "Chukat"
-msgstr ""
+msgstr "Хукат"
 
 #: zmanim_bot/texts/single/names.py:116
 msgid "Balak"
-msgstr ""
+msgstr "Балак"
 
 #: zmanim_bot/texts/single/names.py:117
 msgid "Pinchas"
-msgstr ""
+msgstr "Пинхас"
 
 #: zmanim_bot/texts/single/names.py:118
 msgid "Matot"
-msgstr ""
+msgstr "Матот"
 
 #: zmanim_bot/texts/single/names.py:119
 msgid "Masei"
-msgstr ""
+msgstr "Масей"
 
 #: zmanim_bot/texts/single/names.py:120
 msgid "Devarim"
-msgstr ""
+msgstr "Дварим"
 
 #: zmanim_bot/texts/single/names.py:121
 msgid "Va'etchanan"
-msgstr ""
+msgstr "Ваэтханан"
 
 #: zmanim_bot/texts/single/names.py:122
 msgid "Eikev"
-msgstr ""
+msgstr "Экев"
 
 #: zmanim_bot/texts/single/names.py:123
 msgid "Re'eh"
-msgstr ""
+msgstr "Рээ"
 
 #: zmanim_bot/texts/single/names.py:124
 msgid "Shoftim"
-msgstr ""
+msgstr "Шофтим"
 
 #: zmanim_bot/texts/single/names.py:125
 msgid "Ki Teitzei"
-msgstr ""
+msgstr "Ки-Теце"
 
 #: zmanim_bot/texts/single/names.py:126
 msgid "Ki Tavo"
-msgstr ""
+msgstr "Ки-Таво"
 
 #: zmanim_bot/texts/single/names.py:127
 msgid "Nitzavim"
-msgstr ""
+msgstr "Ницавим"
 
 #: zmanim_bot/texts/single/names.py:128
 msgid "Vayelech"
-msgstr ""
+msgstr "Ваейлех"
 
 #: zmanim_bot/texts/single/names.py:129
 msgid "Haazinu"
-msgstr ""
+msgstr "Хаазину"
 
 #: zmanim_bot/texts/single/names.py:130
 msgid "V'Zot HaBerachah"
-msgstr ""
+msgstr "Везот-Абраха"
 
 #: zmanim_bot/texts/single/names.py:132
 msgid "Vayakhel - Pekudei"
-msgstr ""
+msgstr "Ваякхель - Пекудей"
 
 #: zmanim_bot/texts/single/names.py:133
 msgid "Tazria - Metzora"
-msgstr ""
+msgstr "Тазриа - Мецара"
 
 #: zmanim_bot/texts/single/names.py:134
 msgid "Acharei Mot - Kedoshim"
-msgstr ""
+msgstr "Ахарей Мот - Кдошим"
 
 #: zmanim_bot/texts/single/names.py:135
 msgid "Behar - Bechukotai"
-msgstr ""
+msgstr "Бехар - Бехукотай"
 
 #: zmanim_bot/texts/single/names.py:136
 msgid "Chukat - Balak"
-msgstr ""
+msgstr "Хукат - Балак"
 
 #: zmanim_bot/texts/single/names.py:137
 msgid "Matot - Masei"
-msgstr ""
+msgstr "Матот - Масей"
 
 #: zmanim_bot/texts/single/names.py:138
 msgid "Nitzavim - Vayelech"
-msgstr ""
+msgstr "Ницавим - Ваейлех"
 
 #: zmanim_bot/texts/single/names.py:140
 msgid "Shabbat Rosh ha-Shana"
-msgstr ""
+msgstr "Шаббат Рош-а-Шана"
 
 #: zmanim_bot/texts/single/names.py:141
 msgid "Shabbat Yom Kippur"
-msgstr ""
+msgstr "Шаббат Йом Киппур"
 
 #: zmanim_bot/texts/single/names.py:142
 msgid "Shabat Succot"
-msgstr ""
+msgstr "Шаббат суккот"
 
 #: zmanim_bot/texts/single/names.py:143 zmanim_bot/texts/single/names.py:144
 msgid "Shabbat Chol ha-moed Succot"
-msgstr ""
+msgstr "Шаббат Холь-а-Моэд Суккот"
 
 #: zmanim_bot/texts/single/names.py:145
 msgid "Shabbat Shmini Atzeret"
-msgstr ""
+msgstr "Шаббат Шмини Ацерет"
 
 #: zmanim_bot/texts/single/names.py:146
 msgid "Shabbat Simchat Torah"
-msgstr ""
+msgstr "Шаббат Симхат Тора"
 
 #: zmanim_bot/texts/single/names.py:147
 msgid "Shabbat Pesach"
-msgstr ""
+msgstr "Шаббат Песах"
 
 #: zmanim_bot/texts/single/names.py:148
 msgid "Shabbat Chol ha-moed Pesach"
-msgstr ""
+msgstr "Шаббат Холь-а-Моэд Песах"
 
 #: zmanim_bot/texts/single/names.py:149
 msgid "Shabbat Shavuot"
-msgstr ""
+msgstr "Шаббат Шавуот"
 
 #: zmanim_bot/texts/single/names.py:153
 msgid "Brachot"
-msgstr ""
+msgstr "Брахот"
 
+#. NOTE masehet name; It is very important to add space after the month name!!
 #: zmanim_bot/texts/single/names.py:155
-msgid "Eruvin"
-msgstr ""
+msgid "Shabbat "
+msgstr "Шаббат"
 
 #: zmanim_bot/texts/single/names.py:156
-msgid "Pesachim"
-msgstr ""
+msgid "Eruvin"
+msgstr "Эрувин"
 
 #: zmanim_bot/texts/single/names.py:157
-msgid "Shekalim"
-msgstr ""
+msgid "Pesachim"
+msgstr "Псахим"
 
 #: zmanim_bot/texts/single/names.py:158
-msgid "Yoma"
-msgstr ""
+msgid "Shekalim"
+msgstr "Шкалим"
 
 #: zmanim_bot/texts/single/names.py:159
-msgid "Sukah"
-msgstr ""
+msgid "Yoma"
+msgstr "Йома"
 
 #: zmanim_bot/texts/single/names.py:160
-msgid "Beitzah"
-msgstr ""
+msgid "Sukah"
+msgstr "Сукка"
 
 #: zmanim_bot/texts/single/names.py:161
-msgid "Rosh Hashana"
-msgstr ""
+msgid "Beitzah"
+msgstr "Бейца"
 
 #: zmanim_bot/texts/single/names.py:162
-msgid "Taanit"
-msgstr ""
+msgid "Rosh Hashana"
+msgstr "Рош а-Шана"
 
 #: zmanim_bot/texts/single/names.py:163
-msgid "Megilah"
-msgstr ""
+msgid "Taanit"
+msgstr "Таанит"
 
 #: zmanim_bot/texts/single/names.py:164
-msgid "Moed Katan"
-msgstr ""
+msgid "Megilah"
+msgstr "Мегила"
 
 #: zmanim_bot/texts/single/names.py:165
-msgid "Chagigah"
-msgstr ""
+msgid "Moed Katan"
+msgstr "Моэд Катан"
 
 #: zmanim_bot/texts/single/names.py:166
-msgid "Yevamot"
-msgstr ""
+msgid "Chagigah"
+msgstr "Хагига"
 
 #: zmanim_bot/texts/single/names.py:167
-msgid "Kesuvot"
-msgstr ""
+msgid "Yevamot"
+msgstr "Йевамот"
 
 #: zmanim_bot/texts/single/names.py:168
-msgid "Nedarim"
-msgstr ""
+msgid "Kesuvot"
+msgstr "Ктувот"
 
 #: zmanim_bot/texts/single/names.py:169
-msgid "Nazir"
-msgstr ""
+msgid "Nedarim"
+msgstr "Недарим"
 
 #: zmanim_bot/texts/single/names.py:170
-msgid "Sotah"
-msgstr ""
+msgid "Nazir"
+msgstr "Назир"
 
 #: zmanim_bot/texts/single/names.py:171
-msgid "Gitin"
-msgstr ""
+msgid "Sotah"
+msgstr "Сота"
 
 #: zmanim_bot/texts/single/names.py:172
-msgid "Kidushin"
-msgstr ""
+msgid "Gitin"
+msgstr "Гитин"
 
 #: zmanim_bot/texts/single/names.py:173
-msgid "Bava Kama"
-msgstr ""
+msgid "Kidushin"
+msgstr "Кидушин"
 
 #: zmanim_bot/texts/single/names.py:174
-msgid "Bava Metzia"
-msgstr ""
+msgid "Bava Kama"
+msgstr "Баба Кама"
 
 #: zmanim_bot/texts/single/names.py:175
-msgid "Bava Batra"
-msgstr ""
+msgid "Bava Metzia"
+msgstr "Баба Мециа"
 
 #: zmanim_bot/texts/single/names.py:176
-msgid "Sanhedrin"
-msgstr ""
+msgid "Bava Batra"
+msgstr "Баба Батра"
 
 #: zmanim_bot/texts/single/names.py:177
-msgid "Makot"
-msgstr ""
+msgid "Sanhedrin"
+msgstr "Санхедрин"
 
 #: zmanim_bot/texts/single/names.py:178
-msgid "Shevuot"
-msgstr ""
+msgid "Makot"
+msgstr "Макот"
 
 #: zmanim_bot/texts/single/names.py:179
-msgid "Avodah Zarah"
-msgstr ""
+msgid "Shevuot"
+msgstr "Шевуот"
 
 #: zmanim_bot/texts/single/names.py:180
-msgid "Horayot"
-msgstr ""
+msgid "Avodah Zarah"
+msgstr "Авода Зара"
 
 #: zmanim_bot/texts/single/names.py:181
-msgid "Zevachim"
-msgstr ""
+msgid "Horayot"
+msgstr "Орайот"
 
 #: zmanim_bot/texts/single/names.py:182
-msgid "Menachot"
-msgstr ""
+msgid "Zevachim"
+msgstr "Зевахим"
 
 #: zmanim_bot/texts/single/names.py:183
-msgid "Chulin"
-msgstr ""
+msgid "Menachot"
+msgstr "Менахот"
 
 #: zmanim_bot/texts/single/names.py:184
-msgid "Bechorot"
-msgstr ""
+msgid "Chulin"
+msgstr "Хулин"
 
 #: zmanim_bot/texts/single/names.py:185
-msgid "Erchin"
-msgstr ""
+msgid "Bechorot"
+msgstr "Бехорот"
 
 #: zmanim_bot/texts/single/names.py:186
-msgid "Temurah"
-msgstr ""
+msgid "Erchin"
+msgstr "Эрхин"
 
 #: zmanim_bot/texts/single/names.py:187
-msgid "Kerisot"
-msgstr ""
+msgid "Temurah"
+msgstr "Трума"
 
 #: zmanim_bot/texts/single/names.py:188
-msgid "Meilah"
-msgstr ""
+msgid "Kerisot"
+msgstr "Керисот"
 
 #: zmanim_bot/texts/single/names.py:189
-msgid "Kinnim"
-msgstr ""
+msgid "Meilah"
+msgstr "Меила"
 
 #: zmanim_bot/texts/single/names.py:190
-msgid "Tamid"
-msgstr ""
+msgid "Kinnim"
+msgstr "Киним"
 
 #: zmanim_bot/texts/single/names.py:191
-msgid "Midot"
-msgstr ""
+msgid "Tamid"
+msgstr "Тамид"
 
 #: zmanim_bot/texts/single/names.py:192
+msgid "Midot"
+msgstr "Мидот"
+
+#: zmanim_bot/texts/single/names.py:193
 msgid "Nidah"
-msgstr ""
+msgstr "Нида"
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:197
+#: zmanim_bot/texts/single/names.py:198
 msgid "Nisan "
-msgstr ""
+msgstr "Нисан"
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:199
+#: zmanim_bot/texts/single/names.py:200
 msgid "Iyar "
-msgstr ""
+msgstr "Ияр"
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:201
+#: zmanim_bot/texts/single/names.py:202
 msgid "Sivan "
-msgstr ""
+msgstr "Сиван"
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:203
+#: zmanim_bot/texts/single/names.py:204
 msgid "Tammuz "
-msgstr ""
+msgstr "Таммуз"
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:205
+#: zmanim_bot/texts/single/names.py:206
 msgid "Av "
-msgstr ""
+msgstr "Ав"
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:207
+#: zmanim_bot/texts/single/names.py:208
 msgid "Elul "
-msgstr ""
+msgstr "Элуль"
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:209
+#: zmanim_bot/texts/single/names.py:210
 msgid "Tishrei "
-msgstr ""
+msgstr "Тишрей"
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:211
+#: zmanim_bot/texts/single/names.py:212
 msgid "Cheshvan "
-msgstr ""
+msgstr "Хешван"
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:213
+#: zmanim_bot/texts/single/names.py:214
 msgid "Kislev "
-msgstr ""
+msgstr "Кислев"
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:215
+#: zmanim_bot/texts/single/names.py:216
 msgid "Tevet "
-msgstr ""
+msgstr "Тевет"
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:217
+#: zmanim_bot/texts/single/names.py:218
 msgid "Shevat "
-msgstr ""
+msgstr "Шват"
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:219
+#: zmanim_bot/texts/single/names.py:220
 msgid "Adar "
-msgstr ""
+msgstr "Адар"
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:221
+#: zmanim_bot/texts/single/names.py:222
 msgid "Adar II "
-msgstr ""
+msgstr "Адар II"
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:226
+#: zmanim_bot/texts/single/names.py:227
 msgid "Nisan"
-msgstr ""
+msgstr "Нисана"
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:228
+#: zmanim_bot/texts/single/names.py:229
 msgid "Iyar"
-msgstr ""
+msgstr "Ияра"
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:230
+#: zmanim_bot/texts/single/names.py:231
 msgid "Sivan"
-msgstr ""
+msgstr "Сивана"
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:232
+#: zmanim_bot/texts/single/names.py:233
 msgid "Tammuz"
-msgstr ""
+msgstr "Таммуза"
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:234
+#: zmanim_bot/texts/single/names.py:235
 msgid "Av"
-msgstr ""
+msgstr "Ава"
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:236
+#: zmanim_bot/texts/single/names.py:237
 msgid "Elul"
-msgstr ""
+msgstr "Элуля"
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:238
+#: zmanim_bot/texts/single/names.py:239
 msgid "Tishrei"
-msgstr ""
+msgstr "Тишрея"
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:240
+#: zmanim_bot/texts/single/names.py:241
 msgid "Cheshvan"
-msgstr ""
+msgstr "Хешвана"
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:242
+#: zmanim_bot/texts/single/names.py:243
 msgid "Kislev"
-msgstr ""
+msgstr "Кислева"
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:244
+#: zmanim_bot/texts/single/names.py:245
 msgid "Tevet"
-msgstr ""
+msgstr "Тевета"
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:246
+#: zmanim_bot/texts/single/names.py:247
 msgid "Shevat"
-msgstr ""
+msgstr "Швата"
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:248
+#: zmanim_bot/texts/single/names.py:249
 msgid "Adar"
-msgstr ""
+msgstr "Адара"
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:250
+#: zmanim_bot/texts/single/names.py:251
 msgid "Adar II"
-msgstr ""
+msgstr "Адара II"
 
 #: zmanim_bot/texts/single/zmanim.py:4
 msgid "Sunrise"
-msgstr ""
+msgstr "А-нец а-хама (восход)"
 
 #: zmanim_bot/texts/single/zmanim.py:5
 msgid "Alot ha-shakhar"
-msgstr ""
+msgstr "Алот а-шахар (заря)"
 
 #: zmanim_bot/texts/single/zmanim.py:6
 msgid "Sof zman tfila [AGRO]"
-msgstr ""
+msgstr "Зман тфила (время молитвы) [АГРО]"
 
 #: zmanim_bot/texts/single/zmanim.py:7
 msgid "Sof zman tfila [MA]"
-msgstr ""
+msgstr "Зман тфила (время молитвы) [МА]"
 
 #: zmanim_bot/texts/single/zmanim.py:8
 msgid "Misheyakir (zman tallit and tfilin)"
-msgstr ""
+msgstr "Мишеякир (время Талита и Тфилин)"
 
 #: zmanim_bot/texts/single/zmanim.py:9
 msgid "Sof zman Shemah [AGRO]"
-msgstr ""
+msgstr "Зман Шма (время Шма) [АГРО]"
 
 #: zmanim_bot/texts/single/zmanim.py:10
 msgid "Sof zman Shemah [MA]"
-msgstr ""
+msgstr "Зман Шма (время Шма) [МА]"
+
+#: zmanim_bot/texts/single/zmanim.py:11
+msgid "Chatzot"
+msgstr "Хацот"
 
 #: zmanim_bot/texts/single/zmanim.py:12
 msgid "Mincha ktanah"
-msgstr ""
+msgstr "Минха ктана"
 
 #: zmanim_bot/texts/single/zmanim.py:13
 msgid "Mincha gdolah"
-msgstr ""
+msgstr "Минха гдола"
 
 #: zmanim_bot/texts/single/zmanim.py:14
 msgid "Plag mincha"
-msgstr ""
+msgstr "Плаг минха"
 
 #: zmanim_bot/texts/single/zmanim.py:15
 msgid "Shkia (sunset)"
-msgstr ""
+msgstr "Шкия (закат)"
 
 #: zmanim_bot/texts/single/zmanim.py:16
 msgid "Tzeit ha-kochavim [8.5 degrees]"
-msgstr ""
+msgstr "Выход звезд [8.5 градусов за горизонтом]"
 
 #: zmanim_bot/texts/single/zmanim.py:17
 msgid "Tzeit ha-kochavim [72 minutes]"
-msgstr ""
+msgstr "Выход звезд [72 минуты после заката]"
 
 #: zmanim_bot/texts/single/zmanim.py:18
 msgid "Tzeit ha-kochavim [42 minutes]"
-msgstr ""
+msgstr "Выход звезд [42 минуты после заката]"
 
 #: zmanim_bot/texts/single/zmanim.py:19
 msgid "Tzeit ha-kochavim [5.95 degrees]"
-msgstr ""
+msgstr "Выход звезд [5.95 градусов за горизонтом]"
 
 #: zmanim_bot/texts/single/zmanim.py:20
 msgid "Chatzot Laila (midnight)"
-msgstr ""
+msgstr "Хацот лайла (полночь)"
 
 #: zmanim_bot/texts/single/zmanim.py:21
 msgid "Astronomical hour [MA]"
-msgstr ""
+msgstr "Шаа зманит (астрономический час) [МА]"
 
 #: zmanim_bot/texts/single/zmanim.py:22
 msgid "Astronomical hour [AGRO]"
-msgstr ""
+msgstr "Шаа зманит (астрономический час) [АГРО]"
 

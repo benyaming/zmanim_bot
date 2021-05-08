@@ -151,7 +151,8 @@ TORAH_PARTS = {
 
 GEMARA_BOOKS = {
     'berachos': _('Brachot'),
-    'shabbos': _('Shabbat'),
+    # NOTE masehet name; It is very important to add space after the month name!!
+    'shabbos': _('Shabbat '),
     'eruvin': _('Eruvin'),
     'pesachim': _('Pesachim'),
     'shekalim': _('Shekalim'),
