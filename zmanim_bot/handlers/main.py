@@ -58,7 +58,4 @@ async def handle_rosh_chodesh(msg: Message):
     resp = await zmanim_service.get_rosh_chodesh()
     await msg.reply_photo(resp)
 
-# todo: шаблоны переводов должны совпадать с переводами
-# todo: api работы с бд
 # todo: 1917-01-01T05:44:14.589066+02:20:40
-# todo: pipenv scripts for pybabel

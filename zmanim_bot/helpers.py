@@ -30,6 +30,9 @@ class CallbackPrefixes:
     report = 'report:'
     zmanim_by_date = 'zbd:'
     omer = 'omer:'
+    location_activate = 'loc_a:'
+    location_rename = 'loc_r:'
+    location_delete = 'loc_d:'
 
 
 def parse_coordinates(coordinates: str) -> Tuple[float, float]:

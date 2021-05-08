@@ -1,9 +1,9 @@
-from typing import Tuple, Optional, Any
+from typing import Tuple, Optional, Any, List
 
 from aiogram.types import User
 
 from ._storage import *
-from .models import User as BotUser
+from .models import User as BotUser, Location
 
 __all__ = [
     'Location',
@@ -13,6 +13,9 @@ __all__ = [
     'get_or_set_lang',
     'get_or_set_havdala',
     'get_or_set_location',
+    'set_location_name',
+    'activate_location',
+    'delete_location',
     'get_or_set_processor_type',
     'get_or_set_omer_flag',
 ]
@@ -28,12 +31,24 @@ async def get_or_set_lang(lang: str = None) -> Optional[str]:
     return await get_lang(user) if not lang else await set_lang(user, lang)
 
 
-Location = Tuple[float, float]
-
-
-async def get_or_set_location(location: Location = None) -> Optional[Location]:
+async def get_or_set_location(location: Tuple[float, float] = None) -> Location:
     user = User.get_current()
     return await get_location(user) if not location else await set_location(user, location)
+
+
+async def set_location_name(new_name: str, old_name: str) -> List[Location]:
+    user = User.get_current()
+    return await do_set_location_name(user, new_name=new_name, old_name=old_name)
+
+
+async def activate_location(name: str) -> List[Location]:
+    user = User.get_current()
+    return await do_activate_location(user, name)
+
+
+async def delete_location(name: str) -> List[Location]:
+    user = User.get_current()
+    return await do_delete_location(user, name)
 
 
 async def get_or_set_cl(cl: int = None) -> Optional[int]:

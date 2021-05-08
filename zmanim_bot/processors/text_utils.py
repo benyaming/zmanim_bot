@@ -1,8 +1,8 @@
 from datetime import date, time
 from typing import List, Union
 
-from ..texts.single import names
-from zmanim_bot.api.zmanim_api import AsurBeMelachaDay
+from zmanim_bot.texts.single import names
+from zmanim_bot.integrations.zmanim_models import AsurBeMelachaDay
 
 
 def humanize_date(date_range: List[Union[date, AsurBeMelachaDay]],

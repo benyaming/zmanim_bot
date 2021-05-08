@@ -1,31 +1,30 @@
-from ...middlewares.i18n import lazy_gettext as _
+from zmanim_bot.middlewares.i18n import lazy_gettext as _
 
 
-date = _('date')
+date = _('Date')
 
-daf_masehet = _('masehet')
-daf_page = _('list')
+daf_masehet = _('Masechet')
+daf_page = _('Sheet')
 
-rh_duration = _('duration')
-rh_month = _('month')
-rh_molad = _('molad')
+rh_duration = _('Duration')
+rh_month = _('Мonth')
+rh_molad = _('Molad')
 
-parsha = _('torah part')
-cl = _('candle lighting')
-havdala = _('havdala')
+parsha = _('Parshat ha-shavuah')
+cl = _('Candle Lighting')
+havdala = _('Havdala')
 
-fast_start = _('the fast begins')
-fast_end = _('the fast end')
-fast_chatzot = _('chatzot')
-fast_moved = _('Attention, moved fast!')
-fast_not_moved = _('Fast was\'nt moved')
+fast_start = _('Fast begins')
+fast_end = _('Fast ends')
+fast_chatzot = _('Chatzot')
+fast_moved = _('Attention! Fast has been moved!')
+fast_not_moved = _('Fast hasn’t been moved.')
 
-hoshana_raba = _('hoshana rabah')
+hoshana_raba = _('Hoshana Rabbah')
 
 israel_holidays = {
-    'yom_hashoah': _('yom hashoah'),
-    'yom_hazikaron': _('yom hazikaron'),
-    'yom_haatzmaut': _('yom haatzmaut'),
-    'yom_yerushalaim': _('yom yerushalaim'),
+    'yom_hashoah': _('Yom ha-Shoah'),
+    'yom_hazikaron': _('Yom ha-Zikaron'),
+    'yom_haatzmaut': _('Yom ha-Atzmaut'),
+    'yom_yerushalaim': _('Yom Yerushalaim'),
 }
-

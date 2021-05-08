@@ -11,10 +11,10 @@ from zmanim_bot.processors.text_utils import humanize_date, humanize_time
 from zmanim_bot.helpers import parse_jewish_date
 from zmanim_bot.keyboards.inline import get_zmanim_by_date_buttons
 from zmanim_bot.middlewares.i18n import gettext as _
-from zmanim_bot.texts.single import names, headers, helpers
+from zmanim_bot.texts.single import names, headers, helpers, zmanim
 from zmanim_bot.texts.plural import units
-from zmanim_bot.api.zmanim_api.models import *
-
+from zmanim_bot import texts
+from zmanim_bot.integrations.zmanim_models import *
 IMG_SIZE = 1181
 Line = Tuple[Optional[str], Optional[str], Optional[bool]]
 EMPTY_LINE = None, None, None
@@ -190,11 +190,9 @@ class ShabbatImage(BaseImage):
 
     def get_image(self) -> Tuple[BytesIO, Optional[InlineKeyboardMarkup]]:
         if not self.data.candle_lighting or self.data.late_cl_warning:
-            self._background_path: str = Path(
-                __file__).parent / 'res' / 'backgrounds' / 'shabbos_attention.png'
+            self._background_path = Path( __file__).parent / 'res' / 'backgrounds' / 'shabbos_attention.png'
         else:
-            self._background_path: str = Path(
-                __file__).parent / 'res' / 'backgrounds' / 'shabbos.png'
+            self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'shabbos.png'
         self._image, self._draw = _get_draw(str(self._background_path))
 
         self._draw_title(self._draw, names.title_shabbath)
@@ -298,7 +296,7 @@ class ZmanimImage(BaseImage):
         # draw all image lines in cycle
         for header, value in zmanim.items():
             self._draw_line(
-                x, y, _(header),
+                x, y, getattr(texts.single.zmanim, header),
                 value.time().isoformat('minutes') if isinstance(value, date) else value.isoformat(
                     'minutes')
             )
@@ -340,7 +338,7 @@ class FastImage(BaseImage):
 
         # draw hatzot, if need
         if self.data.chatzot:
-            self._draw_line(x, y, headers.fast_chatzot,
+            self._draw_line(x, y, zmanim.chatzos,
                             self.data.chatzot.time().isoformat('minutes'))
             y += y_offset_small
 
@@ -491,7 +489,7 @@ class YomTovImage(BaseImage):
         for date_ in dates:
             if isinstance(date_, date):  # hoshana rabbah case
                 header = str(headers.hoshana_raba)
-                value = f'{date_.day} {names.MONTH_NAMES_GENETIVE[date_.month]} {names.WEEKDAYS[date_.weekday()]}'
+                value = f'{date_.day} {names.MONTH_NAMES_GENETIVE[date_.month]},\n {names.WEEKDAYS[date_.weekday()]}'
                 lines.append(EMPTY_LINE)
                 lines.append((header, value, False))
                 continue

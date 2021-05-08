@@ -7,6 +7,7 @@ from zmanim_bot.texts.single import messages
 
 __all__ = [
     'redirect_to_main_menu',
+    'redirect_to_settings_menu',
     'redirect_to_request_location',
     'redirect_to_request_language',
 ]
@@ -15,6 +16,12 @@ __all__ = [
 async def redirect_to_main_menu(text: str = None):
     user_id = User.get_current().id
     kb = menus.get_main_menu()
+    await bot.send_message(user_id, text or messages.init_main_menu, reply_markup=kb)
+
+
+async def redirect_to_settings_menu(text: str = None):
+    user_id = User.get_current().id
+    kb = menus.get_settings_menu()
     await bot.send_message(user_id, text or messages.init_main_menu, reply_markup=kb)
     
     

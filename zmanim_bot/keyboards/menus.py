@@ -77,6 +77,12 @@ def get_cancel_keyboard() -> ReplyKeyboardMarkup:
     return kb
 
 
+def get_done_keyboard() -> ReplyKeyboardMarkup:
+    kb = ReplyKeyboardMarkup(resize_keyboard=True)
+    kb.row(buttons.done.value)
+    return kb
+
+
 def get_report_keyboard() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     kb.row(buttons.cancel.value, buttons.done.value)

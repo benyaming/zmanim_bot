@@ -3,7 +3,8 @@ from typing import Tuple
 
 from aiogram.types import InlineKeyboardMarkup
 
-from zmanim_bot.api import storage_api, zmanim_api
+from zmanim_bot.repository import bot_repository
+from zmanim_bot.integrations import zmanim_api_client
 from zmanim_bot.processors.image.image_processor import FastImage, HolidayImage, YomTovImage, \
     IsraelHolidaysImage
 from zmanim_bot.texts.single import buttons
@@ -31,8 +32,8 @@ def _get_festival_name(input_str: str) -> str:
 
 
 async def get_generic_fast(fast_name: str) -> Tuple[BytesIO, InlineKeyboardMarkup]:
-    user = await storage_api.get_or_create_user()
-    data = await zmanim_api.get_generic_fast(
+    user = await bot_repository.get_or_create_user()
+    data = await zmanim_api_client.get_generic_fast(
         name=_get_festival_name(fast_name),
         location=user.get_active_location(),
         havdala_opinion=user.havdala_opinion
@@ -41,8 +42,8 @@ async def get_generic_fast(fast_name: str) -> Tuple[BytesIO, InlineKeyboardMarku
 
 
 async def get_generic_yomtov(yomtov_name: str) -> Tuple[BytesIO, InlineKeyboardMarkup]:
-    user = await storage_api.get_or_create_user()
-    data = await zmanim_api.get_generic_yomtov(
+    user = await bot_repository.get_or_create_user()
+    data = await zmanim_api_client.get_generic_yomtov(
         name=_get_festival_name(yomtov_name),
         location=user.get_active_location(),
         cl_offset=user.cl_offset,
@@ -53,8 +54,8 @@ async def get_generic_yomtov(yomtov_name: str) -> Tuple[BytesIO, InlineKeyboardM
 
 async def get_generic_holiday(holiday_name: str) -> BytesIO:
     if holiday_name == buttons.hom_israel:
-        data = await zmanim_api.get_israel_holidays()
+        data = await zmanim_api_client.get_israel_holidays()
         return IsraelHolidaysImage(data).get_image()
     else:
-        data = await zmanim_api.get_generic_holiday(_get_festival_name(holiday_name))
+        data = await zmanim_api_client.get_generic_holiday(_get_festival_name(holiday_name))
         return HolidayImage(data).get_image()

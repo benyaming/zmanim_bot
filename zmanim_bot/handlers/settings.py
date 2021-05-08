@@ -1,14 +1,15 @@
+from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, CallbackQuery, ContentType
 
 from zmanim_bot.config import LANGUAGE_LIST
-from zmanim_bot.handlers.utils.redirects import redirect_to_request_language, \
-    redirect_to_request_location, redirect_to_main_menu
-from zmanim_bot.helpers import CallbackPrefixes, CALL_ANSWER_OK, LOCATION_PATTERN, \
-    parse_coordinates
+from zmanim_bot.handlers.utils.redirects import redirect_to_request_language, redirect_to_main_menu
+from zmanim_bot.helpers import CallbackPrefixes, CALL_ANSWER_OK, LOCATION_PATTERN, parse_coordinates
+from zmanim_bot.keyboards.menus import get_cancel_keyboard
 from zmanim_bot.misc import dp, bot
+from zmanim_bot.states import LocationNameState
 from zmanim_bot.tracking import track
 from zmanim_bot.utils import chat_action
-from zmanim_bot.texts.single import buttons
+from zmanim_bot.texts.single import buttons, messages
 from zmanim_bot.service import settings_service
 
 
@@ -60,10 +61,10 @@ async def set_zmanim(call: CallbackQuery):
 
 
 @dp.message_handler(text=buttons.sm_omer)
-@chat_action('omer')
+@chat_action('text')
 @track('Omer Settings')
 async def handle_omer_settings(msg: Message):
-    resp, kb = await settings_service.get_current_havdala()
+    resp, kb = await settings_service.get_current_omer()
     await msg.reply(resp, reply_markup=kb)
 
 
@@ -94,24 +95,68 @@ async def set_language(msg: Message):
 @dp.message_handler(commands=['location'])
 @dp.message_handler(text=buttons.sm_location)
 @chat_action('text')
-@track('Location command')
+@track('Location menu')
 async def location_request(msg: Message):
-    await redirect_to_request_location(with_back=True)
+    resp, kb = await settings_service.get_locations_menu()
+    await msg.reply(resp, reply_markup=kb)
+
+
+@dp.callback_query_handler(text_startswith=CallbackPrefixes.location_activate)
+async def handle_activate_location(call: CallbackQuery):
+    location_name = call.data.split(CallbackPrefixes.location_activate)[1]
+    alert, kb = await settings_service.activate_location(location_name)
+    await call.answer(alert)
+
+    await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
+
+
+@dp.callback_query_handler(text_startswith=CallbackPrefixes.location_rename)
+async def init_location_raname(call: CallbackQuery, state: FSMContext):
+    await LocationNameState.waiting_for_location_name_state.set()
+    location_name = call.data.split(CallbackPrefixes.location_rename)[1]
+
+    state_data = {
+        'location_name': location_name,
+        'redirect_target': 'settings',
+        'redirect_message': messages.location_renamed.value,
+        'origin_message_id': call.message.message_id
+    }
+
+    await state.set_data(state_data)
+    await call.answer()
+
+    resp = messages.location_new_name_request.value.format(location_name)
+    kb = get_cancel_keyboard()
+    await bot.send_message(call.from_user.id, resp, reply_markup=kb)
+
+
+@dp.callback_query_handler(text_startswith=CallbackPrefixes.location_delete)
+async def handle_delete_location(call: CallbackQuery):
+    location_name = call.data.split(CallbackPrefixes.location_delete)[1]
+    alert_text, kb = await settings_service.delete_location(location_name)
+    await call.answer(alert_text, show_alert=True)
+
+    if kb:
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
 
 
 @dp.message_handler(regexp=LOCATION_PATTERN)
-@chat_action('text')
 @track('Location regexp')
 @dp.message_handler(content_types=[ContentType.LOCATION, ContentType.VENUE])
-async def handle_location(msg: Message):
+async def handle_location(msg: Message, state: FSMContext):
     if msg.location:
         lat = msg.location.latitude
         lng = msg.location.longitude
     else:
         lat, lng = parse_coordinates(msg.text)
 
-    await settings_service.set_location(lat, lng)
-    return await redirect_to_main_menu()
+    resp, kb, location_name = await settings_service.save_location(lat, lng)
+    await LocationNameState().waiting_for_location_name_state.set()
+    await state.set_data({
+        'location_name': location_name,
+        'redirect_message': messages.location_saved.value
+    })
+    await msg.reply(resp, reply_markup=kb)
 
 
 @dp.message_handler(commands=['report'])
