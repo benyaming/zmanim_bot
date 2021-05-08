@@ -5,10 +5,9 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from zmanim_bot.repository.bot_repository import Location
 from zmanim_bot.processors.text_utils import humanize_date
-from zmanim_bot.texts.single import zmanim
-from zmanim_bot.texts.single import messages
+from zmanim_bot.texts.single import zmanim, buttons
 from zmanim_bot.helpers import CL_OFFET_OPTIONS, HAVDALA_OPINION_OPTIONS, CallbackPrefixes
-from zmanim_bot.texts.single.buttons import zmanim_for
+from zmanim_bot.texts.single.buttons import zmanim_for_date_prefix
 
 
 def get_cl_settings_keyboard(current_value: int) -> InlineKeyboardMarkup:
@@ -63,8 +62,8 @@ def get_omer_kb(status: bool) -> InlineKeyboardMarkup:
     kb = InlineKeyboardMarkup()
     kb.row(
         InlineKeyboardButton(
-            text=f'✅   {messages.settings_enabled}' if status
-            else f'❌   {messages.settings_disabled}',
+            text=f'✅   {buttons.settings_enabled}' if status
+            else f'❌   {buttons.settings_disabled}',
             callback_data=f'{CallbackPrefixes.omer}{int(status)}'
         )
     )
@@ -75,7 +74,7 @@ def get_zmanim_by_date_buttons(dates: List[date]) -> InlineKeyboardMarkup:
     kb = InlineKeyboardMarkup()
     for d in dates:
         kb.row(InlineKeyboardButton(
-            text=f'{zmanim_for} {humanize_date([d])}',
+            text=f'{zmanim_for_date_prefix} {humanize_date([d])}',
             callback_data=f'{CallbackPrefixes.zmanim_by_date}{d.isoformat()}'
         ))
     return kb

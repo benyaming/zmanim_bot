@@ -98,12 +98,12 @@ async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
 @chat_action('text')
 async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
     await state.finish()
-    await redirect_to_main_menu()
+    await redirect_to_main_menu(messages.location_saved)
 
 
 @dp.message_handler(state=LocationNameState.waiting_for_location_name_state)
 @chat_action('text')
-async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
+async def handle_location_name(msg: Message, state: FSMContext):
     state_data = await state.get_data()
 
     old_name = state_data.get('location_name')

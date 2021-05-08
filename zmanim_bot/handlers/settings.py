@@ -4,11 +4,12 @@ from aiogram.types import Message, CallbackQuery, ContentType
 from zmanim_bot.config import LANGUAGE_LIST
 from zmanim_bot.handlers.utils.redirects import redirect_to_request_language, redirect_to_main_menu
 from zmanim_bot.helpers import CallbackPrefixes, CALL_ANSWER_OK, LOCATION_PATTERN, parse_coordinates
+from zmanim_bot.keyboards.menus import get_cancel_keyboard
 from zmanim_bot.misc import dp, bot
 from zmanim_bot.states import LocationNameState
 from zmanim_bot.tracking import track
 from zmanim_bot.utils import chat_action
-from zmanim_bot.texts.single import buttons
+from zmanim_bot.texts.single import buttons, messages
 from zmanim_bot.service import settings_service
 
 
@@ -103,8 +104,8 @@ async def location_request(msg: Message):
 @dp.callback_query_handler(text_startswith=CallbackPrefixes.location_activate)
 async def handle_activate_location(call: CallbackQuery):
     location_name = call.data.split(CallbackPrefixes.location_activate)[1]
-    kb = await settings_service.activate_location(location_name)
-    await call.answer()
+    alert, kb = await settings_service.activate_location(location_name)
+    await call.answer(alert)
 
     await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
 
@@ -117,15 +118,16 @@ async def init_location_raname(call: CallbackQuery, state: FSMContext):
     state_data = {
         'location_name': location_name,
         'redirect_target': 'settings',
-        'redirect_message': 'Successfully renamed!',  # todo translate
+        'redirect_message': messages.location_renamed.value,
         'origin_message_id': call.message.message_id
     }
 
     await state.set_data(state_data)
     await call.answer()
 
-    resp = f'Write new location name for {location_name}:'
-    await bot.send_message(call.from_user.id, resp)
+    resp = messages.location_new_name_request.value.format(location_name)
+    kb = get_cancel_keyboard()
+    await bot.send_message(call.from_user.id, resp, reply_markup=kb)
 
 
 @dp.callback_query_handler(text_startswith=CallbackPrefixes.location_delete)
@@ -148,9 +150,12 @@ async def handle_location(msg: Message, state: FSMContext):
     else:
         lat, lng = parse_coordinates(msg.text)
 
-    resp, kb, location_name = await settings_service.set_location(lat, lng)
+    resp, kb, location_name = await settings_service.save_location(lat, lng)
     await LocationNameState().waiting_for_location_name_state.set()
-    await state.set_data({'location_name': location_name})
+    await state.set_data({
+        'location_name': location_name,
+        'redirect_message': messages.location_saved.value
+    })
     await msg.reply(resp, reply_markup=kb)
 
 

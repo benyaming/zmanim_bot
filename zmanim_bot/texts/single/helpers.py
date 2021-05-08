@@ -3,10 +3,8 @@ from zmanim_bot.middlewares.i18n import lazy_gettext as _
 
 and_word = _('and')
 
-
-cl_error_warning = _('For this location image is impossible\nto determine because of '
-                     'polar night/day.')
-cl_late_warning = _('Notice! You should specify time of candle\n lighting with the ' 
-                    'rabbi of your community!')
+cl_error_warning = _('It is impossible to compute Zmanim for your location. Most likely it is because of '
+                     'Midnight Sun or polar night.')
+cl_late_warning = _('Notice! it is recommended to clarify time of take of Sabbath in your community.')
 
 cl_offset = _('before sunset')

@@ -6,28 +6,41 @@ from zmanim_bot.middlewares.i18n import lazy_gettext as _
 
 
 MONTH_NAMES_GENETIVE: Dict[int, LazyProxy] = {
-    1: _('january-g'),
-    2: _('fubruary-g'),
-    3: _('march-g'),
-    4: _('april-g'),
-    5: _('may-g'),
-    6: _('june-g'),
-    7: _('july-g'),
-    8: _('august-g'),
-    9: _('september-g'),
-    10: _('october-g'),
-    11: _('november-g'),
-    12: _('december-g'),
+    # NOTE Genative month name
+    1: _('January'),
+    # NOTE Genative month name
+    2: _('February'),
+    # NOTE Genative month name
+    3: _('March'),
+    # NOTE Genative month name
+    4: _('April'),
+    # NOTE Genative month name
+    5: _('May'),
+    # NOTE Genative month name
+    6: _('June'),
+    # NOTE Genative month name
+    7: _('July'),
+    # NOTE Genative month name
+    8: _('August'),
+    # NOTE Genative month name
+    9: _('September'),
+    # NOTE Genative month name
+    10: _('October'),
+    # NOTE Genative month name
+    11: _('November'),
+    # NOTE Genative month name
+    12: _('December'),
+
 }
 
 WEEKDAYS: Dict[int, LazyProxy] = {
-    0: _('monday'),
-    1: _('tuesday'),
-    2: _('wednesday'),
-    3: _('thursday'),
-    4: _('friday'),
-    5: _('saturday'),
-    6: _('sunday')
+    0: _('Monday'),
+    1: _('Tuesday'),
+    2: _('Wednesday'),
+    3: _('Thursday'),
+    4: _('Friday'),
+    5: _('Saturday'),
+    6: _('Sunday')
 }
 
 # Titles
@@ -37,10 +50,10 @@ title_shabbath = _('SHABBAT')
 title_zmanim = _('ZMANIM')
 FASTS_TITLES = {
     'fast_gedalia': _('FAST OF GEDALIAH'),
-    'fast_10_teves': _('FAST 10th OF TEVETH'),
+    'fast_10_teves': _('10th OF TEVET'),
     'fast_esther': _('FAST OF ESTHER'),
-    'fast_17_tammuz': _('FAST 17th OF TAMMUZ'),
-    'fast_9_av': _('FAST 9th OF AV')
+    'fast_17_tammuz': _('17th OF TAMMUZ'),
+    'fast_9_av': _('9th OF AV')
 }
 HOLIDAYS_TITLES = {
     'chanukah': _('CHANUKAH'),
@@ -53,7 +66,7 @@ YOMTOVS_TITLES = {
     'rosh_hashana': _('ROSH HA-SHANA'),
     'yom_kippur': _('YOM KIPUR'),
     'succot': _('SUCCOT'),
-    'shmini_atzeres': _('SHMINI ATZERES'),
+    'shmini_atzeres': _('SHMINI ATZERET'),
     'pesach': _('PESACH'),
     'shavuot': _('SHAVUOT')
 }
@@ -61,84 +74,84 @@ YOMTOVS_TITLES = {
 shabbat = _('shabbat')
 
 TORAH_PARTS = {
-    'bereishis': _('bereishis'),
-    'noach': _('noach'),
-    'lech_lecha': _('lech_lecha'),
-    'vayeira': _('vayeira'),
-    'chayei_sarah': _('chayei_sarah'),
-    'toldos': _('toldos'),
-    'vayeitzei': _('vayeitzei'),
-    'vayishlach': _('vayishlach'),
-    'vayeishev': _('vayeishev'),
-    'mikeitz': _('mikeitz'),
-    'vayigash': _('vayigash'),
-    'vayechi': _('vayechi'),
-    'shemos': _('shemos'),
-    'vaeirah': _('vaeirah'),
-    'bo': _('bo'),
-    'beshalach': _('beshalach'),
-    'yisro': _('yisro'),
-    'mishpatim': _('mishpatim'),
-    'terumah': _('terumah'),
-    'tetzaveh': _('tetzaveh'),
-    'ki_sisa': _('ki_sisa'),
-    'vayakheil': _('vayakheil'),
-    'pekudei': _('pekudei'),
-    'vayikra': _('vayikra'),
-    'tzav': _('tzav'),
-    'shemini': _('shemini'),
-    'tazria': _('tazria'),
-    'metzora': _('metzora'),
-    'acharei': _('acharei'),
-    'kedoshim': _('kedoshim'),
-    'emor': _('emor'),
-    'behar': _('behar'),
-    'bechukosai': _('bechukosai'),
-    'bamidbar': _('bamidbar'),
-    'naso': _('naso'),
-    'behaalosecha': _('behaalosecha'),
-    'shelach': _('shelach'),
-    'korach': _('korach'),
-    'chukas': _('chukas'),
-    'balak': _('balak'),
-    'pinchas': _('pinchas'),
-    'matos': _('matos'),
-    'masei': _('masei'),
-    'devarim': _('devarim'),
-    'vaeschanan': _('vaeschanan'),
-    'eikev': _('eikev'),
-    'reei': _('reei'),
-    'shoftim': _('shoftim'),
-    'ki_seitzei': _('ki_seitzei'),
-    'ki_savo': _('ki_savo'),
-    'nitzavim': _('nitzavim'),
-    'vayeilech': _('vayeilech'),
-    'haazinu': _('haazinu'),
-    'vezos_haberacha': _('vezos_haberacha'),
+    'bereishis': _('Bereshit'),
+    'noach': _('Noach'),
+    'lech_lecha': _('Lech-Lecha'),
+    'vayeira': _('Vayeira'),
+    'chayei_sarah': _('Chayei Sarah'),
+    'toldos': _('Toledot'),
+    'vayeitzei': _('Vayetze'),
+    'vayishlach': _('Vayishlach'),
+    'vayeishev': _('Vayeshev'),
+    'mikeitz': _('Miketz'),
+    'vayigash': _('Vayigash'),
+    'vayechi': _('Vayechi'),
+    'shemos': _('Shemot'),
+    'vaeirah': _('Va\'eira'),
+    'bo': _('Bo'),
+    'beshalach': _('Beshalach'),
+    'yisro': _('Yitro'),
+    'mishpatim': _('Mishpatim'),
+    'terumah': _('Terumah'),
+    'tetzaveh': _('Tetzaveh'),
+    'ki_sisa': _('Ki Tisa'),
+    'vayakheil': _('Vayakhel'),
+    'pekudei': _('Pekudei'),
+    'vayikra': _('Vayikra'),
+    'tzav': _('Tzav'),
+    'shemini': _('Shemini'),
+    'tazria': _('Tazria'),
+    'metzora': _('Metzora'),
+    'acharei': _('Acharei Mot'),
+    'kedoshim': _('Kedoshim'),
+    'emor': _('Emor'),
+    'behar': _('Behar'),
+    'bechukosai': _('Bechukotai'),
+    'bamidbar': _('Bamidbar'),
+    'naso': _('Naso'),
+    'behaalosecha': _('Behaalotecha'),
+    'shelach': _('Shlach'),
+    'korach': _('Korach'),
+    'chukas': _('Chukat'),
+    'balak': _('Balak'),
+    'pinchas': _('Pinchas'),
+    'matos': _('Matot'),
+    'masei': _('Masei'),
+    'devarim': _('Devarim'),
+    'vaeschanan': _('Va\'etchanan'),
+    'eikev': _('Eikev'),
+    'reei': _('Re\'eh'),
+    'shoftim': _('Shoftim'),
+    'ki_seitzei': _('Ki Teitzei'),
+    'ki_savo': _('Ki Tavo'),
+    'nitzavim': _('Nitzavim'),
+    'vayeilech': _('Vayelech'),
+    'haazinu': _('Haazinu'),
+    'vezos_haberacha': _('V\'Zot HaBerachah'),
 
-    'vayakheil - pikudei': _('vayakheil - pikudei'),
-    'tazria - metzora': _('tazria - metzora'),
-    'acharei - kedoshim': _('acharei - kedoshim'),
-    'behar - bechukosai': _('behar - bechukosai'),
-    'chukas - balak': _('chukas - balak'),
-    'matos - masei': _('matos - masei'),
-    'nitzavim - vayeilech': _('nitzavim - vayeilech'),
+    'vayakheil - pikudei': _('Vayakhel - Pekudei'),
+    'tazria - metzora': _('Tazria - Metzora'),
+    'acharei - kedoshim': _('Acharei Mot - Kedoshim'),
+    'behar - bechukosai': _('Behar - Bechukotai'),
+    'chukas - balak': _('Chukat - Balak'),
+    'matos - masei': _('Matot - Masei'),
+    'nitzavim - vayeilech': _('Nitzavim - Vayelech'),
     
-    'rosh_hashana': _('shabbat_rosh_hashana'),
-    'yom_kippur': _('shabbat_yom_kippur'),
-    'succos': _('shabbat_succos'),
-    'chol_hamoed_succos': _('shabbat_chol_hamoed_succos'),
-    'hoshana_rabbah': _('shabbat_hoshana_rabbah'),
-    'shemini_atzeres': _('shabbat_shemini_atzeres'),
-    'simchas_torah': _('shabbat_simchas_torah'),
-    'pesach': _('shabbat_pesach'),
-    'chol_hamoed_pesach': _('shabbat_chol_hamoed_pesach'),
-    'shavuos': _('shabbat_shavuos')
+    'rosh_hashana': _('Shabbat Rosh ha-Shana'),
+    'yom_kippur': _('Shabbat Yom Kippur'),
+    'succos': _('Shabat Succot'),
+    'chol_hamoed_succos': _('Shabbat Chol ha-moed Succot'),
+    'hoshana_rabbah': _('Shabbat Chol ha-moed Succot'),
+    'shemini_atzeres': _('Shabbat Shmini Atzeret'),
+    'simchas_torah': _('Shabbat Simchat Torah'),
+    'pesach': _('Shabbat Pesach'),
+    'chol_hamoed_pesach': _('Shabbat Chol ha-moed Pesach'),
+    'shavuos': _('Shabbat Shavuot')
 }
 
 GEMARA_BOOKS = {
-    'berachos': _('Brachos'),
-    'shabbos': _('Shabbos'),
+    'berachos': _('Brachot'),
+    'shabbos': _('Shabbat'),
     'eruvin': _('Eruvin'),
     'pesachim': _('Pesachim'),
     'shekalim': _('Shekalim'),
@@ -146,12 +159,12 @@ GEMARA_BOOKS = {
     'sukkah': _('Sukah'),
     'beitzah': _('Beitzah'),
     'rosh_hashanah': _('Rosh Hashana'),
-    'taanis': _('Taanis'),
+    'taanis': _('Taanit'),
     'megillah': _('Megilah'),
     'moed_katan': _('Moed Katan'),
     'chagigah': _('Chagigah'),
-    'yevamos': _('Yevamos'),
-    'kesubos': _('Kesuvos'),
+    'yevamos': _('Yevamot'),
+    'kesubos': _('Kesuvot'),
     'nedarim': _('Nedarim'),
     'nazir': _('Nazir'),
     'sotah': _('Sotah'),
@@ -159,54 +172,80 @@ GEMARA_BOOKS = {
     'kiddushin': _('Kidushin'),
     'bava_kamma': _('Bava Kama'),
     'bava_metzia': _('Bava Metzia'),
-    'bava_basra': _('Bava Basra'),
+    'bava_basra': _('Bava Batra'),
     'sanhedrin': _('Sanhedrin'),
-    'makkos': _('Makos'),
-    'shevuos': _('Shevuos'),
+    'makkos': _('Makot'),
+    'shevuos': _('Shevuot'),
     'avodah_zarah': _('Avodah Zarah'),
-    'horiyos': _('Horayos'),
+    'horiyos': _('Horayot'),
     'zevachim': _('Zevachim'),
-    'menachos': _('Menachos'),
+    'menachos': _('Menachot'),
     'chullin': _('Chulin'),
-    'bechoros': _('Bechoros'),
+    'bechoros': _('Bechorot'),
     'arachin': _('Erchin'),
     'temurah': _('Temurah'),
-    'kerisos': _('Kerisos'),
+    'kerisos': _('Kerisot'),
     'meilah': _('Meilah'),
     'kinnim': _('Kinnim'),
     'tamid': _('Tamid'),
-    'midos': _('Midos'),
+    'midos': _('Midot'),
     'niddah': _('Nidah')
 }
 
 JEWISH_MONTHS = {
-    'nissan': _('nissan'),
-    'iyar': _('iyar'),
-    'sivan': _('sivan'),
-    'tammuz': _('tammuz'),
-    'av': _('av'),
-    'elul': _('elul'),
-    'tishrei': _('tishrei'),
-    'cheshvan': _('cheshvan'),
-    'kislev': _('kislev'),
-    'teves': _('teves'),
-    'shevat': _('shevat'),
-    'adar': _('adar'),
-    'adar_ii': _('adar_ii')
+    # NOTE It is very important to add space after the month name!!
+    'nissan': _('Nisan '),
+    # NOTE It is very important to add space after the month name!!
+    'iyar': _('Iyar '),
+    # NOTE It is very important to add space after the month name!!
+    'sivan': _('Sivan '),
+    # NOTE It is very important to add space after the month name!!
+    'tammuz': _('Tammuz '),
+    # NOTE It is very important to add space after the month name!!
+    'av': _('Av '),
+    # NOTE It is very important to add space after the month name!!
+    'elul': _('Elul '),
+    # NOTE It is very important to add space after the month name!!
+    'tishrei': _('Tishrei '),
+    # NOTE It is very important to add space after the month name!!
+    'cheshvan': _('Cheshvan '),
+    # NOTE It is very important to add space after the month name!!
+    'kislev': _('Kislev '),
+    # NOTE It is very important to add space after the month name!!
+    'teves': _('Tevet '),
+    # NOTE It is very important to add space after the month name!!
+    'shevat': _('Shevat '),
+    # NOTE It is very important to add space after the month name!!
+    'adar': _('Adar '),
+    # NOTE It is very important to add space after the month name!!
+    'adar_ii': _('Adar II '),
 }
 
 JEWISH_MONTHS_GENETIVE = {
-    'nissan': _('nissan-g'),
-    'iyar': _('iyar-g'),
-    'sivan': _('sivan-g'),
-    'tammuz': _('tammuz-g'),
-    'av': _('av-g'),
-    'elul': _('elul-g'),
-    'tishrei': _('tishrei-g'),
-    'cheshvan': _('cheshvan-g'),
-    'kislev': _('kislev-g'),
-    'teves': _('teves-g'),
-    'shevat': _('shevat-g'),
-    'adar': _('adar-g'),
-    'adar_ii': _('adar_ii-g')
+    # NOTE Genative month name
+    'nissan': _('Nisan'),
+    # NOTE Genative month name
+    'iyar': _('Iyar'),
+    # NOTE Genative month name
+    'sivan': _('Sivan'),
+    # NOTE Genative month name
+    'tammuz': _('Tammuz'),
+    # NOTE Genative month name
+    'av': _('Av'),
+    # NOTE Genative month name
+    'elul': _('Elul'),
+    # NOTE Genative month name
+    'tishrei': _('Tishrei'),
+    # NOTE Genative month name
+    'cheshvan': _('Cheshvan'),
+    # NOTE Genative month name
+    'kislev': _('Kislev'),
+    # NOTE Genative month name
+    'teves': _('Tevet'),
+    # NOTE Genative month name
+    'shevat': _('Shevat'),
+    # NOTE Genative month name
+    'adar': _('Adar'),
+    # NOTE Genative month name
+    'adar_ii': _('Adar II'),
 }

@@ -1,4 +1,4 @@
-from typing import Tuple, Optional, List
+from typing import Tuple, Optional
 
 from aiogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup
 
@@ -11,6 +11,7 @@ from zmanim_bot.helpers import CallbackPrefixes
 from zmanim_bot.middlewares.i18n import i18n_
 from zmanim_bot.service import zmanim_service
 from zmanim_bot.states import FeedbackState
+from zmanim_bot.texts.single import messages
 
 
 async def get_current_cl() -> Tuple[str, InlineKeyboardMarkup]:
@@ -44,7 +45,7 @@ async def set_havdala(call_data: str) -> InlineKeyboardMarkup:
 async def get_current_zmanim() -> Tuple[str, InlineKeyboardMarkup]:
     current_zmanim = await bot_repository.get_or_set_zmanim()
     kb = keyboards.inline.get_zmanim_settings_keyboard(current_zmanim)
-    return texts.single.messages.settings_havdala, kb
+    return texts.single.messages.settings_zmanim, kb
 
 
 async def set_zmanim(call_data: str) -> InlineKeyboardMarkup:
@@ -80,34 +81,33 @@ async def set_language(lang: str):
 
 async def get_locations_menu() -> Tuple[str, InlineKeyboardMarkup]:
     user = await bot_repository.get_or_create_user()
-    msg = 'Activate, edit or send new location:'  # todo translate
     kb = keyboards.inline.get_location_options_menu(user.location_list)
 
-    return msg, kb
+    return messages.settings_location, kb
 
 
-async def set_location(lat: float, lng: float) -> Tuple[str, ReplyKeyboardMarkup, str]:
+async def save_location(lat: float, lng: float) -> Tuple[str, ReplyKeyboardMarkup, str]:
     location = await bot_repository.get_or_set_location((lat, lng))
     kb = keyboards.menus.get_done_keyboard()
-    resp = f'current name: {location.name}. If yoy want, you can write custom name for the ' \
-           f'location or press "Done" button.'  # todo translate
+    resp = messages.custom_location_name_request.value.format(location.name)
     return resp, kb, location.name
 
 
-async def activate_location(location_name: str) -> InlineKeyboardMarkup:
+async def activate_location(location_name: str) -> Tuple[str, InlineKeyboardMarkup]:
     location_list = await bot_repository.activate_location(location_name)
+    resp = messages.location_activated.value.format(location_name)
     kb = keyboards.inline.get_location_options_menu(location_list)
-    return kb
+    return resp, kb
 
 
 async def delete_location(location_name: str) -> Tuple[str, Optional[InlineKeyboardMarkup]]:
     try:
         location_list = await bot_repository.delete_location(location_name)
         kb = keyboards.inline.get_location_options_menu(location_list)
-        msg = 'Successfully deleted'  # todo translate
+        msg = messages.location_deleted
     except ActiveLocationException:
         kb = None
-        msg = 'Unable to delete active location!'  # todo translate
+        msg = messages.unable_to_delete_active_location
 
     return msg, kb
 
@@ -125,5 +125,3 @@ async def init_report() -> Tuple[str, ReplyKeyboardMarkup]:
     await FeedbackState.waiting_for_feedback_text.set()
     kb = keyboards.menus.get_cancel_keyboard()
     return texts.single.messages.init_report, kb
-
-
