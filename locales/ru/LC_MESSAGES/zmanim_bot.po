@@ -324,9 +324,9 @@ msgstr ""
 
 #: zmanim_bot/texts/single/helpers.py:8
 msgid ""
-"Notice! it is recommended to clarify time of take of Sabbath in your "
+"Notice! it is recommended to clarify time\nof taking Shabbat in your "
 "community."
-msgstr "Внимание! Рекомендуем уточнить, во сколько ваша община принимает шаббат!"
+msgstr "Внимание! Стоит уточнить, во сколько\nваша община принимает шаббат!"
 
 #: zmanim_bot/texts/single/helpers.py:10
 msgid "before sunset"
