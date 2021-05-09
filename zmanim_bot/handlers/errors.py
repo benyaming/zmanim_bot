@@ -1,3 +1,4 @@
+import sentry_sdk
 from aiogram import Bot
 from aiogram.types import Update, User
 
@@ -73,4 +74,6 @@ async def main_errors_handler(update: Update, e: Exception):
     await bot.send_message(user.id, error_occured)
 
     logger.exception(e)
+
+    sentry_sdk.capture_exception(e)
     return True
