@@ -1,1 +1,1 @@
-from . import single, plural
+from . import plural, single

@@ -2,10 +2,10 @@ import posthog
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message
 
-from zmanim_bot.misc import dp
-from zmanim_bot.utils import chat_action
-from zmanim_bot.texts.single import buttons
 from zmanim_bot.handlers.utils.redirects import redirect_to_main_menu
+from zmanim_bot.misc import dp
+from zmanim_bot.texts.single import buttons
+from zmanim_bot.utils import chat_action
 
 
 @dp.message_handler(commands=['start'])

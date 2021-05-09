@@ -1,13 +1,13 @@
 from io import BytesIO
-from typing import Tuple, Optional
+from typing import Optional, Tuple
 
 from aiogram.types import InlineKeyboardMarkup
 
-from zmanim_bot.repository import bot_repository
-from zmanim_bot.integrations import zmanim_api_client
 from zmanim_bot.helpers import CallbackPrefixes
-from zmanim_bot.states import ZmanimGregorianDateState
+from zmanim_bot.integrations import zmanim_api_client
 from zmanim_bot.processors.image import image_processor as ip
+from zmanim_bot.repository import bot_repository
+from zmanim_bot.states import ZmanimGregorianDateState
 
 
 async def get_zmanim() -> BytesIO:

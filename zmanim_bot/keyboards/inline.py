@@ -1,12 +1,13 @@
 from datetime import date
 from typing import List
 
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from zmanim_bot.repository.bot_repository import Location
+from zmanim_bot.helpers import (CL_OFFET_OPTIONS, HAVDALA_OPINION_OPTIONS,
+                                CallbackPrefixes)
 from zmanim_bot.processors.text_utils import humanize_date
-from zmanim_bot.texts.single import zmanim, buttons
-from zmanim_bot.helpers import CL_OFFET_OPTIONS, HAVDALA_OPINION_OPTIONS, CallbackPrefixes
+from zmanim_bot.repository.bot_repository import Location
+from zmanim_bot.texts.single import buttons, zmanim
 from zmanim_bot.texts.single.buttons import zmanim_for_date_prefix
 
 

@@ -1,23 +1,21 @@
 from asyncio import create_task
 
-from aiogram.types import Message, ContentType
 from aiogram.dispatcher import FSMContext
+from aiogram.types import ContentType, Message
 
-from zmanim_bot.misc import dp, bot
-from zmanim_bot.states import (
-    ConverterGregorianDateState,
-    ConverterJewishDateState,
-    FeedbackState,
-    ZmanimGregorianDateState, LocationNameState
-)
-from zmanim_bot.helpers import check_date
-from zmanim_bot.utils import chat_action
-from zmanim_bot.texts.single import messages, buttons
-from zmanim_bot.keyboards.menus import get_report_keyboard
-from zmanim_bot.handlers.utils.redirects import redirect_to_main_menu, redirect_to_settings_menu
-from zmanim_bot.service import converter_service, zmanim_service, settings_service
 from zmanim_bot.admin.report_management import send_report_to_admins
-
+from zmanim_bot.handlers.utils.redirects import (redirect_to_main_menu,
+                                                 redirect_to_settings_menu)
+from zmanim_bot.helpers import check_date
+from zmanim_bot.keyboards.menus import get_report_keyboard
+from zmanim_bot.misc import bot, dp
+from zmanim_bot.service import (converter_service, settings_service,
+                                zmanim_service)
+from zmanim_bot.states import (ConverterGregorianDateState,
+                               ConverterJewishDateState, FeedbackState,
+                               LocationNameState, ZmanimGregorianDateState)
+from zmanim_bot.texts.single import buttons, messages
+from zmanim_bot.utils import chat_action
 
 # REPORTS
 

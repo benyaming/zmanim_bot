@@ -1,13 +1,14 @@
-import betterlogging as bl
 import asyncio
 
-from aiogram import Dispatcher, Bot, types
+import betterlogging as bl
+from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.redis import RedisStorage2
 from motor.core import AgnosticCollection
-from odmantic import AIOEngine
 from motor.motor_asyncio import AsyncIOMotorClient
+from odmantic import AIOEngine
 
-from .config import BOT_TOKEN, REDIS_HOST, REDIS_PORT, REDIS_DB, DB_URL, DB_NAME, DB_COLLECTION_NAME
+from .config import (BOT_TOKEN, DB_COLLECTION_NAME, DB_NAME, DB_URL, REDIS_DB,
+                     REDIS_HOST, REDIS_PORT)
 
 logger = bl.get_colorized_logger('zmanim_bot')
 logger.setLevel(bl.INFO)

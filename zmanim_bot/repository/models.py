@@ -1,7 +1,7 @@
 from abc import ABC
-from typing import Optional, List, Tuple
+from typing import List, Optional, Tuple
 
-from odmantic import Model, EmbeddedModel, Field
+from odmantic import EmbeddedModel, Field, Model
 
 from zmanim_bot.config import DB_COLLECTION_NAME
 from zmanim_bot.exceptions import NoLocationException

@@ -1,6 +1,5 @@
 from zmanim_bot.middlewares.i18n import lazy_gettext as _
 
-
 # Service
 geobutton = _('Send location')
 cancel = _('Cancel')

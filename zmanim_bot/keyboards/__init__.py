@@ -1,1 +1,1 @@
-from . import menus, inline
+from . import inline, menus

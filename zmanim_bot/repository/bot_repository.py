@@ -1,9 +1,10 @@
-from typing import Tuple, Optional, Any, List
+from typing import Any, List, Optional, Tuple
 
 from aiogram.types import User
 
 from ._storage import *
-from .models import User as BotUser, Location
+from .models import Location
+from .models import User as BotUser
 
 __all__ = [
     'Location',

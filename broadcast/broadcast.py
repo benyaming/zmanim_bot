@@ -2,14 +2,13 @@ import asyncio
 import logging
 from typing import Tuple
 
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from pymongo import MongoClient
+import data
 from aiogram import Bot, Dispatcher, types
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils import exceptions, executor
+from pymongo import MongoClient
 
 from zmanim_bot import config
-import data
-
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger('broadcast')

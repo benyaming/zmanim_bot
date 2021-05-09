@@ -1,12 +1,12 @@
 from aiogram import Bot
 from aiogram.types import Update, User
 
-from zmanim_bot.misc import dp, logger
 from zmanim_bot.exceptions import *
-from zmanim_bot.texts.single import messages
-from zmanim_bot.texts.single.messages import error_occured
 from zmanim_bot.handlers.utils.redirects import *
 from zmanim_bot.handlers.utils.warnings import *
+from zmanim_bot.misc import dp, logger
+from zmanim_bot.texts.single import messages
+from zmanim_bot.texts.single.messages import error_occured
 
 
 @dp.errors_handler(exception=NoLocationException)

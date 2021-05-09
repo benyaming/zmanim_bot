@@ -1,6 +1,5 @@
 from zmanim_bot.middlewares.i18n import lazy_gettext as _
 
-
 init_bot = _('Welcome to zmanim bot!')
 init_main_menu = _('You are in the main menu:')
 init_help = _('How can I help you?')

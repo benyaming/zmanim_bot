@@ -1,10 +1,9 @@
 import inspect
 
 import posthog
-from aiogram.types import User, Message
+from aiogram.types import Message, User
 
-from .config import POSTHOG_API_KEY, IS_PROD
-
+from .config import IS_PROD, POSTHOG_API_KEY
 
 posthog.api_key = POSTHOG_API_KEY
 posthog.disabled = not IS_PROD

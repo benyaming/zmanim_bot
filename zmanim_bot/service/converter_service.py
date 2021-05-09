@@ -1,15 +1,18 @@
 from datetime import date
 from typing import Tuple
 
-from aiogram.types import ReplyKeyboardMarkup, InlineKeyboardMarkup
+from aiogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup
 from zmanim.hebrew_calendar.jewish_calendar import JewishCalendar
 
 from zmanim_bot import keyboards
-from zmanim_bot.exceptions import IncorrectJewishDateException, IncorrectGregorianDateException
+from zmanim_bot.exceptions import (IncorrectGregorianDateException,
+                                   IncorrectJewishDateException)
 from zmanim_bot.keyboards.inline import get_zmanim_by_date_buttons
-from zmanim_bot.states import ConverterGregorianDateState, ConverterJewishDateState
+from zmanim_bot.states import (ConverterGregorianDateState,
+                               ConverterJewishDateState)
 from zmanim_bot.texts.single import messages
-from zmanim_bot.texts.single.names import MONTH_NAMES_GENETIVE, WEEKDAYS, JEWISH_MONTHS_GENETIVE
+from zmanim_bot.texts.single.names import (JEWISH_MONTHS_GENETIVE,
+                                           MONTH_NAMES_GENETIVE, WEEKDAYS)
 
 
 def get_converter_entry_menu() -> Tuple[str, ReplyKeyboardMarkup]:
