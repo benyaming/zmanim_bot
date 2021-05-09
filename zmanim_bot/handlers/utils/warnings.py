@@ -1,9 +1,8 @@
 from aiogram.types import User
 
 import zmanim_bot.keyboards.menus
-from zmanim_bot.texts.single import messages
 from zmanim_bot.misc import bot
-
+from zmanim_bot.texts.single import messages
 
 __all__ = [
     'incorrect_greg_date_warning',

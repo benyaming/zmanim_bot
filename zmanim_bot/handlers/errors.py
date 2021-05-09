@@ -1,12 +1,13 @@
+import sentry_sdk
 from aiogram import Bot
 from aiogram.types import Update, User
 
-from zmanim_bot.misc import dp, logger
 from zmanim_bot.exceptions import *
-from zmanim_bot.texts.single import messages
-from zmanim_bot.texts.single.messages import error_occured
 from zmanim_bot.handlers.utils.redirects import *
 from zmanim_bot.handlers.utils.warnings import *
+from zmanim_bot.misc import dp, logger
+from zmanim_bot.texts.single import messages
+from zmanim_bot.texts.single.messages import error_occured
 
 
 @dp.errors_handler(exception=NoLocationException)
@@ -73,4 +74,6 @@ async def main_errors_handler(update: Update, e: Exception):
     await bot.send_message(user.id, error_occured)
 
     logger.exception(e)
+
+    sentry_sdk.capture_exception(e)
     return True

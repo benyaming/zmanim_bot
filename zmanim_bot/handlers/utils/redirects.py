@@ -2,7 +2,6 @@ from aiogram.types import User
 
 from zmanim_bot.keyboards import menus
 from zmanim_bot.misc import bot
-
 from zmanim_bot.texts.single import messages
 
 __all__ = [

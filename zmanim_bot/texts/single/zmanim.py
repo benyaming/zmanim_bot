@@ -1,6 +1,5 @@
 from zmanim_bot.middlewares.i18n import lazy_gettext as _
 
-
 sunrise = _('Sunrise')
 alos = _('Alot ha-shakhar')
 sof_zman_tefila_gra = _('Sof zman tfila [AGRO]')

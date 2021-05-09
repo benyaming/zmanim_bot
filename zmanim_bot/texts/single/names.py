@@ -4,7 +4,6 @@ from babel.support import LazyProxy
 
 from zmanim_bot.middlewares.i18n import lazy_gettext as _
 
-
 MONTH_NAMES_GENETIVE: Dict[int, LazyProxy] = {
     # NOTE Genative month name
     1: _('January'),

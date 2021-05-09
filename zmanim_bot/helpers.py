@@ -1,11 +1,11 @@
-from typing import Tuple
 from datetime import date
+from typing import Tuple
 
 from zmanim.hebrew_calendar.jewish_date import JewishDate
 
+from .exceptions import (IncorrectGregorianDateException,
+                         IncorrectLocationException)
 from .texts.single.names import JEWISH_MONTHS_GENETIVE
-from .exceptions import IncorrectLocationException, IncorrectGregorianDateException
-
 
 LOCATION_PATTERN = r'^-?\d{1,2}\.{1}\d+, {0,1}-?\d{1,3}\.{1}\d+$'
 LANGUAGE_SHORTCUTS = {

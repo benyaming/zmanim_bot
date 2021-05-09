@@ -1,16 +1,18 @@
 from aiogram.dispatcher import FSMContext
-from aiogram.types import Message, CallbackQuery, ContentType
+from aiogram.types import CallbackQuery, ContentType, Message
 
 from zmanim_bot.config import LANGUAGE_LIST
-from zmanim_bot.handlers.utils.redirects import redirect_to_request_language, redirect_to_main_menu
-from zmanim_bot.helpers import CallbackPrefixes, CALL_ANSWER_OK, LOCATION_PATTERN, parse_coordinates
+from zmanim_bot.handlers.utils.redirects import (redirect_to_main_menu,
+                                                 redirect_to_request_language)
+from zmanim_bot.helpers import (CALL_ANSWER_OK, LOCATION_PATTERN,
+                                CallbackPrefixes, parse_coordinates)
 from zmanim_bot.keyboards.menus import get_cancel_keyboard
-from zmanim_bot.misc import dp, bot
+from zmanim_bot.misc import bot, dp
+from zmanim_bot.service import settings_service
 from zmanim_bot.states import LocationNameState
+from zmanim_bot.texts.single import buttons, messages
 from zmanim_bot.tracking import track
 from zmanim_bot.utils import chat_action
-from zmanim_bot.texts.single import buttons, messages
-from zmanim_bot.service import settings_service
 
 
 @dp.message_handler(text=buttons.sm_candle)

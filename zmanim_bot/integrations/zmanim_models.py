@@ -1,9 +1,9 @@
 from __future__ import annotations
+
+from datetime import date, datetime, time
 from typing import List, Optional, Tuple
-from datetime import datetime, time, date
 
 from pydantic import BaseModel
-
 
 __all__ = [
     'Settings',

@@ -1,17 +1,17 @@
-from typing import Tuple, Optional, List
+from typing import List, Optional, Tuple
 
 from aiogram import types
 
 from zmanim_bot.config import LOCATION_NUMBER_LIMIT
-from zmanim_bot.exceptions import (
-    NoLocationException,
-    NoLanguageException,
-    NonUniqueLocationException,
-    MaxLocationLimitException, NonUniqueLocationNameException, ActiveLocationException
-)
-from zmanim_bot.misc import db_engine
+from zmanim_bot.exceptions import (ActiveLocationException,
+                                   MaxLocationLimitException,
+                                   NoLanguageException, NoLocationException,
+                                   NonUniqueLocationException,
+                                   NonUniqueLocationNameException)
 from zmanim_bot.integrations.geo_client import get_location_name
-from .models import User, UserInfo, Location, ZmanimSettings
+from zmanim_bot.misc import db_engine
+
+from .models import Location, User, UserInfo, ZmanimSettings
 
 __all__ = [
     '_get_or_create_user',

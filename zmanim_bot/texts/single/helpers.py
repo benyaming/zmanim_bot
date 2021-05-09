@@ -1,6 +1,5 @@
 from zmanim_bot.middlewares.i18n import lazy_gettext as _
 
-
 and_word = _('and')
 
 cl_error_warning = _('It is impossible to compute Zmanim for your location. Most likely it is because of '

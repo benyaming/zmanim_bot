@@ -1,10 +1,9 @@
 from datetime import date
 from typing import Optional, Tuple
 
+from zmanim_bot.config import ZMANIM_API_URL
 from zmanim_bot.integrations.zmanim_models import *
 from zmanim_bot.misc import bot
-from zmanim_bot.config import ZMANIM_API_URL
-
 
 __all__ = [
     'get_zmanim',

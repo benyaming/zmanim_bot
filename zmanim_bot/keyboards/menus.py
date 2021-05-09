@@ -1,7 +1,7 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
-from ..texts.single import buttons
 from ..config import LANGUAGE_LIST
+from ..texts.single import buttons
 
 
 def get_lang_menu() -> ReplyKeyboardMarkup:

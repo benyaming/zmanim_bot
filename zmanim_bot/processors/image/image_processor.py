@@ -1,20 +1,23 @@
+from datetime import date
+from datetime import datetime as dt
+from datetime import timedelta
 from io import BytesIO
 from pathlib import Path
-from datetime import datetime as dt, date, timedelta
-from typing import Union, Dict, List, Tuple, Optional
+from typing import Dict, List, Optional, Tuple, Union
 
 from aiogram.types import InlineKeyboardMarkup
 from babel.support import LazyProxy
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 
-from zmanim_bot.processors.text_utils import humanize_date, humanize_time
+from zmanim_bot import texts
 from zmanim_bot.helpers import parse_jewish_date
+from zmanim_bot.integrations.zmanim_models import *
 from zmanim_bot.keyboards.inline import get_zmanim_by_date_buttons
 from zmanim_bot.middlewares.i18n import gettext as _
-from zmanim_bot.texts.single import names, headers, helpers, zmanim
+from zmanim_bot.processors.text_utils import humanize_date, humanize_time
 from zmanim_bot.texts.plural import units
-from zmanim_bot import texts
-from zmanim_bot.integrations.zmanim_models import *
+from zmanim_bot.texts.single import headers, helpers, names, zmanim
+
 IMG_SIZE = 1181
 Line = Tuple[Optional[str], Optional[str], Optional[bool]]
 EMPTY_LINE = None, None, None

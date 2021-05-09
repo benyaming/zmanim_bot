@@ -1,14 +1,13 @@
-from typing import Tuple, Optional
+from typing import Optional, Tuple
 
 from aiogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup
 
-from zmanim_bot import keyboards
-from zmanim_bot import texts
-from zmanim_bot.repository import bot_repository
+from zmanim_bot import keyboards, texts
 from zmanim_bot.config import LANGUAGE_SHORTCUTS
 from zmanim_bot.exceptions import ActiveLocationException
 from zmanim_bot.helpers import CallbackPrefixes
 from zmanim_bot.middlewares.i18n import i18n_
+from zmanim_bot.repository import bot_repository
 from zmanim_bot.service import zmanim_service
 from zmanim_bot.states import FeedbackState
 from zmanim_bot.texts.single import messages
