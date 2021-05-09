@@ -303,8 +303,7 @@ msgid ""
 "Notice! You should specify time of candle\n"
 " lighting with the rabbi of your community!"
 msgstr ""
-"Notice! it is recommended to clarify time of take of Sabbath in your "
-"community."
+"Notice! it is recommended to clarify time\nof taking Shabbat in your community."
 
 #: helpers.py:12
 msgid "before sunset"
