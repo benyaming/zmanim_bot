@@ -1,5 +1,6 @@
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, ContentType, Message
+from aiogram.utils.exceptions import MessageNotModified
 
 from zmanim_bot.config import LANGUAGE_LIST
 from zmanim_bot.handlers.utils.redirects import (redirect_to_main_menu,
@@ -109,7 +110,10 @@ async def handle_activate_location(call: CallbackQuery):
     alert, kb = await settings_service.activate_location(location_name)
     await call.answer(alert)
 
-    await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
+    try:
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
+    except MessageNotModified:
+        pass
 
 
 @dp.callback_query_handler(text_startswith=CallbackPrefixes.location_rename)
