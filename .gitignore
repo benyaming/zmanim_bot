@@ -14,3 +14,4 @@ zmanim/res/localizations/__pycache__/
 __pycache__/
 
 \.env
+/broadcast/

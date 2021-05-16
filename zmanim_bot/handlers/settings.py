@@ -29,7 +29,10 @@ async def set_cl(call: CallbackQuery):
     await call.answer(CALL_ANSWER_OK)
 
     kb = await settings_service.set_cl(call.data)
-    await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
+    try:
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
+    except MessageNotModified:
+        pass
 
 
 @dp.message_handler(text=buttons.sm_havdala)
@@ -45,7 +48,11 @@ async def set_havdala(call: CallbackQuery):
     await call.answer(CALL_ANSWER_OK)
 
     kb = await settings_service.set_havdala(call.data)
-    await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
+
+    try:
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
+    except MessageNotModified:
+        pass
 
 
 @dp.message_handler(text=buttons.sm_zmanim)
@@ -60,7 +67,10 @@ async def set_zmanim(call: CallbackQuery):
     await call.answer(CALL_ANSWER_OK)
 
     kb = await settings_service.set_zmanim(call.data)
-    await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
+    try:
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
+    except MessageNotModified:
+        pass
 
 
 @dp.message_handler(text=buttons.sm_omer)
