@@ -378,7 +378,7 @@ msgstr "Здесь вы можете включить или выключить 
 
 #: zmanim_bot/texts/single/messages.py:16
 msgid "Here you can activate, edit or send new location;\nIf you want to add new location, just send it right now."
-msgstr "Здесь вы можете выбрать, изменить или добавить новую локацию;\nЕсли вы хотите добавить новую локацию, отпрааьте ее прямо сюда."
+msgstr "Здесь вы можете выбрать, изменить или добавить новую локацию;\nЕсли вы хотите добавить новую локацию, отправьте ее прямо сюда."
 
 #: zmanim_bot/texts/single/messages.py:18
 msgid "Select your language:"
