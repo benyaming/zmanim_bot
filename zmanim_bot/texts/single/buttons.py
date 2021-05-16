@@ -30,7 +30,7 @@ sm_zmanim = _('Select zmanim')
 sm_candle = _('Candle lighting')
 sm_havdala = _('Havdala')
 sm_lang = _('Language')
-sm_location = _('location')
+sm_location = _('Location')
 sm_omer = _('Omer count')
 
 settings_enabled = _('enabled')

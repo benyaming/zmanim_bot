@@ -12,7 +12,7 @@ settings_cl = _('How long before shkiya do you light candles?')
 settings_zmanim = _('Select zmanim that you want to receive:')
 settings_havdala = _('Select your opinion for havdala:')
 settings_omer = _('Here you can enable or disable notifications about the <i>Omer</i> count.')
-settings_location = _('Here you can activate, edit or send new location:')
+settings_location = _('Here you can activate, edit or send new location;\nIf you want to add new location, just send it right now.')
 
 request_language = _('Select your language:')
 

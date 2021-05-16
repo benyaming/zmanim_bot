@@ -142,7 +142,7 @@ msgid "Language"
 msgstr "Язык"
 
 #: zmanim_bot/texts/single/buttons.py:34
-msgid "location"
+msgid "Location"
 msgstr "Локация"
 
 #: zmanim_bot/texts/single/buttons.py:35
@@ -377,8 +377,8 @@ msgid "Here you can enable or disable notifications about the <i>Omer</i> count.
 msgstr "Здесь вы можете включить или выключить оповещения о счёте <i>Омера</i>."
 
 #: zmanim_bot/texts/single/messages.py:16
-msgid "Here you can activate, edit or send new location:"
-msgstr "Здесь вы можете выбрать, изменить или добавить новую локацию:"
+msgid "Here you can activate, edit or send new location;\nIf you want to add new location, just send it right now."
+msgstr "Здесь вы можете выбрать, изменить или добавить новую локацию;\nЕсли вы хотите добавить новую локацию, отпрааьте ее прямо сюда."
 
 #: zmanim_bot/texts/single/messages.py:18
 msgid "Select your language:"
