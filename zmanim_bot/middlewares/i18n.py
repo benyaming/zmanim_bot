@@ -1,15 +1,14 @@
 from pathlib import Path
-from typing import Tuple, Any
+from typing import Any, Tuple
 
 from aiogram.contrib.middlewares.i18n import I18nMiddleware
 from aiogram.types import Message
 
-from ..misc import dp
-from ..api import get_or_set_lang
-from ..config import I18N_DOMAIN, LANGUAGE_LIST
+from zmanim_bot.config import I18N_DOMAIN, LANGUAGE_LIST
+from zmanim_bot.misc import dp
+from zmanim_bot.repository.bot_repository import get_or_set_lang
 
-
-LOCALES_DIR = Path(__file__).parent.parent / 'locales'
+LOCALES_DIR = Path(__file__).parent.parent.parent / 'locales'
 
 
 class I18N(I18nMiddleware):
@@ -30,8 +29,3 @@ dp.middleware.setup(i18n_)
 gettext = i18n_.gettext
 lazy_gettext = i18n_.lazy_gettext
 
-# cd .\zmanim_bot\texts\single\
-#  pybabel extract ..\plural\units.py .\buttons.py .\headers.py .\helpers.py .\messages.py .\names.py .\zmanim.py  -o .\..\..\locales\zmanim_bot.pot -k __:1,2
-
-# pybabel init -i .\locales\zmanim_bot.pot -d .\locales\ -D zmanim_bot -l ru
-# pybabel compile -d ..\..\locales\ -D zmanim_bot

@@ -23,7 +23,9 @@ REDIS_PORT = int(getenv('REDIS_PORT'))
 REDIS_DB = int(getenv('REDIS_DB'))
 
 ZMANIM_API_URL: str = getenv('ZMANIM_API_URL')
+GEO_API_URL: str = getenv('GEO_API_URL')
 
 REPORT_ADMIN_LIST: List[int] = [int(i) for i in getenv('REPORT_ADMIN_LIST', '').split(', ')]
 
 LOCATION_NUMBER_LIMIT: int = int(getenv('LOCATION_NUMBER_LIMIT', 5))
+SENTRY_PUBLIC_KEY: str = getenv('SENTRY_PUBLIC_KEY')

@@ -1,7 +1,7 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
-from ..texts.single import buttons
 from ..config import LANGUAGE_LIST
+from ..texts.single import buttons
 
 
 def get_lang_menu() -> ReplyKeyboardMarkup:
@@ -74,6 +74,12 @@ def get_geobutton(with_back: bool = False) -> ReplyKeyboardMarkup:
 def get_cancel_keyboard() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     kb.row(buttons.cancel.value)
+    return kb
+
+
+def get_done_keyboard() -> ReplyKeyboardMarkup:
+    kb = ReplyKeyboardMarkup(resize_keyboard=True)
+    kb.row(buttons.done.value)
     return kb
 
 

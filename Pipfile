@@ -17,6 +17,20 @@ posthog = "*"
 betterlogging = "*"
 odmantic = "*"
 motor = "*"
+sentry-sdk = "==1.1.0"
 
 [requires]
 python_version = "3.7"
+
+[scripts]
+babel-extract = """pybabel extract
+zmanim_bot/texts/plural/units.py
+zmanim_bot/texts/single/buttons.py
+zmanim_bot/texts/single/headers.py
+zmanim_bot/texts/single/helpers.py
+zmanim_bot/texts/single/messages.py
+zmanim_bot/texts/single/names.py
+zmanim_bot/texts/single/zmanim.py
+ -o locales/zmanim_bot.pot -k __:1,2 --add-comments=NOTE"""
+babel-init = "pybabel init -i locales/zmanim_bot.pot -d locales -D zmanim_bot -l "
+babel-compile = "pybabel compile -d locales -D zmanim_bot"

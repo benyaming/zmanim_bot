@@ -1,13 +1,13 @@
 import json
 
 from aiogram import types
-# from aiogram.types import InputMediaPhoto, User, InlineKeyboardMarkup, InlineKeyboardButton
+
+from zmanim_bot.repository.bot_repository import get_or_set_location
 
 from ..config import REPORT_ADMIN_LIST
 from ..exceptions import NoLocationException
 from ..helpers import CallbackPrefixes
 from ..misc import bot
-from ..api import get_or_set_location
 
 
 async def _compose_report_text(report: dict) -> str:
