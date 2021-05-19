@@ -5,18 +5,23 @@ from aiogram.types import InlineKeyboardMarkup
 
 from zmanim_bot.helpers import CallbackPrefixes
 from zmanim_bot.integrations import zmanim_api_client
+from zmanim_bot.integrations.zmanim_models import Zmanim
 from zmanim_bot.processors.image import image_processor as ip
 from zmanim_bot.repository import bot_repository
 from zmanim_bot.states import ZmanimGregorianDateState
 
 
-async def get_zmanim() -> BytesIO:
+async def get_zmanim() -> Zmanim:
     user = await bot_repository.get_or_create_user()
     data = await zmanim_api_client.get_zmanim(
         user.get_active_location(),
         user.zmanim_settings.dict()
     )
+    return data
 
+
+async def get_zmanim_image() -> BytesIO:
+    data = await get_zmanim()
     return ip.ZmanimImage(data).get_image()
 
 
