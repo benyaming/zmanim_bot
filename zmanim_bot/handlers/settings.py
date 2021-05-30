@@ -1,6 +1,7 @@
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, ContentType, Message
 from aiogram.utils.exceptions import MessageNotModified
+from aiogram_metrics import track
 
 from zmanim_bot.config import LANGUAGE_LIST
 from zmanim_bot.handlers.utils.redirects import (redirect_to_main_menu,
@@ -12,7 +13,6 @@ from zmanim_bot.misc import bot, dp
 from zmanim_bot.service import settings_service
 from zmanim_bot.states import LocationNameState
 from zmanim_bot.texts.single import buttons, messages
-from zmanim_bot.tracking import track
 from zmanim_bot.utils import chat_action
 
 
@@ -99,7 +99,7 @@ async def handle_language_request(msg: Message):
 
 @dp.message_handler(text=LANGUAGE_LIST)
 @chat_action('text')
-@track('Language selected', attach_message_text=True)
+@track('Language selected')
 async def set_language(msg: Message):
     await settings_service.set_language(msg.text)
     return await redirect_to_main_menu()
