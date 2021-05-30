@@ -1,9 +1,9 @@
 from aiogram.types import Message
+from aiogram_metrics import track
 
 from zmanim_bot.keyboards import menus
 from zmanim_bot.misc import dp
 from zmanim_bot.texts.single import buttons, messages
-from zmanim_bot.tracking import track
 from zmanim_bot.utils import chat_action
 
 

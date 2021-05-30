@@ -1,4 +1,3 @@
-import posthog
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message
 
@@ -13,7 +12,6 @@ from zmanim_bot.utils import chat_action
 async def handle_start(msg: Message, state: FSMContext):
     await state.finish()
     await redirect_to_main_menu()
-    posthog.identify(msg.from_user.id, message_id=msg.message_id)
 
 
 @dp.message_handler(text=[buttons.back, buttons.cancel], state="*")

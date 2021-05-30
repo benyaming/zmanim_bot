@@ -1,11 +1,11 @@
 from aiogram.types import CallbackQuery, Message
+from aiogram_metrics import track
 
 from zmanim_bot.helpers import CallbackPrefixes
 from zmanim_bot.keyboards.menus import get_cancel_keyboard
 from zmanim_bot.misc import bot, dp
 from zmanim_bot.service import zmanim_service
 from zmanim_bot.texts.single import buttons, messages
-from zmanim_bot.tracking import track
 from zmanim_bot.utils import chat_action
 
 

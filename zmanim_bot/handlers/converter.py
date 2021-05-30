@@ -1,10 +1,10 @@
 from aiogram.types import Message
+from aiogram_metrics import track
 
 from zmanim_bot.handlers.forms import ConverterGregorianDateState
 from zmanim_bot.misc import dp
 from zmanim_bot.service import converter_service
 from zmanim_bot.texts.single import buttons
-from zmanim_bot.tracking import track
 from zmanim_bot.utils import chat_action
 
 
