@@ -13,7 +13,7 @@ from zmanim_bot.utils import chat_action
 @chat_action()
 @track('Zmanim')
 async def handle_zmanim(msg: Message):
-    resp = await zmanim_service.get_zmanim()
+    resp = await zmanim_service.get_zmanim_image()
     await msg.reply_photo(resp)
 
 
