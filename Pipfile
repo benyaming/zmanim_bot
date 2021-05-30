@@ -13,11 +13,11 @@ zmanim = "*"
 aiopg = "*"
 pydantic = "*"
 aioredis = "*"
-posthog = "*"
 betterlogging = "*"
 odmantic = "*"
 motor = "*"
 sentry-sdk = "==1.1.0"
+aiogram-metrics = "*"
 
 [requires]
 python_version = "3.7"

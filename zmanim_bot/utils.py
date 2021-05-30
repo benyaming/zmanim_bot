@@ -8,7 +8,7 @@ from zmanim_bot.repository.bot_repository import get_or_set_processor_type
 
 
 def chat_action(action: str = None):
-    def decoator(func):
+    def decorator(func):
 
         async def wrapper(*args, **kwargs):
             chat_actions = {
@@ -25,7 +25,7 @@ def chat_action(action: str = None):
             return await func(*args, **kwargs)
 
         return wrapper
-    return decoator
+    return decorator
 
 
 async def ensure_mongo_index():
