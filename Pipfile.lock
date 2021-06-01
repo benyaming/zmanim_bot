@@ -26,10 +26,10 @@
         },
         "aiogram-metrics": {
             "hashes": [
-                "sha256:063cbe86bcfb3bc85ce0728ff6eba05daa151ad287f1bea3bfa4f99edb4979d9"
+                "sha256:84725c748e44d357012b4b6495cb788ee020b080e2f936e4c2f05fe688e799e2"
             ],
             "index": "pypi",
-            "version": "==0.0.8"
+            "version": "==0.0.9"
         },
         "aiohttp": {
             "hashes": [
