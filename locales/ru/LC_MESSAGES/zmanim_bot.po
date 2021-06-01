@@ -316,11 +316,11 @@ msgstr "и"
 
 #: zmanim_bot/texts/single/helpers.py:6
 msgid ""
-"It is impossible to compute Zmanim for your location. Most likely it is "
-"because of Midnight Sun or polar night."
+"It is impossible to compute Zmanim for\nyour location. Most likely it is "
+"because of\nMidnight Sun or polar night."
 msgstr ""
-"Для вашего местоположения невозможно посчитать зманим. Скорее всего, это "
-"связано с полярным днем или полярной ночью."
+"Для вашего местоположения\nневозможно посчитать зманим. Скорее\nвсего, это "
+"связано с полярной ночью."
 
 #: zmanim_bot/texts/single/helpers.py:8
 msgid ""

@@ -10,8 +10,8 @@ from odmantic import AIOEngine
 from .config import (BOT_TOKEN, DB_COLLECTION_NAME, DB_NAME, DB_URL, REDIS_DB,
                      REDIS_HOST, REDIS_PORT)
 
-logger = bl.get_colorized_logger('zmanim_bot')
-logger.setLevel(bl.INFO)
+bl.basic_colorized_config(level=bl.INFO)
+logger = bl.getLogger('zmanim_bot')
 
 loop = asyncio.get_event_loop()
 storage = RedisStorage2(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB)

@@ -199,7 +199,9 @@ class ShabbatImage(BaseImage):
         self._image, self._draw = _get_draw(str(self._background_path))
 
         self._draw_title(self._draw, names.title_shabbath)
-        self._draw_date([self.data.havdala.date()], no_weekday=True)
+
+        if self.data.havdala:
+            self._draw_date([self.data.havdala.date()], no_weekday=True)
 
         y = 400 if self.data.candle_lighting else 470
         x = 100
