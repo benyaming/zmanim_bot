@@ -4,18 +4,16 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import ContentType, Message
 
 from zmanim_bot.admin.report_management import send_report_to_admins
-from zmanim_bot.handlers.utils.redirects import (redirect_to_main_menu,
-                                                 redirect_to_settings_menu)
+from zmanim_bot.handlers.utils.redirects import (redirect_to_main_menu, redirect_to_settings_menu)
 from zmanim_bot.helpers import check_date
 from zmanim_bot.keyboards.menus import get_report_keyboard
 from zmanim_bot.misc import bot, dp
-from zmanim_bot.service import (converter_service, settings_service,
-                                zmanim_service)
-from zmanim_bot.states import (ConverterGregorianDateState,
-                               ConverterJewishDateState, FeedbackState,
-                               LocationNameState, ZmanimGregorianDateState)
+from zmanim_bot.service import (converter_service, settings_service, zmanim_service)
+from zmanim_bot.states import (ConverterGregorianDateState, ConverterJewishDateState, FeedbackState, LocationNameState,
+                               ZmanimGregorianDateState)
 from zmanim_bot.texts.single import buttons, messages
 from zmanim_bot.utils import chat_action
+
 
 # REPORTS
 
@@ -38,7 +36,7 @@ async def handle_report(msg: Message, state: FSMContext):
 
 @dp.message_handler(text=buttons.done, state=FeedbackState.waiting_for_payload)
 @chat_action('text')
-async def handle_done_report(msg: Message, state: FSMContext):
+async def handle_done_report(_, state: FSMContext):
     report = await state.get_data()
     await state.finish()
     await redirect_to_main_menu(messages.reports_created)
@@ -94,7 +92,7 @@ async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
 
 @dp.message_handler(state=LocationNameState.waiting_for_location_name_state, text=buttons.done)
 @chat_action('text')
-async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
+async def handle_zmanim_gregorian_date(_, state: FSMContext):
     await state.finish()
     await redirect_to_main_menu(messages.location_saved)
 

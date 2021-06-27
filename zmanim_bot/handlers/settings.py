@@ -4,10 +4,8 @@ from aiogram.utils.exceptions import MessageNotModified
 from aiogram_metrics import track
 
 from zmanim_bot.config import LANGUAGE_LIST
-from zmanim_bot.handlers.utils.redirects import (redirect_to_main_menu,
-                                                 redirect_to_request_language)
-from zmanim_bot.helpers import (CALL_ANSWER_OK, LOCATION_PATTERN,
-                                CallbackPrefixes, parse_coordinates)
+from zmanim_bot.handlers.utils.redirects import (redirect_to_main_menu, redirect_to_request_language)
+from zmanim_bot.helpers import (CALL_ANSWER_OK, LOCATION_PATTERN, CallbackPrefixes, parse_coordinates)
 from zmanim_bot.keyboards.menus import get_cancel_keyboard
 from zmanim_bot.misc import bot, dp
 from zmanim_bot.service import settings_service
@@ -93,7 +91,7 @@ async def set_omer(call: CallbackQuery):
 @dp.message_handler(text=buttons.sm_lang)
 @chat_action('text')
 @track('Language command')
-async def handle_language_request(msg: Message):
+async def handle_language_request(_):
     await redirect_to_request_language()
 
 

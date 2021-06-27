@@ -5,11 +5,12 @@ from io import BytesIO
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union
 
+from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 from aiogram.types import InlineKeyboardMarkup
 from babel.support import LazyProxy
-from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 
 from zmanim_bot import texts
+from zmanim_bot.exceptions import PolarCoordinatesException
 from zmanim_bot.helpers import parse_jewish_date
 from zmanim_bot.integrations.zmanim_models import *
 from zmanim_bot.keyboards.inline import get_zmanim_by_date_buttons
@@ -193,7 +194,7 @@ class ShabbatImage(BaseImage):
 
     def get_image(self) -> Tuple[BytesIO, Optional[InlineKeyboardMarkup]]:
         if not self.data.candle_lighting or self.data.late_cl_warning:
-            self._background_path = Path( __file__).parent / 'res' / 'backgrounds' / 'shabbos_attention.png'
+            self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'shabbos_attention.png'
         else:
             self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'shabbos.png'
         self._image, self._draw = _get_draw(str(self._background_path))
@@ -292,14 +293,18 @@ class ZmanimImage(BaseImage):
         self._bold_font = ImageFont.truetype(str(self._bold_font_path), size=self._font_size)
 
     def get_image(self) -> BytesIO:
-        zmanim: Dict[str, dt] = self.data.dict(exclude={'settings'}, exclude_none=True)
-        self._set_font_properties(len(zmanim))
+        zmanim_rows: Dict[str, dt] = self.data.dict(exclude={'settings'}, exclude_none=True)
 
-        y: int = 210 + self._start_y_offset
+        if len(zmanim_rows) == 0:
+            raise PolarCoordinatesException()
+
+        self._set_font_properties(len(zmanim_rows))
+
+        y: int = 170 + self._start_y_offset
         x: int = 50
 
         # draw all image lines in cycle
-        for header, value in zmanim.items():
+        for header, value in zmanim_rows.items():
             self._draw_line(
                 x, y, getattr(texts.single.zmanim, header),
                 value.time().isoformat('minutes') if isinstance(value, date) else value.isoformat(
@@ -330,32 +335,36 @@ class FastImage(BaseImage):
         )
 
         x = 100
-        y = 450
+        y = 300 if self.data.chatzot else 350
 
         y_offset = 80
-        y_offset_small = 70
 
         # draw date and start time
         fast_date, fast_weekday = humanize_date([self.data.fast_start]).split(', ')
         fast_start_value = f'{fast_date},\n{fast_weekday}, {self.data.fast_start.time().isoformat("minutes")}'
         self._draw_line(x, y, headers.fast_start, fast_start_value)
-        y += self._y_font_offset(fast_start_value) + y_offset
+        y += self._y_font_offset(fast_start_value) + y_offset + y_offset
 
         # draw hatzot, if need
         if self.data.chatzot:
-            self._draw_line(x, y, zmanim.chatzos,
-                            self.data.chatzot.time().isoformat('minutes'))
-            y += y_offset_small
+            self._draw_line(x, y, zmanim.chatzos, self.data.chatzot.time().isoformat('minutes'))
+            y += y_offset
 
         # draw havdala
-        self._draw_line(x, y, headers.fast_end, self.data.havdala.time().isoformat('minutes'))
+        # self._draw_line(x, y, headers.fast_end, self.data.havdala.time().isoformat('minutes'))
 
-        # timings = [data.tzeit_kochavim, data.sba_time, data.ssk_time, data.nvr_time]
-        # for timing in timings:
-        #     self._draw_line((pos_x, pos_y), timing.header, timing.value)
-        #     pos_y += y_offset
+        self._draw_line(x, y, headers.fast_end, '')
+        y += y_offset
+        havdala_options = (
+            (self.data.havdala_5_95_dgr, headers.fast_end_5_95_dgr),
+            (self.data.havdala_8_5_dgr, headers.fast_end_8_5_dgr),
+            (self.data.havdala_42_min, headers.fast_end_42_min)
+        )
+        for havdala_value, havdala_header in havdala_options:
+            self._draw_line(x, y, havdala_header, havdala_value.time().isoformat('minutes'))
+            y += y_offset
 
-        kb = get_zmanim_by_date_buttons([self.data.havdala.date()])
+        kb = get_zmanim_by_date_buttons([self.data.havdala_42_min.date()])
         return _convert_img_to_bytes_io(self._image), kb
 
 

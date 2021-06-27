@@ -119,4 +119,6 @@ class Fast(BaseModel):
     moved_fast: Optional[bool] = False
     fast_start: Optional[datetime] = None
     chatzot: Optional[datetime] = None
-    havdala: Optional[datetime] = None
+    havdala_5_95_dgr: Optional[datetime] = None
+    havdala_8_5_dgr: Optional[datetime] = None
+    havdala_42_min: Optional[datetime] = None

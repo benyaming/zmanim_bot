@@ -279,8 +279,8 @@ msgid "Fast begins"
 msgstr "Начало поста"
 
 #: zmanim_bot/texts/single/headers.py:18
-msgid "Fast ends"
-msgstr "Конец поста"
+msgid "Fast ends (tzeit ha-kochavim)"
+msgstr "Конец поста (выход звёзд)"
 
 #: zmanim_bot/texts/single/headers.py:20
 msgid "Attention! Fast has been moved!"
@@ -289,6 +289,18 @@ msgstr "Внимание, пост перенесён!"
 #: zmanim_bot/texts/single/headers.py:21
 msgid "Fast hasn’t been moved."
 msgstr "Пост не перенесен"
+
+#: zmanim_bot/texts/single/headers.py:21
+msgid "5.95 degrees, derabanan"
+msgstr "5.95 градусов, дерабанан"
+
+#: zmanim_bot/texts/single/headers.py:22
+msgid "8.5 degrees, lehumra"
+msgstr "8.5 градусов, лехумра"
+
+#: zmanim_bot/texts/single/headers.py:23
+msgid "42 minutes"
+msgstr "42 минуты"
 
 #: zmanim_bot/texts/single/headers.py:23
 msgid "Hoshana Rabbah"
