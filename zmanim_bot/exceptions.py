@@ -1,52 +1,53 @@
-class NoLanguageException(Exception):
+# KNOWN_EXCEPTIONS = []
+
+
+class ZmanimBotBaseException(Exception):
+    ...
+    # def __init_subclass__(cls, **kwargs):
+    #     KNOWN_EXCEPTIONS.append(cls)
+
+
+class NoLanguageException(ZmanimBotBaseException):
     ...
 
 
-class NoLocationException(Exception):
+class NoLocationException(ZmanimBotBaseException):
     ...
 
 
-class IncorrectLocationException(Exception):
+class IncorrectLocationException(ZmanimBotBaseException):
     ...
 
 
-class IncorrectTextException(Exception):
+class IncorrectTextException(ZmanimBotBaseException):
     ...
 
 
-class IncorrectGregorianDateException(Exception):
+class IncorrectGregorianDateException(ZmanimBotBaseException):
     ...
 
 
-class IncorrectJewishDateException(Exception):
+class IncorrectJewishDateException(ZmanimBotBaseException):
     ...
 
 
-class NonUniqueLocationException(Exception):
+class NonUniqueLocationException(ZmanimBotBaseException):
     ...
 
 
-class NonUniqueLocationNameException(Exception):
+class NonUniqueLocationNameException(ZmanimBotBaseException):
     ...
 
 
-class MaxLocationLimitException(Exception):
+class MaxLocationLimitException(ZmanimBotBaseException):
     ...
 
 
-class ActiveLocationException(Exception):
+class ActiveLocationException(ZmanimBotBaseException):
     ...
 
 
-KNOWN_EXCEPTIONS = (
-    NoLanguageException,
-    NoLocationException,
-    IncorrectLocationException,
-    IncorrectTextException,
-    IncorrectGregorianDateException,
-    IncorrectJewishDateException,
-    NonUniqueLocationException,
-    NonUniqueLocationNameException,
-    MaxLocationLimitException,
-    ActiveLocationException
-)
+class PolarCoordinatesException(ZmanimBotBaseException):
+    ...
+
+

@@ -51,7 +51,7 @@ async def handle_report_response(msg: Message, state: FSMContext):
 
 
 @dp.message_handler(text=buttons.done, state=AdminReportResponse.waiting_for_payload)
-async def handle_done_report(msg: Message, state: FSMContext):
+async def handle_done_report(_, state: FSMContext):
     response = await state.get_data()
     await state.finish()
     await redirect_to_main_menu('Succesfully sent')
