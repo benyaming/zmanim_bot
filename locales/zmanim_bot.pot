@@ -8,377 +8,392 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-05-09 02:34+0300\n"
+"POT-Creation-Date: 2021-06-28 00:56+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.0\n"
+"Generated-By: Babel 2.9.1\n"
 
-#: zmanim_bot/texts/plural/units.py:5
+#: zmanim_bot/texts/plural/units.py:4
 msgid "year"
 msgid_plural "years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: zmanim_bot/texts/plural/units.py:6
+#: zmanim_bot/texts/plural/units.py:5
 msgid "month"
 msgid_plural "months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: zmanim_bot/texts/plural/units.py:7
+#: zmanim_bot/texts/plural/units.py:6
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: zmanim_bot/texts/plural/units.py:8
+#: zmanim_bot/texts/plural/units.py:7
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: zmanim_bot/texts/plural/units.py:9
+#: zmanim_bot/texts/plural/units.py:8
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: zmanim_bot/texts/plural/units.py:10
+#: zmanim_bot/texts/plural/units.py:9
 msgid "part"
 msgid_plural "parts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: zmanim_bot/texts/single/buttons.py:5
+#: zmanim_bot/texts/single/buttons.py:4
 msgid "Send location"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:6
+#: zmanim_bot/texts/single/buttons.py:5
 msgid "Cancel"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:7
+#: zmanim_bot/texts/single/buttons.py:6
 msgid "Back"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:8
+#: zmanim_bot/texts/single/buttons.py:7
 msgid "Done"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:12
+#: zmanim_bot/texts/single/buttons.py:11
 msgid "Zmanim"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:13
+#: zmanim_bot/texts/single/buttons.py:12
 msgid "Shabbat"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:14
+#: zmanim_bot/texts/single/buttons.py:13
 msgid "Holidays"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:15
+#: zmanim_bot/texts/single/buttons.py:14
 msgid "Daf yomi"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:16
+#: zmanim_bot/texts/single/buttons.py:15
 msgid "Rosh chodesh"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:17
+#: zmanim_bot/texts/single/buttons.py:16
 msgid "Fast days"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:18
+#: zmanim_bot/texts/single/buttons.py:17
 msgid "Zmanim by the date"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:19
+#: zmanim_bot/texts/single/buttons.py:18
 msgid "Date converter"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:20
+#: zmanim_bot/texts/single/buttons.py:19
 msgid "Help"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:21
+#: zmanim_bot/texts/single/buttons.py:20
 msgid "Settings"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:25
+#: zmanim_bot/texts/single/buttons.py:24
 msgid "F.A.Q."
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:26
+#: zmanim_bot/texts/single/buttons.py:25
 msgid "Report a problem"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:30
+#: zmanim_bot/texts/single/buttons.py:29
 msgid "Select zmanim"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:31
+#: zmanim_bot/texts/single/buttons.py:30
 msgid "Candle lighting"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:32 zmanim_bot/texts/single/headers.py:15
+#: zmanim_bot/texts/single/buttons.py:31 zmanim_bot/texts/single/headers.py:14
 msgid "Havdala"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:33
+#: zmanim_bot/texts/single/buttons.py:32
 msgid "Language"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:34
-msgid "location"
+#: zmanim_bot/texts/single/buttons.py:33
+msgid "Location"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:35
+#: zmanim_bot/texts/single/buttons.py:34
 msgid "Omer count"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:37
+#: zmanim_bot/texts/single/buttons.py:36
 msgid "enabled"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:38
+#: zmanim_bot/texts/single/buttons.py:37
 msgid "disabled"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:41
+#: zmanim_bot/texts/single/buttons.py:40
 msgid "More..."
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:42
+#: zmanim_bot/texts/single/buttons.py:41
 msgid "Main holidays"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:44
+#: zmanim_bot/texts/single/buttons.py:43
 msgid "Rosh ha-Shanah"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:45
+#: zmanim_bot/texts/single/buttons.py:44
 msgid "Yom Kippur"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:46
+#: zmanim_bot/texts/single/buttons.py:45
 msgid "Succot"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:47
+#: zmanim_bot/texts/single/buttons.py:46
 msgid "Shmini Atzeres"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:48
+#: zmanim_bot/texts/single/buttons.py:47
 msgid "Chanukah"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:49
+#: zmanim_bot/texts/single/buttons.py:48
 msgid "Purim"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:50
+#: zmanim_bot/texts/single/buttons.py:49
 msgid "Pesach"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:51
+#: zmanim_bot/texts/single/buttons.py:50
 msgid "Shavuot"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:52
+#: zmanim_bot/texts/single/buttons.py:51
 msgid "Tu bi-Shvat"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:53
+#: zmanim_bot/texts/single/buttons.py:52
 msgid "Lag ba-Omer"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:54
+#: zmanim_bot/texts/single/buttons.py:53
 msgid "Israel holidays"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:58
+#: zmanim_bot/texts/single/buttons.py:57
 msgid "Fast of Gedaliah"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:59
+#: zmanim_bot/texts/single/buttons.py:58
 msgid "10th of Tevet"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:60
+#: zmanim_bot/texts/single/buttons.py:59
 msgid "Fast of Ester"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:61
+#: zmanim_bot/texts/single/buttons.py:60
 msgid "17th of Tammuz"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:62
+#: zmanim_bot/texts/single/buttons.py:61
 msgid "9th of Av"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:70
+#: zmanim_bot/texts/single/buttons.py:69
 msgid "Gregorian ➡ Jewish"
 msgstr ""
 
-#: zmanim_bot/texts/single/buttons.py:71
+#: zmanim_bot/texts/single/buttons.py:70
 msgid "Jewish ➡ Gregorian"
 msgstr ""
 
 #. NOTE prefix for button "Zmanim for {date}"
-#: zmanim_bot/texts/single/buttons.py:74
+#: zmanim_bot/texts/single/buttons.py:73
 msgid "Zmanim for"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:4
+#: zmanim_bot/texts/single/headers.py:3
 msgid "Date"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:6
+#: zmanim_bot/texts/single/headers.py:5
 msgid "Masechet"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:7
+#: zmanim_bot/texts/single/headers.py:6
 msgid "Sheet"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:9
+#: zmanim_bot/texts/single/headers.py:8
 msgid "Duration"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:10
+#: zmanim_bot/texts/single/headers.py:9
 msgid "Мonth"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:11
+#: zmanim_bot/texts/single/headers.py:10
 msgid "Molad"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:13
+#: zmanim_bot/texts/single/headers.py:12
 msgid "Parshat ha-shavuah"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:14
+#: zmanim_bot/texts/single/headers.py:13
 msgid "Candle Lighting"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:17
+#: zmanim_bot/texts/single/headers.py:16
 msgid "Fast begins"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:18
+#: zmanim_bot/texts/single/headers.py:17
 msgid "Fast ends"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:19 zmanim_bot/texts/single/zmanim.py:11
+#: zmanim_bot/texts/single/headers.py:18 zmanim_bot/texts/single/zmanim.py:10
 msgid "Chatzot"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:20
+#: zmanim_bot/texts/single/headers.py:19
 msgid "Attention! Fast has been moved!"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:21
+#: zmanim_bot/texts/single/headers.py:20
 msgid "Fast hasn’t been moved."
 msgstr ""
 
+#: zmanim_bot/texts/single/headers.py:21
+msgid "3 stars [5.95°, derabanan]"
+msgstr ""
+
+#: zmanim_bot/texts/single/headers.py:22
+msgid "3 stars [8.5°, lehumra]"
+msgstr ""
+
 #: zmanim_bot/texts/single/headers.py:23
+msgid "3 stars [42 minutes]"
+msgstr ""
+
+#: zmanim_bot/texts/single/headers.py:25
 msgid "Hoshana Rabbah"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:26
+#: zmanim_bot/texts/single/headers.py:28
 msgid "Yom ha-Shoah"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:27
+#: zmanim_bot/texts/single/headers.py:29
 msgid "Yom ha-Zikaron"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:28
+#: zmanim_bot/texts/single/headers.py:30
 msgid "Yom ha-Atzmaut"
 msgstr ""
 
-#: zmanim_bot/texts/single/headers.py:29
+#: zmanim_bot/texts/single/headers.py:31
 msgid "Yom Yerushalaim"
 msgstr ""
 
-#: zmanim_bot/texts/single/helpers.py:4
+#: zmanim_bot/texts/single/helpers.py:3
 msgid "and"
 msgstr ""
 
-#: zmanim_bot/texts/single/helpers.py:6
+#: zmanim_bot/texts/single/helpers.py:5
 msgid ""
-"It is impossible to compute Zmanim for your location. Most likely it is "
-"because of Midnight Sun or polar night."
+"It is impossible to compute Zmanim for\n"
+"your location. Most likely it is because of\n"
+"Midnight Sun or polar night."
 msgstr ""
 
-#: zmanim_bot/texts/single/helpers.py:8
+#: zmanim_bot/texts/single/helpers.py:7
 msgid ""
-"Notice! it is recommended to clarify time of take of Sabbath in your "
-"community."
+"Notice! it is recommended to clarify time\n"
+"of taking Shabbat in your community."
 msgstr ""
 
-#: zmanim_bot/texts/single/helpers.py:10
+#: zmanim_bot/texts/single/helpers.py:9
 msgid "before sunset"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:4
+#: zmanim_bot/texts/single/messages.py:3
 msgid "Welcome to zmanim bot!"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:5
+#: zmanim_bot/texts/single/messages.py:4
 msgid "You are in the main menu:"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:6
+#: zmanim_bot/texts/single/messages.py:5
 msgid "How can I help you?"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:7
+#: zmanim_bot/texts/single/messages.py:6
 msgid "You are in the settings:"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:8
+#: zmanim_bot/texts/single/messages.py:7
 msgid "Please, describe your problem:"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:9
+#: zmanim_bot/texts/single/messages.py:8
 msgid "Choose the way of conversion:"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:10
+#: zmanim_bot/texts/single/messages.py:9
 msgid "Choose:"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:12
+#: zmanim_bot/texts/single/messages.py:11
 msgid "How long before shkiya do you light candles?"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:13
+#: zmanim_bot/texts/single/messages.py:12
 msgid "Select zmanim that you want to receive:"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:14
+#: zmanim_bot/texts/single/messages.py:13
 msgid "Select your opinion for havdala:"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:15
+#: zmanim_bot/texts/single/messages.py:14
 msgid "Here you can enable or disable notifications about the <i>Omer</i> count."
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:16
-msgid "Here you can activate, edit or send new location:"
+#: zmanim_bot/texts/single/messages.py:15
+msgid ""
+"Here you can activate, edit or send new location;\n"
+"If you want to add new location, just send it right now."
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:18
+#: zmanim_bot/texts/single/messages.py:17
 msgid "Select your language:"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:20
+#: zmanim_bot/texts/single/messages.py:19
 msgid ""
 "Please share your location by pressing the button.\n"
 "<b>Warning!</b> Desktop version of Telegram doesn’t support this type of "
@@ -387,71 +402,71 @@ msgid ""
 "message here."
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:24
+#: zmanim_bot/texts/single/messages.py:23
 msgid "You sent incorrect coordinates. Please check and re-send them!"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:25
+#: zmanim_bot/texts/single/messages.py:24
 msgid "This location alredy exists in your saved locations!"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:26
+#: zmanim_bot/texts/single/messages.py:25
 msgid "This location name alredy exists in your saved locations!"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:27
+#: zmanim_bot/texts/single/messages.py:26
 msgid ""
 "You saved too many locations, please remove some of them before saving "
 "new one!"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:28
+#: zmanim_bot/texts/single/messages.py:27
 msgid ""
 "Automatic location name: {}.\n"
 "You can write custom name for the location or press \"Done\" button."
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:30
+#: zmanim_bot/texts/single/messages.py:29
 msgid "Location successfully deleted!"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:31
+#: zmanim_bot/texts/single/messages.py:30
 msgid "Location successfully renamed!"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:32
+#: zmanim_bot/texts/single/messages.py:31
 msgid "Location successfully saved!"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:33
+#: zmanim_bot/texts/single/messages.py:32
 msgid "It is unable to delete active location!"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:34
+#: zmanim_bot/texts/single/messages.py:33
 msgid "Please, write here new location name for {}:"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:35
+#: zmanim_bot/texts/single/messages.py:34
 msgid "{} selected!"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:37
+#: zmanim_bot/texts/single/messages.py:36
 msgid ""
 "\"I’m not aware of such command 🤖\n"
 "Would you choose something from the menu:"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:40
+#: zmanim_bot/texts/single/messages.py:39
 msgid "Please enter Gregorian date in following format: <code>YYYY-MM-DD</code>"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:41
+#: zmanim_bot/texts/single/messages.py:40
 msgid ""
 "Incorrect/Illegal date format. Take a look at the correct one: <code"
 ">YYYY-MM-DD</code>"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:43
+#: zmanim_bot/texts/single/messages.py:42
 msgid ""
 "Please enter Jewish date in following format: \n"
 "<code>YYYY-MM-DD\n"
@@ -470,7 +485,7 @@ msgid ""
 "13 Adar II</code>"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:57
+#: zmanim_bot/texts/single/messages.py:56
 msgid ""
 "Incorrect/Illegal date format. Take a look at the correct one: \n"
 "<code>YYYY-MM-DD\n"
@@ -489,847 +504,847 @@ msgid ""
 "13 Adar II</code>"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:73
+#: zmanim_bot/texts/single/messages.py:72
 msgid ""
 "Your message has been saved for sending. You can attach screenshots or "
 "videos of your choice. Once done, click the Done button."
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:75
+#: zmanim_bot/texts/single/messages.py:74
 msgid "File added successfully. Add another one or click Done."
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:76
+#: zmanim_bot/texts/single/messages.py:75
 msgid ""
 "Unsupported message format. You can attach screenshots or videos by "
 "sending a photo, picture or video."
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:78
+#: zmanim_bot/texts/single/messages.py:77
 msgid ""
 "Your message has been sent to the Bot's developer. He will fix the "
 "problem soon and you will receive a notification.\n"
 "Thanks for your feedback!"
 msgstr ""
 
-#: zmanim_bot/texts/single/messages.py:82
+#: zmanim_bot/texts/single/messages.py:81
 msgid ""
 "Looks like an error occured... The Bot's developer already working on "
 "it..."
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:10
+#: zmanim_bot/texts/single/names.py:9
 msgid "January"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:12
+#: zmanim_bot/texts/single/names.py:11
 msgid "February"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:14
+#: zmanim_bot/texts/single/names.py:13
 msgid "March"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:16
+#: zmanim_bot/texts/single/names.py:15
 msgid "April"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:18
+#: zmanim_bot/texts/single/names.py:17
 msgid "May"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:20
+#: zmanim_bot/texts/single/names.py:19
 msgid "June"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:22
+#: zmanim_bot/texts/single/names.py:21
 msgid "July"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:24
+#: zmanim_bot/texts/single/names.py:23
 msgid "August"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:26
+#: zmanim_bot/texts/single/names.py:25
 msgid "September"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:28
+#: zmanim_bot/texts/single/names.py:27
 msgid "October"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:30
+#: zmanim_bot/texts/single/names.py:29
 msgid "November"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:32
+#: zmanim_bot/texts/single/names.py:31
 msgid "December"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:37
+#: zmanim_bot/texts/single/names.py:36
 msgid "Monday"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:38
+#: zmanim_bot/texts/single/names.py:37
 msgid "Tuesday"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:39
+#: zmanim_bot/texts/single/names.py:38
 msgid "Wednesday"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:40
+#: zmanim_bot/texts/single/names.py:39
 msgid "Thursday"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:41
+#: zmanim_bot/texts/single/names.py:40
 msgid "Friday"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:42
+#: zmanim_bot/texts/single/names.py:41
 msgid "Saturday"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:43
+#: zmanim_bot/texts/single/names.py:42
 msgid "Sunday"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:47
+#: zmanim_bot/texts/single/names.py:46
 msgid "DAF YOMI"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:48
+#: zmanim_bot/texts/single/names.py:47
 msgid "ROSH CHODESH"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:49
+#: zmanim_bot/texts/single/names.py:48
 msgid "SHABBAT"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:50
+#: zmanim_bot/texts/single/names.py:49
 msgid "ZMANIM"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:52
+#: zmanim_bot/texts/single/names.py:51
 msgid "FAST OF GEDALIAH"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:53
+#: zmanim_bot/texts/single/names.py:52
 msgid "10th OF TEVET"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:54
+#: zmanim_bot/texts/single/names.py:53
 msgid "FAST OF ESTHER"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:55
+#: zmanim_bot/texts/single/names.py:54
 msgid "17th OF TAMMUZ"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:56
+#: zmanim_bot/texts/single/names.py:55
 msgid "9th OF AV"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:59
+#: zmanim_bot/texts/single/names.py:58
 msgid "CHANUKAH"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:60
+#: zmanim_bot/texts/single/names.py:59
 msgid "TU BI-SHVAT"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:61
+#: zmanim_bot/texts/single/names.py:60
 msgid "PURIM"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:62
+#: zmanim_bot/texts/single/names.py:61
 msgid "LAG BA-OMER"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:63
+#: zmanim_bot/texts/single/names.py:62
 msgid "ISRAEL HOLIDAYS"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:66
+#: zmanim_bot/texts/single/names.py:65
 msgid "ROSH HA-SHANA"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:67
+#: zmanim_bot/texts/single/names.py:66
 msgid "YOM KIPUR"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:68
+#: zmanim_bot/texts/single/names.py:67
 msgid "SUCCOT"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:69
+#: zmanim_bot/texts/single/names.py:68
 msgid "SHMINI ATZERET"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:70
+#: zmanim_bot/texts/single/names.py:69
 msgid "PESACH"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:71
+#: zmanim_bot/texts/single/names.py:70
 msgid "SHAVUOT"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:74
+#: zmanim_bot/texts/single/names.py:73
 msgid "shabbat"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:77
+#: zmanim_bot/texts/single/names.py:76
 msgid "Bereshit"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:78
+#: zmanim_bot/texts/single/names.py:77
 msgid "Noach"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:79
+#: zmanim_bot/texts/single/names.py:78
 msgid "Lech-Lecha"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:80
+#: zmanim_bot/texts/single/names.py:79
 msgid "Vayeira"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:81
+#: zmanim_bot/texts/single/names.py:80
 msgid "Chayei Sarah"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:82
+#: zmanim_bot/texts/single/names.py:81
 msgid "Toledot"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:83
+#: zmanim_bot/texts/single/names.py:82
 msgid "Vayetze"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:84
+#: zmanim_bot/texts/single/names.py:83
 msgid "Vayishlach"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:85
+#: zmanim_bot/texts/single/names.py:84
 msgid "Vayeshev"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:86
+#: zmanim_bot/texts/single/names.py:85
 msgid "Miketz"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:87
+#: zmanim_bot/texts/single/names.py:86
 msgid "Vayigash"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:88
+#: zmanim_bot/texts/single/names.py:87
 msgid "Vayechi"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:89
+#: zmanim_bot/texts/single/names.py:88
 msgid "Shemot"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:90
+#: zmanim_bot/texts/single/names.py:89
 msgid "Va'eira"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:91
+#: zmanim_bot/texts/single/names.py:90
 msgid "Bo"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:92
+#: zmanim_bot/texts/single/names.py:91
 msgid "Beshalach"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:93
+#: zmanim_bot/texts/single/names.py:92
 msgid "Yitro"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:94
+#: zmanim_bot/texts/single/names.py:93
 msgid "Mishpatim"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:95
+#: zmanim_bot/texts/single/names.py:94
 msgid "Terumah"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:96
+#: zmanim_bot/texts/single/names.py:95
 msgid "Tetzaveh"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:97
+#: zmanim_bot/texts/single/names.py:96
 msgid "Ki Tisa"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:98
+#: zmanim_bot/texts/single/names.py:97
 msgid "Vayakhel"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:99
+#: zmanim_bot/texts/single/names.py:98
 msgid "Pekudei"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:100
+#: zmanim_bot/texts/single/names.py:99
 msgid "Vayikra"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:101
+#: zmanim_bot/texts/single/names.py:100
 msgid "Tzav"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:102
+#: zmanim_bot/texts/single/names.py:101
 msgid "Shemini"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:103
+#: zmanim_bot/texts/single/names.py:102
 msgid "Tazria"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:104
+#: zmanim_bot/texts/single/names.py:103
 msgid "Metzora"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:105
+#: zmanim_bot/texts/single/names.py:104
 msgid "Acharei Mot"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:106
+#: zmanim_bot/texts/single/names.py:105
 msgid "Kedoshim"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:107
+#: zmanim_bot/texts/single/names.py:106
 msgid "Emor"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:108
+#: zmanim_bot/texts/single/names.py:107
 msgid "Behar"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:109
+#: zmanim_bot/texts/single/names.py:108
 msgid "Bechukotai"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:110
+#: zmanim_bot/texts/single/names.py:109
 msgid "Bamidbar"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:111
+#: zmanim_bot/texts/single/names.py:110
 msgid "Naso"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:112
+#: zmanim_bot/texts/single/names.py:111
 msgid "Behaalotecha"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:113
+#: zmanim_bot/texts/single/names.py:112
 msgid "Shlach"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:114
+#: zmanim_bot/texts/single/names.py:113
 msgid "Korach"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:115
+#: zmanim_bot/texts/single/names.py:114
 msgid "Chukat"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:116
+#: zmanim_bot/texts/single/names.py:115
 msgid "Balak"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:117
+#: zmanim_bot/texts/single/names.py:116
 msgid "Pinchas"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:118
+#: zmanim_bot/texts/single/names.py:117
 msgid "Matot"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:119
+#: zmanim_bot/texts/single/names.py:118
 msgid "Masei"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:120
+#: zmanim_bot/texts/single/names.py:119
 msgid "Devarim"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:121
+#: zmanim_bot/texts/single/names.py:120
 msgid "Va'etchanan"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:122
+#: zmanim_bot/texts/single/names.py:121
 msgid "Eikev"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:123
+#: zmanim_bot/texts/single/names.py:122
 msgid "Re'eh"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:124
+#: zmanim_bot/texts/single/names.py:123
 msgid "Shoftim"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:125
+#: zmanim_bot/texts/single/names.py:124
 msgid "Ki Teitzei"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:126
+#: zmanim_bot/texts/single/names.py:125
 msgid "Ki Tavo"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:127
+#: zmanim_bot/texts/single/names.py:126
 msgid "Nitzavim"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:128
+#: zmanim_bot/texts/single/names.py:127
 msgid "Vayelech"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:129
+#: zmanim_bot/texts/single/names.py:128
 msgid "Haazinu"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:130
+#: zmanim_bot/texts/single/names.py:129
 msgid "V'Zot HaBerachah"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:132
+#: zmanim_bot/texts/single/names.py:131
 msgid "Vayakhel - Pekudei"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:133
+#: zmanim_bot/texts/single/names.py:132
 msgid "Tazria - Metzora"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:134
+#: zmanim_bot/texts/single/names.py:133
 msgid "Acharei Mot - Kedoshim"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:135
+#: zmanim_bot/texts/single/names.py:134
 msgid "Behar - Bechukotai"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:136
+#: zmanim_bot/texts/single/names.py:135
 msgid "Chukat - Balak"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:137
+#: zmanim_bot/texts/single/names.py:136
 msgid "Matot - Masei"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:138
+#: zmanim_bot/texts/single/names.py:137
 msgid "Nitzavim - Vayelech"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:140
+#: zmanim_bot/texts/single/names.py:139
 msgid "Shabbat Rosh ha-Shana"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:141
+#: zmanim_bot/texts/single/names.py:140
 msgid "Shabbat Yom Kippur"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:142
+#: zmanim_bot/texts/single/names.py:141
 msgid "Shabat Succot"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:143 zmanim_bot/texts/single/names.py:144
+#: zmanim_bot/texts/single/names.py:142 zmanim_bot/texts/single/names.py:143
 msgid "Shabbat Chol ha-moed Succot"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:145
+#: zmanim_bot/texts/single/names.py:144
 msgid "Shabbat Shmini Atzeret"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:146
+#: zmanim_bot/texts/single/names.py:145
 msgid "Shabbat Simchat Torah"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:147
+#: zmanim_bot/texts/single/names.py:146
 msgid "Shabbat Pesach"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:148
+#: zmanim_bot/texts/single/names.py:147
 msgid "Shabbat Chol ha-moed Pesach"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:149
+#: zmanim_bot/texts/single/names.py:148
 msgid "Shabbat Shavuot"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:153
+#: zmanim_bot/texts/single/names.py:152
 msgid "Brachot"
 msgstr ""
 
 #. NOTE masehet name; It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:155
+#: zmanim_bot/texts/single/names.py:154
 msgid "Shabbat "
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:156
+#: zmanim_bot/texts/single/names.py:155
 msgid "Eruvin"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:157
+#: zmanim_bot/texts/single/names.py:156
 msgid "Pesachim"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:158
+#: zmanim_bot/texts/single/names.py:157
 msgid "Shekalim"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:159
+#: zmanim_bot/texts/single/names.py:158
 msgid "Yoma"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:160
+#: zmanim_bot/texts/single/names.py:159
 msgid "Sukah"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:161
+#: zmanim_bot/texts/single/names.py:160
 msgid "Beitzah"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:162
+#: zmanim_bot/texts/single/names.py:161
 msgid "Rosh Hashana"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:163
+#: zmanim_bot/texts/single/names.py:162
 msgid "Taanit"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:164
+#: zmanim_bot/texts/single/names.py:163
 msgid "Megilah"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:165
+#: zmanim_bot/texts/single/names.py:164
 msgid "Moed Katan"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:166
+#: zmanim_bot/texts/single/names.py:165
 msgid "Chagigah"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:167
+#: zmanim_bot/texts/single/names.py:166
 msgid "Yevamot"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:168
+#: zmanim_bot/texts/single/names.py:167
 msgid "Kesuvot"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:169
+#: zmanim_bot/texts/single/names.py:168
 msgid "Nedarim"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:170
+#: zmanim_bot/texts/single/names.py:169
 msgid "Nazir"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:171
+#: zmanim_bot/texts/single/names.py:170
 msgid "Sotah"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:172
+#: zmanim_bot/texts/single/names.py:171
 msgid "Gitin"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:173
+#: zmanim_bot/texts/single/names.py:172
 msgid "Kidushin"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:174
+#: zmanim_bot/texts/single/names.py:173
 msgid "Bava Kama"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:175
+#: zmanim_bot/texts/single/names.py:174
 msgid "Bava Metzia"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:176
+#: zmanim_bot/texts/single/names.py:175
 msgid "Bava Batra"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:177
+#: zmanim_bot/texts/single/names.py:176
 msgid "Sanhedrin"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:178
+#: zmanim_bot/texts/single/names.py:177
 msgid "Makot"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:179
+#: zmanim_bot/texts/single/names.py:178
 msgid "Shevuot"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:180
+#: zmanim_bot/texts/single/names.py:179
 msgid "Avodah Zarah"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:181
+#: zmanim_bot/texts/single/names.py:180
 msgid "Horayot"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:182
+#: zmanim_bot/texts/single/names.py:181
 msgid "Zevachim"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:183
+#: zmanim_bot/texts/single/names.py:182
 msgid "Menachot"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:184
+#: zmanim_bot/texts/single/names.py:183
 msgid "Chulin"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:185
+#: zmanim_bot/texts/single/names.py:184
 msgid "Bechorot"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:186
+#: zmanim_bot/texts/single/names.py:185
 msgid "Erchin"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:187
+#: zmanim_bot/texts/single/names.py:186
 msgid "Temurah"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:188
+#: zmanim_bot/texts/single/names.py:187
 msgid "Kerisot"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:189
+#: zmanim_bot/texts/single/names.py:188
 msgid "Meilah"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:190
+#: zmanim_bot/texts/single/names.py:189
 msgid "Kinnim"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:191
+#: zmanim_bot/texts/single/names.py:190
 msgid "Tamid"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:192
+#: zmanim_bot/texts/single/names.py:191
 msgid "Midot"
 msgstr ""
 
-#: zmanim_bot/texts/single/names.py:193
+#: zmanim_bot/texts/single/names.py:192
 msgid "Nidah"
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:198
+#: zmanim_bot/texts/single/names.py:197
 msgid "Nisan "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:200
+#: zmanim_bot/texts/single/names.py:199
 msgid "Iyar "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:202
+#: zmanim_bot/texts/single/names.py:201
 msgid "Sivan "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:204
+#: zmanim_bot/texts/single/names.py:203
 msgid "Tammuz "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:206
+#: zmanim_bot/texts/single/names.py:205
 msgid "Av "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:208
+#: zmanim_bot/texts/single/names.py:207
 msgid "Elul "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:210
+#: zmanim_bot/texts/single/names.py:209
 msgid "Tishrei "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:212
+#: zmanim_bot/texts/single/names.py:211
 msgid "Cheshvan "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:214
+#: zmanim_bot/texts/single/names.py:213
 msgid "Kislev "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:216
+#: zmanim_bot/texts/single/names.py:215
 msgid "Tevet "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:218
+#: zmanim_bot/texts/single/names.py:217
 msgid "Shevat "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:220
+#: zmanim_bot/texts/single/names.py:219
 msgid "Adar "
 msgstr ""
 
 #. NOTE It is very important to add space after the month name!!
-#: zmanim_bot/texts/single/names.py:222
+#: zmanim_bot/texts/single/names.py:221
 msgid "Adar II "
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:227
+#: zmanim_bot/texts/single/names.py:226
 msgid "Nisan"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:229
+#: zmanim_bot/texts/single/names.py:228
 msgid "Iyar"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:231
+#: zmanim_bot/texts/single/names.py:230
 msgid "Sivan"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:233
+#: zmanim_bot/texts/single/names.py:232
 msgid "Tammuz"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:235
+#: zmanim_bot/texts/single/names.py:234
 msgid "Av"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:237
+#: zmanim_bot/texts/single/names.py:236
 msgid "Elul"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:239
+#: zmanim_bot/texts/single/names.py:238
 msgid "Tishrei"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:241
+#: zmanim_bot/texts/single/names.py:240
 msgid "Cheshvan"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:243
+#: zmanim_bot/texts/single/names.py:242
 msgid "Kislev"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:245
+#: zmanim_bot/texts/single/names.py:244
 msgid "Tevet"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:247
+#: zmanim_bot/texts/single/names.py:246
 msgid "Shevat"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:249
+#: zmanim_bot/texts/single/names.py:248
 msgid "Adar"
 msgstr ""
 
 #. NOTE Genative month name
-#: zmanim_bot/texts/single/names.py:251
+#: zmanim_bot/texts/single/names.py:250
 msgid "Adar II"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:4
+#: zmanim_bot/texts/single/zmanim.py:3
 msgid "Sunrise"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:5
+#: zmanim_bot/texts/single/zmanim.py:4
 msgid "Alot ha-shakhar"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:6
+#: zmanim_bot/texts/single/zmanim.py:5
 msgid "Sof zman tfila [AGRO]"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:7
+#: zmanim_bot/texts/single/zmanim.py:6
 msgid "Sof zman tfila [MA]"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:8
+#: zmanim_bot/texts/single/zmanim.py:7
 msgid "Misheyakir (zman tallit and tfilin)"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:9
+#: zmanim_bot/texts/single/zmanim.py:8
 msgid "Sof zman Shemah [AGRO]"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:10
+#: zmanim_bot/texts/single/zmanim.py:9
 msgid "Sof zman Shemah [MA]"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:12
+#: zmanim_bot/texts/single/zmanim.py:11
 msgid "Mincha ktanah"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:13
+#: zmanim_bot/texts/single/zmanim.py:12
 msgid "Mincha gdolah"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:14
+#: zmanim_bot/texts/single/zmanim.py:13
 msgid "Plag mincha"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:15
+#: zmanim_bot/texts/single/zmanim.py:14
 msgid "Shkia (sunset)"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:16
+#: zmanim_bot/texts/single/zmanim.py:15
 msgid "Tzeit ha-kochavim [8.5 degrees]"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:17
+#: zmanim_bot/texts/single/zmanim.py:16
 msgid "Tzeit ha-kochavim [72 minutes]"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:18
+#: zmanim_bot/texts/single/zmanim.py:17
 msgid "Tzeit ha-kochavim [42 minutes]"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:19
+#: zmanim_bot/texts/single/zmanim.py:18
 msgid "Tzeit ha-kochavim [5.95 degrees]"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:20
+#: zmanim_bot/texts/single/zmanim.py:19
 msgid "Chatzot Laila (midnight)"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:21
+#: zmanim_bot/texts/single/zmanim.py:20
 msgid "Astronomical hour [MA]"
 msgstr ""
 
-#: zmanim_bot/texts/single/zmanim.py:22
+#: zmanim_bot/texts/single/zmanim.py:21
 msgid "Astronomical hour [AGRO]"
 msgstr ""
 
