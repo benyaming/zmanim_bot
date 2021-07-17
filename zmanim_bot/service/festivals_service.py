@@ -37,21 +37,21 @@ async def get_generic_fast(fast_name: str) -> Tuple[BytesIO, InlineKeyboardMarku
     user = await bot_repository.get_or_create_user()
     data = await zmanim_api_client.get_generic_fast(
         name=_get_festival_name(fast_name),
-        location=user.get_active_location(),
+        location=user.location.coordinates,
         havdala_opinion=user.havdala_opinion
     )
-    return FastImage(data).get_image()
+    return FastImage(data, user.location.name).get_image()
 
 
 async def get_generic_yomtov(yomtov_name: str) -> Tuple[BytesIO, InlineKeyboardMarkup]:
     user = await bot_repository.get_or_create_user()
     data = await zmanim_api_client.get_generic_yomtov(
         name=_get_festival_name(yomtov_name),
-        location=user.get_active_location(),
+        location=user.location.coordinates,
         cl_offset=user.cl_offset,
         havdala_opinion=user.havdala_opinion
     )
-    return YomTovImage(data).get_image()
+    return YomTovImage(data, user.location.name).get_image()
 
 
 async def get_generic_holiday(holiday_name: str) -> BytesIO:

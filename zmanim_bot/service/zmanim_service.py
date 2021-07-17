@@ -14,15 +14,19 @@ from zmanim_bot.states import ZmanimGregorianDateState
 async def get_zmanim() -> Zmanim:
     user = await bot_repository.get_or_create_user()
     data = await zmanim_api_client.get_zmanim(
-        user.get_active_location(),
+        user.location.coordinates,
         user.zmanim_settings.dict()
     )
     return data
 
 
 async def get_zmanim_image() -> BytesIO:
-    data = await get_zmanim()
-    return ip.ZmanimImage(data).get_image()
+    user = await bot_repository.get_or_create_user()
+    data = await zmanim_api_client.get_zmanim(
+        user.location.coordinates,
+        user.zmanim_settings.dict()
+    )
+    return ip.ZmanimImage(data, user.location.name).get_image()
 
 
 async def get_zmanim_by_date(*, date: str = None, call_data: str = None) -> BytesIO:
@@ -30,14 +34,13 @@ async def get_zmanim_by_date(*, date: str = None, call_data: str = None) -> Byte
         date = call_data.split(CallbackPrefixes.zmanim_by_date)[1]
 
     user = await bot_repository.get_or_create_user()
-
     data = await zmanim_api_client.get_zmanim(
-        user.get_active_location(),
+        user.location.coordinates,
         user.zmanim_settings.dict(),
         date_=date
     )
 
-    return ip.ZmanimImage(data).get_image()
+    return ip.ZmanimImage(data, user.location.name).get_image()
 
 
 async def init_zmanim_by_date():
@@ -47,12 +50,12 @@ async def init_zmanim_by_date():
 async def get_shabbat() -> Tuple[BytesIO, Optional[InlineKeyboardMarkup]]:
     user = await bot_repository.get_or_create_user()
     data = await zmanim_api_client.get_shabbat(
-        location=user.get_active_location(),
+        location=user.location.coordinates,
         cl_offset=user.cl_offset,
         havdala_opinion=user.havdala_opinion
     )
 
-    return ip.ShabbatImage(data).get_image()
+    return ip.ShabbatImage(data, location_name=user.location.name).get_image()
 
 
 async def get_daf_yomi() -> BytesIO:

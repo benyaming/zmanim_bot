@@ -81,8 +81,15 @@ class BaseImage:
         date_font = ImageFont.truetype(str(self._font_path), 40)
         self._draw.text((x, y), date_str, font=date_font)
 
-    def _draw_location(self):
-        ...
+    def _draw_location(self, location_name: str, *, is_fast: bool = False):
+        x = 185
+        y = 150 if not is_fast else 100
+
+        icon_font = ImageFont.truetype(str(Path(__file__).parent / 'res' / 'fonts' / 'fontello.ttf'), 40)
+        text_font = ImageFont.truetype(str(self._font_path), 40)
+
+        self._draw.text((x, y + 5), f'\ue800', font=icon_font, embedded_color=True)
+        self._draw.text((x + 20, y), f' {location_name}', font=text_font, embedded_color=True)
 
     def _x_font_offset(self, text: str) -> int:
         """Returns size in px of given text in axys x"""
@@ -185,10 +192,11 @@ class RoshChodeshImage(BaseImage):
 
 class ShabbatImage(BaseImage):
 
-    def __init__(self, data: Shabbat):
+    def __init__(self, data: Shabbat, location_name: str):
         self.data = data
         self._font_size = 60
         self._warning_font_size = 48
+        self.location_name = location_name
 
         super().__init__()
 
@@ -200,6 +208,7 @@ class ShabbatImage(BaseImage):
         self._image, self._draw = _get_draw(str(self._background_path))
 
         self._draw_title(self._draw, names.title_shabbath)
+        self._draw_location(self.location_name)
 
         if self.data.havdala:
             self._draw_date([self.data.havdala.date()], no_weekday=True)
@@ -257,36 +266,37 @@ class ShabbatImage(BaseImage):
 
 class ZmanimImage(BaseImage):
 
-    def __init__(self, data: Zmanim):
+    def __init__(self, data: Zmanim, location_name: str):
         self.data = data
         self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'zmanim.png'
         super().__init__()
 
         self._draw_title(self._draw, names.title_zmanim)
         self._draw_date([self.data.settings.date_], self.data.settings.jewish_date)
+        self._draw_location(location_name)
 
     def _set_font_properties(self, number_of_lines: int):
         p = {
             # [font_size, y_offset, start_y_offset
-            1: [44, 53, 300],
-            2: [44, 53, 270],
-            3: [44, 53, 220],
-            4: [44, 53, 180],
-            5: [44, 53, 160],
-            6: [44, 53, 140],
-            7: [44, 53, 100],
-            8: [44, 53, 85],
-            9: [44, 53, 85],
-            10: [44, 53, 40],
-            11: [44, 53, 20],
-            12: [44, 53, 15],
-            13: [44, 53, 20],
-            14: [44, 53, 20],
-            15: [44, 53, 10],
-            16: [40, 45, 0],
-            17: [40, 45, 0],
-            18: [40, 45, 0],
-            19: [40, 45, 0]
+            1: [44, 53, 350],
+            2: [44, 53, 300],
+            3: [44, 53, 270],
+            4: [44, 53, 220],
+            5: [44, 53, 180],
+            6: [44, 53, 160],
+            7: [44, 53, 140],
+            8: [44, 53, 100],
+            9: [44, 53, 100],
+            10: [44, 53, 80],
+            11: [44, 53, 40],
+            12: [44, 53, 25],
+            13: [44, 53, 30],
+            14: [44, 53, 30],
+            15: [44, 53, 20],
+            16: [40, 42, 20],
+            17: [40, 42, 20],
+            18: [40, 42, 0],
+            19: [40, 42, 0]
         }
         self._font_size, self._y_offset, self._start_y_offset = p.get(number_of_lines)
         self._font = ImageFont.truetype(str(self._font_path), size=self._font_size)
@@ -300,7 +310,7 @@ class ZmanimImage(BaseImage):
 
         self._set_font_properties(len(zmanim_rows))
 
-        y: int = 170 + self._start_y_offset
+        y: int = 200 + self._start_y_offset
         x: int = 50
 
         # draw all image lines in cycle
@@ -317,18 +327,20 @@ class ZmanimImage(BaseImage):
 
 class FastImage(BaseImage):
 
-    def __init__(self, data: Fast):
+    def __init__(self, data: Fast, location_name: str):
         self.data = data
         self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'fast.png'
         self._font_size = 60
 
         super().__init__()
 
+        self._draw_title(self._draw, names.FASTS_TITLES[data.settings.fast_name])
+        self._draw_location(location_name, is_fast=True)
+
     def get_image(self) -> Tuple[BytesIO, InlineKeyboardMarkup]:
-        self._draw_title(self._draw, names.FASTS_TITLES[self.data.settings.fast_name])
 
         self._draw.text(
-            (210, 125),
+            (210, 150),
             headers.fast_moved.value if self.data.moved_fast else headers.fast_not_moved.value,
             font=self._bold_font,
             fill='#ff5959' if self.data.moved_fast else '#8bff59'
@@ -351,8 +363,6 @@ class FastImage(BaseImage):
             y += y_offset
 
         # draw havdala
-        # self._draw_line(x, y, headers.fast_end, self.data.havdala.time().isoformat('minutes'))
-
         self._draw_line(x, y, headers.fast_end, '')
         y += y_offset
         havdala_options = (
@@ -444,7 +454,7 @@ class IsraelHolidaysImage(BaseImage):
 
 class YomTovImage(BaseImage):
 
-    def __init__(self, data: YomTov):
+    def __init__(self, data: YomTov, location_name: str):
         backgrounds = {
             'rosh_hashana': 'rosh_hashana.png',
             'yom_kippur': 'yom_kippur.png',
@@ -461,6 +471,7 @@ class YomTovImage(BaseImage):
 
         self.data = data
         self._draw_title(self._draw, names.YOMTOVS_TITLES[data.settings.yomtov_name])
+        self._draw_location(location_name)
 
     @staticmethod
     def _humanize_header_date(header_type: str, date_: Union[date, dt]) -> Tuple[str, bool]:
@@ -526,12 +537,12 @@ class YomTovImage(BaseImage):
     def _get_font_properties(number_of_lines: int) -> Tuple[int, int, int]:
         p = {
             # [font_size, y_offset, start_y_position]
-            2: (58, 70, 400),
+            2: (57, 70, 400),
             3: (57, 70, 400),
             4: (55, 70, 400),
-            5: (55, 80, 400),
-            6: (55, 70, 400),
-            7: (55, 70, 400),
+            5: (55, 80, 260),
+            6: (55, 70, 260),
+            7: (55, 70, 260),
             8: (55, 60, 260),
             9: (50, 50, 230),
             10: (50, 50, 230)
