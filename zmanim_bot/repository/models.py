@@ -21,6 +21,10 @@ class Location(EmbeddedModel, ABC):
     name: str
     is_active: bool
 
+    @property
+    def coordinates(self) -> Tuple[float, float]:
+        return self.lat, self.lng
+
 
 class OmerSettings(EmbeddedModel, ABC):
     is_enabled: bool = False
@@ -65,8 +69,9 @@ class User(Model, ABC):
     class Config:
         collection = DB_COLLECTION_NAME
 
-    def get_active_location(self) -> Tuple[float, float]:
+    @property
+    def location(self) -> Location:
         loc = list(filter(lambda l: l.is_active, self.location_list))
         if not loc:
             raise NoLocationException
-        return loc[0].lat, loc[0].lng
+        return loc[0]

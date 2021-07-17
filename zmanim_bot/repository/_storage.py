@@ -10,7 +10,6 @@ from zmanim_bot.exceptions import (ActiveLocationException,
                                    NonUniqueLocationNameException)
 from zmanim_bot.integrations.geo_client import get_location_name
 from zmanim_bot.misc import db_engine
-
 from .models import Location, User, UserInfo, ZmanimSettings
 
 __all__ = [
@@ -106,7 +105,7 @@ async def set_location(tg_user: types.User, location: Tuple[float, float]) -> Lo
     user = await _get_or_create_user(tg_user)
     location_name = await get_location_name(location[0], location[1], user.language)
     if len(location_name) > MAX_LOCATION_NAME_SIZE:
-        location_name = f'{location_name[MAX_LOCATION_NAME_SIZE:]}...'
+        location_name = f'{location_name[:MAX_LOCATION_NAME_SIZE]}...'
 
     location_obj = Location(
         lat=location[0],
@@ -133,7 +132,7 @@ async def do_set_location_name(tg_user: types.User, new_name: str, old_name: str
     validate_location_name(new_name, user.location_list)
 
     if len(new_name) > MAX_LOCATION_NAME_SIZE:
-        new_name = f'{new_name[MAX_LOCATION_NAME_SIZE:]}...'
+        new_name = f'{new_name[:MAX_LOCATION_NAME_SIZE]}...'
 
     location = location[0]
     location.name = new_name
