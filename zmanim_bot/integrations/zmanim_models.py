@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date, datetime, time
+from datetime import date, datetime, time, timedelta
 from typing import List, Optional, Tuple
 
 from pydantic import BaseModel
@@ -18,6 +18,41 @@ __all__ = [
     'Zmanim',
     'IsraelHolidays'
 ]
+
+
+LEHUMRA_MINUS_MINUTE_NAMES = [
+    'sof_zman_shema_ma', 'sof_zman_shema_gra', 'sof_zman_tefila_ma',
+    'sof_zman_tefila_gra', 'sunset', 'fast_start'
+]
+LEHUMRA_TO_MIN = False
+LEHUMRA_TO_MAX = True
+
+
+def round_time_lehumra(dt: datetime, lehumra_to_max: bool) -> datetime:
+    delta = timedelta(minutes=1 if lehumra_to_max else -1)
+    return dt + delta
+
+
+class BaseModelWithZmanimLehumra(BaseModel):
+    is_second_day: bool = False
+
+    def apply_zmanim_lehumra(self):
+        for name, value in self.dict(exclude={'settings'}).items():
+            if isinstance(value, datetime):
+                if \
+                        name in LEHUMRA_MINUS_MINUTE_NAMES or (
+                            name == 'candle_lighting' and not self.is_second_day and value.weekday() != 5
+                            or (self.is_second_day and value.weekday() == 4)
+                        ):
+                    lehumra = LEHUMRA_TO_MIN
+                else:
+                    lehumra = LEHUMRA_TO_MAX
+                value_lehumra = round_time_lehumra(value, lehumra)
+                setattr(self, name, value_lehumra)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.apply_zmanim_lehumra()
 
 
 class SimpleSettings(BaseModel):
@@ -38,7 +73,7 @@ class Settings(SimpleSettings):
     yomtov_name: Optional[str] = None
 
 
-class Zmanim(BaseModel):
+class Zmanim(BaseModelWithZmanimLehumra):
     settings: Settings
     alos: Optional[datetime] = None
     misheyakir_10_2: Optional[datetime] = None
@@ -61,10 +96,14 @@ class Zmanim(BaseModel):
     astronomical_hour_gra: Optional[time] = None
 
 
-class AsurBeMelachaDay(BaseModel):
+class AsurBeMelachaDay(BaseModelWithZmanimLehumra):
     date: Optional[date] = None
     candle_lighting: Optional[datetime] = None
     havdala: Optional[datetime] = None
+
+
+class SecondAsurBeMelachaDay(AsurBeMelachaDay):
+    is_second_day = True
 
 
 class Shabbat(AsurBeMelachaDay):
@@ -106,15 +145,15 @@ class YomTov(BaseModel):
     settings: Settings
     pre_shabbat: Optional[AsurBeMelachaDay] = None
     day_1: AsurBeMelachaDay
-    day_2: Optional[AsurBeMelachaDay] = None
-    post_shabbat: Optional[AsurBeMelachaDay] = None
+    day_2: Optional[SecondAsurBeMelachaDay] = None
+    post_shabbat: Optional[SecondAsurBeMelachaDay] = None
     hoshana_rabba: Optional[date] = None
 
     pesach_part_2_day_1: Optional[AsurBeMelachaDay] = None
-    pesach_part_2_day_2: Optional[AsurBeMelachaDay] = None
+    pesach_part_2_day_2: Optional[SecondAsurBeMelachaDay] = None
 
 
-class Fast(BaseModel):
+class Fast(BaseModelWithZmanimLehumra):
     settings: Settings
     moved_fast: Optional[bool] = False
     fast_start: Optional[datetime] = None
