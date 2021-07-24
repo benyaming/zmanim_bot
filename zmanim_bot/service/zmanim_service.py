@@ -20,16 +20,7 @@ async def get_zmanim() -> Zmanim:
     return data
 
 
-async def get_zmanim_image() -> BytesIO:
-    user = await bot_repository.get_or_create_user()
-    data = await zmanim_api_client.get_zmanim(
-        user.location.coordinates,
-        user.zmanim_settings.dict()
-    )
-    return ip.ZmanimImage(data, user.location.name).get_image()
-
-
-async def get_zmanim_by_date(*, date: str = None, call_data: str = None) -> BytesIO:
+async def get_zmanim_image(*, date: str = None, call_data: str = None) -> BytesIO:
     if call_data:
         date = call_data.split(CallbackPrefixes.zmanim_by_date)[1]
 
@@ -39,7 +30,6 @@ async def get_zmanim_by_date(*, date: str = None, call_data: str = None) -> Byte
         user.zmanim_settings.dict(),
         date_=date
     )
-
     return ip.ZmanimImage(data, user.location.name).get_image()
 
 

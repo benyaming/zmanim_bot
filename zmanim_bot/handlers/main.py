@@ -22,7 +22,7 @@ async def handle_zmanim(msg: Message):
 async def handle_zmanim_by_date(call: CallbackQuery):
     await call.answer()
 
-    resp = await zmanim_service.get_zmanim_by_date(call_data=call.data)
+    resp = await zmanim_service.get_zmanim_image(call_data=call.data)
     await bot.send_photo(call.from_user.id, resp, reply_to_message_id=call.message.message_id)
     await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id)
 
