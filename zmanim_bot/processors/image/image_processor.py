@@ -303,7 +303,7 @@ class ZmanimImage(BaseImage):
         self._bold_font = ImageFont.truetype(str(self._bold_font_path), size=self._font_size)
 
     def get_image(self) -> BytesIO:
-        zmanim_rows: Dict[str, dt] = self.data.dict(exclude={'settings'}, exclude_none=True)
+        zmanim_rows: Dict[str, dt] = self.data.dict(exclude={'settings', 'is_second_day'}, exclude_none=True)
 
         if len(zmanim_rows) == 0:
             raise PolarCoordinatesException()
