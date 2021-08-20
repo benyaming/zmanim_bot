@@ -14,7 +14,7 @@ from zmanim_bot.exceptions import PolarCoordinatesException
 from zmanim_bot.helpers import parse_jewish_date
 from zmanim_bot.integrations.zmanim_models import *
 from zmanim_bot.keyboards.inline import get_zmanim_by_date_buttons
-from zmanim_bot.middlewares.i18n import gettext as _
+from zmanim_bot.middlewares.i18n import gettext as _, i18n_
 from zmanim_bot.processors.text_utils import humanize_date, humanize_time
 from zmanim_bot.texts.plural import units
 from zmanim_bot.texts.single import headers, helpers, names, zmanim
@@ -48,6 +48,27 @@ class BaseImage:
     _image: PngImagePlugin.PngImageFile
     _draw: ImageDraw
 
+    _is_rtl: bool
+
+    __x: int
+    y: int
+    y_offset: int
+
+    @property
+    def x(self) -> int:
+        return self.__x
+
+    @x.setter
+    def x(self, value: int):
+        self.__x = value if not self._is_rtl else IMG_SIZE - value
+
+    def shift_y(self):
+        self.y += self.y_offset
+
+    def get_x_for_text(self, text: str) -> ...:
+        length = self._x_font_offset(text)
+        return self.__x + length if not self._is_rtl else self.__x - length
+
     def __init__(self):
         self._font = ImageFont.truetype(str(self._font_path), self._font_size)
         self._bold_font = ImageFont.truetype(str(self._bold_font_path), self._font_size)
@@ -56,6 +77,7 @@ class BaseImage:
             self._image, self._draw = _get_draw(str(self._background_path))
 
         self._warning_font = ImageFont.truetype(str(self._bold_font_path), self._warning_font_size)
+        self._is_rtl = i18n_.ctx_locale.get() == 'he'
 
     def _draw_title(self, draw: ImageDraw, title: LazyProxy) -> None:
         coordinates = (180, 30)
@@ -94,8 +116,11 @@ class BaseImage:
     def _x_font_offset(self, text: str) -> int:
         """Returns size in px of given text in axys x"""
         last_line = text.split('\n')[-1]
+        offset = self._bold_font.getsize(last_line)[0]
+        if self._is_rtl:
+            offset *= -1
 
-        return self._bold_font.getsize(last_line)[0]
+        return offset
 
     def _y_font_offset(self, text: str) -> int:
         """Returns size in px of given text in axys y"""
@@ -118,7 +143,32 @@ class BaseImage:
         if value_on_new_line or value_without_x_offset:
             y += self._y_font_offset(header.split('\n')[0])
 
-        self._draw.text((x, y), text=str(value), font=self._font)
+        self._draw.text((x, y), text=str(value), font=self._font, direction='rtl' if self._is_rtl else 'ltr')
+
+    def _draw_line2(
+            self,
+            header: str,
+            value: str,
+            value_on_new_line: bool = False,
+            value_without_x_offset: bool = False
+    ):
+        header = f'{str(header)}: '
+        header_offset = self._x_font_offset(header)
+        x = self.x + header_offset if self._is_rtl else self.x
+        self._draw.text((x, self.y), text=header, font=self._bold_font)
+
+        if not value_without_x_offset:
+            x += self._x_font_offset(header) if not self._is_rtl else self._x_font_offset(value)
+        if value_on_new_line or value_without_x_offset:
+            self.y += self._y_font_offset(header.split('\n')[0])
+
+        self._draw.text(
+            (x, self.y),
+            text=str(value),
+            font=self._font,
+            direction='rtl' if self._is_rtl else 'ltr',
+            align='left' if not self._is_rtl else 'right'
+        )
 
     def get_image(self):
         raise NotImplemented
@@ -159,33 +209,28 @@ class RoshChodeshImage(BaseImage):
         self._draw_title(self._draw, names.title_rosh_chodesh)
         self._draw_date(self.data.days, self.data.settings.jewish_date)
 
+        self.y = 370
+        self.x = 100
+        self.y_offset = 80
+
     def get_image(self) -> BytesIO:
-        y = 370
-        x = 100
-        y_offset = 80
 
         # draw month
-        self._draw_line(x, y, _(*units.tu_month, 1).capitalize(),
-                        names.JEWISH_MONTHS[self.data.month_name])
-        y += y_offset
+        self._draw_line2(_(*units.tu_month, 1).capitalize(), names.JEWISH_MONTHS[self.data.month_name])
+        self.shift_y()
 
         # draw duration
         duration_value = f'{self.data.duration} {_(*units.tu_day, self.data.duration)}'
-        self._draw_line(x, y, headers.rh_duration, duration_value)
-        y += y_offset
-
-        # # draw date
-        # date_value = humanize_date(self.data.days, weekday_on_new_line=len(self.data.days) > 1)
-        # self._draw_line(x, y, headers.date, date_value)
-        # y += y_offset if len(self.data.days) == 1 else y_offset * 2
+        self._draw_line2(headers.rh_duration, duration_value)
+        self.shift_y()
 
         # draw molad string
         molad = self.data.molad[0]
-        molad_value = f'{molad.day} {names.MONTH_NAMES_GENETIVE[molad.month]} {molad.year},\n' \
+        molad_value = f'{molad.day} {names.MONTH_NAMES_GENETIVE[molad.month]} {molad.year},\n'\
                       f'{molad.time().hour} {_(*units.tu_hour, molad.time().hour)} ' \
                       f'{molad.time().minute} {_(*units.tu_minute, molad.time().minute)} ' \
                       f'{helpers.and_word} {self.data.molad[1]} {_(*units.tu_part, self.data.molad[1])}'
-        self._draw_line(x, y, headers.rh_molad, molad_value)
+        self._draw_line2(headers.rh_molad, molad_value)
 
         return _convert_img_to_bytes_io(self._image)
 
