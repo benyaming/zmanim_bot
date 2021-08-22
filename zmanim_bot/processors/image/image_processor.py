@@ -115,7 +115,7 @@ class BaseImage:
 
     def _x_font_offset(self, text: str) -> int:
         """Returns size in px of given text in axys x"""
-        last_line = text.split('\n')[-1]
+        last_line = min(text.split('\n'))
         offset = self._bold_font.getsize(last_line)[0]
         if self._is_rtl:
             offset *= -1
@@ -149,6 +149,7 @@ class BaseImage:
             self,
             header: str,
             value: str,
+            *,
             value_on_new_line: bool = False,
             value_without_x_offset: bool = False
     ):
@@ -184,18 +185,17 @@ class DafYomImage(BaseImage):
         self._draw_title(self._draw, names.title_daf_yomi)
         self._draw_date([self.data.settings.date_], self.data.settings.jewish_date)
 
-    def get_image(self) -> BytesIO:
-        y = 470
-        x = 100
-        y_offset = 100
+        self.y = 470
+        self.x = 100
+        self.y_offset = 100
 
+    def get_image(self) -> BytesIO:
         # draw masehet
-        self._draw_line(x, y, headers.daf_masehet, names.GEMARA_BOOKS.get(self.data.masehet, ''))
-        y += y_offset
+        self._draw_line2(headers.daf_masehet, names.GEMARA_BOOKS.get(self.data.masehet, ''))
+        self.shift_y()
 
         # draw daf
-        self._draw_line(x, y, headers.daf_page, str(self.data.daf))
-
+        self._draw_line2(headers.daf_page, str(self.data.daf))
         return _convert_img_to_bytes_io(self._image)
 
 
@@ -320,6 +320,16 @@ class ZmanimImage(BaseImage):
         self._draw_date([self.data.settings.date_], self.data.settings.jewish_date)
         self._draw_location(location_name)
 
+        self.zmanim_rows: Dict[str, dt] = self.data.dict(exclude={'settings', 'is_second_day'}, exclude_none=True)
+
+        if len(self.zmanim_rows) == 0:
+            raise PolarCoordinatesException()
+
+        self._set_font_properties(len(self.zmanim_rows))
+
+        self.y: int = 200 + self._start_y_offset
+        self.x: int = 50
+
     def _set_font_properties(self, number_of_lines: int):
         p = {
             # [font_size, y_offset, start_y_offset
@@ -343,29 +353,17 @@ class ZmanimImage(BaseImage):
             18: [40, 42, 0],
             19: [40, 42, 0]
         }
-        self._font_size, self._y_offset, self._start_y_offset = p.get(number_of_lines)
+        self._font_size, self.y_offset, self._start_y_offset = p.get(number_of_lines)
         self._font = ImageFont.truetype(str(self._font_path), size=self._font_size)
         self._bold_font = ImageFont.truetype(str(self._bold_font_path), size=self._font_size)
 
     def get_image(self) -> BytesIO:
-        zmanim_rows: Dict[str, dt] = self.data.dict(exclude={'settings', 'is_second_day'}, exclude_none=True)
-
-        if len(zmanim_rows) == 0:
-            raise PolarCoordinatesException()
-
-        self._set_font_properties(len(zmanim_rows))
-
-        y: int = 200 + self._start_y_offset
-        x: int = 50
-
-        # draw all image lines in cycle
-        for header, value in zmanim_rows.items():
-            self._draw_line(
-                x, y, getattr(texts.single.zmanim, header),
-                value.time().isoformat('minutes') if isinstance(value, date) else value.isoformat(
-                    'minutes')
+        for header, value in self.zmanim_rows.items():
+            self._draw_line2(
+                getattr(texts.single.zmanim, header),
+                value.time().isoformat('minutes') if isinstance(value, date) else value.isoformat('minutes')
             )
-            y += self._y_offset
+            self.shift_y()
 
         return _convert_img_to_bytes_io(self._image)
 
@@ -443,9 +441,10 @@ class HolidayImage(BaseImage):
 
         self._draw_title(self._draw, names.HOLIDAYS_TITLES[data.settings.holiday_name])
 
+        self.x = 100
+        self.y = 450
+
     def get_image(self) -> BytesIO:
-        x = 100
-        y = 450
 
         holiday_last_date = self.data.date
         line_break = False
@@ -453,19 +452,12 @@ class HolidayImage(BaseImage):
             holiday_last_date += timedelta(days=7)
             line_break = True
 
-        date_value = humanize_date([self.data.date, holiday_last_date],
-                                   weekday_on_new_line=line_break)
+        date_value = humanize_date([self.data.date, holiday_last_date], weekday_on_new_line=line_break)
 
-        if (x + self._x_font_offset(headers.date.value) + self._x_font_offset(
-                date_value)) > IMG_SIZE:
-            date_value = humanize_date([self.data.date, holiday_last_date],
-                                       weekday_on_new_line=True)
+        if (self.x + self._x_font_offset(headers.date.value) + self._x_font_offset(date_value)) > IMG_SIZE:
+            date_value = humanize_date([self.data.date, holiday_last_date], weekday_on_new_line=True)
 
-        self._draw_line(
-            x,
-            y,
-            headers.date,
-            date_value)
+        self._draw_line2(headers.date, date_value)
         return _convert_img_to_bytes_io(self._image)
 
 
@@ -478,21 +470,24 @@ class IsraelHolidaysImage(BaseImage):
         self._font_size = 53
 
         super().__init__()
+        self.x = 80
+        self.y = 300
+        self.y_offset = 90
 
         self._draw_title(self._draw, names.HOLIDAYS_TITLES['israel_holidays'])
 
     def get_image(self) -> BytesIO:
-        x = 80
-        y = 300
-        y_offset = 90
         y_offset_small = 60
 
         for holiday in self.data.holiday_list:
-            self._draw.text((x, y), f'{headers.israel_holidays[holiday[0]]}:',
-                            font=self._bold_font)
-            y += y_offset_small
-            self._draw_line(x, y, headers.date, humanize_date([holiday[1]]))
-            y += y_offset
+            header = f'{headers.israel_holidays[holiday[0]]}:'
+            x = self.x + self._x_font_offset(header) if self._is_rtl else self.x
+
+            self._draw.text((x, self.y), header, font=self._bold_font)
+            self.y += y_offset_small
+
+            self._draw_line2(headers.date, humanize_date([holiday[1]]))
+            self.shift_y()
 
         return _convert_img_to_bytes_io(self._image)
 
@@ -512,9 +507,17 @@ class YomTovImage(BaseImage):
 
         self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / background
 
-        super().__init__()
-
         self.data = data
+        super().__init__()
+        self.x = 80
+
+        self.dates = self._get_dates()
+        self.lines = self._prepare_lines(self.dates)
+        self.y, self.y_offset, self._font_size = self._get_font_properties(len(self.lines))
+
+        self._font = ImageFont.truetype(str(self._font_path), self._font_size)
+        self._bold_font = ImageFont.truetype(str(self._bold_font_path), self._font_size)
+
         self._draw_title(self._draw, names.YOMTOVS_TITLES[data.settings.yomtov_name])
         self._draw_location(location_name)
 
@@ -552,14 +555,12 @@ class YomTovImage(BaseImage):
                           or self.data.day_2 \
                           or self.data.day_1
         self._draw_date([self.data.day_1.date, yomtov_last_day.date])
-        # dates_range = humanize_date([self.data.day_1, yomtov_last_day], weekday_on_new_line=True)
-        # lines.append((headers.date, dates_range, False))
-        # lines.append(EMPTY_LINE)
 
         for date_ in dates:
             if isinstance(date_, date):  # hoshana rabbah case
                 header = str(headers.hoshana_raba)
-                value = f'{date_.day} {names.MONTH_NAMES_GENETIVE[date_.month]},\n {names.WEEKDAYS[date_.weekday()]}'
+                sep = '\n' if not self._is_rtl else ''
+                value = f'{date_.day} {names.MONTH_NAMES_GENETIVE[date_.month]},{sep} {names.WEEKDAYS[date_.weekday()]}'
                 lines.append(EMPTY_LINE)
                 lines.append((header, value, False))
                 continue
@@ -596,28 +597,20 @@ class YomTovImage(BaseImage):
         return start_position_y, y_offset, font_size
 
     def get_image(self) -> Tuple[BytesIO, Optional[InlineKeyboardMarkup]]:
-        x = 80
-
-        dates = self._get_dates()
-        lines = self._prepare_lines(dates)
-        y, y_offset, font_size = self._get_font_properties(len(lines))
-        self._font = ImageFont.truetype(str(self._font_path), size=font_size)
-        self._bold_font = ImageFont.truetype(str(self._bold_font_path), size=font_size)
-
-        for header, value, new_line in lines:
+        for header, value, new_line in self.lines:
             if not header:
-                y += y_offset * 2
+                self.y += self.y_offset * 2
                 continue
 
-            self._draw_line(x, y, header, value, new_line)
+            self._draw_line2(header, value, value_on_new_line=new_line)
             if new_line:
-                y += self._y_font_offset(header)
-            y += y_offset
+                self.y += self._y_font_offset(header)
+            self.shift_y()
 
         kb = get_zmanim_by_date_buttons(
             list(map(
                 lambda d: d.date if isinstance(d, AsurBeMelachaDay) else d,
-                dates
+                self.dates
             ))
         )
         return _convert_img_to_bytes_io(self._image), kb
