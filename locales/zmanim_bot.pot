@@ -407,11 +407,11 @@ msgid "You sent incorrect coordinates. Please check and re-send them!"
 msgstr ""
 
 #: zmanim_bot/texts/single/messages.py:24
-msgid "This location alredy exists in your saved locations!"
+msgid "This location already exists in your saved locations!"
 msgstr ""
 
 #: zmanim_bot/texts/single/messages.py:25
-msgid "This location name alredy exists in your saved locations!"
+msgid "This location name already exists in your saved locations!"
 msgstr ""
 
 #: zmanim_bot/texts/single/messages.py:26
