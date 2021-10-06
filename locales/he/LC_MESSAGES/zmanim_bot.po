@@ -49,24 +49,24 @@ msgid "hour"
 msgid_plural "hours"
 msgstr[0] "שעה"
 msgstr[1] "שעות"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[2] "שעות"
+msgstr[3] "שעות"
 
 #: zmanim_bot/texts/plural/units.py:8
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "דקה"
 msgstr[1] "דקות"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[2] "דקות"
+msgstr[3] "דקות"
 
 #: zmanim_bot/texts/plural/units.py:9
 msgid "part"
 msgid_plural "parts"
 msgstr[0] "חלק"
 msgstr[1] "חלקים"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[2] "חלקים"
+msgstr[3] "חלקים"
 
 #: zmanim_bot/texts/single/buttons.py:4
 msgid "Send location"
@@ -166,7 +166,7 @@ msgstr "מושבת"
 
 #: zmanim_bot/texts/single/buttons.py:40
 msgid "More..."
-msgstr "יותר..."
+msgstr "עוד..."
 
 #: zmanim_bot/texts/single/buttons.py:41
 msgid "Main holidays"
@@ -262,8 +262,8 @@ msgid "Sheet"
 msgstr "דף"
 
 #: zmanim_bot/texts/single/headers.py:8
-msgid "Duration"
-msgstr ""
+msgid "Number of days"
+msgstr "משך ימים"
 
 #: zmanim_bot/texts/single/headers.py:9
 msgid "Мonth"
@@ -283,12 +283,12 @@ msgid "Candle Lighting"
 msgstr "הדלקת נרות"
 
 #: zmanim_bot/texts/single/headers.py:16
-msgid "Fast begins"
-msgstr ""
+msgid "Fast ends (tzeit ha-kochavim)"
+msgstr "תחילת הצום (צאת הכוכבים)"
 
 #: zmanim_bot/texts/single/headers.py:17
 msgid "Fast ends"
-msgstr ""
+msgstr "סיום הצום"
 
 #: zmanim_bot/texts/single/headers.py:18 zmanim_bot/texts/single/zmanim.py:10
 msgid "Chatzot"
@@ -296,23 +296,23 @@ msgstr "חצות"
 
 #: zmanim_bot/texts/single/headers.py:19
 msgid "Attention! Fast has been moved!"
-msgstr ""
+msgstr "שים לב! הצום דחוי!"
 
 #: zmanim_bot/texts/single/headers.py:20
 msgid "Fast hasn’t been moved."
-msgstr ""
+msgstr "הצום לא נדחה"
 
 #: zmanim_bot/texts/single/headers.py:21
-msgid "3 stars [5.95°, derabanan]"
-msgstr "צאת ג' כוכבים [5.95°, דרבנן]"
+msgid "5.95 degrees, derabanan"
+msgstr "5.95 מעלות"
 
 #: zmanim_bot/texts/single/headers.py:22
-msgid "3 stars [8.5°, lehumra]"
-msgstr "צאת ג' כוכבים [8.5°, לחומרא]"
+msgid "8.5 degrees, lehumra"
+msgstr "8.5 מעלות"
 
 #: zmanim_bot/texts/single/headers.py:23
-msgid "3 stars [42 minutes]"
-msgstr "צאת ג' כוכבים [5.95°, דרבנן]"
+msgid "42 minutes"
+msgstr "42 דקות"
 
 #: zmanim_bot/texts/single/headers.py:25
 msgid "Hoshana Rabbah"
@@ -336,24 +336,24 @@ msgstr "יום ירושלים"
 
 #: zmanim_bot/texts/single/helpers.py:3
 msgid "and"
-msgstr ""
+msgstr "ו"
 
 #: zmanim_bot/texts/single/helpers.py:5
 msgid ""
 "It is impossible to compute Zmanim for\n"
 "your location. Most likely it is because of\n"
 "Midnight Sun or polar night."
-msgstr ""
+msgstr "לא ניתן לחשב את זמני היום עבור המיקום שלך.\n מסתבר שזה בגלל שמש חצות/ליל קוטב."
 
 #: zmanim_bot/texts/single/helpers.py:7
 msgid ""
 "Notice! it is recommended to clarify time\n"
 "of taking Shabbat in your community."
-msgstr ""
+msgstr "מומלץ להבהיר את זמן כניסת השבת בקהילה שלך."
 
 #: zmanim_bot/texts/single/helpers.py:9
 msgid "before sunset"
-msgstr ""
+msgstr "לפני השקיעה"
 
 #: zmanim_bot/texts/single/messages.py:3
 msgid "Welcome to zmanim bot!"
@@ -361,19 +361,19 @@ msgstr ""
 
 #: zmanim_bot/texts/single/messages.py:4
 msgid "You are in the main menu:"
-msgstr ""
+msgstr "אתה בתפריט הראשי:"
 
 #: zmanim_bot/texts/single/messages.py:5
 msgid "How can I help you?"
-msgstr ""
+msgstr "איך אני יכול לעזור לך?"
 
 #: zmanim_bot/texts/single/messages.py:6
 msgid "You are in the settings:"
-msgstr ""
+msgstr "אתה נמצא בהגדרות:"
 
 #: zmanim_bot/texts/single/messages.py:7
 msgid "Please, describe your problem:"
-msgstr ""
+msgstr "תאר בבקשה את הבעיה."
 
 #: zmanim_bot/texts/single/messages.py:8
 msgid "Choose the way of conversion:"
@@ -381,34 +381,34 @@ msgstr ""
 
 #: zmanim_bot/texts/single/messages.py:9
 msgid "Choose:"
-msgstr ""
+msgstr "בחר:"
 
 #: zmanim_bot/texts/single/messages.py:11
 msgid "How long before shkiya do you light candles?"
-msgstr ""
+msgstr "כמה זמן לפני השקיעה אתה מדליק נרות?"
 
 #: zmanim_bot/texts/single/messages.py:12
 msgid "Select zmanim that you want to receive:"
-msgstr ""
+msgstr "בחר את הזמנים שברצונך לקבל:"
 
 #: zmanim_bot/texts/single/messages.py:13
 msgid "Select your opinion for havdala:"
-msgstr ""
+msgstr "מה דעתך על ההבדלה?"
 
 #: zmanim_bot/texts/single/messages.py:14
 msgid ""
 "Here you can enable or disable notifications about the <i>Omer</i> count."
-msgstr ""
+msgstr "כאן באפשרותך להפעיל או להשבית את קבלת ההתראות על ספירת העומר"
 
 #: zmanim_bot/texts/single/messages.py:15
 msgid ""
 "Here you can activate, edit or send new location;\n"
 "If you want to add new location, just send it right now."
-msgstr ""
+msgstr "כאן באפשרותך להוסיף, לערוך או לשלוח מיקום חדש;\nאם רצונך להוסיף מיקום חדש, שלח אותו כעת."
 
 #: zmanim_bot/texts/single/messages.py:17
 msgid "Select your language:"
-msgstr ""
+msgstr "בחר את השפה שלך:"
 
 #: zmanim_bot/texts/single/messages.py:19
 msgid ""
@@ -418,71 +418,77 @@ msgid ""
 "separated text (example: <code>55.5, 37.7</code>) or send a geotag message "
 "here."
 msgstr ""
+"אנא שתף את מיקומך על ידי לחיצה על הכפתור.\n"
+"<b> אזהרה! </b> גרסת הטלגרם למחשב אינה תומכת בשיתוף מיקום מסוג זה. על מנת לשתף את המיקום שלך מהמחשב שלח אותו בטקסט המופרד בפסיקים (לדוגמה: <code> 55.5, 37.7 </code>) או שלח הודעת מיקום גיאוגרפי לכאן."
 
 #: zmanim_bot/texts/single/messages.py:23
 msgid "You sent incorrect coordinates. Please check and re-send them!"
-msgstr ""
+msgstr "שלחת קואורדינטות שגויות. אנא בדוק אותם ושלח שוב!"
 
 #: zmanim_bot/texts/single/messages.py:24
 msgid "This location already exists in your saved locations!"
-msgstr ""
+msgstr "מיקום זה כבר קיים במיקומים השמורים שלך!"
 
 #: zmanim_bot/texts/single/messages.py:25
 msgid "This location name already exists in your saved locations!"
-msgstr ""
+msgstr "שם המיקום הזה קיים במיקומים השמורים שלך!"
 
 #: zmanim_bot/texts/single/messages.py:26
 msgid ""
 "You saved too many locations, please remove some of them before saving new "
 "one!"
-msgstr ""
+msgstr "שמרת יותר מדי מיקומים. יש להסיר כמה מהם לפני שמירת מיקום חדש."
 
 #: zmanim_bot/texts/single/messages.py:27
 msgid ""
 "Automatic location name: {}.\n"
 "You can write custom name for the location or press \"Done\" button."
 msgstr ""
+"שם מיקום אוטומטי: {}. "
+"אתה יכול לכתוב שם מותאם אישית למיקום או ללחוץ על כפתור \"סיום\"."
 
 #: zmanim_bot/texts/single/messages.py:29
 msgid "Location successfully deleted!"
-msgstr ""
+msgstr "המיקום נמחק בהצלחה!"
 
 #: zmanim_bot/texts/single/messages.py:30
 msgid "Location successfully renamed!"
-msgstr ""
+msgstr "שינוי המיקום בהצלחה!"
 
 #: zmanim_bot/texts/single/messages.py:31
 msgid "Location successfully saved!"
-msgstr ""
+msgstr "המיקום נשמר בהצלחה!"
 
 #: zmanim_bot/texts/single/messages.py:32
 msgid "It is unable to delete active location!"
-msgstr ""
+msgstr "אין אפשרות למחוק מיקום פעיל!"
 
 #: zmanim_bot/texts/single/messages.py:33
 msgid "Please, write here new location name for {}:"
-msgstr ""
+msgstr "אנא, כתוב כאן שם מיקום חדש עבור {}:"
 
 #: zmanim_bot/texts/single/messages.py:34
 msgid "{} selected!"
-msgstr ""
+msgstr "{} נבחר!"
 
 #: zmanim_bot/texts/single/messages.py:36
 msgid ""
 "\"I’m not aware of such command 🤖\n"
 "Would you choose something from the menu:"
 msgstr ""
+"אני לא מודע לפקודה כזו 🤖"
+"האם היית בוחר משהו מהתפריט:"
 
 #: zmanim_bot/texts/single/messages.py:39
 msgid ""
 "Please enter Gregorian date in following format: <code>YYYY-MM-DD</code>"
-msgstr ""
+msgstr "אנא הזן את התאריך הגרגוריאני / לועזי בפורמט הבא: <code> YYYY-MM-DD </code>"
 
 #: zmanim_bot/texts/single/messages.py:40
 msgid ""
 "Incorrect/Illegal date format. Take a look at the correct one: <code>YYYY-MM-"
 "DD</code>"
-msgstr ""
+msgstr "פורמט תאריך לא נכון/לא חוקי. תסתכל על הנכון: <code> YYYY-MM-DD </code>"
 
 #: zmanim_bot/texts/single/messages.py:42
 msgid ""
@@ -502,6 +508,21 @@ msgid ""
 "12 Adar/Adar\n"
 "13 Adar II</code>"
 msgstr ""
+"אנא הזן את התאריך הגרגוריאני / לועזי בפורמט הבא: <code> YYYY-MM-DD </code>"
+"1 ניסן"
+"2 אייר"
+"3 סיוון"
+"4 תמוז"
+"5 אב"
+"6 אלול"
+"7 תשרי"
+"8 חשוון"
+"9 כסלו"
+"10 טבת"
+"11 שבט"
+"12 אדר"
+"13 אדר ב'"
+
 
 #: zmanim_bot/texts/single/messages.py:56
 msgid ""
@@ -521,34 +542,48 @@ msgid ""
 "12 Adar/Adar\n"
 "13 Adar II</code>"
 msgstr ""
+"פורמט תאריך לא נכון/לא חוקי. תסתכל על הנכון: <code> YYYY-MM-DD </code>"
+"1 ניסן"
+"2 אייר"
+"3 סיוון"
+"4 תמוז"
+"5 אב"
+"6 אלול"
+"7 תשרי"
+"8 חשוון"
+"9 כסלו"
+"10 טבת"
+"11 שבט"
+"12 אדר"
+"13 אדר ב'"
 
 #: zmanim_bot/texts/single/messages.py:72
 msgid ""
 "Your message has been saved for sending. You can attach screenshots or "
 "videos of your choice. Once done, click the Done button."
-msgstr ""
+msgstr "ההודעה שלך נשמרה לשליחה. אתה יכול לצרף צילומי מסך או סרטונים לבחירתך. לאחר שתסיים, לחץ על הלחצן בוצע."
 
 #: zmanim_bot/texts/single/messages.py:74
 msgid "File added successfully. Add another one or click Done."
-msgstr ""
+msgstr "הקובץ נוסף בהצלחה. הוסף עוד אחד או לחץ על בוצע."
 
 #: zmanim_bot/texts/single/messages.py:75
 msgid ""
 "Unsupported message format. You can attach screenshots or videos by sending "
 "a photo, picture or video."
-msgstr ""
+msgstr "פורמט ההודעה ששלחת אינו נתמך. ניתן לצרף צילומי מסך או סרטוני וידאו על ידי שליחת תמונה או סרטון."
 
 #: zmanim_bot/texts/single/messages.py:77
 msgid ""
 "Your message has been sent to the Bot's developer. He will fix the problem "
 "soon and you will receive a notification.\n"
 "Thanks for your feedback!"
-msgstr ""
+msgstr "ההודעה שלך נשלחה למפתח הבוט. הוא יפתור את הבעיה בקרוב ותקבל הודעה. תודה על המשוב שלך!"
 
 #: zmanim_bot/texts/single/messages.py:81
 msgid ""
 "Looks like an error occured... The Bot's developer already working on it..."
-msgstr ""
+msgstr "נראה כי אירעה שגיאה... מפתח הבוט כבר עובד על זה..."
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:9
@@ -1166,17 +1201,17 @@ msgstr "נידה"
 #. NOTE It is very important to add space after the month name!!
 #: zmanim_bot/texts/single/names.py:197
 msgid "Nisan "
-msgstr "ניסן"
+msgstr "ניסן "
 
 #. NOTE It is very important to add space after the month name!!
 #: zmanim_bot/texts/single/names.py:199
 msgid "Iyar "
-msgstr "אייר"
+msgstr " אייר"
 
 #. NOTE It is very important to add space after the month name!!
 #: zmanim_bot/texts/single/names.py:201
 msgid "Sivan "
-msgstr "סיוון"
+msgstr " סיוון"
 
 #. NOTE It is very important to add space after the month name!!
 #: zmanim_bot/texts/single/names.py:203

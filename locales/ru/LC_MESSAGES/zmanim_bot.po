@@ -255,8 +255,8 @@ msgid "Sheet"
 msgstr "Лист"
 
 #: zmanim_bot/texts/single/headers.py:9
-msgid "Duration"
-msgstr "Продолжительность"
+msgid "Number of days"
+msgstr "Число дней"
 
 #: zmanim_bot/texts/single/headers.py:10
 msgid "Мonth"

@@ -247,7 +247,7 @@ msgid "Sheet"
 msgstr ""
 
 #: zmanim_bot/texts/single/headers.py:8
-msgid "Duration"
+msgid "Number of days"
 msgstr ""
 
 #: zmanim_bot/texts/single/headers.py:9
