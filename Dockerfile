@@ -1,5 +1,8 @@
 FROM python:3.9-slim
 
+RUN apt update
+RUN apt install libraqm-dev
+
 RUN pip install pipenv
 WORKDIR /home/app
 COPY . .
