@@ -1,6 +1,7 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
 from ..config import LANGUAGE_LIST
+from ..middlewares.i18n import i18n_
 from ..texts.single import buttons
 
 
@@ -16,6 +17,10 @@ def get_main_menu() -> ReplyKeyboardMarkup:
     kb.add(buttons.mm_rh.value, buttons.mm_daf_yomi.value, buttons.mm_fasts.value)
     kb.add(buttons.mm_zmanim_by_date.value, buttons.mm_converter.value)
     kb.add(buttons.hm_report.value, buttons.mm_settings.value)
+
+    if i18n_.is_rtl():
+        for row in kb.keyboard:
+            row.reverse()
     return kb
 
 
@@ -30,6 +35,11 @@ def get_settings_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     kb.row(buttons.sm_zmanim.value, buttons.sm_candle.value, buttons.sm_havdala.value)
     kb.row(buttons.sm_lang.value, buttons.sm_omer.value, buttons.sm_location.value, buttons.back.value)
+
+    if i18n_.is_rtl():
+        for row in kb.keyboard:
+            row.reverse()
+
     return kb
 
 
@@ -39,6 +49,11 @@ def get_holidays_menu() -> ReplyKeyboardMarkup:
     kb.row(buttons.hom_shmini_atzeret.value, buttons.hom_chanukah.value, buttons.hom_purim.value)
     kb.row(buttons.hom_pesach.value, buttons.hom_shavuot.value, buttons.hom_more.value)
     kb.row(buttons.back.value)
+
+    if i18n_.is_rtl():
+        for row in kb.keyboard:
+            row.reverse()
+
     return kb
 
 
@@ -46,6 +61,11 @@ def get_more_holidays_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     kb.row(buttons.hom_tu_bishvat.value, buttons.hom_lag_baomer.value, buttons.hom_israel.value)
     kb.row(buttons.mm_holidays.value, buttons.back.value)
+
+    if i18n_.is_rtl():
+        for row in kb.keyboard:
+            row.reverse()
+
     return kb
 
 
@@ -54,6 +74,11 @@ def get_fast_menu() -> ReplyKeyboardMarkup:
     kb.row(buttons.fm_gedaliah.value, buttons.fm_tevet.value, buttons.fm_esther.value)
     kb.row(buttons.fm_tammuz.value, buttons.fm_av.value)
     kb.row(buttons.back.value)
+
+    if i18n_.is_rtl():
+        for row in kb.keyboard:
+            row.reverse()
+
     return kb
 
 

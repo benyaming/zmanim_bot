@@ -8,10 +8,11 @@ POSTHOG_API_KEY = getenv('POSTHOG_API_KEY')
 IS_PROD = bool(getenv('IS_PROD', False))
 WEBHOOK_PATH = getenv('WEBHOOK_PATH', '/zmanim_bot')
 
-LANGUAGE_LIST = ['English', 'Русский']
+LANGUAGE_LIST = ['English', 'Русский', 'עברית']
 LANGUAGE_SHORTCUTS = {
     'English': 'en',
-    'Русский': 'ru'
+    'Русский': 'ru',
+    'עברית': 'he'
 }
 
 DB_URL = getenv('DB_URL')

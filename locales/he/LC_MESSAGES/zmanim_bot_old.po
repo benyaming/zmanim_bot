@@ -1,17 +1,18 @@
-# Translations template for PROJECT.
+# Hebrew translations for PROJECT.
 # Copyright (C) 2021 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-06-28 00:56+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-08-19 22:55+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: he\n"
+"Language-Team: he <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,38 +21,38 @@ msgstr ""
 #: zmanim_bot/texts/plural/units.py:4
 msgid "year"
 msgid_plural "years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "שנה"
+msgstr[1] "שנים"
 
 #: zmanim_bot/texts/plural/units.py:5
 msgid "month"
 msgid_plural "months"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "חודש"
+msgstr[1] "חודשים"
 
 #: zmanim_bot/texts/plural/units.py:6
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "יום"
+msgstr[1] "ימים"
 
 #: zmanim_bot/texts/plural/units.py:7
 msgid "hour"
 msgid_plural "hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "שעה"
+msgstr[1] "שעות"
 
 #: zmanim_bot/texts/plural/units.py:8
 msgid "minute"
 msgid_plural "minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "דקה"
+msgstr[1] "דקות"
 
 #: zmanim_bot/texts/plural/units.py:9
 msgid "part"
 msgid_plural "parts"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "חלק"
+msgstr[1] "חלקים"
 
 #: zmanim_bot/texts/single/buttons.py:4
 msgid "Send location"
@@ -247,8 +248,8 @@ msgid "Sheet"
 msgstr ""
 
 #: zmanim_bot/texts/single/headers.py:8
-msgid "Number of days"
-msgstr ""
+msgid "Duration"
+msgstr "משך"
 
 #: zmanim_bot/texts/single/headers.py:9
 msgid "Мonth"
@@ -256,7 +257,8 @@ msgstr ""
 
 #: zmanim_bot/texts/single/headers.py:10
 msgid "Molad"
-msgstr ""
+msgstr "משך"
+# msgstr "מולד"
 
 #: zmanim_bot/texts/single/headers.py:12
 msgid "Parshat ha-shavuah"
@@ -320,7 +322,7 @@ msgstr ""
 
 #: zmanim_bot/texts/single/helpers.py:3
 msgid "and"
-msgstr ""
+msgstr "ו"
 
 #: zmanim_bot/texts/single/helpers.py:5
 msgid ""
@@ -581,7 +583,7 @@ msgstr ""
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:27
 msgid "October"
-msgstr ""
+msgstr "אוקטובר"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:29
@@ -603,11 +605,11 @@ msgstr ""
 
 #: zmanim_bot/texts/single/names.py:38
 msgid "Wednesday"
-msgstr ""
+msgstr "רביעי"
 
 #: zmanim_bot/texts/single/names.py:39
 msgid "Thursday"
-msgstr ""
+msgstr "חמישי"
 
 #: zmanim_bot/texts/single/names.py:40
 msgid "Friday"
@@ -627,7 +629,7 @@ msgstr ""
 
 #: zmanim_bot/texts/single/names.py:47
 msgid "ROSH CHODESH"
-msgstr ""
+msgstr "ראש חודש"
 
 #: zmanim_bot/texts/single/names.py:48
 msgid "SHABBAT"
@@ -1184,7 +1186,7 @@ msgstr ""
 #. NOTE It is very important to add space after the month name!!
 #: zmanim_bot/texts/single/names.py:211
 msgid "Cheshvan "
-msgstr ""
+msgstr "חשוון"
 
 #. NOTE It is very important to add space after the month name!!
 #: zmanim_bot/texts/single/names.py:213
@@ -1249,7 +1251,7 @@ msgstr ""
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:240
 msgid "Cheshvan"
-msgstr ""
+msgstr "חשוון"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:242

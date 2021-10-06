@@ -23,9 +23,11 @@ class I18N(I18nMiddleware):
 
         return locale
 
+    def is_rtl(self) -> bool:
+        return self.ctx_locale.get() == 'he'
+
 
 i18n_ = I18N(I18N_DOMAIN, LOCALES_DIR)
 dp.middleware.setup(i18n_)
 gettext = i18n_.gettext
 lazy_gettext = i18n_.lazy_gettext
-

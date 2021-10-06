@@ -21,8 +21,8 @@ request_location = _('Please share your location by pressing the button.\n'
                      'location sharing. To share you location from PC/Mac send them in comma '
                      'separated text (example: <code>55.5, 37.7</code>) or send a geotag message here.')
 incorrect_locations_received = _('You sent incorrect coordinates. Please check and re-send them!')
-location_already_exists = _('This location alredy exists in your saved locations!')
-location_name_already_exists = _('This location name alredy exists in your saved locations!')
+location_already_exists = _('This location already exists in your saved locations!')
+location_name_already_exists = _('This location name already exists in your saved locations!')
 too_many_locations_error = _('You saved too many locations, please remove some of them before saving new one!')
 custom_location_name_request = _('Automatic location name: {}.\n'
                                  'You can write custom name for the location or press "Done" button.')
