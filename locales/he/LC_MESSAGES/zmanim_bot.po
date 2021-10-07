@@ -82,7 +82,7 @@ msgstr "חזור"
 
 #: zmanim_bot/texts/single/buttons.py:7
 msgid "Done"
-msgstr "בוצע"
+msgstr "סיום"
 
 #: zmanim_bot/texts/single/buttons.py:11
 msgid "Zmanim"
@@ -106,11 +106,11 @@ msgstr "ראש חודש"
 
 #: zmanim_bot/texts/single/buttons.py:16
 msgid "Fast days"
-msgstr "תעניות"
+msgstr "צומות"
 
 #: zmanim_bot/texts/single/buttons.py:17
 msgid "Zmanim by the date"
-msgstr "זמנים לתאריך"
+msgstr "זמנים לפי תאריך"
 
 #: zmanim_bot/texts/single/buttons.py:18
 msgid "Date converter"
@@ -150,7 +150,7 @@ msgstr "שפה"
 
 #: zmanim_bot/texts/single/buttons.py:33
 msgid "Location"
-msgstr "מקום"
+msgstr "מיקום"
 
 #: zmanim_bot/texts/single/buttons.py:34
 msgid "Omer count"
@@ -273,7 +273,6 @@ msgstr "חודש"
 msgid "Molad"
 msgstr "מולד"
 
-# msgstr "מולד"
 #: zmanim_bot/texts/single/headers.py:12
 msgid "Parshat ha-shavuah"
 msgstr "פרשות השבוע"
@@ -281,6 +280,10 @@ msgstr "פרשות השבוע"
 #: zmanim_bot/texts/single/headers.py:13
 msgid "Candle Lighting"
 msgstr "הדלקת נרות"
+
+#: zmanim_bot/texts/single/headers.py:17
+msgid "Fast begins"
+msgstr "תחילת הצום"
 
 #: zmanim_bot/texts/single/headers.py:16
 msgid "Fast ends (tzeit ha-kochavim)"
@@ -361,7 +364,7 @@ msgstr ""
 
 #: zmanim_bot/texts/single/messages.py:4
 msgid "You are in the main menu:"
-msgstr "אתה בתפריט הראשי:"
+msgstr "את/ה בתפריט הראשי:"
 
 #: zmanim_bot/texts/single/messages.py:5
 msgid "How can I help you?"
@@ -516,7 +519,7 @@ msgstr ""
 "5 אב"
 "6 אלול"
 "7 תשרי"
-"8 חשוון"
+"8 חשון"
 "9 כסלו"
 "10 טבת"
 "11 שבט"
@@ -550,7 +553,7 @@ msgstr ""
 "5 אב"
 "6 אלול"
 "7 תשרי"
-"8 חשוון"
+"8 חשון"
 "9 כסלו"
 "10 טבת"
 "11 שבט"
@@ -565,7 +568,7 @@ msgstr "ההודעה שלך נשמרה לשליחה. אתה יכול לצרף צ
 
 #: zmanim_bot/texts/single/messages.py:74
 msgid "File added successfully. Add another one or click Done."
-msgstr "הקובץ נוסף בהצלחה. הוסף עוד אחד או לחץ על בוצע."
+msgstr "הקובץ נוסף בהצלחה. הוסף עוד אחד או לחץ על סיום."
 
 #: zmanim_bot/texts/single/messages.py:75
 msgid ""
@@ -1236,7 +1239,7 @@ msgstr "תשרי"
 #. NOTE It is very important to add space after the month name!!
 #: zmanim_bot/texts/single/names.py:211
 msgid "Cheshvan "
-msgstr "חשוון"
+msgstr "חשון"
 
 #. NOTE It is very important to add space after the month name!!
 #: zmanim_bot/texts/single/names.py:213
@@ -1301,7 +1304,7 @@ msgstr "תשרי"
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:240
 msgid "Cheshvan"
-msgstr "חשוון"
+msgstr "חשון"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:242
