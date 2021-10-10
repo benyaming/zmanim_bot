@@ -14,7 +14,7 @@ from zmanim_bot.exceptions import PolarCoordinatesException
 from zmanim_bot.helpers import parse_jewish_date
 from zmanim_bot.integrations.zmanim_models import *
 from zmanim_bot.keyboards.inline import get_zmanim_by_date_buttons
-from zmanim_bot.middlewares.i18n import gettext as _
+from zmanim_bot.middlewares.i18n import gettext as _, i18n_
 from zmanim_bot.processors.text_utils import humanize_date, humanize_time
 from zmanim_bot.texts.plural import units
 from zmanim_bot.texts.single import headers, helpers, names, zmanim
@@ -31,7 +31,7 @@ def _convert_img_to_bytes_io(img: PngImagePlugin.PngImageFile) -> BytesIO:
     return bytes_io
 
 
-def _get_draw(background_path: str) -> ImageDraw:
+def _get_draw(background_path: str) -> Tuple[Image.Image, ImageDraw.ImageDraw]:
     image = Image.open(background_path)
     draw = ImageDraw.Draw(image)
     return image, draw
@@ -48,6 +48,27 @@ class BaseImage:
     _image: PngImagePlugin.PngImageFile
     _draw: ImageDraw
 
+    _is_rtl: bool
+
+    __x: int
+    y: int
+    y_offset: int
+
+    @property
+    def x(self) -> int:
+        return self.__x
+
+    @x.setter
+    def x(self, value: int):
+        self.__x = value if not self._is_rtl else IMG_SIZE - value
+
+    def shift_y(self):
+        self.y += self.y_offset
+
+    def get_x_for_text(self, text: str) -> ...:
+        length = self._x_font_offset(text)
+        return self.__x + length if not self._is_rtl else self.__x - length
+
     def __init__(self):
         self._font = ImageFont.truetype(str(self._font_path), self._font_size)
         self._bold_font = ImageFont.truetype(str(self._bold_font_path), self._font_size)
@@ -56,6 +77,7 @@ class BaseImage:
             self._image, self._draw = _get_draw(str(self._background_path))
 
         self._warning_font = ImageFont.truetype(str(self._bold_font_path), self._warning_font_size)
+        self._is_rtl = i18n_.is_rtl()
 
     def _draw_title(self, draw: ImageDraw, title: LazyProxy) -> None:
         coordinates = (180, 30)
@@ -89,13 +111,16 @@ class BaseImage:
         text_font = ImageFont.truetype(str(self._font_path), 40)
 
         self._draw.text((x, y + 5), f'\ue800', font=icon_font, embedded_color=True)
-        self._draw.text((x + 20, y), f' {location_name}', font=text_font, embedded_color=True)
+        self._draw.text((x + 20, y), f' {location_name} ', font=text_font, embedded_color=True)
 
     def _x_font_offset(self, text: str) -> int:
         """Returns size in px of given text in axys x"""
-        last_line = text.split('\n')[-1]
+        last_line = min(text.split('\n'))
+        offset = self._bold_font.getsize(last_line)[0]
+        if self._is_rtl:
+            offset *= -1
 
-        return self._bold_font.getsize(last_line)[0]
+        return offset
 
     def _y_font_offset(self, text: str) -> int:
         """Returns size in px of given text in axys y"""
@@ -103,22 +128,29 @@ class BaseImage:
 
     def _draw_line(
             self,
-            x: int,
-            y: int,
-            header: str,
+            header: Optional[str],
             value: str,
+            *,
             value_on_new_line: bool = False,
             value_without_x_offset: bool = False
     ):
-        header = f'{str(header)}: '
-        self._draw.text((x, y), text=header, font=self._bold_font)
+        header = f'{str(header)}: ' if header else ''
+        header_offset = self._x_font_offset(header)
+        x = self.x + header_offset if self._is_rtl else self.x
+        header and self._draw.text((x, self.y), text=header, font=self._bold_font)
 
         if not value_without_x_offset:
-            x += self._x_font_offset(header)
+            x += self._x_font_offset(header) if not self._is_rtl else self._x_font_offset(value)
         if value_on_new_line or value_without_x_offset:
-            y += self._y_font_offset(header.split('\n')[0])
+            self.y += self._y_font_offset(header.split('\n')[0])
 
-        self._draw.text((x, y), text=str(value), font=self._font)
+        self._draw.text(
+            (x, self.y),
+            text=str(value),
+            font=self._font,
+            direction='rtl' if self._is_rtl else 'ltr',
+            align='left' if not self._is_rtl else 'right'
+        )
 
     def get_image(self):
         raise NotImplemented
@@ -134,18 +166,17 @@ class DafYomImage(BaseImage):
         self._draw_title(self._draw, names.title_daf_yomi)
         self._draw_date([self.data.settings.date_], self.data.settings.jewish_date)
 
-    def get_image(self) -> BytesIO:
-        y = 470
-        x = 100
-        y_offset = 100
+        self.y = 470
+        self.x = 100
+        self.y_offset = 100
 
+    def get_image(self) -> BytesIO:
         # draw masehet
-        self._draw_line(x, y, headers.daf_masehet, names.GEMARA_BOOKS.get(self.data.masehet, ''))
-        y += y_offset
+        self._draw_line(headers.daf_masehet, names.GEMARA_BOOKS.get(self.data.masehet, ''))
+        self.shift_y()
 
         # draw daf
-        self._draw_line(x, y, headers.daf_page, str(self.data.daf))
-
+        self._draw_line(headers.daf_page, str(self.data.daf))
         return _convert_img_to_bytes_io(self._image)
 
 
@@ -159,33 +190,27 @@ class RoshChodeshImage(BaseImage):
         self._draw_title(self._draw, names.title_rosh_chodesh)
         self._draw_date(self.data.days, self.data.settings.jewish_date)
 
+        self.y = 370
+        self.x = 100
+        self.y_offset = 80
+
     def get_image(self) -> BytesIO:
-        y = 370
-        x = 100
-        y_offset = 80
 
         # draw month
-        self._draw_line(x, y, _(*units.tu_month, 1).capitalize(),
-                        names.JEWISH_MONTHS[self.data.month_name])
-        y += y_offset
+        self._draw_line(_(*units.tu_month, 1).capitalize(), names.JEWISH_MONTHS[self.data.month_name])
+        self.shift_y()
 
         # draw duration
-        duration_value = f'{self.data.duration} {_(*units.tu_day, self.data.duration)}'
-        self._draw_line(x, y, headers.rh_duration, duration_value)
-        y += y_offset
-
-        # # draw date
-        # date_value = humanize_date(self.data.days, weekday_on_new_line=len(self.data.days) > 1)
-        # self._draw_line(x, y, headers.date, date_value)
-        # y += y_offset if len(self.data.days) == 1 else y_offset * 2
+        self._draw_line(headers.rh_duration, str(self.data.duration))
+        self.shift_y()
 
         # draw molad string
         molad = self.data.molad[0]
-        molad_value = f'{molad.day} {names.MONTH_NAMES_GENETIVE[molad.month]} {molad.year},\n' \
+        molad_value = f'{molad.day} {names.MONTH_NAMES_GENETIVE[molad.month]} {molad.year},\n'\
                       f'{molad.time().hour} {_(*units.tu_hour, molad.time().hour)} ' \
                       f'{molad.time().minute} {_(*units.tu_minute, molad.time().minute)} ' \
                       f'{helpers.and_word} {self.data.molad[1]} {_(*units.tu_part, self.data.molad[1])}'
-        self._draw_line(x, y, headers.rh_molad, molad_value)
+        self._draw_line(headers.rh_molad, molad_value)
 
         return _convert_img_to_bytes_io(self._image)
 
@@ -200,8 +225,7 @@ class ShabbatImage(BaseImage):
 
         super().__init__()
 
-    def get_image(self) -> Tuple[BytesIO, Optional[InlineKeyboardMarkup]]:
-        if not self.data.candle_lighting or self.data.late_cl_warning:
+        if not data.candle_lighting or data.late_cl_warning:
             self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'shabbos_attention.png'
         else:
             self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / 'shabbos.png'
@@ -213,20 +237,21 @@ class ShabbatImage(BaseImage):
         if self.data.havdala:
             self._draw_date([self.data.havdala.date()], no_weekday=True)
 
-        y = 400 if self.data.candle_lighting else 470
-        x = 100
-        y_offset: int = 80
+        self.y = 400 if self.data.candle_lighting else 470
+        self.x = 100
+        self.y_offset: int = 80
 
+    def get_image(self) -> Tuple[BytesIO, Optional[InlineKeyboardMarkup]]:
         # draw parashat hashavua
         torah_part = names.TORAH_PARTS.get(self.data.torah_part, '')
-        if (self._x_font_offset(headers.parsha.value) + self._x_font_offset(
-                torah_part) + x) > IMG_SIZE:
+        if (self._x_font_offset(headers.parsha.value) + self._x_font_offset(torah_part) + self.x) > IMG_SIZE:
             value_on_new_line = True
         else:
             value_on_new_line = False
 
-        self._draw_line(x, y, headers.parsha, torah_part, value_without_x_offset=value_on_new_line)
-        y += y_offset if not value_on_new_line else y_offset * 2
+        self._draw_line(headers.parsha, torah_part, value_without_x_offset=value_on_new_line)
+        self.shift_y()
+        value_on_new_line and self.shift_y()
 
         # if polar error, draw error message and return
         if not self.data.candle_lighting:
@@ -238,18 +263,20 @@ class ShabbatImage(BaseImage):
             return _convert_img_to_bytes_io(self._image), None
 
         # draw candle lighting
-        self._draw_line(x, y, headers.cl, self.data.candle_lighting.time().isoformat('minutes'))
-        y += y_offset
+        self._draw_line(headers.cl, self.data.candle_lighting.time().isoformat('minutes'))
+        self.shift_y()
 
         # draw shekiah offset
         cl_offset = self.data.settings.cl_offset
         offset_value = f'({cl_offset} {_(*units.tu_minute, cl_offset)} {helpers.cl_offset})'
-        self._draw.text((x, y), offset_value, font=self._font)
-        y += y_offset
+        # x = self.x if not self._is_rtl else (self.x + self._x_font_offset(offset_value))
+        self._draw_line(None, offset_value)
+        # self._draw.text((x, self.y), offset_value, font=self._font)
+        self.shift_y()
 
         # draw havdala
-        self._draw_line(x, y, headers.havdala, self.data.havdala.time().isoformat('minutes'))
-        y += y_offset
+        self._draw_line(headers.havdala, self.data.havdala.time().isoformat('minutes'))
+        self.shift_y()
 
         kb = get_zmanim_by_date_buttons([self.data.havdala.date()])
 
@@ -257,9 +284,8 @@ class ShabbatImage(BaseImage):
         if not self.data.late_cl_warning:
             return _convert_img_to_bytes_io(self._image), kb
 
-        x, y = 100, 840
-        self._draw.text((x, y), helpers.cl_late_warning.value, font=self._warning_font,
-                        fill='#ff5959')
+        x, y = 100, 840 if not self._is_rtl else 860
+        self._draw.text((x, y), helpers.cl_late_warning.value, font=self._warning_font, fill='#ff5959')
 
         return _convert_img_to_bytes_io(self._image), kb
 
@@ -274,6 +300,16 @@ class ZmanimImage(BaseImage):
         self._draw_title(self._draw, names.title_zmanim)
         self._draw_date([self.data.settings.date_], self.data.settings.jewish_date)
         self._draw_location(location_name)
+
+        self.zmanim_rows: Dict[str, dt] = self.data.dict(exclude={'settings', 'is_second_day'}, exclude_none=True)
+
+        if len(self.zmanim_rows) == 0:
+            raise PolarCoordinatesException()
+
+        self._set_font_properties(len(self.zmanim_rows))
+
+        self.y: int = 200 + self._start_y_offset
+        self.x: int = 50
 
     def _set_font_properties(self, number_of_lines: int):
         p = {
@@ -298,29 +334,17 @@ class ZmanimImage(BaseImage):
             18: [40, 42, 0],
             19: [40, 42, 0]
         }
-        self._font_size, self._y_offset, self._start_y_offset = p.get(number_of_lines)
+        self._font_size, self.y_offset, self._start_y_offset = p.get(number_of_lines)
         self._font = ImageFont.truetype(str(self._font_path), size=self._font_size)
         self._bold_font = ImageFont.truetype(str(self._bold_font_path), size=self._font_size)
 
     def get_image(self) -> BytesIO:
-        zmanim_rows: Dict[str, dt] = self.data.dict(exclude={'settings', 'is_second_day'}, exclude_none=True)
-
-        if len(zmanim_rows) == 0:
-            raise PolarCoordinatesException()
-
-        self._set_font_properties(len(zmanim_rows))
-
-        y: int = 200 + self._start_y_offset
-        x: int = 50
-
-        # draw all image lines in cycle
-        for header, value in zmanim_rows.items():
+        for header, value in self.zmanim_rows.items():
             self._draw_line(
-                x, y, getattr(texts.single.zmanim, header),
-                value.time().isoformat('minutes') if isinstance(value, date) else value.isoformat(
-                    'minutes')
+                getattr(texts.single.zmanim, header),
+                value.time().isoformat('minutes') if isinstance(value, date) else value.isoformat('minutes')
             )
-            y += self._y_offset
+            self.shift_y()
 
         return _convert_img_to_bytes_io(self._image)
 
@@ -337,42 +361,46 @@ class FastImage(BaseImage):
         self._draw_title(self._draw, names.FASTS_TITLES[data.settings.fast_name])
         self._draw_location(location_name, is_fast=True)
 
+        self.x = 100
+        self.y = 300 if data.chatzot else 350
+        self.y_offset = 80
+
     def get_image(self) -> Tuple[BytesIO, InlineKeyboardMarkup]:
 
+        fast_moved_header = headers.fast_moved.value if self.data.moved_fast else headers.fast_not_moved.value
         self._draw.text(
-            (210, 150),
-            headers.fast_moved.value if self.data.moved_fast else headers.fast_not_moved.value,
+            (
+                210 if not self._is_rtl else (IMG_SIZE - 60 + self._x_font_offset(fast_moved_header)),
+                150
+            ),
+            fast_moved_header,
             font=self._bold_font,
             fill='#ff5959' if self.data.moved_fast else '#8bff59'
         )
 
-        x = 100
-        y = 300 if self.data.chatzot else 350
-
-        y_offset = 80
-
         # draw date and start time
         fast_date, fast_weekday = humanize_date([self.data.fast_start]).split(', ')
         fast_start_value = f'{fast_date},\n{fast_weekday}, {self.data.fast_start.time().isoformat("minutes")}'
-        self._draw_line(x, y, headers.fast_start, fast_start_value)
-        y += self._y_font_offset(fast_start_value) + y_offset + y_offset
+        self._draw_line(headers.fast_start, fast_start_value)
+        self.y += self._y_font_offset(fast_start_value) + self.y_offset * 2
 
         # draw hatzot, if need
         if self.data.chatzot:
-            self._draw_line(x, y, zmanim.chatzos, self.data.chatzot.time().isoformat('minutes'))
-            y += y_offset
+            self._draw_line(zmanim.chatzos, self.data.chatzot.time().isoformat('minutes'))
+            self.shift_y()
 
         # draw havdala
-        self._draw_line(x, y, headers.fast_end, '')
-        y += y_offset
+        self._draw_line(headers.fast_end, '')
+        self.shift_y()
+
         havdala_options = (
             (self.data.havdala_5_95_dgr, headers.fast_end_5_95_dgr),
             (self.data.havdala_8_5_dgr, headers.fast_end_8_5_dgr),
             (self.data.havdala_42_min, headers.fast_end_42_min)
         )
         for havdala_value, havdala_header in havdala_options:
-            self._draw_line(x, y, havdala_header, havdala_value.time().isoformat('minutes'))
-            y += y_offset
+            self._draw_line(havdala_header, havdala_value.time().isoformat('minutes'))
+            self.shift_y()
 
         kb = get_zmanim_by_date_buttons([self.data.havdala_42_min.date()])
         return _convert_img_to_bytes_io(self._image), kb
@@ -398,9 +426,10 @@ class HolidayImage(BaseImage):
 
         self._draw_title(self._draw, names.HOLIDAYS_TITLES[data.settings.holiday_name])
 
+        self.x = 100
+        self.y = 450
+
     def get_image(self) -> BytesIO:
-        x = 100
-        y = 450
 
         holiday_last_date = self.data.date
         line_break = False
@@ -408,19 +437,12 @@ class HolidayImage(BaseImage):
             holiday_last_date += timedelta(days=7)
             line_break = True
 
-        date_value = humanize_date([self.data.date, holiday_last_date],
-                                   weekday_on_new_line=line_break)
+        date_value = humanize_date([self.data.date, holiday_last_date], weekday_on_new_line=line_break)
 
-        if (x + self._x_font_offset(headers.date.value) + self._x_font_offset(
-                date_value)) > IMG_SIZE:
-            date_value = humanize_date([self.data.date, holiday_last_date],
-                                       weekday_on_new_line=True)
+        if (self.x + self._x_font_offset(headers.date.value) + self._x_font_offset(date_value)) > IMG_SIZE:
+            date_value = humanize_date([self.data.date, holiday_last_date], weekday_on_new_line=True)
 
-        self._draw_line(
-            x,
-            y,
-            headers.date,
-            date_value)
+        self._draw_line(headers.date, date_value)
         return _convert_img_to_bytes_io(self._image)
 
 
@@ -433,21 +455,24 @@ class IsraelHolidaysImage(BaseImage):
         self._font_size = 53
 
         super().__init__()
+        self.x = 80
+        self.y = 300
+        self.y_offset = 90
 
         self._draw_title(self._draw, names.HOLIDAYS_TITLES['israel_holidays'])
 
     def get_image(self) -> BytesIO:
-        x = 80
-        y = 300
-        y_offset = 90
         y_offset_small = 60
 
         for holiday in self.data.holiday_list:
-            self._draw.text((x, y), f'{headers.israel_holidays[holiday[0]]}:',
-                            font=self._bold_font)
-            y += y_offset_small
-            self._draw_line(x, y, headers.date, humanize_date([holiday[1]]))
-            y += y_offset
+            header = f'{headers.israel_holidays[holiday[0]]}:'
+            x = self.x + self._x_font_offset(header) if self._is_rtl else self.x
+
+            self._draw.text((x, self.y), header, font=self._bold_font)
+            self.y += y_offset_small
+
+            self._draw_line(headers.date, humanize_date([holiday[1]]))
+            self.shift_y()
 
         return _convert_img_to_bytes_io(self._image)
 
@@ -467,9 +492,17 @@ class YomTovImage(BaseImage):
 
         self._background_path = Path(__file__).parent / 'res' / 'backgrounds' / background
 
-        super().__init__()
-
         self.data = data
+        super().__init__()
+        self.x = 80
+
+        self.dates = self._get_dates()
+        self.lines = self._prepare_lines(self.dates)
+        self.y, self.y_offset, self._font_size = self._get_font_properties(len(self.lines))
+
+        self._font = ImageFont.truetype(str(self._font_path), self._font_size)
+        self._bold_font = ImageFont.truetype(str(self._bold_font_path), self._font_size)
+
         self._draw_title(self._draw, names.YOMTOVS_TITLES[data.settings.yomtov_name])
         self._draw_location(location_name)
 
@@ -507,14 +540,12 @@ class YomTovImage(BaseImage):
                           or self.data.day_2 \
                           or self.data.day_1
         self._draw_date([self.data.day_1.date, yomtov_last_day.date])
-        # dates_range = humanize_date([self.data.day_1, yomtov_last_day], weekday_on_new_line=True)
-        # lines.append((headers.date, dates_range, False))
-        # lines.append(EMPTY_LINE)
 
         for date_ in dates:
             if isinstance(date_, date):  # hoshana rabbah case
                 header = str(headers.hoshana_raba)
-                value = f'{date_.day} {names.MONTH_NAMES_GENETIVE[date_.month]},\n {names.WEEKDAYS[date_.weekday()]}'
+                sep = '\n' if not self._is_rtl else ''
+                value = f'{date_.day} {names.MONTH_NAMES_GENETIVE[date_.month]},{sep} {names.WEEKDAYS[date_.weekday()]}'
                 lines.append(EMPTY_LINE)
                 lines.append((header, value, False))
                 continue
@@ -551,28 +582,20 @@ class YomTovImage(BaseImage):
         return start_position_y, y_offset, font_size
 
     def get_image(self) -> Tuple[BytesIO, Optional[InlineKeyboardMarkup]]:
-        x = 80
-
-        dates = self._get_dates()
-        lines = self._prepare_lines(dates)
-        y, y_offset, font_size = self._get_font_properties(len(lines))
-        self._font = ImageFont.truetype(str(self._font_path), size=font_size)
-        self._bold_font = ImageFont.truetype(str(self._bold_font_path), size=font_size)
-
-        for header, value, new_line in lines:
+        for header, value, new_line in self.lines:
             if not header:
-                y += y_offset * 2
+                self.y += self.y_offset * 2
                 continue
 
-            self._draw_line(x, y, header, value, new_line)
+            self._draw_line(header, value, value_on_new_line=new_line)
             if new_line:
-                y += self._y_font_offset(header)
-            y += y_offset
+                self.y += self._y_font_offset(header)
+            self.shift_y()
 
         kb = get_zmanim_by_date_buttons(
             list(map(
                 lambda d: d.date if isinstance(d, AsurBeMelachaDay) else d,
-                dates
+                self.dates
             ))
         )
         return _convert_img_to_bytes_io(self._image), kb

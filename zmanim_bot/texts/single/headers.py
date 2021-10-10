@@ -5,7 +5,7 @@ date = _('Date')
 daf_masehet = _('Masechet')
 daf_page = _('Sheet')
 
-rh_duration = _('Duration')
+rh_duration = _('Number of days')
 rh_month = _('Мonth')
 rh_molad = _('Molad')
 
