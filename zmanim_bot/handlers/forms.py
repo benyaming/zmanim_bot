@@ -7,18 +7,15 @@ from zmanim_bot.admin.report_management import send_report_to_admins
 from zmanim_bot.handlers.utils.redirects import (redirect_to_main_menu, redirect_to_settings_menu)
 from zmanim_bot.helpers import check_date
 from zmanim_bot.keyboards.menus import get_report_keyboard
-from zmanim_bot.misc import bot, dp
-from zmanim_bot.service import (converter_service, settings_service, zmanim_service)
-from zmanim_bot.states import (ConverterGregorianDateState, ConverterJewishDateState, FeedbackState, LocationNameState,
-                               ZmanimGregorianDateState)
-from zmanim_bot.texts.single import buttons, messages
+from zmanim_bot.misc import bot
+from zmanim_bot.service import converter_service, settings_service, zmanim_service
+from zmanim_bot.states import FeedbackState
+from zmanim_bot.texts.single import messages
 from zmanim_bot.utils import chat_action
 
 
 # REPORTS
 
-
-@dp.message_handler(state=FeedbackState.waiting_for_feedback_text)
 @chat_action('text')
 async def handle_report(msg: Message, state: FSMContext):
     report = {
@@ -34,7 +31,6 @@ async def handle_report(msg: Message, state: FSMContext):
     await bot.send_message(msg.chat.id, messages.reports_text_received, reply_markup=kb)
 
 
-@dp.message_handler(text=buttons.done, state=FeedbackState.waiting_for_payload)
 @chat_action('text')
 async def handle_done_report(_, state: FSMContext):
     report = await state.get_data()
@@ -43,7 +39,6 @@ async def handle_done_report(_, state: FSMContext):
     create_task(send_report_to_admins(report))
 
 
-@dp.message_handler(content_types=ContentType.ANY, state=FeedbackState.waiting_for_payload)
 @chat_action('text')
 async def handle_report_payload(msg: Message, state: FSMContext):
     if msg.content_type != ContentType.PHOTO:
@@ -58,7 +53,6 @@ async def handle_report_payload(msg: Message, state: FSMContext):
 
 # CONVERTER #
 
-@dp.message_handler(state=ConverterGregorianDateState.waiting_for_gregorian_date)
 @chat_action('text')
 async def handle_converter_gregorian_date(msg: Message, state: FSMContext):
     resp, kb = converter_service.convert_greg_to_heb(msg.text)
@@ -67,7 +61,6 @@ async def handle_converter_gregorian_date(msg: Message, state: FSMContext):
     await redirect_to_main_menu()
 
 
-@dp.message_handler(state=ConverterJewishDateState.waiting_for_jewish_date)
 @chat_action('text')
 async def handle_converter_jewish_date(msg: Message, state: FSMContext):
     resp, kb = converter_service.convert_heb_to_greg(msg.text)
@@ -78,7 +71,6 @@ async def handle_converter_jewish_date(msg: Message, state: FSMContext):
 
 # ZMANIM #
 
-@dp.message_handler(state=ZmanimGregorianDateState.waiting_for_gregorian_date)
 @chat_action('text')
 async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
     check_date(msg.text)
@@ -90,14 +82,12 @@ async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
 
 # LOCATIONS #
 
-@dp.message_handler(state=LocationNameState.waiting_for_location_name_state, text=buttons.done)
 @chat_action('text')
 async def handle_zmanim_gregorian_date(_, state: FSMContext):
     await state.finish()
     await redirect_to_main_menu(messages.location_saved)
 
 
-@dp.message_handler(state=LocationNameState.waiting_for_location_name_state)
 @chat_action('text')
 async def handle_location_name(msg: Message, state: FSMContext):
     state_data = await state.get_data()

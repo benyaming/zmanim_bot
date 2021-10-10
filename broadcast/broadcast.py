@@ -2,13 +2,12 @@ import asyncio
 import logging
 from typing import Tuple
 
-import data
 from aiogram import Bot, Dispatcher, types
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import InlineKeyboardMarkup
 from aiogram.utils import exceptions, executor
 from pymongo import MongoClient
 
-from zmanim_bot import config
+import data
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger('broadcast')
@@ -41,7 +40,7 @@ async def send_message(
         disable_notification: bool = False
 ) -> bool:
     try:
-        await bot.send_message(user_id, text, disable_notification=disable_notification, reply_markup=kb)
+        await bot.send_message(user_id, text, disable_notification=disable_notification, reply_markup=None)
     except exceptions.BotBlocked:
         log.error(f"Target [ID:{user_id}]: blocked by user")
     except exceptions.ChatNotFound:
@@ -73,9 +72,10 @@ async def broadcaster() -> int:
                 log.error(f'There is no known language for user {user_id}')
                 continue
 
-            kb = InlineKeyboardMarkup()
-            kb.row(InlineKeyboardButton(text=button_texts[lang], url=data.link))
-            if await send_message(user_id, text, kb=kb):
+            # kb = InlineKeyboardMarkup()
+            # kb.row(InlineKeyboardButton(text=button_donate_texts[lang], url=data.donate_link))
+            # kb.row(InlineKeyboardButton(text=button_channel_texts[lang], url=data.channel_link))
+            if await send_message(user_id, text, kb=...):
                 count += 1
             await asyncio.sleep(.05)  # 20 messages per second (Limit: 30 messages per second)
     finally:
