@@ -2,8 +2,6 @@ import sentry_sdk
 from aiogram.dispatcher.middlewares import BaseMiddleware
 from aiogram.types import Update
 
-from zmanim_bot.misc import dp
-
 
 class SentryContextMiddleware(BaseMiddleware):
 
@@ -17,5 +15,3 @@ class SentryContextMiddleware(BaseMiddleware):
             'update': update.to_python()
         })
 
-
-dp.middleware.setup(SentryContextMiddleware())

@@ -5,7 +5,6 @@ from aiogram.contrib.middlewares.i18n import I18nMiddleware
 from aiogram.types import Message
 
 from zmanim_bot.config import I18N_DOMAIN, LANGUAGE_LIST
-from zmanim_bot.misc import dp
 from zmanim_bot.repository.bot_repository import get_or_set_lang
 
 LOCALES_DIR = Path(__file__).parent.parent.parent / 'locales'
@@ -28,6 +27,5 @@ class I18N(I18nMiddleware):
 
 
 i18n_ = I18N(I18N_DOMAIN, LOCALES_DIR)
-dp.middleware.setup(i18n_)
 gettext = i18n_.gettext
 lazy_gettext = i18n_.lazy_gettext
