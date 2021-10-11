@@ -1,20 +1,18 @@
 from aiogram.dispatcher import FSMContext
-from aiogram.types import CallbackQuery, ContentType, Message
+from aiogram.types import CallbackQuery, Message
 from aiogram.utils.exceptions import MessageNotModified
 from aiogram_metrics import track
 
-from zmanim_bot.config import LANGUAGE_LIST
 from zmanim_bot.handlers.utils.redirects import (redirect_to_main_menu, redirect_to_request_language)
-from zmanim_bot.helpers import (CALL_ANSWER_OK, LOCATION_PATTERN, CallbackPrefixes, parse_coordinates)
+from zmanim_bot.helpers import (CALL_ANSWER_OK, CallbackPrefixes, parse_coordinates)
 from zmanim_bot.keyboards.menus import get_cancel_keyboard
-from zmanim_bot.misc import bot, dp
+from zmanim_bot.misc import bot
 from zmanim_bot.service import settings_service
 from zmanim_bot.states import LocationNameState
-from zmanim_bot.texts.single import buttons, messages
+from zmanim_bot.texts.single import messages
 from zmanim_bot.utils import chat_action
 
 
-@dp.message_handler(text=buttons.sm_candle)
 @chat_action('text')
 @track('Candle lighting selection')
 async def settings_menu_cl(msg: Message):
@@ -22,7 +20,6 @@ async def settings_menu_cl(msg: Message):
     await msg.reply(resp, reply_markup=kb)
 
 
-@dp.callback_query_handler(text_startswith=CallbackPrefixes.cl)
 async def set_cl(call: CallbackQuery):
     await call.answer(CALL_ANSWER_OK)
 
@@ -33,7 +30,6 @@ async def set_cl(call: CallbackQuery):
         pass
 
 
-@dp.message_handler(text=buttons.sm_havdala)
 @chat_action('text')
 @track('Havdala selection')
 async def settings_menu_havdala(msg: Message):
@@ -41,7 +37,6 @@ async def settings_menu_havdala(msg: Message):
     await msg.reply(resp, reply_markup=kb)
 
 
-@dp.callback_query_handler(text_startswith=CallbackPrefixes.havdala)
 async def set_havdala(call: CallbackQuery):
     await call.answer(CALL_ANSWER_OK)
 
@@ -53,14 +48,12 @@ async def set_havdala(call: CallbackQuery):
         pass
 
 
-@dp.message_handler(text=buttons.sm_zmanim)
 @track('Zmanim selection')
 async def settings_menu_zmanim(msg: Message):
     resp, kb = await settings_service.get_current_zmanim()
     await msg.reply(resp, reply_markup=kb)
 
 
-@dp.callback_query_handler(text_startswith=CallbackPrefixes.zmanim)
 async def set_zmanim(call: CallbackQuery):
     await call.answer(CALL_ANSWER_OK)
 
@@ -71,7 +64,6 @@ async def set_zmanim(call: CallbackQuery):
         pass
 
 
-@dp.message_handler(text=buttons.sm_omer)
 @chat_action('text')
 @track('Omer Settings')
 async def handle_omer_settings(msg: Message):
@@ -79,7 +71,6 @@ async def handle_omer_settings(msg: Message):
     await msg.reply(resp, reply_markup=kb)
 
 
-@dp.callback_query_handler(text_startswith=CallbackPrefixes.omer)
 async def set_omer(call: CallbackQuery):
     await call.answer(CALL_ANSWER_OK)
 
@@ -87,15 +78,12 @@ async def set_omer(call: CallbackQuery):
     await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
 
 
-@dp.message_handler(commands=['language'])
-@dp.message_handler(text=buttons.sm_lang)
 @chat_action('text')
 @track('Language command')
 async def handle_language_request(_):
     await redirect_to_request_language()
 
 
-@dp.message_handler(text=LANGUAGE_LIST)
 @chat_action('text')
 @track('Language selected')
 async def set_language(msg: Message):
@@ -103,8 +91,6 @@ async def set_language(msg: Message):
     return await redirect_to_main_menu()
 
 
-@dp.message_handler(commands=['location'])
-@dp.message_handler(text=buttons.sm_location)
 @chat_action('text')
 @track('Location menu')
 async def location_request(msg: Message):
@@ -112,7 +98,6 @@ async def location_request(msg: Message):
     await msg.reply(resp, reply_markup=kb)
 
 
-@dp.callback_query_handler(text_startswith=CallbackPrefixes.location_activate)
 async def handle_activate_location(call: CallbackQuery):
     location_name = call.data.split(CallbackPrefixes.location_activate)[1]
     alert, kb = await settings_service.activate_location(location_name)
@@ -124,8 +109,7 @@ async def handle_activate_location(call: CallbackQuery):
         pass
 
 
-@dp.callback_query_handler(text_startswith=CallbackPrefixes.location_rename)
-async def init_location_raname(call: CallbackQuery, state: FSMContext):
+async def init_location_rename(call: CallbackQuery, state: FSMContext):
     await LocationNameState.waiting_for_location_name_state.set()
     location_name = call.data.split(CallbackPrefixes.location_rename)[1]
 
@@ -144,7 +128,6 @@ async def init_location_raname(call: CallbackQuery, state: FSMContext):
     await bot.send_message(call.from_user.id, resp, reply_markup=kb)
 
 
-@dp.callback_query_handler(text_startswith=CallbackPrefixes.location_delete)
 async def handle_delete_location(call: CallbackQuery):
     location_name = call.data.split(CallbackPrefixes.location_delete)[1]
     alert_text, kb = await settings_service.delete_location(location_name)
@@ -154,9 +137,7 @@ async def handle_delete_location(call: CallbackQuery):
         await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
 
 
-@dp.message_handler(regexp=LOCATION_PATTERN)
 @track('Location regexp')
-@dp.message_handler(content_types=[ContentType.LOCATION, ContentType.VENUE])
 async def handle_location(msg: Message, state: FSMContext):
     if msg.location:
         lat = msg.location.latitude
@@ -173,8 +154,6 @@ async def handle_location(msg: Message, state: FSMContext):
     await msg.reply(resp, reply_markup=kb)
 
 
-@dp.message_handler(commands=['report'])
-@dp.message_handler(text=buttons.hm_report)
 @chat_action('text')
 @track('Init report')
 async def help_menu_report(msg: Message):

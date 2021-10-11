@@ -1,20 +1,15 @@
 from aiogram.types import ContentType
 
 from zmanim_bot import exceptions as e
+from zmanim_bot.admin.states import AdminReportResponse
+from zmanim_bot.config import REPORT_ADMIN_LIST, LANGUAGE_LIST
+from zmanim_bot.helpers import CallbackPrefixes, LOCATION_PATTERN
 from zmanim_bot.misc import dp
-from . import admin, converter, errors, festivals, forms, main, menus, settings
-from . import incorrect_text_handler  # ----- SHOULD BE IMPORTED LAST
-from . import reset_handler  # ----- SHOULD BE IMPORTED FIRST
+from zmanim_bot.states import FeedbackState, ConverterGregorianDateState, ConverterJewishDateState, LocationNameState
+from . import admin, converter, errors, festivals, forms, main, menus, settings, incorrect_text_handler, reset_handler
+from ..texts.single import buttons
 
 __all__ = ['register_handlers']
-
-from ..admin.states import AdminReportResponse
-
-from ..config import REPORT_ADMIN_LIST
-from ..helpers import CallbackPrefixes
-from ..states import FeedbackState, ConverterGregorianDateState, ConverterJewishDateState, LocationNameState
-
-from ..texts.single import buttons
 
 
 def register_handlers():
@@ -35,20 +30,11 @@ def register_handlers():
     dp.register_message_handler(reset_handler.handle_back, text=[buttons.back, buttons.cancel], state="*")
 
     # admin
-    dp.register_callback_query_handler(
-        admin.handle_report,
-        lambda call: call.from_user.id in REPORT_ADMIN_LIST,
-        text_startswith=CallbackPrefixes.report
-    )
-    dp.register_message_handler(
-        admin.handle_report_response,
-        lambda msg: msg.from_user.id in REPORT_ADMIN_LIST,
-        state=AdminReportResponse.waiting_for_response_text
-    )
+    dp.register_message_handler(admin.handle_report_response, lambda msg: msg.from_user.id in REPORT_ADMIN_LIST, state=AdminReportResponse.waiting_for_response_text)
     dp.register_message_handler(admin.handle_done_report, text=buttons.done, state=AdminReportResponse.waiting_for_payload)
     dp.register_message_handler(admin.handle_report_payload, content_types=ContentType.ANY, state=AdminReportResponse.waiting_for_payload)
 
-    # commands
+    dp.register_callback_query_handler(admin.handle_report, lambda call: call.from_user.id in REPORT_ADMIN_LIST, text_startswith=CallbackPrefixes.report)
 
     # forms/states
     dp.register_message_handler(forms.handle_report, state=FeedbackState.waiting_for_feedback_text)
@@ -59,6 +45,55 @@ def register_handlers():
     dp.register_message_handler(forms.handle_zmanim_gregorian_date, state=LocationNameState.waiting_for_location_name_state, text=buttons.done)
     dp.register_message_handler(forms.handle_location_name, state=LocationNameState.waiting_for_location_name_state)
 
-    # messages
+    # main
+    dp.register_message_handler(main.handle_zmanim, text=buttons.mm_zmanim)
+    dp.register_message_handler(main.handle_zmanim_by_date, text=buttons.mm_zmanim_by_date)
+    dp.register_message_handler(main.handle_shabbat, text=buttons.mm_shabbat)
+    dp.register_message_handler(main.handle_daf_yomi, text=buttons.mm_daf_yomi)
+    dp.register_message_handler(main.handle_rosh_chodesh, text=buttons.mm_rh)
+
+    dp.register_callback_query_handler(main.handle_zmanim_by_date_callback, text_startswith=CallbackPrefixes.zmanim_by_date)
+
+    # menus
+    dp.register_message_handler(menus.handle_holidays_menu, text=[buttons.mm_holidays, buttons.hom_main])
+    dp.register_message_handler(menus.handle_more_holidays_menu, text=buttons.hom_more)
+    dp.register_message_handler(menus.handle_fasts_menu, text=buttons.mm_fasts)
+    dp.register_message_handler(menus.handle_settings_menu, commands=['settings'])
+    dp.register_message_handler(menus.handle_settings_menu, text=buttons.mm_settings)
+
+    # festivals
+    dp.register_message_handler(festivals.handle_fast, text=buttons.FASTS)
+    dp.register_message_handler(festivals.handle_yom_tov, text=buttons.YOMTOVS)
+    dp.register_message_handler(festivals.handle_holiday, text=buttons.HOLIDAYS)
+
+    # converter
+    dp.register_message_handler(converter.handle_converter_entry, commands=['converter_api'])
+    dp.register_message_handler(converter.handle_converter_entry, text=buttons.mm_converter)
+    dp.register_message_handler(converter.start_greg_to_jew_converter, text=buttons.conv_greg_to_jew)
+    dp.register_message_handler(converter.start_jew_to_greg_converter, text=buttons.conv_jew_to_greg)
+
+    # settings
+    dp.register_message_handler(settings.settings_menu_cl, text=buttons.sm_candle)
+    dp.register_message_handler(settings.settings_menu_havdala, text=buttons.sm_havdala)
+    dp.register_message_handler(settings.settings_menu_zmanim, text=buttons.sm_zmanim)
+    dp.register_message_handler(settings.handle_omer_settings, text=buttons.sm_omer)
+    dp.register_message_handler(settings.handle_language_request, commands=['language'])
+    dp.register_message_handler(settings.handle_language_request, text=buttons.sm_lang)
+    dp.register_message_handler(settings.set_language, text=LANGUAGE_LIST)
+    dp.register_message_handler(settings.location_request, commands=['location'])
+    dp.register_message_handler(settings.location_request, text=buttons.sm_location)
+    dp.register_message_handler(settings.handle_location, regexp=LOCATION_PATTERN)
+    dp.register_message_handler(settings.handle_location, content_types=[ContentType.LOCATION, ContentType.VENUE])
+    dp.register_message_handler(settings.help_menu_report, commands=['report'])
+    dp.register_message_handler(settings.help_menu_report, text=buttons.hm_report)
+
+    dp.register_callback_query_handler(settings.set_cl, text_startswith=CallbackPrefixes.cl)
+    dp.register_callback_query_handler(settings.set_havdala, text_startswith=CallbackPrefixes.havdala)
+    dp.register_callback_query_handler(settings.set_zmanim, text_startswith=CallbackPrefixes.zmanim)
+    dp.register_callback_query_handler(settings.set_omer, text_startswith=CallbackPrefixes.omer)
+    dp.register_callback_query_handler(settings.handle_activate_location, text_startswith=CallbackPrefixes.location_activate)
+    dp.register_callback_query_handler(settings.init_location_rename, text_startswith=CallbackPrefixes.location_rename)
+    dp.register_callback_query_handler(settings.handle_delete_location, text_startswith=CallbackPrefixes.location_delete)
 
     # unknown messages (SHOULD BE LAST!)
+    dp.register_message_handler(incorrect_text_handler.handle_incorrect_text)
