@@ -20,7 +20,7 @@ async def get_zmanim() -> Zmanim:
     return data
 
 
-async def get_zmanim_image(*, date: str = None, call_data: str = None) -> BytesIO:
+async def send_zmanim(*, date: str = None, call_data: str = None):
     if call_data:
         date = call_data.split(CallbackPrefixes.zmanim_by_date)[1]
 
@@ -30,7 +30,8 @@ async def get_zmanim_image(*, date: str = None, call_data: str = None) -> BytesI
         user.zmanim_settings.dict(),
         date_=date
     )
-    return ip.ZmanimImage(data, user.location.name).get_image()
+    await user.processor.send_zmanim(data)
+    # return ip.ZmanimImage(data, user.location.name).get_image()
 
 
 async def init_zmanim_by_date():

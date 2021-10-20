@@ -4,10 +4,7 @@ from typing import Tuple
 from aiogram.types import InlineKeyboardMarkup
 
 from zmanim_bot.integrations import zmanim_api_client
-from zmanim_bot.processors.image.image_processor import (FastImage,
-                                                         HolidayImage,
-                                                         IsraelHolidaysImage,
-                                                         YomTovImage)
+from zmanim_bot.processors.image.renderer import (FastImage, HolidayImage, IsraelHolidaysImage, YomTovImage)
 from zmanim_bot.repository import bot_repository
 from zmanim_bot.texts.single import buttons
 

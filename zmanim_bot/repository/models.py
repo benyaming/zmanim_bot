@@ -4,7 +4,8 @@ from typing import List, Optional, Tuple
 from odmantic import EmbeddedModel, Field, Model
 
 from zmanim_bot.config import DB_COLLECTION_NAME
-from zmanim_bot.exceptions import NoLocationException
+from zmanim_bot.exceptions import NoLocationException, UnknownProcessorException
+from zmanim_bot.processors.base import BaseProcessor, PROCESSORS
 
 HAVDALA_OPINIONS = ['tzeis_5_95_degrees', 'tzeis_8_5_degrees', 'tzeis_42_minutes', 'tzeis_72_minutes']
 
@@ -75,3 +76,10 @@ class User(Model, ABC):
         if not loc:
             raise NoLocationException
         return loc[0]
+
+    @property
+    def processor(self) -> BaseProcessor:
+        try:
+            return PROCESSORS[self.processor_type](self.location.name)
+        except KeyError:
+            raise UnknownProcessorException()
