@@ -31,20 +31,17 @@ async def handle_zmanim_by_date(msg: Message):
 
 @chat_action()
 @track('Shabbat')
-async def handle_shabbat(msg: Message):
-    resp, kb = await zmanim_service.get_shabbat()
-    await msg.reply_photo(resp, reply_markup=kb)
+async def handle_shabbat(_):
+    await zmanim_service.get_shabbat()
 
 
 @chat_action()
 @track('Daf yomi')
-async def handle_daf_yomi(msg: Message):
-    resp = await zmanim_service.get_daf_yomi()
-    await msg.reply_photo(resp)
+async def handle_daf_yomi(_):
+    await zmanim_service.get_daf_yomi()
 
 
 @chat_action()
 @track('Rosh chodesh')
-async def handle_rosh_chodesh(msg: Message):
-    resp = await zmanim_service.get_rosh_chodesh()
-    await msg.reply_photo(resp)
+async def handle_rosh_chodesh(_):
+    await zmanim_service.get_rosh_chodesh()

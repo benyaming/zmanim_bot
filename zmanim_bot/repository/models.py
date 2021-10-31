@@ -5,7 +5,8 @@ from odmantic import EmbeddedModel, Field, Model
 
 from zmanim_bot.config import DB_COLLECTION_NAME
 from zmanim_bot.exceptions import NoLocationException, UnknownProcessorException
-from zmanim_bot.processors.base import BaseProcessor, PROCESSORS
+from zmanim_bot.processors import PROCESSORS
+from zmanim_bot.processors.base import BaseProcessor
 
 HAVDALA_OPINIONS = ['tzeis_5_95_degrees', 'tzeis_8_5_degrees', 'tzeis_42_minutes', 'tzeis_72_minutes']
 

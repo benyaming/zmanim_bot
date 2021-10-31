@@ -1,25 +1,19 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Optional, Tuple
 
 from aiogram.types import InlineKeyboardMarkup
 
 from zmanim_bot.integrations.zmanim_models import (Zmanim, Shabbat, YomTov, Fast, IsraelHolidays, RoshChodesh, DafYomi,
                                                    Holiday)
 
-PROCESSORS = dict()
-
 
 class BaseProcessor(ABC):
-    _type: str
     _location_name: str
 
     def __init__(self, location_name: str):
         self._location_name = location_name
-
-    def __init_subclass__(cls, **kwargs):
-        PROCESSORS[cls._type] = cls
 
     @abstractmethod
     async def _send(self, data: ..., kb: Optional[InlineKeyboardMarkup] = None):
@@ -29,13 +23,13 @@ class BaseProcessor(ABC):
         await self._send(self._get_zmanim(data))
 
     async def send_shabbat(self, data: Shabbat):
-        await self._send(self._get_shabbat(data))
+        await self._send(*self._get_shabbat(data))
 
     async def send_yom_tov(self, data: YomTov):
-        await self._send(self._get_yom_tov(data))
+        await self._send(*self._get_yom_tov(data))
 
     async def send_fast(self, data: Fast):
-        await self._send(self._get_fast(data))
+        await self._send(*self._get_fast(data))
 
     async def send_holiday(self, data: Holiday):
         await self._send(self._get_holiday(data))
@@ -50,33 +44,33 @@ class BaseProcessor(ABC):
         await self._send(self._get_daf_yomi(data))
 
     @abstractmethod
-    def _get_zmanim(self, data: Zmanim):
-        ...
+    def _get_zmanim(self, data: Zmanim) -> Tuple[..., InlineKeyboardMarkup]:
+        pass
 
     @abstractmethod
-    def _get_shabbat(self, data: Shabbat):
-        ...
+    def _get_shabbat(self, data: Shabbat) -> Tuple[..., InlineKeyboardMarkup]:
+        pass
 
     @abstractmethod
-    def _get_yom_tov(self, data: YomTov):
-        ...
+    def _get_yom_tov(self, data: YomTov) -> Tuple[..., InlineKeyboardMarkup]:
+        pass
 
     @abstractmethod
-    def _get_fast(self, data: Fast):
-        ...
+    def _get_fast(self, data: Fast) -> Tuple[..., InlineKeyboardMarkup]:
+        pass
 
     @abstractmethod
-    def _get_holiday(self, data: Holiday):
-        ...
+    def _get_holiday(self, data: Holiday) -> ...:
+        pass
 
     @abstractmethod
-    def _get_israel_holidays(self, data: IsraelHolidays):
-        ...
+    def _get_israel_holidays(self, data: IsraelHolidays) -> ...:
+        pass
 
     @abstractmethod
-    def _get_rosh_chodesh(self, data: RoshChodesh):
-        ...
+    def _get_rosh_chodesh(self, data: RoshChodesh) -> ...:
+        pass
 
     @abstractmethod
-    def _get_daf_yomi(self, data: DafYomi):
-        ...
+    def _get_daf_yomi(self, data: DafYomi) -> ...:
+        pass

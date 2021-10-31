@@ -23,6 +23,7 @@ def register_handlers():
     dp.register_errors_handler(errors.gregorian_date_exception_handler, exception=e.IncorrectGregorianDateException)
     dp.register_errors_handler(errors.jewish_date_exception_handler, exception=e.IncorrectJewishDateException)
     dp.register_errors_handler(errors.polar_coordinates_exception_handler, exception=e.PolarCoordinatesException)
+    dp.register_errors_handler(errors.unknown_processor_exception_handler, exception=e.UnknownProcessorException)
     dp.register_errors_handler(errors.main_errors_handler, exception=Exception)
 
     # reset handlers whech clears any state (should be first!)

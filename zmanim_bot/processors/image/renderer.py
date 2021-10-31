@@ -13,11 +13,10 @@ from babel.support import LazyProxy
 
 from zmanim_bot import texts
 from zmanim_bot.exceptions import PolarCoordinatesException
-from zmanim_bot.helpers import parse_jewish_date
 from zmanim_bot.integrations.zmanim_models import *
 from zmanim_bot.keyboards.inline import get_zmanim_by_date_buttons
 from zmanim_bot.middlewares.i18n import gettext as _, i18n_
-from zmanim_bot.processors.text_utils import humanize_date, humanize_time
+from zmanim_bot.processors.text_utils import humanize_date, humanize_time, parse_jewish_date
 from zmanim_bot.texts.plural import units
 from zmanim_bot.texts.single import headers, helpers, names, zmanim
 
@@ -373,7 +372,7 @@ class FastImage(BaseImage):
         self._draw.text(
             (
                 210 if not self._is_rtl else (IMG_SIZE - 60 + self._x_font_offset(fast_moved_header)),
-                150
+                155
             ),
             fast_moved_header,
             font=self._bold_font,
