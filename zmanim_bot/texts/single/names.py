@@ -221,7 +221,7 @@ JEWISH_MONTHS = {
     'adar_ii': _('Adar II '),
 }
 
-JEWISH_MONTHS_GENETIVE = {
+JEWISH_MONTHS_GENITIVE = {
     # NOTE Genative month name
     'nissan': _('Nisan'),
     # NOTE Genative month name

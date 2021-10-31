@@ -63,6 +63,11 @@ async def polar_coordinates_exception_handler(*_):
     return True
 
 
+async def unknown_processor_exception_handler(_, e: UnknownProcessorException):
+    await Message.get_current().reply(error_occured)
+    raise e
+
+
 async def main_errors_handler(_, e: Exception):
     if isinstance(e, ZmanimBotBaseException):
         return True

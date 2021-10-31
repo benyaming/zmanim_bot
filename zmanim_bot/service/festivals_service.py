@@ -1,13 +1,4 @@
-from io import BytesIO
-from typing import Tuple
-
-from aiogram.types import InlineKeyboardMarkup
-
 from zmanim_bot.integrations import zmanim_api_client
-from zmanim_bot.processors.image.image_processor import (FastImage,
-                                                         HolidayImage,
-                                                         IsraelHolidaysImage,
-                                                         YomTovImage)
 from zmanim_bot.repository import bot_repository
 from zmanim_bot.texts.single import buttons
 
@@ -33,17 +24,17 @@ def _get_festival_name(input_str: str) -> str:
     return festival_shortcuts[input_str]
 
 
-async def get_generic_fast(fast_name: str) -> Tuple[BytesIO, InlineKeyboardMarkup]:
+async def get_generic_fast(fast_name: str):
     user = await bot_repository.get_or_create_user()
     data = await zmanim_api_client.get_generic_fast(
         name=_get_festival_name(fast_name),
         location=user.location.coordinates,
         havdala_opinion=user.havdala_opinion
     )
-    return FastImage(data, user.location.name).get_image()
+    await user.processor.send_fast(data)
 
 
-async def get_generic_yomtov(yomtov_name: str) -> Tuple[BytesIO, InlineKeyboardMarkup]:
+async def get_generic_yomtov(yomtov_name: str):
     user = await bot_repository.get_or_create_user()
     data = await zmanim_api_client.get_generic_yomtov(
         name=_get_festival_name(yomtov_name),
@@ -51,13 +42,14 @@ async def get_generic_yomtov(yomtov_name: str) -> Tuple[BytesIO, InlineKeyboardM
         cl_offset=user.cl_offset,
         havdala_opinion=user.havdala_opinion
     )
-    return YomTovImage(data, user.location.name).get_image()
+    await user.processor.send_yom_tov(data)
 
 
-async def get_generic_holiday(holiday_name: str) -> BytesIO:
+async def get_generic_holiday(holiday_name: str):
+    user = await bot_repository.get_or_create_user()
     if holiday_name == buttons.hom_israel:
         data = await zmanim_api_client.get_israel_holidays()
-        return IsraelHolidaysImage(data).get_image()
+        await user.processor.send_israel_holidays(data)
     else:
         data = await zmanim_api_client.get_generic_holiday(_get_festival_name(holiday_name))
-        return HolidayImage(data).get_image()
+        await user.processor.send_holiday(data)

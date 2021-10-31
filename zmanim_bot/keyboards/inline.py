@@ -1,12 +1,10 @@
 from datetime import date
-from typing import List
+from typing import List, Any
 
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from zmanim_bot.helpers import (CL_OFFET_OPTIONS, HAVDALA_OPINION_OPTIONS,
-                                CallbackPrefixes)
+from zmanim_bot.helpers import (CL_OFFET_OPTIONS, HAVDALA_OPINION_OPTIONS, CallbackPrefixes)
 from zmanim_bot.processors.text_utils import humanize_date
-from zmanim_bot.repository.bot_repository import Location
 from zmanim_bot.texts.single import buttons, zmanim
 from zmanim_bot.texts.single.buttons import zmanim_for_date_prefix
 
@@ -81,7 +79,8 @@ def get_zmanim_by_date_buttons(dates: List[date]) -> InlineKeyboardMarkup:
     return kb
 
 
-def get_location_options_menu(location_list: List[Location]) -> InlineKeyboardMarkup:
+# todo: refactor imports and fix typing
+def get_location_options_menu(location_list: List[Any]) -> InlineKeyboardMarkup:
     kb = InlineKeyboardMarkup()
 
     for location in location_list:

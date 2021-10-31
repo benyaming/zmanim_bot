@@ -10,17 +10,15 @@ from zmanim_bot.utils import chat_action
 
 @chat_action()
 @track('Zmanim')
-async def handle_zmanim(msg: Message):
-    resp = await zmanim_service.get_zmanim_image()
-    await msg.reply_photo(resp)
+async def handle_zmanim(_):
+    await zmanim_service.send_zmanim()
 
 
 @chat_action()
 async def handle_zmanim_by_date_callback(call: CallbackQuery):
     await call.answer()
 
-    resp = await zmanim_service.get_zmanim_image(call_data=call.data)
-    await bot.send_photo(call.from_user.id, resp, reply_to_message_id=call.message.message_id)
+    await zmanim_service.send_zmanim(call_data=call.data)
     await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id)
 
 
@@ -33,20 +31,17 @@ async def handle_zmanim_by_date(msg: Message):
 
 @chat_action()
 @track('Shabbat')
-async def handle_shabbat(msg: Message):
-    resp, kb = await zmanim_service.get_shabbat()
-    await msg.reply_photo(resp, reply_markup=kb)
+async def handle_shabbat(_):
+    await zmanim_service.get_shabbat()
 
 
 @chat_action()
 @track('Daf yomi')
-async def handle_daf_yomi(msg: Message):
-    resp = await zmanim_service.get_daf_yomi()
-    await msg.reply_photo(resp)
+async def handle_daf_yomi(_):
+    await zmanim_service.get_daf_yomi()
 
 
 @chat_action()
 @track('Rosh chodesh')
-async def handle_rosh_chodesh(msg: Message):
-    resp = await zmanim_service.get_rosh_chodesh()
-    await msg.reply_photo(resp)
+async def handle_rosh_chodesh(_):
+    await zmanim_service.get_rosh_chodesh()

@@ -1,8 +1,11 @@
 from datetime import date, time
 from typing import List, Union
 
+from zmanim.hebrew_calendar.jewish_date import JewishDate
+
 from zmanim_bot.integrations.zmanim_models import AsurBeMelachaDay
 from zmanim_bot.texts.single import names
+from zmanim_bot.texts.single.names import JEWISH_MONTHS_GENITIVE
 
 
 def humanize_date(date_range: List[Union[date, AsurBeMelachaDay]],
@@ -51,3 +54,8 @@ def humanize_time(time_: time) -> str:
     """ Use this function for convert time to hh:mm """
     if isinstance(time_, time):
         return time_.isoformat(timespec='minutes')
+
+
+def parse_jewish_date(date_str: str) -> str:
+    year, month, day = date_str.split('-')
+    return f'{day} {JEWISH_MONTHS_GENITIVE.get(list(JewishDate.MONTHS)[int(month) - 1].name)} {year}'
