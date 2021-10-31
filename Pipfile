@@ -8,11 +8,10 @@ verify_ssl = true
 [packages]
 pillow = "*"
 aiogram = "*"
-aiohttp = "*"
+aiohttp = "==3.7.3"
 zmanim = "*"
-aiopg = "*"
 pydantic = "*"
-aioredis = "<2.0"
+aioredis = "*"
 betterlogging = "*"
 odmantic = "*"
 motor = "*"
