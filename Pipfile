@@ -7,8 +7,8 @@ verify_ssl = true
 
 [packages]
 pillow = "*"
-aiogram = "*"
-aiohttp = "*"
+aiogram = "==2.15"
+aiohttp = "==3.7.3"
 zmanim = "*"
 aiopg = "*"
 pydantic = "*"
