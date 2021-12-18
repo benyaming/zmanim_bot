@@ -74,8 +74,7 @@ async def handle_converter_jewish_date(msg: Message, state: FSMContext):
 @chat_action('text')
 async def handle_zmanim_gregorian_date(msg: Message, state: FSMContext):
     check_date(msg.text)
-    resp = await zmanim_service.send_zmanim(date=msg.text)
-    await msg.reply_photo(resp)
+    await zmanim_service.send_zmanim(date=msg.text)
     await state.finish()
     await redirect_to_main_menu()
 
