@@ -1,3 +1,4 @@
+import functools
 import inspect
 
 from aiogram.types import ChatActions
@@ -10,6 +11,7 @@ from zmanim_bot.repository.bot_repository import get_or_set_processor_type
 def chat_action(action: str = None):
     def decorator(func):
 
+        @functools.wraps(func)
         async def wrapper(*args, **kwargs):
             chat_actions = {
                 'image': ChatActions.upload_photo,

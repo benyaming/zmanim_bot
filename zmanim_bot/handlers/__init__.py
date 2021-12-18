@@ -5,8 +5,10 @@ from zmanim_bot.admin.states import AdminReportResponse
 from zmanim_bot.config import REPORT_ADMIN_LIST, LANGUAGE_LIST
 from zmanim_bot.helpers import CallbackPrefixes, LOCATION_PATTERN
 from zmanim_bot.misc import dp
-from zmanim_bot.states import FeedbackState, ConverterGregorianDateState, ConverterJewishDateState, LocationNameState
-from . import admin, converter, errors, festivals, forms, main, menus, settings, incorrect_text_handler, reset_handler
+from zmanim_bot.states import FeedbackState, ConverterGregorianDateState, ConverterJewishDateState, \
+    LocationNameState, ZmanimGregorianDateState
+from . import admin, converter, errors, festivals, forms, main, menus, settings, \
+    incorrect_text_handler, reset_handler
 from ..texts.single import buttons
 
 __all__ = ['register_handlers']
@@ -43,7 +45,7 @@ def register_handlers():
     dp.register_message_handler(forms.handle_report_payload, content_types=ContentType.ANY, state=FeedbackState.waiting_for_payload)
     dp.register_message_handler(forms.handle_converter_gregorian_date, state=ConverterGregorianDateState.waiting_for_gregorian_date)
     dp.register_message_handler(forms.handle_converter_jewish_date, state=ConverterJewishDateState.waiting_for_jewish_date)
-    dp.register_message_handler(forms.handle_zmanim_gregorian_date, state=LocationNameState.waiting_for_location_name_state, text=buttons.done)
+    dp.register_message_handler(forms.handle_zmanim_gregorian_date, state=ZmanimGregorianDateState.waiting_for_gregorian_date)
     dp.register_message_handler(forms.handle_location_name, state=LocationNameState.waiting_for_location_name_state)
 
     # main
