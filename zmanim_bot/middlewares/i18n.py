@@ -5,7 +5,6 @@ from aiogram.contrib.middlewares.i18n import I18nMiddleware
 from aiogram.types import Message
 
 from zmanim_bot.config import I18N_DOMAIN, LANGUAGE_LIST
-from zmanim_bot.repository.bot_repository import get_or_set_lang
 
 LOCALES_DIR = Path(__file__).parent.parent.parent / 'locales'
 
@@ -18,6 +17,8 @@ class I18N(I18nMiddleware):
         if len(args) > 0 and isinstance(args[0], Message) and args[0].text in LANGUAGE_LIST:
             locale = args[0].text
         else:
+            from zmanim_bot.repository.bot_repository import get_or_set_lang
+
             locale = await get_or_set_lang()
 
         return locale

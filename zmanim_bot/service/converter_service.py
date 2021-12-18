@@ -5,14 +5,11 @@ from aiogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup
 from zmanim.hebrew_calendar.jewish_calendar import JewishCalendar
 
 from zmanim_bot import keyboards
-from zmanim_bot.exceptions import (IncorrectGregorianDateException,
-                                   IncorrectJewishDateException)
+from zmanim_bot.exceptions import (IncorrectGregorianDateException, IncorrectJewishDateException)
 from zmanim_bot.keyboards.inline import get_zmanim_by_date_buttons
-from zmanim_bot.states import (ConverterGregorianDateState,
-                               ConverterJewishDateState)
+from zmanim_bot.states import (ConverterGregorianDateState, ConverterJewishDateState)
 from zmanim_bot.texts.single import messages
-from zmanim_bot.texts.single.names import (JEWISH_MONTHS_GENETIVE,
-                                           MONTH_NAMES_GENETIVE, WEEKDAYS)
+from zmanim_bot.texts.single.names import (JEWISH_MONTHS_GENITIVE, MONTH_NAMES_GENETIVE, WEEKDAYS)
 
 
 def get_converter_entry_menu() -> Tuple[str, ReplyKeyboardMarkup]:
@@ -56,7 +53,7 @@ def convert_greg_to_heb(date_: str) -> Tuple[str, InlineKeyboardMarkup]:
         raise IncorrectGregorianDateException
 
     calendar = JewishCalendar.from_date(pydate)
-    jewish_date = f'{calendar.jewish_day} {JEWISH_MONTHS_GENETIVE[calendar.jewish_month_name()]} {calendar.jewish_year},' \
+    jewish_date = f'{calendar.jewish_day} {JEWISH_MONTHS_GENITIVE[calendar.jewish_month_name()]} {calendar.jewish_year},' \
                   f' {WEEKDAYS[calendar.gregorian_date.weekday()]}'
     kb = get_zmanim_by_date_buttons([pydate])
     return jewish_date, kb

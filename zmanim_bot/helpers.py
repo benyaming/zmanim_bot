@@ -1,11 +1,7 @@
 from datetime import date
 from typing import Tuple
 
-from zmanim.hebrew_calendar.jewish_date import JewishDate
-
-from .exceptions import (IncorrectGregorianDateException,
-                         IncorrectLocationException)
-from .texts.single.names import JEWISH_MONTHS_GENETIVE
+from .exceptions import IncorrectGregorianDateException, IncorrectLocationException
 
 LOCATION_PATTERN = r'^-?\d{1,2}\.{1}\d+, {0,1}-?\d{1,3}\.{1}\d+$'
 LANGUAGE_SHORTCUTS = {
@@ -52,8 +48,3 @@ def check_date(date_: str):
         date.fromisoformat(date_)
     except ValueError:
         raise IncorrectGregorianDateException
-
-
-def parse_jewish_date(date_str: str) -> str:
-    year, month, day = date_str.split('-')
-    return f'{day} {JEWISH_MONTHS_GENETIVE.get(list(JewishDate.MONTHS)[int(month) - 1].name)} {year}'
