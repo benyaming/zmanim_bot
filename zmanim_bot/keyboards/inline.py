@@ -3,6 +3,7 @@ from typing import List, Any
 
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+from zmanim_bot.config import DONATE_OPTIONS
 from zmanim_bot.helpers import (CL_OFFET_OPTIONS, HAVDALA_OPINION_OPTIONS, CallbackPrefixes)
 from zmanim_bot.processors.text_utils import humanize_date
 from zmanim_bot.texts.single import buttons, zmanim
@@ -95,3 +96,9 @@ def get_location_options_menu(location_list: List[Any]) -> InlineKeyboardMarkup:
         )
 
     return kb
+
+
+DONATE_KB = InlineKeyboardMarkup()
+DONATE_KB.row(
+    *[InlineKeyboardButton(text=option, callback_data=f'{CallbackPrefixes.donate}{option}') for option in DONATE_OPTIONS]
+)

@@ -117,6 +117,9 @@ msgstr "Помощь"
 msgid "Settings"
 msgstr "Настройки"
 
+msgid "Donate"
+msgstr "Поддержать"
+
 #: zmanim_bot/texts/single/buttons.py:25
 msgid "F.A.Q."
 msgstr "ЧаВо"
@@ -575,6 +578,19 @@ msgid ""
 "Looks like an error occured... The Bot's developer already working on "
 "it..."
 msgstr "Кажется, возникла ошибка... Разработчик бота уже занимается ее решением..."
+
+
+msgid "Select donate amount in $:"
+msgstr "Выберите сумму доната в $:"
+
+msgid "${} donate"
+msgstr "Донат на ${}"
+
+msgid "Support zmanim bot with one-time ${} payment."
+msgstr "Поддержка zmanim bot однократным платежом в ${}."
+
+msgid "Thank you so mach! Your support motivates the developer to spend more time on the bot development!"
+msgstr "Большое спасибо! Ваша поддержка мотивирует разработчика уделять боту больше времени!"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:10

@@ -124,6 +124,9 @@ msgstr "עזרה"
 msgid "Settings"
 msgstr "הגדרות"
 
+msgid "Donate"
+msgstr "לתרום"
+
 #: zmanim_bot/texts/single/buttons.py:24
 msgid "F.A.Q."
 msgstr "שאלות נפוצות"
@@ -587,6 +590,19 @@ msgstr "ההודעה שלך נשלחה למפתח הבוט. הוא יפתור א
 msgid ""
 "Looks like an error occured... The Bot's developer already working on it..."
 msgstr "נראה כי אירעה שגיאה... מפתח הבוט כבר עובד על זה..."
+
+
+msgid "Select donate amount in $:"
+msgstr "בחר סכום תרומה ב-$:"
+
+msgid "${} donate"
+msgstr "תרומה ${}"
+
+msgid "Support zmanim bot with one-time ${} payment."
+msgstr "תמיכה zmanim bot בתשלום חד פעמי של ${}."
+
+msgid "Thank you so mach! Your support motivates the developer to spend more time on the bot development!"
+msgstr "תודה רבה לך! התמיכה שלך מניעה את המפתח להשקיע יותר זמן בפיתוח הבוט!"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:9

@@ -79,3 +79,8 @@ reports_created = _('Your message has been sent to the Bot\'s developer. He will
                     'Thanks for your feedback!')
 
 error_occured = _('Looks like an error occured... The Bot\'s developer already working on it...')
+
+donate_init = _('Select donate amount in $:')
+donate_invoice_title = _('${} donate')
+donate_invoice_description = _('Support zmanim bot with one-time ${} payment.')
+donate_thanks = _('Thank you so mach! Your support motivates the developer to spend more time on the bot development!')

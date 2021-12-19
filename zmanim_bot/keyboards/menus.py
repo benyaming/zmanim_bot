@@ -16,7 +16,7 @@ def get_main_menu() -> ReplyKeyboardMarkup:
     kb.add(buttons.mm_zmanim.value, buttons.mm_shabbat.value, buttons.mm_holidays.value)
     kb.add(buttons.mm_rh.value, buttons.mm_daf_yomi.value, buttons.mm_fasts.value)
     kb.add(buttons.mm_zmanim_by_date.value, buttons.mm_converter.value)
-    kb.add(buttons.hm_report.value, buttons.mm_settings.value)
+    kb.add(buttons.hm_report.value, buttons.mm_donate.value, buttons.mm_settings.value)
 
     if i18n_.is_rtl():
         for row in kb.keyboard:
