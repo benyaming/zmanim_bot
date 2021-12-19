@@ -8,7 +8,7 @@ from zmanim_bot.misc import dp
 from zmanim_bot.states import FeedbackState, ConverterGregorianDateState, ConverterJewishDateState, \
     LocationNameState, ZmanimGregorianDateState
 from . import admin, converter, errors, festivals, forms, main, menus, settings, \
-    incorrect_text_handler, reset_handler
+    incorrect_text_handler, reset_handler, payments
 from ..texts.single import buttons
 
 __all__ = ['register_handlers']
@@ -63,6 +63,7 @@ def register_handlers():
     dp.register_message_handler(menus.handle_fasts_menu, text=buttons.mm_fasts)
     dp.register_message_handler(menus.handle_settings_menu, commands=['settings'])
     dp.register_message_handler(menus.handle_settings_menu, text=buttons.mm_settings)
+    dp.register_message_handler(menus.handle_donate, text=buttons.mm_donate)
 
     # festivals
     dp.register_message_handler(festivals.handle_fast, text=buttons.FASTS)
@@ -97,6 +98,12 @@ def register_handlers():
     dp.register_callback_query_handler(settings.handle_activate_location, text_startswith=CallbackPrefixes.location_activate)
     dp.register_callback_query_handler(settings.init_location_rename, text_startswith=CallbackPrefixes.location_rename)
     dp.register_callback_query_handler(settings.handle_delete_location, text_startswith=CallbackPrefixes.location_delete)
+
+    # payments
+    dp.register_callback_query_handler(payments.handle_donate, text_startswith=CallbackPrefixes.donate)
+    dp.register_pre_checkout_query_handler(payments.handle_pre_checkout)
+    dp.register_message_handler(payments.on_success_payment, content_types=[ContentType.SUCCESSFUL_PAYMENT])
+    dp.register_message_handler(payments.on_success_payment, content_types=[ContentType])
 
     # unknown messages (SHOULD BE LAST!)
     dp.register_message_handler(incorrect_text_handler.handle_incorrect_text)

@@ -2,6 +2,7 @@ from aiogram.types import Message
 from aiogram_metrics import track
 
 from zmanim_bot.keyboards import menus
+from zmanim_bot.keyboards.inline import DONATE_KB
 from zmanim_bot.misc import dp
 from zmanim_bot.texts.single import buttons, messages
 from zmanim_bot.utils import chat_action
@@ -34,3 +35,9 @@ async def handle_fasts_menu(msg: Message):
 async def handle_settings_menu(msg: Message):
     kb = menus.get_settings_menu()
     await msg.reply(messages.init_settings, reply_markup=kb)
+
+
+@chat_action('text')
+@track('Donate button')
+async def handle_donate(msg: Message):
+    await msg.reply(messages.donate_init, reply_markup=DONATE_KB)

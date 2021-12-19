@@ -18,6 +18,7 @@ mm_zmanim_by_date = _('Zmanim by the date')
 mm_converter = _('Date converter')
 mm_help = _('Help')
 mm_settings = _('Settings')
+mm_donate = _('Donate')
 
 
 # Help menu
