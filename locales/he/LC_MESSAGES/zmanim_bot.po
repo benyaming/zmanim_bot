@@ -602,7 +602,7 @@ msgid "Support zmanim bot with one-time ${} payment."
 msgstr "תמיכה zmanim bot בתשלום חד פעמי של ${}."
 
 msgid "Thank you so mach! Your support motivates the developer to spend more time on the bot development!"
-msgstr "תודה רבה לך! התמיכה שלך מניעה את המפתח להשקיע יותר זמן בפיתוח הבוט!"
+msgstr "תודה רבה לך! התמיכה שלך מעודדת את המפתח להשקיע יותר זמן בפיתוח הבוט!"
 
 #. NOTE Genative month name
 #: zmanim_bot/texts/single/names.py:9
