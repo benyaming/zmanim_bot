@@ -8,7 +8,7 @@ from zmanim_bot.misc import dp
 from zmanim_bot.states import FeedbackState, ConverterGregorianDateState, ConverterJewishDateState, \
     LocationNameState, ZmanimGregorianDateState
 from . import admin, converter, errors, festivals, forms, main, menus, settings, \
-    incorrect_text_handler, reset_handler, payments
+    incorrect_text_handler, reset_handler, payments, geolocation
 from ..texts.single import buttons
 
 __all__ = ['register_handlers']
@@ -89,6 +89,7 @@ def register_handlers():
     dp.register_message_handler(settings.handle_location, content_types=[ContentType.LOCATION, ContentType.VENUE])
     dp.register_message_handler(settings.help_menu_report, commands=['report'])
     dp.register_message_handler(settings.help_menu_report, text=buttons.hm_report)
+    dp.register_inline_handler(geolocation.handle_inline_location_query)
 
     dp.register_callback_query_handler(settings.set_cl, text_startswith=CallbackPrefixes.cl)
     dp.register_callback_query_handler(settings.set_havdala, text_startswith=CallbackPrefixes.havdala)

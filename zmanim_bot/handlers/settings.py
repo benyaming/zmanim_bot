@@ -3,7 +3,7 @@ from aiogram.types import CallbackQuery, Message
 from aiogram.utils.exceptions import MessageNotModified
 from aiogram_metrics import track
 
-from zmanim_bot.handlers.utils.redirects import (redirect_to_main_menu, redirect_to_request_language)
+from zmanim_bot.handlers.utils.redirects import (redirect_to_main_menu)
 from zmanim_bot.helpers import (CALL_ANSWER_OK, CallbackPrefixes, parse_coordinates)
 from zmanim_bot.keyboards.menus import get_cancel_keyboard
 from zmanim_bot.misc import bot
@@ -80,8 +80,11 @@ async def set_omer(call: CallbackQuery):
 
 @chat_action('text')
 @track('Language command')
-async def handle_language_request(_):
-    await redirect_to_request_language()
+async def handle_language_request(_: Message):
+    from aiogram import types
+    kb = types.InlineKeyboardMarkup()
+    kb.row(types.InlineKeyboardButton('search place', switch_inline_query_current_chat='', ))
+    await _.reply('test test test', reply_markup=kb)
 
 
 @chat_action('text')
