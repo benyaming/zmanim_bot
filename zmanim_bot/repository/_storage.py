@@ -2,7 +2,7 @@ from typing import List, Optional, Tuple
 
 from aiogram import types
 
-from zmanim_bot.config import LOCATION_NUMBER_LIMIT
+from zmanim_bot.config import config
 from zmanim_bot.exceptions import (ActiveLocationException,
                                    MaxLocationLimitException,
                                    NoLanguageException, NoLocationException,
@@ -38,7 +38,7 @@ MAX_LOCATION_NAME_SIZE = 30
 
 
 def validate_location_coordinates(location: Location, locations: List[Location]):
-    if len(locations) >= LOCATION_NUMBER_LIMIT:
+    if len(locations) >= config.LOCATION_NUMBER_LIMIT:
         raise MaxLocationLimitException
 
     for loc in locations:

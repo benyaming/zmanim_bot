@@ -5,19 +5,18 @@ from motor.core import AgnosticCollection
 from motor.motor_asyncio import AsyncIOMotorClient
 from odmantic import AIOEngine
 
-from .config import (BOT_TOKEN, DB_COLLECTION_NAME, DB_NAME, DB_URL, REDIS_DB,
-                     REDIS_HOST, REDIS_PORT)
+from .config import config
 
 bl.basic_colorized_config(level=bl.INFO)
 logger = bl.getLogger('zmanim_bot')
 
-storage = RedisStorage2(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB)
-bot = Bot(BOT_TOKEN, parse_mode=types.ParseMode.HTML)
+storage = RedisStorage2(host=config.REDIS_HOST, port=config.REDIS_PORT, db=config.REDIS_DB)
+bot = Bot(config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
 dp = Dispatcher(bot, storage=storage)
 loop = bot.loop
 
 
-motor_client = AsyncIOMotorClient(DB_URL)
-collection: AgnosticCollection = motor_client[DB_NAME][DB_COLLECTION_NAME]
-db_engine = AIOEngine(motor_client, database=DB_NAME)
+motor_client = AsyncIOMotorClient(config.DB_URL)
+collection: AgnosticCollection = motor_client[config.DB_NAME][config.DB_COLLECTION_NAME]
+db_engine = AIOEngine(motor_client, database=config.DB_NAME)
 

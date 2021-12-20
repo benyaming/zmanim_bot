@@ -3,7 +3,7 @@ from typing import Optional, Tuple
 from aiogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup
 
 from zmanim_bot import keyboards, texts
-from zmanim_bot.config import LANGUAGE_SHORTCUTS
+from zmanim_bot.config import config
 from zmanim_bot.exceptions import ActiveLocationException
 from zmanim_bot.helpers import CallbackPrefixes
 from zmanim_bot.middlewares.i18n import i18n_
@@ -73,7 +73,7 @@ async def set_omer(call_data) -> InlineKeyboardMarkup:
 
 
 async def set_language(lang: str):
-    lang = LANGUAGE_SHORTCUTS[lang]
+    lang = config.LANGUAGE_SHORTCUTS[lang]
     await bot_repository.get_or_set_lang(lang)
     i18n_.ctx_locale.set(lang)
 

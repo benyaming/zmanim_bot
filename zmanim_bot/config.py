@@ -1,39 +1,56 @@
-from os import getenv
-from typing import List
+from typing import List, Dict, Optional
 
-I18N_DOMAIN = 'zmanim_bot'
-BOT_TOKEN = getenv('BOT_TOKEN')
-POSTHOG_API_KEY = getenv('POSTHOG_API_KEY')
+from pydantic import BaseSettings, Field, validator
 
-IS_PROD = bool(getenv('IS_PROD', False))
-WEBHOOK_PATH = getenv('WEBHOOK_PATH', '/zmanim_bot')
 
-LANGUAGE_LIST = ['English', 'Русский', 'עברית']
-LANGUAGE_SHORTCUTS = {
-    'English': 'en',
-    'Русский': 'ru',
-    'עברית': 'he'
-}
+class Config(BaseSettings):
 
-DB_URL = getenv('DB_URL')
-DB_NAME = getenv('DB_NAME')
-DB_COLLECTION_NAME = getenv('DB_COLLECTION_NAME')
+    class Config:
+        env_file = '.env'
+        env_file_encoding = 'utf-8'
 
-REDIS_HOST = getenv('REDIS_HOST')
-REDIS_PORT = int(getenv('REDIS_PORT'))
-REDIS_DB = int(getenv('REDIS_DB'))
+    I18N_DOMAIN: str = Field('zmanim_bot')
+    BOT_TOKEN: str = Field(env='BOT_TOKEN')
 
-ZMANIM_API_URL: str = getenv('ZMANIM_API_URL')
-GEO_API_URL: str = getenv('GEO_API_URL')
+    IS_PROD: bool = Field(False, env='IS_PROD')
+    WEBHOOK_PATH: str = Field('/zmanim_bot', env='WEBHOOK_PATH')
 
-REPORT_ADMIN_LIST: List[int] = [int(i) for i in getenv('REPORT_ADMIN_LIST', '').split(', ')]
+    LANGUAGE_LIST: List[str] = Field(['English', 'Русский', 'עברית'])
+    LANGUAGE_SHORTCUTS: Dict[str, str] = Field({
+        'English': 'en',
+        'Русский': 'ru',
+        'עברית': 'he'
+    })
 
-LOCATION_NUMBER_LIMIT: int = int(getenv('LOCATION_NUMBER_LIMIT', 5))
-SENTRY_PUBLIC_KEY: str = getenv('SENTRY_PUBLIC_KEY')
+    DB_URL: str = Field('localhost', env='DB_URL')
+    DB_NAME: str = Field(env='DB_NAME')
+    DB_COLLECTION_NAME: str = Field(env='DB_COLLECTION_NAME')
 
-METRICS_DSN = getenv('METRICS_DSN')
-METRICS_TABLE_NAME = getenv('METRICS_TABLE_NAME')
-IS_METRICS_ENABLED = bool(METRICS_DSN)
+    REDIS_HOST: str = Field(env='REDIS_HOST')
+    REDIS_PORT: int = Field(env='REDIS_PORT')
+    REDIS_DB: int = Field(env='REDIS_DB')
 
-PAYMENTS_PROVIDER_TOKEN = getenv('PAYMENTS_PROVIDER_TOKEN')
-DONATE_OPTIONS = [2, 5, 10, 25, 50]
+    ZMANIM_API_URL: str = Field(env='ZMANIM_API_URL')
+    GEO_API_URL: str = Field(env='GEO_API_URL')
+
+    REPORT_ADMIN_LIST: List[int] = Field(env='REPORT_ADMIN_LIST')
+
+    LOCATION_NUMBER_LIMIT: int = Field(5, env='LOCATION_NUMBER_LIMIT')
+    SENTRY_KEY: Optional[str] = Field(env='SENTRY_PUBLIC_KEY')
+
+    METRICS_DSN: Optional[str] = Field(env='METRICS_DSN')
+    METRICS_TABLE_NAME: Optional[str] = Field(env='METRICS_TABLE_NAME')
+
+    PAYMENTS_PROVIDER_TOKEN: str = Field(env='PAYMENTS_PROVIDER_TOKEN')
+    DONATE_OPTIONS: List[int] = Field([2, 5, 10, 25, 50])
+
+    @validator('REPORT_ADMIN_LIST', pre=True)
+    def parse_list(cls, report_admin_list):
+        if isinstance(report_admin_list, int):
+            return [report_admin_list]
+        if isinstance(report_admin_list, str):
+            return [int(i.strip()) for i in report_admin_list.split(',')]
+        return report_admin_list
+
+
+config = Config()

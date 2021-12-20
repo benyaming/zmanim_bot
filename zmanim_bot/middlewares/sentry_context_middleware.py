@@ -14,4 +14,3 @@ class SentryContextMiddleware(BaseMiddleware):
             'id': (update.message or update.callback_query).from_user.id,
             'update': update.to_python()
         })
-

@@ -2,7 +2,7 @@ from aiogram.types import ContentType
 
 from zmanim_bot import exceptions as e
 from zmanim_bot.admin.states import AdminReportResponse
-from zmanim_bot.config import REPORT_ADMIN_LIST, LANGUAGE_LIST
+from zmanim_bot.config import config
 from zmanim_bot.helpers import CallbackPrefixes, LOCATION_PATTERN
 from zmanim_bot.misc import dp
 from zmanim_bot.states import FeedbackState, ConverterGregorianDateState, ConverterJewishDateState, \
@@ -33,11 +33,10 @@ def register_handlers():
     dp.register_message_handler(reset_handler.handle_back, text=[buttons.back, buttons.cancel], state="*")
 
     # admin
-    dp.register_message_handler(admin.handle_report_response, lambda msg: msg.from_user.id in REPORT_ADMIN_LIST, state=AdminReportResponse.waiting_for_response_text)
+    dp.register_message_handler(admin.handle_report_response, lambda msg: msg.from_user.id in config.REPORT_ADMIN_LIST, state=AdminReportResponse.waiting_for_response_text)
     dp.register_message_handler(admin.handle_done_report, text=buttons.done, state=AdminReportResponse.waiting_for_payload)
     dp.register_message_handler(admin.handle_report_payload, content_types=ContentType.ANY, state=AdminReportResponse.waiting_for_payload)
-
-    dp.register_callback_query_handler(admin.handle_report, lambda call: call.from_user.id in REPORT_ADMIN_LIST, text_startswith=CallbackPrefixes.report)
+    dp.register_callback_query_handler(admin.handle_report, lambda call: call.from_user.id in config.REPORT_ADMIN_LIST, text_startswith=CallbackPrefixes.report)
 
     # forms/states
     dp.register_message_handler(forms.handle_report, state=FeedbackState.waiting_for_feedback_text)
@@ -83,7 +82,7 @@ def register_handlers():
     dp.register_message_handler(settings.handle_omer_settings, text=buttons.sm_omer)
     dp.register_message_handler(settings.handle_language_request, commands=['language'])
     dp.register_message_handler(settings.handle_language_request, text=buttons.sm_lang)
-    dp.register_message_handler(settings.set_language, text=LANGUAGE_LIST)
+    dp.register_message_handler(settings.set_language, text=config.LANGUAGE_LIST)
     dp.register_message_handler(settings.location_request, commands=['location'])
     dp.register_message_handler(settings.location_request, text=buttons.sm_location)
     dp.register_message_handler(settings.handle_location, regexp=LOCATION_PATTERN)
