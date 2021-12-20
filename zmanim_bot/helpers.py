@@ -1,7 +1,7 @@
 from datetime import date
 from typing import Tuple
 
-from .exceptions import IncorrectGregorianDateException, IncorrectLocationException
+from zmanim_bot.exceptions import IncorrectGregorianDateException, IncorrectLocationException
 
 LOCATION_PATTERN = r'^-?\d{1,2}\.{1}\d+, {0,1}-?\d{1,3}\.{1}\d+$'
 LANGUAGE_SHORTCUTS = {

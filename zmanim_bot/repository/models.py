@@ -3,7 +3,7 @@ from typing import List, Optional, Tuple
 
 from odmantic import EmbeddedModel, Field, Model
 
-from zmanim_bot.config import DB_COLLECTION_NAME
+from zmanim_bot.config import config
 from zmanim_bot.exceptions import NoLocationException, UnknownProcessorException
 from zmanim_bot.processors import PROCESSORS
 from zmanim_bot.processors.base import BaseProcessor
@@ -69,7 +69,7 @@ class User(Model, ABC):
     omer: OmerSettings = Field(default_factory=OmerSettings)
 
     class Config:
-        collection = DB_COLLECTION_NAME
+        collection = config.DB_COLLECTION_NAME
 
     @property
     def location(self) -> Location:

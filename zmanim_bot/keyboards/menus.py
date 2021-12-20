@@ -1,13 +1,13 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
-from ..config import LANGUAGE_LIST
-from ..middlewares.i18n import i18n_
-from ..texts.single import buttons
+from zmanim_bot.config import config
+from zmanim_bot.middlewares.i18n import i18n_
+from zmanim_bot.texts.single import buttons
 
 
 def get_lang_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.add(*LANGUAGE_LIST)
+    kb.add(*config.LANGUAGE_LIST)
     return kb
 
 

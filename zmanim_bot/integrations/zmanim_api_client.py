@@ -1,7 +1,7 @@
 from datetime import date
 from typing import Optional, Tuple
 
-from zmanim_bot.config import ZMANIM_API_URL
+from zmanim_bot.config import config
 from zmanim_bot.integrations.zmanim_models import *
 from zmanim_bot.misc import bot
 
@@ -18,7 +18,7 @@ __all__ = [
 
 
 async def get_zmanim(location: Tuple[float, float], zmanim_settings: dict, date_: str = None) -> Zmanim:
-    url = ZMANIM_API_URL.format('zmanim')
+    url = config.ZMANIM_API_URL.format('zmanim')
     params = {
         'lat': str(location[0]),
         'lng': str(location[1]),
@@ -37,7 +37,7 @@ async def get_shabbat(
         havdala_opinion: str,
         date_: str = None
 ) -> Shabbat:
-    url = ZMANIM_API_URL.format('shabbat')
+    url = config.ZMANIM_API_URL.format('shabbat')
     params = {
         'lat': str(location[0]),
         'lng': str(location[1]),
@@ -53,7 +53,7 @@ async def get_shabbat(
 
 
 async def get_daf_yomi(date_=None) -> DafYomi:
-    url = ZMANIM_API_URL.format('daf_yomi')
+    url = config.ZMANIM_API_URL.format('daf_yomi')
     params = None if not date_ else {'date': date_}
 
     async with bot.session.get(url, params=params) as resp:
@@ -62,7 +62,7 @@ async def get_daf_yomi(date_=None) -> DafYomi:
 
 
 async def get_rosh_chodesh(date_=None) -> RoshChodesh:
-    url = ZMANIM_API_URL.format('rosh_chodesh')
+    url = config.ZMANIM_API_URL.format('rosh_chodesh')
     params = None if not date_ else {'date': date_}
 
     async with bot.session.get(url, params=params) as resp:
@@ -76,7 +76,7 @@ async def get_generic_yomtov(
         cl_offset: int,
         havdala_opinion: str
 ) -> YomTov:
-    url = ZMANIM_API_URL.format('yom_tov')
+    url = config.ZMANIM_API_URL.format('yom_tov')
     params = {
         'lat': str(location[0]),
         'lng': str(location[1]),
@@ -91,7 +91,7 @@ async def get_generic_yomtov(
 
 
 async def get_generic_fast(name: str, location: Tuple[float, float], havdala_opinion: str) -> Fast:
-    url = ZMANIM_API_URL.format('fast')
+    url = config.ZMANIM_API_URL.format('fast')
     params = {
         'lat': str(location[0]),
         'lng': str(location[1]),
@@ -105,7 +105,7 @@ async def get_generic_fast(name: str, location: Tuple[float, float], havdala_opi
 
 
 async def get_generic_holiday(name: str) -> Holiday:
-    url = ZMANIM_API_URL.format('holiday')
+    url = config.ZMANIM_API_URL.format('holiday')
     params = {'holiday_name': name}
 
     async with bot.session.get(url, params=params) as resp:
@@ -114,7 +114,7 @@ async def get_generic_holiday(name: str) -> Holiday:
 
 
 async def get_israel_holidays() -> IsraelHolidays:
-    url = ZMANIM_API_URL.format('holiday')
+    url = config.ZMANIM_API_URL.format('holiday')
     result = []
     settings: Optional[SimpleSettings] = None
 

@@ -4,7 +4,7 @@ from typing import Union
 from aiogram import types
 
 from zmanim_bot.repository.bot_repository import get_or_set_location
-from ..config import REPORT_ADMIN_LIST
+from ..config import config
 from ..exceptions import NoLocationException
 from ..helpers import CallbackPrefixes
 from ..misc import bot
@@ -54,7 +54,7 @@ async def send_report_to_admins(report: dict):
     report_text = await _compose_report_text(report)
     report_media = await _compose_media(report) if report['media_ids'] else None
 
-    for admin_id in REPORT_ADMIN_LIST:
+    for admin_id in config.REPORT_ADMIN_LIST:
         if report_media:
             if isinstance(report_media, types.MediaGroup):
                 msg = await bot.send_media_group(admin_id, report_media)

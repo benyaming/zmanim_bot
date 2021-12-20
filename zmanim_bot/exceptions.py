@@ -1,10 +1,5 @@
-# KNOWN_EXCEPTIONS = []
-
-
 class ZmanimBotBaseException(Exception):
     ...
-    # def __init_subclass__(cls, **kwargs):
-    #     KNOWN_EXCEPTIONS.append(cls)
 
 
 class NoLanguageException(ZmanimBotBaseException):
