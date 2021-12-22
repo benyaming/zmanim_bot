@@ -95,8 +95,26 @@ def get_location_options_menu(location_list: List[Any]) -> InlineKeyboardMarkup:
             InlineKeyboardButton(text='❌', callback_data=f'{CallbackPrefixes.location_delete}{location.name}')
         )
 
+    kb.add(BACK_BUTTON)
     return kb
 
+
+def get_location_management_kb() -> InlineKeyboardMarkup:
+    kb = InlineKeyboardMarkup()
+    kb.add(InlineKeyboardButton(
+        text=buttons.manage_locations, callback_data=CallbackPrefixes.location_namage
+    ))
+    kb.add(InlineKeyboardButton(
+        text=buttons.add_location, callback_data=CallbackPrefixes.location_add
+    ))
+    return kb
+
+
+BACK_BUTTON = InlineKeyboardButton(text=buttons.back, callback_data=CallbackPrefixes.location_menu_back)
+
+LOCATION_SEARCH_KB = InlineKeyboardMarkup()
+LOCATION_SEARCH_KB.add(InlineKeyboardButton(text=buttons.search_location, switch_inline_query_current_chat=''))
+LOCATION_SEARCH_KB.add(BACK_BUTTON)
 
 DONATE_KB = InlineKeyboardMarkup()
 DONATE_KB.row(*[

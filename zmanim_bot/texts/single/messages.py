@@ -16,10 +16,8 @@ settings_location = _('Here you can activate, edit or send new location;\nIf you
 
 request_language = _('Select your language:')
 
-request_location = _('Please share your location by pressing the button.\n'
-                     '<b>Warning!</b> Desktop version of Telegram doesn’t support this type of '
-                     'location sharing. To share you location from PC/Mac send them in comma '
-                     'separated text (example: <code>55.5, 37.7</code>) or send a geotag message here.')
+request_location_on_init = _('For this feature, the bot should know your location. If you want to find it by name, press the button below.\nAlso, you can pass your location as an attachment or as a pair of coordinates, like <code>55.5, 32.2</code>.')
+request_location = _('If you want to find location by name, press the button below.\nAlso, you can pass your location as an attachment or as a pair of coordinates, like <code>55.5, 32.2</code>.')
 incorrect_locations_received = _('You sent incorrect coordinates. Please check and re-send them!')
 location_already_exists = _('This location already exists in your saved locations!')
 location_name_already_exists = _('This location name already exists in your saved locations!')

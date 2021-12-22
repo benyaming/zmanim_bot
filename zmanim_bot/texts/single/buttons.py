@@ -1,10 +1,15 @@
 from zmanim_bot.middlewares.i18n import lazy_gettext as _
 
 # Service
-geobutton = _('Send location')
 cancel = _('Cancel')
 back = _('Back')
 done = _('Done')
+
+# location
+geobutton = _('Send location')
+search_location = _('Find location by name')
+manage_locations = _('Manage saved locations')
+add_location = _('Add new location')
 
 
 # Main menu

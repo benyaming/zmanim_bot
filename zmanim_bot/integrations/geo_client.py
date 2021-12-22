@@ -38,7 +38,7 @@ async def find_places_by_query(query: str, language: str) -> List[InlineQueryRes
     params = {
         'access_token': config.MAPBOX_API_KEY,
         'language': language,
-        'types': 'place,locality,neighborhood,address,poi'
+        'types': 'place,locality,neighborhood,address'  # ,poi
     }
     results = []
 

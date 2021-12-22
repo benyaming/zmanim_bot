@@ -77,6 +77,15 @@ msgstr "Назад"
 msgid "Done"
 msgstr "Готово"
 
+msgid "Find location by name"
+msgstr "Найти локацию по названию"
+
+msgid "Manage saved locations"
+msgstr "Управление сохраненными локациями"
+
+msgid "Add new location"
+msgstr "Добавить новую локацию"
+
 #: zmanim_bot/texts/single/buttons.py:12
 msgid "Zmanim"
 msgstr "Зманим"
@@ -400,18 +409,11 @@ msgid "Select your language:"
 msgstr "Выберите язык:"
 
 #: zmanim_bot/texts/single/messages.py:20
-msgid ""
-"Please share your location by pressing the button.\n"
-"<b>Warning!</b> Desktop version of Telegram doesn’t support this type of "
-"location sharing. To share you location from PC/Mac send them in comma "
-"separated text (example: <code>55.5, 37.7</code>) or send a geotag "
-"message here."
-msgstr ""
-"Пожалуйста, предоставьте координаты, нажав на кнопку.\n"
-"<b>Внимание!</b> Telegram на ПК пока что не поддерживает отправку координат "
-"таким способом. Чтобы отправить координаты с ПК, отправьте их в текстовом "
-"виде через запятую, например \"<code>55.5, 37.7</code>\", либо перешлите "
-"сюда сообщение с геометкой."
+msgid "For this feature, the bot should know your location. If you want to find it by name, press the button below.\nAlso, you can pass your location as an attachment or as a pair of coordinates, like <code>55.5, 32.2</code>."
+msgstr "Чтобы воспользоваться этой функцией, нужно послать боту локацию.\nЧтобы найти место по его названию, нажмите на кнопку ниже.\nТакже вы можете послать геометку как вложение или отправить координаты, например, <code>55.5, 32.2</code>."
+
+msgid "If you want to find location by name, press the button below.\nAlso, you can pass your location as an attachment or as a pair of coordinates, like <code>55.5, 32.2</code>."
+msgstr "Чтобы найти место по его названию, нажмите на кнопку ниже.\nТакже вы можете послать геометку как вложение или отправить координаты, например, <code>55.5, 32.2</code>."
 
 #: zmanim_bot/texts/single/messages.py:24
 msgid "You sent incorrect coordinates. Please check and re-send them!"
