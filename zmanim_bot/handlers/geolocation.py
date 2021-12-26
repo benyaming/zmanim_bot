@@ -16,6 +16,7 @@ from zmanim_bot.repository.models import User
 from zmanim_bot.service import settings_service
 from zmanim_bot.states import LocationNameState
 from zmanim_bot.texts.single import messages
+from zmanim_bot.utils import chat_action
 
 
 async def get_locations_by_location(lat: float, lng: float, user: User) -> List[InlineQueryResultLocation]:
@@ -37,35 +38,31 @@ async def handle_inline_location_query(query: InlineQuery):
     await bot.answer_inline_query(query.id, results)
 
 
-# todo the last things:
-# - add missing texts (welcome to locations menu)
-# - edit 'manage locations' description - add about renaming only
-# - hebrew translations
-
-# todo track
+@chat_action('text')
+@track('Location menu init')
 async def location_settings(msg: Message):
     kb = inline.get_location_management_kb()
-    resp = 'loc management'
+    resp = messages.location_menu_init
     await msg.reply(resp, reply_markup=kb)
 
 
-# todo track
+@track('Location menu back')
 async def back_to_location_settings(call: CallbackQuery):
     await call.answer()
     kb = inline.get_location_management_kb()
-    resp = 'loc management'
+    resp = messages.location_menu_init
     await bot.edit_message_text(resp, call.from_user.id, call.message.message_id)
     await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
 
 
-# todo track
+@track('Location menu -> add new location')
 async def add_new_location(call: CallbackQuery):
     await call.answer()
     await bot.edit_message_text(messages.request_location, call.from_user.id, call.message.message_id)
     await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=inline.LOCATION_SEARCH_KB)
 
 
-# todo track
+@track('Location menu -> Manage saved locations')
 async def manage_saved_locations(call: CallbackQuery):
     await call.answer()
     resp, kb = await settings_service.get_locations_menu()
