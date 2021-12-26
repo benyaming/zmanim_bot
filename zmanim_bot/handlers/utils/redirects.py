@@ -1,6 +1,6 @@
 from aiogram.types import User
 
-from zmanim_bot.keyboards import menus
+from zmanim_bot.keyboards import menus, inline
 from zmanim_bot.misc import bot
 from zmanim_bot.texts.single import messages
 
@@ -24,10 +24,10 @@ async def redirect_to_settings_menu(text: str = None):
     await bot.send_message(user_id, text or messages.init_main_menu, reply_markup=kb)
     
     
-async def redirect_to_request_location(with_back: bool = False):
+async def redirect_to_request_location():
     user_id = User.get_current().id
-    kb = menus.get_geobutton(with_back)
-    await bot.send_message(user_id, messages.request_location, reply_markup=kb)
+    kb = inline.LOCATION_SEARCH_KB
+    await bot.send_message(user_id, messages.request_location_on_init, reply_markup=kb)
     
     
 async def redirect_to_request_language():

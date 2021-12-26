@@ -29,6 +29,9 @@ class CallbackPrefixes:
     location_activate = 'loc_a:'
     location_rename = 'loc_r:'
     location_delete = 'loc_d:'
+    location_namage = 'loc_m:'
+    location_add = 'loc_add:'
+    location_menu_back = 'loc_back'
     donate = 'donate:'
 
 
