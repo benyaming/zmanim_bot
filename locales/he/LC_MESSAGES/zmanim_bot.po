@@ -408,7 +408,7 @@ msgstr "כאן באפשרותך להפעיל או להשבית את קבלת ה�
 
 #: zmanim_bot/texts/single/messages.py:15
 msgid "Here you can activate, edit or send new location;\nIf you want to add new location, just send it right now.\n<b>Notice!</b> if you change the name of a location, it will point to the same location. To add another location, use the \"Add Location\" button."
-msgstr "כאן באפשרותך להוסיף, לערוך או לשלוח מיקום חדש;\nאם ברצונך להוסיף מיקום חדש, שלח אותו כעת.\n\n<b>שיםו לב!</b> עם שינוי שם של המקום, המיקום עצמו אינו משתנה (כלומר והבוט מראה נתונים אקטואלים לאותו מיקום שהיה). כדי לקבל נתונים מתאימים למיקום חדש ניתן להשתמש בכפתור ״הוסף מיקום״."
+msgstr "כאן באפשרותך להוסיף, לערוך או לשלוח מיקום חדש;\nאם ברצונך להוסיף מיקום חדש, שלח אותו כעת.\n\n<b>שימו לב!</b> עם שינוי שם של המקום, המיקום עצמו אינו משתנה (כלומר הבוט מראה נתונים אקטואלים לאותו מיקום שהיה). כדי לקבל נתונים מתאימים למיקום חדש ניתן להשתמש בכפתור ״הוסף מיקום״."
 
 #: zmanim_bot/texts/single/messages.py:17
 msgid "Select your language:"
