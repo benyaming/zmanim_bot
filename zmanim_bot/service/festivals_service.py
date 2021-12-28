@@ -1,4 +1,6 @@
+from zmanim_bot.helpers import CallbackPrefixes
 from zmanim_bot.integrations import zmanim_api_client
+from zmanim_bot.keyboards import inline
 from zmanim_bot.repository import bot_repository
 from zmanim_bot.texts.single import buttons
 
@@ -31,7 +33,20 @@ async def get_generic_fast(fast_name: str):
         location=user.location.coordinates,
         havdala_opinion=user.havdala_opinion
     )
-    await user.processor.send_fast(data)
+    kb = inline.get_location_variants_menu(user.location_list, user.location, CallbackPrefixes.update_fast)
+    await user.get_processor().send_fast(data, kb)
+
+
+async def update_generic_fast(fast_name: str, lat: float, lng: float):
+    user = await bot_repository.get_or_create_user()
+    location = user.get_location_by_coords(lat, lng)
+    data = await zmanim_api_client.get_generic_fast(
+        name=_get_festival_name(fast_name),
+        location=location.coordinates,
+        havdala_opinion=user.havdala_opinion
+    )
+    kb = inline.get_location_variants_menu(user.location_list, location, CallbackPrefixes.update_fast)
+    await user.get_processor().update_fast(data, kb)
 
 
 async def get_generic_yomtov(yomtov_name: str):
@@ -42,14 +57,14 @@ async def get_generic_yomtov(yomtov_name: str):
         cl_offset=user.cl_offset,
         havdala_opinion=user.havdala_opinion
     )
-    await user.processor.send_yom_tov(data)
+    await user.get_processor().send_yom_tov(data)
 
 
 async def get_generic_holiday(holiday_name: str):
     user = await bot_repository.get_or_create_user()
     if holiday_name == buttons.hom_israel:
         data = await zmanim_api_client.get_israel_holidays()
-        await user.processor.send_israel_holidays(data)
+        await user.get_processor().send_israel_holidays(data)
     else:
         data = await zmanim_api_client.get_generic_holiday(_get_festival_name(holiday_name))
-        await user.processor.send_holiday(data)
+        await user.get_processor().send_holiday(data)

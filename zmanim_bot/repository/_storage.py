@@ -34,7 +34,7 @@ __all__ = [
 ]
 
 
-MAX_LOCATION_NAME_SIZE = 30
+MAX_LOCATION_NAME_SIZE = 29
 
 
 def validate_location_coordinates(location: Location, locations: List[Location]):

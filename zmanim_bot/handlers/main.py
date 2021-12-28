@@ -1,6 +1,7 @@
 from aiogram.types import CallbackQuery, Message
 from aiogram_metrics import track
 
+from zmanim_bot.helpers import CallbackPrefixes
 from zmanim_bot.keyboards.menus import get_cancel_keyboard
 from zmanim_bot.misc import bot
 from zmanim_bot.service import zmanim_service
@@ -12,6 +13,14 @@ from zmanim_bot.utils import chat_action
 @track('Zmanim')
 async def handle_zmanim(_):
     await zmanim_service.send_zmanim()
+
+
+@track('Zmanim geo-variant')
+async def handle_update_zmanim(call: CallbackQuery):
+    await call.answer()
+    coordinates = call.data.split(CallbackPrefixes.update_zmanim)[1]
+    lat, lng = map(float, coordinates.split(','))
+    await zmanim_service.update_zmanim(lat, lng)
 
 
 @chat_action()
@@ -33,6 +42,15 @@ async def handle_zmanim_by_date(msg: Message):
 @track('Shabbat')
 async def handle_shabbat(_):
     await zmanim_service.get_shabbat()
+
+
+@track('Shabbat geo-variant')
+async def handle_update_shabbat(call: CallbackQuery):
+    # todo when changed shabbat trigers zmanim location is different by default, this is bad
+    await call.answer()
+    coordinates = call.data.split(CallbackPrefixes.update_shabbat)[1]
+    lat, lng = map(float, coordinates.split(','))
+    await zmanim_service.update_shabbat(lat, lng)
 
 
 @chat_action()

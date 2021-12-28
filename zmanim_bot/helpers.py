@@ -34,6 +34,10 @@ class CallbackPrefixes:
     location_menu_back = 'loc_back'
     donate = 'donate:'
 
+    update_zmanim = 'uz:'
+    update_shabbat = 'us:'
+    update_fast = 'uf:'
+
 
 def parse_coordinates(coordinates: str) -> Tuple[float, float]:
     try:
