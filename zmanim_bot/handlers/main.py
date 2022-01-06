@@ -1,6 +1,8 @@
+from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, Message
 from aiogram_metrics import track
 
+from zmanim_bot.helpers import CallbackPrefixes
 from zmanim_bot.keyboards.menus import get_cancel_keyboard
 from zmanim_bot.misc import bot
 from zmanim_bot.service import zmanim_service
@@ -8,18 +10,25 @@ from zmanim_bot.texts.single import messages
 from zmanim_bot.utils import chat_action
 
 
-@chat_action()
 @track('Zmanim')
-async def handle_zmanim(_):
-    await zmanim_service.send_zmanim()
+async def handle_zmanim(msg: Message, state: FSMContext):
+    await bot.send_chat_action(msg.chat.id, 'typing')  # TODO refactor `@chat_action` to work with `@track`
+    await zmanim_service.send_zmanim(state=state)
+
+
+@track('Zmanim geo-variant')
+async def handle_update_zmanim(call: CallbackQuery):
+    await call.answer()
+    coordinates = call.data.split(CallbackPrefixes.update_zmanim)[1]
+    lat, lng = map(float, coordinates.split(','))
+    await zmanim_service.update_zmanim(lat, lng)
 
 
 @chat_action()
-async def handle_zmanim_by_date_callback(call: CallbackQuery):
+async def handle_zmanim_by_date_callback(call: CallbackQuery, state: FSMContext):
     await call.answer()
 
-    await zmanim_service.send_zmanim(call_data=call.data)
-    await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id)
+    await zmanim_service.send_zmanim(call=call, state=state)
 
 
 @chat_action()
@@ -33,6 +42,14 @@ async def handle_zmanim_by_date(msg: Message):
 @track('Shabbat')
 async def handle_shabbat(_):
     await zmanim_service.get_shabbat()
+
+
+@track('Shabbat geo-variant')
+async def handle_update_shabbat(call: CallbackQuery, state: FSMContext):
+    await call.answer()
+    coordinates = call.data.split(CallbackPrefixes.update_shabbat)[1]
+    lat, lng = map(float, coordinates.split(','))
+    await zmanim_service.update_shabbat(lat, lng, state)
 
 
 @chat_action()

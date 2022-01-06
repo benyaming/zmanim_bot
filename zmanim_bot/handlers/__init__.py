@@ -55,6 +55,8 @@ def register_handlers():
     dp.register_message_handler(main.handle_rosh_chodesh, text=buttons.mm_rh)
 
     dp.register_callback_query_handler(main.handle_zmanim_by_date_callback, text_startswith=CallbackPrefixes.zmanim_by_date)
+    dp.register_callback_query_handler(main.handle_update_zmanim, text_startswith=CallbackPrefixes.update_zmanim)
+    dp.register_callback_query_handler(main.handle_update_shabbat, text_startswith=CallbackPrefixes.update_shabbat)
 
     # menus
     dp.register_message_handler(menus.handle_holidays_menu, text=[buttons.mm_holidays, buttons.hom_main])
@@ -68,6 +70,9 @@ def register_handlers():
     dp.register_message_handler(festivals.handle_fast, text=buttons.FASTS)
     dp.register_message_handler(festivals.handle_yom_tov, text=buttons.YOMTOVS)
     dp.register_message_handler(festivals.handle_holiday, text=buttons.HOLIDAYS)
+
+    dp.register_callback_query_handler(festivals.handle_fast_update, text_startswith=CallbackPrefixes.update_fast)
+    dp.register_callback_query_handler(festivals.handle_yom_tov_update, text_startswith=CallbackPrefixes.update_yom_tov)
 
     # converter
     dp.register_message_handler(converter.handle_converter_entry, commands=['converter_api'])
