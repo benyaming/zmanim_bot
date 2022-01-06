@@ -72,6 +72,7 @@ def register_handlers():
     dp.register_message_handler(festivals.handle_holiday, text=buttons.HOLIDAYS)
 
     dp.register_callback_query_handler(festivals.handle_fast_update, text_startswith=CallbackPrefixes.update_fast)
+    dp.register_callback_query_handler(festivals.handle_yom_tov_update, text_startswith=CallbackPrefixes.update_yom_tov)
 
     # converter
     dp.register_message_handler(converter.handle_converter_entry, commands=['converter_api'])

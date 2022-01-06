@@ -1,3 +1,5 @@
+from aiogram_metrics import track
+
 from zmanim_bot.helpers import CallbackPrefixes
 from zmanim_bot.integrations import zmanim_api_client
 from zmanim_bot.keyboards import inline
@@ -26,6 +28,7 @@ def _get_festival_name(input_str: str) -> str:
     return festival_shortcuts[input_str]
 
 
+@track('Fast')
 async def get_generic_fast(fast_name: str):
     user = await bot_repository.get_or_create_user()
     data = await zmanim_api_client.get_generic_fast(
@@ -37,6 +40,7 @@ async def get_generic_fast(fast_name: str):
     await user.get_processor().send_fast(data, kb)
 
 
+@track('Fast geo-variant')
 async def update_generic_fast(fast_name: str, lat: float, lng: float):
     user = await bot_repository.get_or_create_user()
     location = user.get_location_by_coords(lat, lng)
@@ -46,9 +50,10 @@ async def update_generic_fast(fast_name: str, lat: float, lng: float):
         havdala_opinion=user.havdala_opinion
     )
     kb = inline.get_location_variants_menu(user.location_list, location, CallbackPrefixes.update_fast)
-    await user.get_processor().update_fast(data, kb)
+    await user.get_processor(location).update_fast(data, kb)
 
 
+@track('Yom tov')
 async def get_generic_yomtov(yomtov_name: str):
     user = await bot_repository.get_or_create_user()
     data = await zmanim_api_client.get_generic_yomtov(
@@ -57,7 +62,22 @@ async def get_generic_yomtov(yomtov_name: str):
         cl_offset=user.cl_offset,
         havdala_opinion=user.havdala_opinion
     )
-    await user.get_processor().send_yom_tov(data)
+    kb = inline.get_location_variants_menu(user.location_list, user.location, CallbackPrefixes.update_yom_tov)
+    await user.get_processor().send_yom_tov(data, kb)
+
+
+@track('Yom tov geo-variant')
+async def update_generic_yom_tov(yom_tov_name: str, lat: float, lng: float):
+    user = await bot_repository.get_or_create_user()
+    location = user.get_location_by_coords(lat, lng)
+    data = await zmanim_api_client.get_generic_yomtov(
+        name=_get_festival_name(yom_tov_name),
+        location=location.coordinates,
+        cl_offset=user.cl_offset,
+        havdala_opinion=user.havdala_opinion
+    )
+    kb = inline.get_location_variants_menu(user.location_list, location, CallbackPrefixes.update_yom_tov)
+    await user.get_processor(location).update_yom_tov(data, kb)
 
 
 async def get_generic_holiday(holiday_name: str):

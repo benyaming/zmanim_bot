@@ -32,8 +32,8 @@ class BaseProcessor(ABC, Generic[T]):
     async def send_shabbat(self, data: Shabbat, kb: InlineKeyboardMarkup):
         await self._send(*self._get_shabbat(data), kb)
 
-    async def send_yom_tov(self, data: YomTov):
-        await self._send(*self._get_yom_tov(data))
+    async def send_yom_tov(self, data: YomTov, kb: InlineKeyboardMarkup):
+        await self._send(*self._get_yom_tov(data), kb)
 
     async def send_fast(self, data: Fast, kb: InlineKeyboardMarkup):
         await self._send(*self._get_fast(data), kb)

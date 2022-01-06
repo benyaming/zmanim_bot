@@ -37,6 +37,7 @@ class CallbackPrefixes:
     update_zmanim = 'uz:'
     update_shabbat = 'us:'
     update_fast = 'uf:'
+    update_yom_tov = 'uy:'
 
 
 def parse_coordinates(coordinates: str) -> Tuple[float, float]:
