@@ -21,6 +21,7 @@ class ImageProcessor(BaseProcessor[BytesIO]):
         user = User.get_current()
         call = CallbackQuery.get_current()
         message = Message.get_current()
+        kb_list = [kb for kb in kb_list if kb]  # clean from None
 
         if call:
             reply_to = call.message.message_id
