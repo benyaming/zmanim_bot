@@ -26,9 +26,8 @@ async def handle_update_zmanim(call: CallbackQuery):
 
 @chat_action()
 async def handle_zmanim_by_date_callback(call: CallbackQuery, state: FSMContext):
-    await call.answer()
-
     await zmanim_service.send_zmanim(call=call, state=state)
+    await call.answer()
 
 
 @chat_action()
@@ -46,10 +45,10 @@ async def handle_shabbat(_):
 
 @track('Shabbat geo-variant')
 async def handle_update_shabbat(call: CallbackQuery, state: FSMContext):
-    await call.answer()
     coordinates = call.data.split(CallbackPrefixes.update_shabbat)[1]
     lat, lng = map(float, coordinates.split(','))
     await zmanim_service.update_shabbat(lat, lng, state)
+    await call.answer()
 
 
 @chat_action()

@@ -22,8 +22,8 @@ async def handle_fast_update(call: CallbackQuery, state: FSMContext):
     if not current_fast_name:
         return await call.answer('Current fast is not set')
 
-    await call.answer()
     await festivals_service.update_generic_fast(current_fast_name, lat, lng)
+    await call.answer()
 
 
 @chat_action()
@@ -41,9 +41,8 @@ async def handle_yom_tov_update(call: CallbackQuery, state: FSMContext):
     if not current_yom_tov_name:
         return await call.answer('Current yom tov is not set')
 
-    await call.answer()
-
     await festivals_service.update_generic_yom_tov(current_yom_tov_name, lat, lng)
+    await call.answer()
 
 
 @chat_action()
