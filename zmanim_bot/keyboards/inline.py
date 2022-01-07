@@ -152,14 +152,15 @@ def get_location_variants_menu(
     index = locations.index(current_loc)
 
     if len(locations) == 2:
-        if index == 0:
-            text = f'◀️ {locations[index].name} 📍'
+        new_index = int(not index)
+        if current_loc.is_active:
+            text = f'📍 {locations[new_index].name} ▶️'
         else:
-            text = f'📍 {locations[index].name} ▶️'
+            text = f'◀️ {locations[new_index].name} 📍'
 
         kb.row(InlineKeyboardButton(
             text=text,
-            callback_data=f'{callback_prefix}{locations[index].lat},{locations[index].lng}'
+            callback_data=f'{callback_prefix}{locations[new_index].lat},{locations[new_index].lng}'
         ))
     else:
         loc_len = len(locations)
