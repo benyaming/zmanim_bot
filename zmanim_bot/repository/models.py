@@ -78,9 +78,15 @@ class User(Model, ABC):
             raise NoLocationException
         return loc[0]
 
-    @property
-    def processor(self) -> BaseProcessor:
+    def get_location_by_coords(self, lat: float, lng: float) -> Location:
+        resp = list(filter(lambda loc: loc.lat == lat and loc.lng == lng, self.location_list))
+        if not resp:
+            raise NoLocationException
+        return resp[0]
+
+    def get_processor(self, location: Optional[Location] = None) -> BaseProcessor:
         try:
-            return PROCESSORS[self.processor_type](self.location.name)
+            return PROCESSORS[self.processor_type]((location and location.name) or self.location.name)
         except KeyError:
             raise UnknownProcessorException()
+

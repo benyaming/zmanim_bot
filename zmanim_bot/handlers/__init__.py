@@ -8,7 +8,7 @@ from zmanim_bot.misc import dp
 from zmanim_bot.states import FeedbackState, ConverterGregorianDateState, ConverterJewishDateState, \
     LocationNameState, ZmanimGregorianDateState
 from . import admin, converter, errors, festivals, forms, main, menus, settings, \
-    incorrect_text_handler, reset_handler, payments
+    incorrect_text_handler, reset_handler, payments, geolocation
 from ..texts.single import buttons
 
 __all__ = ['register_handlers']
@@ -55,6 +55,8 @@ def register_handlers():
     dp.register_message_handler(main.handle_rosh_chodesh, text=buttons.mm_rh)
 
     dp.register_callback_query_handler(main.handle_zmanim_by_date_callback, text_startswith=CallbackPrefixes.zmanim_by_date)
+    dp.register_callback_query_handler(main.handle_update_zmanim, text_startswith=CallbackPrefixes.update_zmanim)
+    dp.register_callback_query_handler(main.handle_update_shabbat, text_startswith=CallbackPrefixes.update_shabbat)
 
     # menus
     dp.register_message_handler(menus.handle_holidays_menu, text=[buttons.mm_holidays, buttons.hom_main])
@@ -68,6 +70,9 @@ def register_handlers():
     dp.register_message_handler(festivals.handle_fast, text=buttons.FASTS)
     dp.register_message_handler(festivals.handle_yom_tov, text=buttons.YOMTOVS)
     dp.register_message_handler(festivals.handle_holiday, text=buttons.HOLIDAYS)
+
+    dp.register_callback_query_handler(festivals.handle_fast_update, text_startswith=CallbackPrefixes.update_fast)
+    dp.register_callback_query_handler(festivals.handle_yom_tov_update, text_startswith=CallbackPrefixes.update_yom_tov)
 
     # converter
     dp.register_message_handler(converter.handle_converter_entry, commands=['converter_api'])
@@ -83,10 +88,6 @@ def register_handlers():
     dp.register_message_handler(settings.handle_language_request, commands=['language'])
     dp.register_message_handler(settings.handle_language_request, text=buttons.sm_lang)
     dp.register_message_handler(settings.set_language, text=config.LANGUAGE_LIST)
-    dp.register_message_handler(settings.location_request, commands=['location'])
-    dp.register_message_handler(settings.location_request, text=buttons.sm_location)
-    dp.register_message_handler(settings.handle_location, regexp=LOCATION_PATTERN)
-    dp.register_message_handler(settings.handle_location, content_types=[ContentType.LOCATION, ContentType.VENUE])
     dp.register_message_handler(settings.help_menu_report, commands=['report'])
     dp.register_message_handler(settings.help_menu_report, text=buttons.hm_report)
 
@@ -94,9 +95,21 @@ def register_handlers():
     dp.register_callback_query_handler(settings.set_havdala, text_startswith=CallbackPrefixes.havdala)
     dp.register_callback_query_handler(settings.set_zmanim, text_startswith=CallbackPrefixes.zmanim)
     dp.register_callback_query_handler(settings.set_omer, text_startswith=CallbackPrefixes.omer)
-    dp.register_callback_query_handler(settings.handle_activate_location, text_startswith=CallbackPrefixes.location_activate)
-    dp.register_callback_query_handler(settings.init_location_rename, text_startswith=CallbackPrefixes.location_rename)
-    dp.register_callback_query_handler(settings.handle_delete_location, text_startswith=CallbackPrefixes.location_delete)
+
+    # location
+    dp.register_message_handler(geolocation.location_settings, commands=['location'])
+    dp.register_message_handler(geolocation.location_settings, text=buttons.sm_location)
+    dp.register_message_handler(geolocation.handle_location, regexp=LOCATION_PATTERN)
+    dp.register_message_handler(geolocation.handle_location, content_types=[ContentType.LOCATION, ContentType.VENUE])
+
+    dp.register_callback_query_handler(geolocation.add_new_location, text_startswith=CallbackPrefixes.location_add)
+    dp.register_callback_query_handler(geolocation.manage_saved_locations, text_startswith=CallbackPrefixes.location_namage)
+    dp.register_callback_query_handler(geolocation.back_to_location_settings, text_startswith=CallbackPrefixes.location_menu_back)
+    dp.register_callback_query_handler(geolocation.handle_activate_location, text_startswith=CallbackPrefixes.location_activate)
+    dp.register_callback_query_handler(geolocation.init_location_rename, text_startswith=CallbackPrefixes.location_rename)
+    dp.register_callback_query_handler(geolocation.handle_delete_location, text_startswith=CallbackPrefixes.location_delete)
+
+    dp.register_inline_handler(geolocation.handle_inline_location_query)
 
     # payments
     dp.register_callback_query_handler(payments.handle_donate, text_startswith=CallbackPrefixes.donate)

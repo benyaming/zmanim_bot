@@ -32,6 +32,7 @@ class Config(BaseSettings):
 
     ZMANIM_API_URL: str = Field(env='ZMANIM_API_URL')
     GEO_API_URL: str = Field(env='GEO_API_URL')
+    MAPBOX_API_KEY: str = Field(env='MAPBOX_API_KEY')
 
     REPORT_ADMIN_LIST: List[int] = Field(env='REPORT_ADMIN_LIST')
 

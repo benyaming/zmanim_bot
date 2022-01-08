@@ -1,5 +1,5 @@
 from datetime import date
-from typing import List, Any
+from typing import List, Optional, TypeVar
 
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -8,6 +8,35 @@ from zmanim_bot.helpers import (CL_OFFET_OPTIONS, HAVDALA_OPINION_OPTIONS, Callb
 from zmanim_bot.processors.text_utils import humanize_date
 from zmanim_bot.texts.single import buttons, zmanim
 from zmanim_bot.texts.single.buttons import zmanim_for_date_prefix
+
+Location = TypeVar('Location')
+
+
+BACK_BUTTON = InlineKeyboardButton(text=buttons.back, callback_data=CallbackPrefixes.location_menu_back)
+
+LOCATION_SEARCH_KB = InlineKeyboardMarkup()
+LOCATION_SEARCH_KB.add(InlineKeyboardButton(text=buttons.search_location, switch_inline_query_current_chat=''))
+LOCATION_SEARCH_KB.add(BACK_BUTTON)
+
+DONATE_KB = InlineKeyboardMarkup()
+DONATE_KB.row(*[
+    InlineKeyboardButton(
+        text=option,
+        callback_data=f'{CallbackPrefixes.donate}{option}'
+    ) for option in config.DONATE_OPTIONS
+])
+
+
+def shorten_name(name: str, limit: int) -> str:
+    if len(name) <= limit:
+        return name
+    return f'{name[:limit]}...'
+
+
+def merge_inline_keyboards(kb1: InlineKeyboardMarkup, kb2: InlineKeyboardMarkup) -> InlineKeyboardMarkup:
+    for row in kb2.inline_keyboard:
+        kb1.row(*row)
+    return kb1
 
 
 def get_cl_settings_keyboard(current_value: int) -> InlineKeyboardMarkup:
@@ -81,7 +110,7 @@ def get_zmanim_by_date_buttons(dates: List[date]) -> InlineKeyboardMarkup:
 
 
 # todo: refactor imports and fix typing
-def get_location_options_menu(location_list: List[Any]) -> InlineKeyboardMarkup:
+def get_location_options_menu(location_list: List[Location]) -> InlineKeyboardMarkup:
     kb = InlineKeyboardMarkup()
 
     for location in location_list:
@@ -95,13 +124,58 @@ def get_location_options_menu(location_list: List[Any]) -> InlineKeyboardMarkup:
             InlineKeyboardButton(text='❌', callback_data=f'{CallbackPrefixes.location_delete}{location.name}')
         )
 
+    kb.add(BACK_BUTTON)
     return kb
 
 
-DONATE_KB = InlineKeyboardMarkup()
-DONATE_KB.row(*[
-    InlineKeyboardButton(
-        text=option,
-        callback_data=f'{CallbackPrefixes.donate}{option}'
-    ) for option in config.DONATE_OPTIONS
-])
+def get_location_management_kb() -> InlineKeyboardMarkup:
+    kb = InlineKeyboardMarkup()
+    kb.add(InlineKeyboardButton(
+        text=buttons.manage_locations, callback_data=CallbackPrefixes.location_namage
+    ))
+    kb.add(InlineKeyboardButton(
+        text=buttons.add_location, callback_data=CallbackPrefixes.location_add
+    ))
+    return kb
+
+
+# todo: refactor imports and fix typing
+def get_location_variants_menu(
+        locations: List[Location],
+        current_loc: Location,
+        callback_prefix: str
+) -> Optional[InlineKeyboardMarkup]:
+    if len(locations) < 2:
+        return
+
+    kb = InlineKeyboardMarkup()
+    index = locations.index(current_loc)
+
+    if len(locations) == 2:
+        new_index = int(not index)
+        if current_loc.is_active:
+            text = f'📍 {locations[new_index].name} ▶️'
+        else:
+            text = f'◀️ {locations[new_index].name} 📍'
+
+        kb.row(InlineKeyboardButton(
+            text=text,
+            callback_data=f'{callback_prefix}{locations[new_index].lat},{locations[new_index].lng}'
+        ))
+    else:
+        loc_len = len(locations)
+        prev_index = ((index - 1) % loc_len + loc_len) % loc_len
+        next_index = ((index + 1) % loc_len + loc_len) % loc_len
+
+        kb.row(
+            InlineKeyboardButton(
+                text=f'◀️ {shorten_name(locations[prev_index].name, 13)} 📍',
+                callback_data=f'{callback_prefix}{locations[prev_index].lat},{locations[prev_index].lng}'
+            ),
+            InlineKeyboardButton(
+                text=f'📍 {shorten_name(locations[next_index].name, 13)} ▶️',
+                callback_data=f'{callback_prefix}{locations[next_index].lat},{locations[next_index].lng}'
+            )
+        )
+
+    return kb

@@ -29,7 +29,15 @@ class CallbackPrefixes:
     location_activate = 'loc_a:'
     location_rename = 'loc_r:'
     location_delete = 'loc_d:'
+    location_namage = 'loc_m:'
+    location_add = 'loc_add:'
+    location_menu_back = 'loc_back'
     donate = 'donate:'
+
+    update_zmanim = 'uz:'
+    update_shabbat = 'us:'
+    update_fast = 'uf:'
+    update_yom_tov = 'uy:'
 
 
 def parse_coordinates(coordinates: str) -> Tuple[float, float]:

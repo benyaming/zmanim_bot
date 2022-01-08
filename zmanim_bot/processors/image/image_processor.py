@@ -1,25 +1,27 @@
 from __future__ import annotations
 
 from io import BytesIO
-from typing import Optional, Tuple
+from typing import Tuple
 
 from aiogram import Bot
-from aiogram.types import InlineKeyboardMarkup, Message, User, CallbackQuery
+from aiogram.types import InlineKeyboardMarkup, Message, User, CallbackQuery, InputMedia
 
 from zmanim_bot.integrations import zmanim_models
+from zmanim_bot.keyboards import inline
 from zmanim_bot.processors.base import BaseProcessor
 from zmanim_bot.processors.image import renderer
 
 
-class ImageProcessor(BaseProcessor):
+class ImageProcessor(BaseProcessor[BytesIO]):
 
     _type = 'image'
 
-    async def _send(self, image: BytesIO, kb: Optional[InlineKeyboardMarkup] = None):
+    async def _send(self, image: BytesIO, *kb_list: InlineKeyboardMarkup):
         bot = Bot.get_current()
         user = User.get_current()
         call = CallbackQuery.get_current()
         message = Message.get_current()
+        kb_list = [kb for kb in kb_list if kb]  # clean from None
 
         if call:
             reply_to = call.message.message_id
@@ -28,7 +30,30 @@ class ImageProcessor(BaseProcessor):
         else:
             reply_to = None
 
+        if len(kb_list) == 0:
+            kb = None
+        elif len(kb_list) == 1:
+            kb = kb_list[0]
+        else:
+            kb = inline.merge_inline_keyboards(kb_list[0], kb_list[1])
+
         await bot.send_photo(user.id, image, reply_markup=kb, reply_to_message_id=reply_to)
+
+    async def _update(self, image: BytesIO, *kb_list: InlineKeyboardMarkup):
+        bot = Bot.get_current()
+        user = User.get_current()
+        call = CallbackQuery.get_current()
+
+        media = InputMedia(media=image)
+
+        if len(kb_list) == 0:
+            kb = None
+        elif len(kb_list) == 1:
+            kb = kb_list[0]
+        else:
+            kb = inline.merge_inline_keyboards(kb_list[0], kb_list[1])
+
+        await bot.edit_message_media(media, user.id, call.message.message_id, reply_markup=kb)
 
     def _get_zmanim(self, data: zmanim_models.Zmanim) -> BytesIO:
         return renderer.ZmanimImage(data, self._location_name).get_image()
