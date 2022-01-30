@@ -16,4 +16,6 @@ __pycache__/
 \.env
 /broadcast/
 /broadcast/**
+broadcast
+broadcast/*
 Pipfile.lock
