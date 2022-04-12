@@ -340,6 +340,14 @@ msgstr "יום העצמאות"
 msgid "Yom Yerushalaim"
 msgstr "יום ירושלים"
 
+#: zmanim_bot/texts/single/headers.py:34
+msgid "Eating chametz until"
+msgstr "סוף זמן אכילת חמץ"
+
+#: zmanim_bot/texts/single/headers.py:35
+msgid "Burning chametz until"
+msgstr "סוף זמן ביעור חמץ"
+
 #: zmanim_bot/texts/single/helpers.py:3
 msgid "and"
 msgstr "ו"

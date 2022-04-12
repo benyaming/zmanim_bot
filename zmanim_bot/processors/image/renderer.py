@@ -130,15 +130,18 @@ class BaseImage:
     def _draw_line(
             self,
             header: Optional[str],
-            value: str,
+            value: Optional[str] = None,
             *,
             value_on_new_line: bool = False,
             value_without_x_offset: bool = False
     ):
-        header = f'{str(header)}: ' if header else ''
+        header = f'{str(header)}{":" if value else ""} ' if header else ''
         header_offset = self._x_font_offset(header)
         x = self.x + header_offset if self._is_rtl else self.x
         header and self._draw.text((x, self.y), text=header, font=self._bold_font)
+
+        if not value:
+            return
 
         if not value_without_x_offset:
             x += self._x_font_offset(header) if not self._is_rtl else self._x_font_offset(value)
@@ -521,9 +524,13 @@ class YomTovImage(BaseImage):
         resp = f'{header_type} {date_.day} {names.MONTH_NAMES_GENETIVE[date_.month]}{shabbat}'
         return resp, bool(shabbat)
 
-    def _get_dates(self) -> List[Union[AsurBeMelachaDay, date]]:
+    def _get_dates(self) -> List[Union[AsurBeMelachaDay, date, Tuple[dt, str]]]:
         dates = [
             self.data.pre_shabbat,
+            self.data.pesach_eating_chanetz_till and (
+                self.data.pesach_eating_chanetz_till,
+                self.data.pesach_burning_chanetz_till
+            ),
             self.data.day_1,
             self.data.day_2,
             self.data.post_shabbat,
@@ -544,6 +551,17 @@ class YomTovImage(BaseImage):
         self._draw_date([self.data.day_1.date, yomtov_last_day.date])
 
         for date_ in dates:
+            if isinstance(date_, tuple) and isinstance(date_[0], dt):  # for pesach chametz times
+                header = str(headers.pesach_end_eating_chametz)
+                value = humanize_time(date_[0].time())
+                lines.append((header, value, False))
+
+                header = str(headers.pesach_end_burning_chametz)
+                value = humanize_time(date_[1].time())
+                lines.append((header, value, False))
+                lines.append(EMPTY_LINE)
+                continue
+
             if isinstance(date_, date):  # hoshana rabbah case
                 header = str(headers.hoshana_raba)
                 sep = '\n' if not self._is_rtl else ''
@@ -570,15 +588,15 @@ class YomTovImage(BaseImage):
     def _get_font_properties(number_of_lines: int) -> Tuple[int, int, int]:
         p = {
             # [font_size, y_offset, start_y_position]
-            2: (57, 70, 400),
-            3: (57, 70, 400),
-            4: (55, 70, 400),
-            5: (55, 80, 260),
-            6: (55, 70, 260),
-            7: (55, 50, 260),
-            8: (55, 50, 260),
-            9: (50, 50, 230),
-            10: (50, 50, 230)
+            2: (50, 70, 400),
+            3: (50, 70, 400),
+            4: (50, 70, 400),
+            5: (50, 80, 260),
+            6: (50, 70, 260),
+            7: (50, 50, 260),
+            8: (50, 50, 260),
+            9: (45, 50, 230),
+            10: (45, 50, 230)
         }
         font_size, y_offset, start_position_y = p.get(number_of_lines)
         return start_position_y, y_offset, font_size
@@ -589,7 +607,18 @@ class YomTovImage(BaseImage):
                 self.y += self.y_offset * 2
                 continue
 
-            self._draw_line(header, value, value_on_new_line=new_line)
+            if '\n' in header:
+                if abs(self._x_font_offset(header.replace('\n', ' '))) < IMG_SIZE * 0.8:
+                    header = header.replace('\n', ' ')
+                    self._draw_line(header, value)
+                else:
+                    header_1, header_2 = header.split('\n')
+                    self._draw_line(header_1)
+                    self.y += self._y_font_offset(header_1)
+                    self._draw_line(header_2, value)
+            else:
+                self._draw_line(header, value)
+
             if new_line:
                 self.y += self._y_font_offset(header)
             self.shift_y()
@@ -597,7 +626,7 @@ class YomTovImage(BaseImage):
         kb = get_zmanim_by_date_buttons(
             list(map(
                 lambda d: d.date if isinstance(d, AsurBeMelachaDay) else d,
-                self.dates
+                filter(lambda v: isinstance(v, (dt, date)), self.dates)
             ))
         )
         return _convert_img_to_bytes_io(self._image), kb

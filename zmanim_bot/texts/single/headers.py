@@ -31,3 +31,5 @@ israel_holidays = {
     'yom_yerushalaim': _('Yom Yerushalaim'),
 }
 
+pesach_end_eating_chametz = _('Eating chametz until')
+pesach_end_burning_chametz = _('Burning chametz until')
