@@ -529,6 +529,7 @@ class YomTovImage(BaseImage):
             self.data.post_shabbat,
             self.data.pesach_part_2_day_1,
             self.data.pesach_part_2_day_2,
+            self.data.pesach_part_2_post_shabat,
             self.data.hoshana_rabba
         ]
         return [d for d in dates if d is not None]

@@ -151,6 +151,7 @@ class YomTov(BaseModel):
 
     pesach_part_2_day_1: Optional[AsurBeMelachaDay] = None
     pesach_part_2_day_2: Optional[SecondAsurBeMelachaDay] = None
+    pesach_part_2_post_shabat: Optional[AsurBeMelachaDay] = None
 
 
 class Fast(BaseModelWithZmanimLehumra):
