@@ -43,6 +43,7 @@ class ImageProcessor(BaseProcessor[BytesIO]):
         bot = Bot.get_current()
         user = User.get_current()
         call = CallbackQuery.get_current()
+        kb_list = [kb for kb in kb_list if kb]  # clean from None
 
         media = InputMedia(media=image)
 
