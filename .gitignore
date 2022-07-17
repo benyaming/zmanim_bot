@@ -19,3 +19,4 @@ __pycache__/
 broadcast
 broadcast/*
 Pipfile.lock
+/broadcast/*
