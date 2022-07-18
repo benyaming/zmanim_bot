@@ -143,6 +143,10 @@ class IsraelHolidays(BaseModel):
 
 class YomTov(BaseModel):
     settings: Settings
+
+    pesach_eating_chanetz_till: Optional[datetime] = None
+    pesach_burning_chanetz_till: Optional[datetime] = None
+
     pre_shabbat: Optional[AsurBeMelachaDay] = None
     day_1: AsurBeMelachaDay
     day_2: Optional[SecondAsurBeMelachaDay] = None
@@ -151,6 +155,7 @@ class YomTov(BaseModel):
 
     pesach_part_2_day_1: Optional[AsurBeMelachaDay] = None
     pesach_part_2_day_2: Optional[SecondAsurBeMelachaDay] = None
+    pesach_part_2_post_shabat: Optional[AsurBeMelachaDay] = None
 
 
 class Fast(BaseModelWithZmanimLehumra):

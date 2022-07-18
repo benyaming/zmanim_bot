@@ -16,7 +16,7 @@ betterlogging = "*"
 odmantic = "*"
 motor = "*"
 sentry-sdk = "==1.1.0"
-aiogram-metrics = "*"
+aiogram-metrics = "0.0.11"
 typing_extensions = "*"
 
 [requires]

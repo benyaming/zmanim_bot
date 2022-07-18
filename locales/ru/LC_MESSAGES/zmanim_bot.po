@@ -337,6 +337,14 @@ msgstr "День независимости Израиля"
 msgid "Yom Yerushalaim"
 msgstr "День Иерусалима"
 
+#: zmanim_bot/texts/single/headers.py:34
+msgid "Eating chametz until"
+msgstr "Можно есть хамец до"
+
+#: zmanim_bot/texts/single/headers.py:35
+msgid "Burning chametz until"
+msgstr "Можно сжигать хамец до"
+
 #: zmanim_bot/texts/single/helpers.py:4
 msgid "and"
 msgstr "и"
