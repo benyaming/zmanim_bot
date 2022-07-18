@@ -62,7 +62,7 @@ class TextProcessor(BaseProcessor[str]):
         pass
 
     def _get_fast(self, data: Fast) -> Tuple[str, InlineKeyboardMarkup]:
-        pass
+        return composer.compose_fast(data, self._location_name)
 
     def _get_holiday(self, data: Holiday) -> str:
         return composer.compose_holiday(data)

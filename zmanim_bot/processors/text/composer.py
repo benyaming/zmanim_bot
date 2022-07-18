@@ -8,7 +8,7 @@ from babel.support import LazyProxy
 from zmanim_bot import texts
 from zmanim_bot.exceptions import PolarCoordinatesException
 from zmanim_bot.integrations.zmanim_models import Zmanim, Shabbat, RoshChodesh, DafYomi, Holiday, \
-    IsraelHolidays
+    IsraelHolidays, Fast
 from zmanim_bot.keyboards.inline import get_zmanim_by_date_buttons
 from zmanim_bot.middlewares.i18n import gettext as _
 from zmanim_bot.processors.text_utils import humanize_date, parse_jewish_date
@@ -134,3 +134,43 @@ def compose_israel_holidays(data: IsraelHolidays) -> str:
     content = '\n'.join(content_lines)
     resp = _compose_response(names.HOLIDAYS_TITLES['israel_holidays'], content)
     return resp
+
+
+def compose_fast(data: Fast, location_name: str) -> Tuple[str, InlineKeyboardMarkup]:
+    deferred_fast_header = headers.fast_moved.value if data.moved_fast \
+        else headers.fast_not_moved.value
+    deferred_fast_str = hitalic(deferred_fast_header)
+
+    fast_start_date = humanize_date([data.fast_start])
+    fast_start_time = data.fast_start.time().isoformat("minutes")
+    fast_start_str = f'{hbold(headers.fast_start) + ":"} {fast_start_date}, {fast_start_time}'
+
+    if data.chatzot:
+        chatzot_time = data.chatzot.time().isoformat('minutes')
+        chatzot_str = f'\n{hbold(texts.single.zmanim.chatzos) + ":"} {chatzot_time}'
+    else:
+        chatzot_str = ''
+
+    havdala_header = hbold(headers.fast_end)
+    havdala_5_95_str = f'{hbold(headers.fast_end_5_95_dgr + ":")} ' \
+                       f'{data.havdala_5_95_dgr.time().isoformat("minutes")}'
+    havdala_8_5_str = f'{hbold(headers.fast_end_8_5_dgr + ":")} ' \
+                       f'{data.havdala_8_5_dgr.time().isoformat("minutes")}'
+    havdala_42_str = f'{hbold(headers.fast_end_42_min + ":")} ' \
+                       f'{data.havdala_42_min.time().isoformat("minutes")}'
+
+    content = f'{fast_start_str}\n' \
+              f'{deferred_fast_str}\n' \
+              f'{chatzot_str}\n' \
+              f'{havdala_header}\n' \
+              f'{havdala_5_95_str}\n' \
+              f'{havdala_8_5_str}\n' \
+              f'{havdala_42_str}'
+
+    resp = _compose_response(
+        names.FASTS_TITLES[data.settings.fast_name],
+        content,
+        location=location_name
+    )
+    kb = get_zmanim_by_date_buttons([data.havdala_42_min.date()])
+    return resp, kb
