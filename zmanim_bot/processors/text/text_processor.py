@@ -65,13 +65,13 @@ class TextProcessor(BaseProcessor[str]):
         pass
 
     def _get_holiday(self, data: Holiday) -> str:
-        pass
+        return composer.compose_holiday(data)
 
     def _get_israel_holidays(self, data: IsraelHolidays) -> str:
-        pass
+        return composer.compose_israel_holidays(data)
 
     def _get_rosh_chodesh(self, data: RoshChodesh) -> str:
-        pass
+        return composer.compose_rosh_chodesh(data)
 
     def _get_daf_yomi(self, data: DafYomi) -> str:
-        pass
+        return composer.compose_daf_yomi(data)
