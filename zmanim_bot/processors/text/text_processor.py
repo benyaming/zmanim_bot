@@ -59,7 +59,7 @@ class TextProcessor(BaseProcessor[str]):
         return composer.compose_shabbat(data, self._location_name)
 
     def _get_yom_tov(self, data: YomTov) -> Tuple[str, InlineKeyboardMarkup]:
-        pass
+        return composer.compose_yom_tov(data, self._location_name)
 
     def _get_fast(self, data: Fast) -> Tuple[str, InlineKeyboardMarkup]:
         return composer.compose_fast(data, self._location_name)
