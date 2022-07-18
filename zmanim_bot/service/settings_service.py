@@ -63,12 +63,26 @@ async def get_current_omer() -> Tuple[str, InlineKeyboardMarkup]:
     return texts.single.messages.settings_omer, kb
 
 
-async def set_omer(call_data) -> InlineKeyboardMarkup:
+async def set_omer(call_data: str) -> InlineKeyboardMarkup:
     omer_flag = not bool(int(call_data.split(CallbackPrefixes.omer)[1]))
     zmanim = omer_flag and await zmanim_service.get_zmanim()
     await bot_repository.get_or_set_omer_flag(omer_flag, zmanim)
 
     kb = keyboards.inline.get_omer_kb(omer_flag)
+    return kb
+
+
+async def get_current_format() -> Tuple[str, InlineKeyboardMarkup]:
+    current_format = await bot_repository.get_or_set_processor_type()
+    kb = keyboards.inline.get_format_options_kb(current_format)
+    return texts.single.messages.settings_format, kb
+
+
+async def set_format(call_data: str) -> InlineKeyboardMarkup:
+    current_format = call_data.split(CallbackPrefixes.format)[1]
+    await bot_repository.get_or_set_processor_type(current_format)
+
+    kb = keyboards.inline.get_format_options_kb(current_format)
     return kb
 
 
