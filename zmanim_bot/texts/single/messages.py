@@ -13,6 +13,7 @@ settings_zmanim = _('Select zmanim that you want to receive:')
 settings_havdala = _('Select your opinion for havdala:')
 settings_omer = _('Here you can enable or disable notifications about the <i>Omer</i> count.')
 settings_location = _('Here you can activate, edit or send new location;\nIf you want to add new location, just send it right now.\n<b>Notice!</b> if you change the name of a location, it will point to the same location. To add another location, use the "Add Location" button.')
+settings_format = _('Select an output type for the bot\'s responces:')
 
 request_language = _('Select your language:')
 

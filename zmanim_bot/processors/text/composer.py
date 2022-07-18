@@ -268,7 +268,7 @@ def compose_yom_tov(data: YomTov, location_name: str) -> Tuple[str, InlineKeyboa
     kb = get_zmanim_by_date_buttons(
         list(map(
             lambda d: d.date if isinstance(d, AsurBeMelachaDay) else d,
-            filter(lambda v: isinstance(v, (dt, date)), dates)
+            filter(lambda v: isinstance(v, AsurBeMelachaDay), dates)
         ))
     )
     return resp, kb

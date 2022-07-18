@@ -1,18 +1,24 @@
 from aiogram.dispatcher import FSMContext
-from aiogram.types import CallbackQuery, Message
+from aiogram.types import CallbackQuery, Message, ChatActions
 from aiogram_metrics import track
 
 from zmanim_bot.helpers import CallbackPrefixes
 from zmanim_bot.keyboards.menus import get_cancel_keyboard
-from zmanim_bot.misc import bot
+from zmanim_bot.repository.bot_repository import get_or_set_processor_type
 from zmanim_bot.service import zmanim_service
 from zmanim_bot.texts.single import messages
 from zmanim_bot.utils import chat_action
 
 
 @track('Zmanim')
-async def handle_zmanim(msg: Message, state: FSMContext):
-    await bot.send_chat_action(msg.chat.id, 'typing')  # TODO refactor `@chat_action` to work with `@track`
+async def handle_zmanim(_, state: FSMContext):
+    chat_actions = {  # TODO refactor `@chat_action` to work with `@track`
+        'image': ChatActions.upload_photo,
+        'text': ChatActions.typing
+    }
+    processor_type = await get_or_set_processor_type()
+    await chat_actions.get(processor_type, 'text')()
+
     await zmanim_service.send_zmanim(state=state)
 
 

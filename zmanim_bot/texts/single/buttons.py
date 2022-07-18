@@ -38,6 +38,14 @@ sm_havdala = _('Havdala')
 sm_lang = _('Language')
 sm_location = _('Location')
 sm_omer = _('Omer count')
+sm_format = _('Format')
+sm_format_text_option = _('Text')
+sm_format_image_option = _('Picture')
+
+processor_types = {
+    'image': sm_format_image_option,
+    'text': sm_format_text_option,
+}
 
 settings_enabled = _('enabled')
 settings_disabled = _('disabled')

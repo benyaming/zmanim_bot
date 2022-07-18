@@ -596,7 +596,8 @@ class YomTovImage(BaseImage):
             7: (50, 50, 260),
             8: (50, 50, 260),
             9: (45, 50, 230),
-            10: (45, 50, 230)
+            10: (45, 50, 230),
+            11: (45, 50, 230)
         }
         font_size, y_offset, start_position_y = p.get(number_of_lines)
         return start_position_y, y_offset, font_size
@@ -626,7 +627,7 @@ class YomTovImage(BaseImage):
         kb = get_zmanim_by_date_buttons(
             list(map(
                 lambda d: d.date if isinstance(d, AsurBeMelachaDay) else d,
-                filter(lambda v: isinstance(v, (dt, date)), self.dates)
+                filter(lambda v: isinstance(v, AsurBeMelachaDay), self.dates)
             ))
         )
         return _convert_img_to_bytes_io(self._image), kb
