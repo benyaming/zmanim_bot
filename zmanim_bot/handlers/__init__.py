@@ -90,11 +90,13 @@ def register_handlers():
     dp.register_message_handler(settings.set_language, text=config.LANGUAGE_LIST)
     dp.register_message_handler(settings.help_menu_report, commands=['report'])
     dp.register_message_handler(settings.help_menu_report, text=buttons.hm_report)
+    dp.register_message_handler(settings.handle_format_settings, text=buttons.sm_format)
 
     dp.register_callback_query_handler(settings.set_cl, text_startswith=CallbackPrefixes.cl)
     dp.register_callback_query_handler(settings.set_havdala, text_startswith=CallbackPrefixes.havdala)
     dp.register_callback_query_handler(settings.set_zmanim, text_startswith=CallbackPrefixes.zmanim)
     dp.register_callback_query_handler(settings.set_omer, text_startswith=CallbackPrefixes.omer)
+    dp.register_callback_query_handler(settings.set_format, text_startswith=CallbackPrefixes.format)
 
     # location
     dp.register_message_handler(geolocation.location_settings, commands=['location'])

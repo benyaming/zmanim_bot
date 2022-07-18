@@ -179,3 +179,14 @@ def get_location_variants_menu(
         )
 
     return kb
+
+
+def get_format_options_kb(current_type: str) -> InlineKeyboardMarkup:
+    kb = InlineKeyboardMarkup()
+    for processor_type, button_name in buttons.processor_types.items():
+        button = InlineKeyboardButton(
+            text=f'{button_name}' if processor_type != current_type else f'✅ {button_name}',
+            callback_data=f'{CallbackPrefixes.format}{processor_type}'
+        )
+        kb.add(button)
+    return kb

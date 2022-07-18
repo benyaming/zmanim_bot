@@ -553,11 +553,11 @@ class YomTovImage(BaseImage):
         for date_ in dates:
             if isinstance(date_, tuple) and isinstance(date_[0], dt):  # for pesach chametz times
                 header = str(headers.pesach_end_eating_chametz)
-                value = humanize_time(date_[0].time())
+                value = humanize_time(date_[0])
                 lines.append((header, value, False))
 
                 header = str(headers.pesach_end_burning_chametz)
-                value = humanize_time(date_[1].time())
+                value = humanize_time(date_[1])
                 lines.append((header, value, False))
                 lines.append(EMPTY_LINE)
                 continue
@@ -575,11 +575,11 @@ class YomTovImage(BaseImage):
 
             if date_.candle_lighting:
                 header, new_line = self._humanize_header_date(headers.cl, date_.candle_lighting)
-                value = humanize_time(date_.candle_lighting.time())
+                value = humanize_time(date_.candle_lighting)
                 lines.append((header, value, new_line))
             if date_.havdala:
                 header, new_line = self._humanize_header_date(headers.havdala, date_.havdala)
-                value = humanize_time(date_.havdala.time())
+                value = humanize_time(date_.havdala)
                 lines.append((header, value, new_line))
 
         return lines
@@ -596,7 +596,8 @@ class YomTovImage(BaseImage):
             7: (50, 50, 260),
             8: (50, 50, 260),
             9: (45, 50, 230),
-            10: (45, 50, 230)
+            10: (45, 50, 230),
+            11: (45, 50, 230)
         }
         font_size, y_offset, start_position_y = p.get(number_of_lines)
         return start_position_y, y_offset, font_size
@@ -626,7 +627,7 @@ class YomTovImage(BaseImage):
         kb = get_zmanim_by_date_buttons(
             list(map(
                 lambda d: d.date if isinstance(d, AsurBeMelachaDay) else d,
-                filter(lambda v: isinstance(v, (dt, date)), self.dates)
+                filter(lambda v: isinstance(v, AsurBeMelachaDay), self.dates)
             ))
         )
         return _convert_img_to_bytes_io(self._image), kb

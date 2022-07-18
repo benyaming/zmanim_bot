@@ -76,6 +76,24 @@ async def set_omer(call: CallbackQuery):
 
 
 @chat_action('text')
+@track('Format settings')
+async def handle_format_settings(msg: Message):
+    resp, kb = await settings_service.get_current_format()
+    await msg.reply(resp, reply_markup=kb)
+
+
+async def set_format(call: CallbackQuery):
+    await call.answer(CALL_ANSWER_OK)
+
+    kb = await settings_service.set_format(call.data)
+
+    try:
+        await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
+    except MessageNotModified:
+        pass
+
+
+@chat_action('text')
 @track('Language command')
 async def handle_language_request(_: Message):
     await redirect_to_request_language()

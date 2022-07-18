@@ -63,7 +63,7 @@ class BaseProcessor(ABC, Generic[T]):
         await self._update(*self._get_fast(data), kb)
 
     @abstractmethod
-    def _get_zmanim(self, data: Zmanim) -> Tuple[T, InlineKeyboardMarkup]:
+    def _get_zmanim(self, data: Zmanim) -> T:
         pass
 
     @abstractmethod
