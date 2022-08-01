@@ -84,7 +84,7 @@ def compose_zmanim(data: Zmanim, location_name: str) -> str:
 
 def compose_shabbat(data: Shabbat, location_name: str) -> Tuple[str, Optional[InlineKeyboardMarkup]]:
     torah_part = names.TORAH_PARTS.get(data.torah_part, '')
-    date_str = hitalic(humanize_date([data.settings.date_]))
+    date_str = hitalic(humanize_date([data.havdala.date()])) if data.havdala else None
     torah_part_str = f'{hbold(headers.parsha + ":")} {torah_part}'
 
     if not data.candle_lighting:
