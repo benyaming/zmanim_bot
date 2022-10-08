@@ -10,7 +10,7 @@ pillow = "*"
 aiogram = "==2.15"
 aiohttp = "==3.7.3"
 zmanim = "*"
-pydantic = "*"
+pydantic = {extras = ["dotenv"],version = '*'}
 aioredis = "<2.0"
 betterlogging = "*"
 odmantic = "*"
