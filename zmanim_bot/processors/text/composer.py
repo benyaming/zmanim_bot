@@ -98,11 +98,15 @@ def compose_shabbat(data: Shabbat, location_name: str) -> Tuple[str, Optional[In
     cl_offset_str = hitalic(f'({cl_offset} {_(*units.tu_minute, cl_offset)} {helpers.cl_offset})')
 
     havdala_str = f'{hbold(headers.havdala + ":")} {humanize_time(data.havdala)}'
+    havdala_opinion = getattr(texts.single.zmanim, data.settings.havdala_opinion)
+    opinion_value = havdala_opinion.value.split('[')[1].split(']')[0]
+    havdala_opinion_str = hitalic(f'({opinion_value})')
+
     late_cl_warning = '\n\n' + hitalic(helpers.cl_late_warning) if data.late_cl_warning else ''
 
     content = f'{torah_part_str}\n' \
               f'{cl_str} {cl_offset_str}\n' \
-              f'{havdala_str} {late_cl_warning}'
+              f'{havdala_str} {havdala_opinion_str} {late_cl_warning}'
     resp = _compose_response(f'🕯 {names.title_shabbath}', content, date_str, location_name)
 
     kb = get_zmanim_by_date_buttons([data.havdala.date()])

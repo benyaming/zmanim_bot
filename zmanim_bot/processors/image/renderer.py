@@ -273,13 +273,17 @@ class ShabbatImage(BaseImage):
         # draw shekiah offset
         cl_offset = self.data.settings.cl_offset
         offset_value = f'({cl_offset} {_(*units.tu_minute, cl_offset)} {helpers.cl_offset})'
-        # x = self.x if not self._is_rtl else (self.x + self._x_font_offset(offset_value))
         self._draw_line(None, offset_value)
-        # self._draw.text((x, self.y), offset_value, font=self._font)
         self.shift_y()
 
         # draw havdala
         self._draw_line(headers.havdala, self.data.havdala.time().isoformat('minutes'))
+        self.shift_y()
+
+        # draw havdala opinion
+        havdala_opinion = getattr(texts.single.zmanim, self.data.settings.havdala_opinion)
+        opinion_value = havdala_opinion.value.split('[')[1].split(']')[0]
+        self._draw_line(None, f'({opinion_value})')
         self.shift_y()
 
         kb = get_zmanim_by_date_buttons([self.data.havdala.date()])
