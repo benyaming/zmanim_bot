@@ -6,7 +6,8 @@ from sentry_sdk.integrations.aiohttp import AioHttpIntegration
 from zmanim_bot.config import config
 from zmanim_bot.handlers import register_handlers
 from zmanim_bot.middlewares import setup_middlewares
-from zmanim_bot.misc import dp, logger
+from zmanim_bot.misc import dp, logger, bot
+from zmanim_bot.texts.commands import commands
 from zmanim_bot.utils import ensure_mongo_index
 
 sentry_sdk.init(dsn=config.SENTRY_KEY, integrations=[AioHttpIntegration()])
@@ -15,6 +16,8 @@ sentry_sdk.init(dsn=config.SENTRY_KEY, integrations=[AioHttpIntegration()])
 async def on_start(_):
     setup_middlewares()
     register_handlers()
+
+    await bot.set_my_commands(commands)
 
     await ensure_mongo_index()
 
