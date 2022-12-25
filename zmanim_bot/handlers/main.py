@@ -26,8 +26,14 @@ async def handle_zmanim(_, state: FSMContext):
 async def handle_update_zmanim(call: CallbackQuery):
     await call.answer()
     coordinates = call.data.split(CallbackPrefixes.update_zmanim)[1]
+
+    if ':' in coordinates:
+        coordinates, date = coordinates.split(':')
+    else:
+        date = None
+
     lat, lng = map(float, coordinates.split(','))
-    await zmanim_service.update_zmanim(lat, lng)
+    await zmanim_service.update_zmanim(lat, lng, date)
 
 
 @chat_action()

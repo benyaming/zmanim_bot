@@ -143,13 +143,19 @@ def get_location_management_kb() -> InlineKeyboardMarkup:
 def get_location_variants_menu(
         locations: List[Location],
         current_loc: Location,
-        callback_prefix: str
+        callback_prefix: str,
+        date_: Optional[date] = None
 ) -> Optional[InlineKeyboardMarkup]:
     if len(locations) < 2:
         return
 
     kb = InlineKeyboardMarkup()
     index = locations.index(current_loc)
+
+    if date_:
+        date_str = f':{date_}'
+    else:
+        date_str = ''
 
     if len(locations) == 2:
         new_index = int(not index)
@@ -160,7 +166,10 @@ def get_location_variants_menu(
 
         kb.row(InlineKeyboardButton(
             text=text,
-            callback_data=f'{callback_prefix}{locations[new_index].lat},{locations[new_index].lng}'
+            callback_data=f''
+                          f'{callback_prefix}'
+                          f'{locations[new_index].lat},{locations[new_index].lng}'
+                          f'{date_str}'
         ))
     else:
         loc_len = len(locations)
@@ -170,11 +179,17 @@ def get_location_variants_menu(
         kb.row(
             InlineKeyboardButton(
                 text=f'◀️ {shorten_name(locations[prev_index].name, 13)} 📍',
-                callback_data=f'{callback_prefix}{locations[prev_index].lat},{locations[prev_index].lng}'
+                callback_data=f''
+                              f'{callback_prefix}'
+                              f'{locations[prev_index].lat},{locations[prev_index].lng}'
+                              f'{date_str}'
             ),
             InlineKeyboardButton(
                 text=f'📍 {shorten_name(locations[next_index].name, 13)} ▶️',
-                callback_data=f'{callback_prefix}{locations[next_index].lat},{locations[next_index].lng}'
+                callback_data=f''
+                              f'{callback_prefix}'
+                              f'{locations[next_index].lat},{locations[next_index].lng}'
+                              f'{date_str}'
             )
         )
 

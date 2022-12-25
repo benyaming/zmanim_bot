@@ -1,3 +1,5 @@
+from typing import Optional
+
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery
 
@@ -35,21 +37,32 @@ async def send_zmanim(*, state: FSMContext, date: str = None, call: CallbackQuer
         user.zmanim_settings.dict(),
         date_=date
     )
-    kb = inline.get_location_variants_menu(user.location_list, location, CallbackPrefixes.update_zmanim)
+    kb = inline.get_location_variants_menu(
+        user.location_list,
+        location,
+        CallbackPrefixes.update_zmanim,
+        date_=date
+    )
     await user.get_processor(location=location).send_zmanim(data, kb)
     if call:
         await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)
 
 
-async def update_zmanim(lat: float, lng: float):
+async def update_zmanim(lat: float, lng: float, date: Optional[str]):
     user = await bot_repository.get_or_create_user()
     location = user.get_location_by_coords(lat, lng)
 
     data = await zmanim_api_client.get_zmanim(
         location.coordinates,
-        user.zmanim_settings.dict()
+        user.zmanim_settings.dict(),
+        date_=date
     )
-    kb = inline.get_location_variants_menu(user.location_list, location, CallbackPrefixes.update_zmanim)
+    kb = inline.get_location_variants_menu(
+        user.location_list,
+        location,
+        CallbackPrefixes.update_zmanim,
+        date_=date
+    )
     await user.get_processor(location).update_zmanim(data, kb)
 
 
