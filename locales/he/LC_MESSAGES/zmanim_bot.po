@@ -302,7 +302,7 @@ msgstr "תחילת הצום"
 
 #: zmanim_bot/texts/single/headers.py:16
 msgid "Fast ends (tzeit ha-kochavim)"
-msgstr "תחילת הצום (צאת הכוכבים)"
+msgstr "צאת הצום (צאת הכוכבים)"
 
 #: zmanim_bot/texts/single/headers.py:17
 msgid "Fast ends"
