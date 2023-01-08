@@ -7,11 +7,11 @@ verify_ssl = true
 
 [packages]
 pillow = "*"
-aiogram = "==2.15"
-aiohttp = "==3.7.3"
+aiogram = "==2.24"
+#aiohttp = "==3.7.3"
 zmanim = "*"
 pydantic = {extras = ["dotenv"],version = '*'}
-aioredis = "<2.0"
+redis = "==4.4.1"
 betterlogging = "*"
 odmantic = "*"
 motor = "*"
@@ -20,7 +20,7 @@ aiogram-metrics = "0.0.11"
 typing_extensions = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.10"
 
 [scripts]
 babel-extract = """pybabel extract
