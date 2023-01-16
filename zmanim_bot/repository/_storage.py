@@ -1,6 +1,7 @@
 from datetime import datetime as dt
 from typing import List, Optional, Tuple
 
+import aiogram_metrics
 from aiogram import types
 
 from zmanim_bot.config import config
@@ -65,6 +66,8 @@ async def _get_or_create_user(tg_user: types.User) -> User:
             )
         )
         await db_engine.save(user)
+        aiogram_metrics.manual_track('New user has joined')
+
     elif user.personal_info.first_name != tg_user.first_name or \
             user.personal_info.last_name != tg_user.last_name or \
             user.personal_info.username != tg_user.username:

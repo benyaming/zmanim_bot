@@ -24,7 +24,7 @@ async def on_start(_):
     if config.METRICS_DSN:
         await aiogram_metrics.register(config.METRICS_DSN, config.METRICS_TABLE_NAME)
 
-    logger.info('Starting zmanim_api bot...')
+    logger.info('Starting zmanim bot...')
 
 
 async def on_close(_):
