@@ -1,3 +1,4 @@
+from datetime import datetime as dt
 from typing import List, Optional, Tuple
 
 from aiogram import types
@@ -33,7 +34,6 @@ __all__ = [
     'set_omer_flag',
 ]
 
-
 MAX_LOCATION_NAME_SIZE = 27
 
 
@@ -66,14 +66,16 @@ async def _get_or_create_user(tg_user: types.User) -> User:
         )
         await db_engine.save(user)
     elif user.personal_info.first_name != tg_user.first_name or \
-         user.personal_info.last_name != tg_user.last_name or \
-         user.personal_info.username != tg_user.username:
+            user.personal_info.last_name != tg_user.last_name or \
+            user.personal_info.username != tg_user.username:
         user.personal_info = UserInfo(
-                first_name=tg_user.first_name,
-                last_name=tg_user.last_name,
-                username=tg_user.username
-            )
-        await db_engine.save(user)
+            first_name=tg_user.first_name,
+            last_name=tg_user.last_name,
+            username=tg_user.username
+        )
+
+    user.meta.last_seen_at = dt.now()
+    await db_engine.save(user)
 
     return user
 
@@ -123,7 +125,8 @@ async def set_location(tg_user: types.User, location: Tuple[float, float]) -> Lo
     return location_obj
 
 
-async def do_set_location_name(tg_user: types.User, new_name: str, old_name: str) -> List[Location]:
+async def do_set_location_name(tg_user: types.User, new_name: str, old_name: str) -> List[
+    Location]:
     user = await _get_or_create_user(tg_user)
     location = list(filter(lambda l: l.name == old_name, user.location_list))
 
