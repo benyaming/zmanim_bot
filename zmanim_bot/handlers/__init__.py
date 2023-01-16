@@ -65,6 +65,7 @@ def register_handlers():
     dp.register_message_handler(menus.handle_settings_menu, commands=['settings'])
     dp.register_message_handler(menus.handle_settings_menu, text=buttons.mm_settings)
     dp.register_message_handler(menus.handle_donate, text=buttons.mm_donate)
+    dp.register_message_handler(menus.handle_notifications, text='Notifications')  # todo
 
     # festivals
     dp.register_message_handler(festivals.handle_fast, text=buttons.FASTS)

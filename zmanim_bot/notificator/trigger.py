@@ -2,7 +2,7 @@ from abc import abstractmethod
 from datetime import datetime as dt, timedelta
 from enum import Enum
 
-from pydantic import BaseModel
+from odmantic import EmbeddedModel
 from zmanim.hebrew_calendar.jewish_calendar import JewishDate
 
 from zmanim_bot.integrations.zmanim_api_client import get_zmanim
@@ -34,7 +34,8 @@ class ZmanType(Enum):
     chatzot_laila = 'chatzot_laila'
 
 
-class EventTrigger(BaseModel):
+class EventTrigger(EmbeddedModel):
+    type: str
 
     @abstractmethod
     def calculate_next_event_dt(self, from_point: dt | None = None) -> dt:

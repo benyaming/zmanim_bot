@@ -9,9 +9,7 @@ class Event(dt):
     owner_id: int
     name: str
     message: str
-    dt: dt
     trigger: EventTrigger
 
-
-
-
+    class Config:
+        collection = 'events'
