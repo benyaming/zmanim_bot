@@ -7,17 +7,16 @@ verify_ssl = true
 
 [packages]
 pillow = "*"
-aiogram = "==2.15"
-aiohttp = "==3.7.3"
+aiogram = "==2.24"
+#aiohttp = "==3.7.3"
 zmanim = "*"
 pydantic = {extras = ["dotenv"],version = '*'}
-aioredis = "<2.0"
+redis = "==4.4.1"
 betterlogging = "*"
-odmantic = "*"
+odmantic = "0.9.2"
 motor = "*"
-sentry-sdk = "==1.1.0"
+sentry-sdk = "==1.13.0"
 aiogram-metrics = "0.0.11"
-typing_extensions = "*"
 
 [requires]
 python_version = "3.9"
