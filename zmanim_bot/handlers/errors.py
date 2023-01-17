@@ -2,6 +2,7 @@ import aiogram_metrics
 import sentry_sdk
 from aiogram import Bot
 from aiogram.types import User, Message, CallbackQuery
+from aiogram.utils.exceptions import CantInitiateConversation
 
 from zmanim_bot.exceptions import *
 from zmanim_bot.handlers.utils.redirects import *
@@ -74,12 +75,15 @@ async def access_denied_exception_handler(*_):
     msg = Message.get_current()
     call = CallbackQuery.get_current()
 
-    if msg:
-        await msg.reply('<i>Access was denied by admin.</i>')
-    elif call:
-        await call.answer('Access was denied by admin.')
-    else:
-        await Bot.get_current().send_message(user.id, '<i>Access was denied by admin.</i>')
+    try:
+        if msg:
+            await msg.reply('<i>Access was denied by admin.</i>')
+        elif call:
+            await call.answer('Access was denied by admin.')
+        else:
+            await Bot.get_current().send_message(user.id, '<i>Access was denied by admin.</i>')
+    except CantInitiateConversation:
+        pass
 
     aiogram_metrics.manual_track('Access denied')
     return True
