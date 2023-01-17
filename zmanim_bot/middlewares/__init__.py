@@ -5,6 +5,6 @@ from .sentry_context_middleware import SentryContextMiddleware
 
 
 def setup_middlewares():
+    dp.middleware.setup(BlackListMiddleware())
     dp.middleware.setup(SentryContextMiddleware())
     dp.middleware.setup(i18n_)
-    dp.middleware.setup(BlackListMiddleware())
