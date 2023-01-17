@@ -16,6 +16,7 @@ __all__ = ['register_handlers']
 
 def register_handlers():
     # errors
+    dp.register_errors_handler(errors.access_denied_exception_handler, exception=e.AccessDeniedException)
     dp.register_errors_handler(errors.no_location_exception_handler, exception=e.NoLocationException)
     dp.register_errors_handler(errors.incorrect_location_exception_handler, exception=e.IncorrectLocationException)
     dp.register_errors_handler(errors.non_unique_location_exception_handler, exception=e.NonUniqueLocationException)

@@ -1,6 +1,7 @@
+import aiogram_metrics
 import sentry_sdk
 from aiogram import Bot
-from aiogram.types import User, Message
+from aiogram.types import User, Message, CallbackQuery
 
 from zmanim_bot.exceptions import *
 from zmanim_bot.handlers.utils.redirects import *
@@ -66,6 +67,22 @@ async def polar_coordinates_exception_handler(*_):
 async def unknown_processor_exception_handler(_, e: UnknownProcessorException):
     await Message.get_current().reply(error_occured)
     raise e
+
+
+async def access_denied_exception_handler(*_):
+    user = User.get_current()
+    msg = Message.get_current()
+    call = CallbackQuery.get_current()
+
+    if msg:
+        await msg.reply('<i>Access was denied by admin.</i>')
+    elif call:
+        await call.answer('Access was denied by admin.')
+    else:
+        await Bot.get_current().send_message(user.id, '<i>Access was denied by admin.</i>')
+
+    aiogram_metrics.manual_track('Access denied')
+    return True
 
 
 async def main_errors_handler(_, e: Exception):
