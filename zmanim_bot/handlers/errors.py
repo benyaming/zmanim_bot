@@ -89,6 +89,10 @@ async def access_denied_exception_handler(*_):
     return True
 
 
+async def empty_exception_handler(*_):
+    return True
+
+
 async def main_errors_handler(_, e: Exception):
     if isinstance(e, ZmanimBotBaseException):
         return True

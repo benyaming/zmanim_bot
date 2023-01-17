@@ -16,6 +16,8 @@ class I18N(I18nMiddleware):
 
         if len(args) > 0 and isinstance(args[0], Message) and args[0].text in config.LANGUAGE_LIST:
             locale = args[0].text
+        elif args[0].chat.type != 'private':
+            return ''
         else:
             from zmanim_bot.repository.bot_repository import get_or_set_lang
 

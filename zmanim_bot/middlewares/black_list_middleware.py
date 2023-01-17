@@ -9,6 +9,9 @@ class BlackListMiddleware(BaseMiddleware):
         if action not in ('pre_process_message', 'pre_process_callback_query'):
             return
 
+        elif args[0].chat.type != 'private':
+            return
+
         from zmanim_bot.repository.bot_repository import get_or_create_user
 
         user = await get_or_create_user()

@@ -52,3 +52,7 @@ class UnknownProcessorException(ZmanimBotBaseException):
 
 class AccessDeniedException(ZmanimBotBaseException):
     ...
+
+
+class UnsupportedChatTypeException(ZmanimBotBaseException):
+    ...
