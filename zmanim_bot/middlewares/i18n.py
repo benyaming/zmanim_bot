@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Any, Tuple
 
+from aiogram import types
 from aiogram.contrib.middlewares.i18n import I18nMiddleware
 from aiogram.types import Message
 
@@ -15,13 +16,16 @@ class I18N(I18nMiddleware):
             return ''
 
         if len(args) > 0 and isinstance(args[0], Message) and args[0].text in config.LANGUAGE_LIST:
-            locale = args[0].text
-        else:
-            from zmanim_bot.repository.bot_repository import get_or_set_lang
+            return args[0].text
 
-            locale = await get_or_set_lang()
-
-        return locale
+        match args[0]:
+            case types.Message() as msg if msg.chat.type != 'private':
+                return ''
+            case types.CallbackQuery() as call if call.message.chat.type != 'private':
+                return ''
+            case _:
+                from zmanim_bot.repository.bot_repository import get_or_set_lang
+                return await get_or_set_lang()
 
     def is_rtl(self) -> bool:
         return self.ctx_locale.get() == 'he'

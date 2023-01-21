@@ -1,4 +1,4 @@
-from abc import ABC
+from datetime import datetime as dt
 from typing import List, Optional, Tuple
 
 from odmantic import EmbeddedModel, Field, Model
@@ -11,13 +11,19 @@ from zmanim_bot.processors.base import BaseProcessor
 HAVDALA_OPINIONS = ['tzeis_5_95_degrees', 'tzeis_8_5_degrees', 'tzeis_42_minutes', 'tzeis_72_minutes']
 
 
-class UserInfo(EmbeddedModel, ABC):
+class UserInfo(EmbeddedModel):
     first_name: Optional[str] = None
     last_name: Optional[str] = None
     username: Optional[str] = None
 
 
-class Location(EmbeddedModel, ABC):
+class UserMeta(EmbeddedModel):
+    last_seen_at: dt = Field(default_factory=dt.now)
+    is_banned_by_admin: bool = False
+    is_user_blocked_bot: bool = False
+
+
+class Location(EmbeddedModel):
     lat: float
     lng: float
     name: str
@@ -28,13 +34,13 @@ class Location(EmbeddedModel, ABC):
         return self.lat, self.lng
 
 
-class OmerSettings(EmbeddedModel, ABC):
+class OmerSettings(EmbeddedModel):
     is_enabled: bool = False
     is_sent_today: Optional[bool]
     notification_time: Optional[str]
 
 
-class ZmanimSettings(EmbeddedModel, ABC):
+class ZmanimSettings(EmbeddedModel):
     alos: bool = True
     misheyakir_10_2: bool = True
     sunrise: bool = True
@@ -56,7 +62,7 @@ class ZmanimSettings(EmbeddedModel, ABC):
     astronomical_hour_gra: bool = False
 
 
-class User(Model, ABC):
+class User(Model):
     user_id: int
     personal_info: UserInfo = Field(default_factory=UserInfo)
 
@@ -68,8 +74,11 @@ class User(Model, ABC):
     processor_type: str = 'image'
     omer: OmerSettings = Field(default_factory=OmerSettings)
 
+    meta: UserMeta = Field(default_factory=UserMeta)
+
     class Config:
         collection = config.DB_COLLECTION_NAME
+        parse_doc_with_default_factories = True
 
     @property
     def location(self) -> Location:

@@ -850,7 +850,7 @@ msgstr "Шмот"
 
 #: zmanim_bot/texts/single/names.py:90
 msgid "Va'eira"
-msgstr "Ваира"
+msgstr "Ваэра"
 
 #: zmanim_bot/texts/single/names.py:91
 msgid "Bo"
