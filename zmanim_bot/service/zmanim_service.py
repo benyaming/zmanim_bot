@@ -3,7 +3,8 @@ from typing import Optional
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery
 
-from zmanim_bot.helpers import CallbackPrefixes
+import zmanim_bot.keyboards.notifications
+from zmanim_bot.helpers import CallbackPrefixes, FeatureType
 from zmanim_bot.integrations import zmanim_api_client
 from zmanim_bot.integrations.zmanim_models import Zmanim
 from zmanim_bot.keyboards import inline
@@ -43,6 +44,7 @@ async def send_zmanim(*, state: FSMContext, date: str = None, call: CallbackQuer
         CallbackPrefixes.update_zmanim,
         date_=date
     )
+    zmanim_bot.keyboards.notifications.add_notification_button_to_kb(kb, FeatureType.zmanim)
     await user.get_processor(location=location).send_zmanim(data, kb)
     if call:
         await bot.edit_message_reply_markup(call.from_user.id, call.message.message_id, reply_markup=kb)

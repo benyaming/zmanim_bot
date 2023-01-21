@@ -20,3 +20,5 @@ broadcast
 broadcast/*
 Pipfile.lock
 /broadcast/*
+
+.python-version

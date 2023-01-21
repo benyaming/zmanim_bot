@@ -1,4 +1,5 @@
 from datetime import date
+from enum import Enum
 from typing import Tuple
 
 from zmanim_bot.exceptions import IncorrectGregorianDateException, IncorrectLocationException
@@ -39,6 +40,39 @@ class CallbackPrefixes:
     update_shabbat = 'us:'
     update_fast = 'uf:'
     update_yom_tov = 'uy:'
+
+    init_notification_setup = 'a:'
+    select_notification_zmanim = 'b:'
+
+
+class FeatureType:
+    zmanim = '0'
+    shabbat = '1'
+    rosh_chodesh = '2'
+    holiday = '3'
+    yom_tov = '4'
+    fast = '5'
+    daf_yomi = '6'
+
+
+class ZmanimType(str, Enum):
+    alos = 'a'
+    misheyakir_10_2 = 'b'
+    sunrise = 'c'
+    sof_zman_shema_ma = 'd'
+    sof_zman_shema_gra = 'e'
+    sof_zman_tefila_ma = 'f'
+    sof_zman_tefila_gra = 'g'
+    chatzos = 'h'
+    mincha_gedola = 'i'
+    mincha_ketana = 'j'
+    plag_mincha = 'k'
+    sunset = 'l'
+    tzeis_5_95_degrees = 'm'
+    tzeis_8_5_degrees = 'n'
+    tzeis_42_minutes = 'o'
+    tzeis_72_minutes = 'p'
+    chatzot_laila = 'q'
 
 
 def parse_coordinates(coordinates: str) -> Tuple[float, float]:

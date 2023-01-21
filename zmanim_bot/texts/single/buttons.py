@@ -47,6 +47,19 @@ processor_types = {
     'text': sm_format_text_option,
 }
 
+notification_types = {
+    'jefish_date': '',
+    'gragorian_date': '',
+    'day_of_week': '',
+    'zman': '',
+    'candle_lighting': '',
+    'havdala': '',
+    'fast_start': '',
+    'fast_end': '',
+    'omer_count': '',
+    'rosh_chodesh': ''
+}
+
 settings_enabled = _('enabled')
 settings_disabled = _('disabled')
 

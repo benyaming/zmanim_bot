@@ -41,3 +41,10 @@ async def handle_settings_menu(msg: Message):
 @track('Donate button')
 async def handle_donate(msg: Message):
     await msg.reply(messages.donate_init, reply_markup=DONATE_KB)
+
+
+@chat_action('text')
+@track('.')  # todo
+async def handle_notifications(msg: Message):
+    kb = menus.get_notifications_welcome_menu(False)
+    await msg.reply('notifications management', reply_markup=kb)  # todo

@@ -3,12 +3,13 @@ from typing import Any, List, Optional, Tuple
 from aiogram.types import User
 
 from ._storage import *
-from .models import Location
+from .models import Location, Event
 from .models import User as BotUser
 
 __all__ = [
     'Location',
     'get_or_create_user',
+    'get_user_by_id',
     'get_or_set_zmanim',
     'get_or_set_cl',
     'get_or_set_lang',
@@ -19,12 +20,17 @@ __all__ = [
     'delete_location',
     'get_or_set_processor_type',
     'get_or_set_omer_flag',
+    'create_event',
 ]
 
 
 async def get_or_create_user() -> BotUser:
     user = User.get_current()
     return await _get_or_create_user(user)
+
+
+async def get_user_by_id(user_id: int) -> BotUser:
+    return await _get_user_by_id(user_id)
 
 
 async def get_or_set_lang(lang: str = None) -> Optional[str]:
@@ -82,3 +88,8 @@ async def get_or_set_omer_flag(
         omer_time = zmanim and zmanim.tzeis_8_5_degrees.isoformat()
         return await set_omer_flag(user, omer_flag, omer_time)
     return await get_omer_flag(user)
+
+
+async def create_event(event: Event):
+    await _create_event(event)
+

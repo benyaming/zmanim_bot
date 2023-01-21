@@ -15,7 +15,7 @@ def get_main_menu() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     kb.add(buttons.mm_zmanim.value, buttons.mm_shabbat.value, buttons.mm_holidays.value)
     kb.add(buttons.mm_rh.value, buttons.mm_daf_yomi.value, buttons.mm_fasts.value)
-    kb.add(buttons.mm_zmanim_by_date.value, buttons.mm_converter.value)
+    kb.add(buttons.mm_zmanim_by_date.value, 'Notifications', buttons.mm_converter.value)  # todo translate
     kb.add(buttons.hm_report.value, buttons.mm_donate.value, buttons.mm_settings.value)
 
     if i18n_.is_rtl():
@@ -112,4 +112,12 @@ def get_done_keyboard() -> ReplyKeyboardMarkup:
 def get_report_keyboard() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     kb.row(buttons.cancel.value, buttons.done.value)
+    return kb
+
+
+def get_notifications_welcome_menu(nothing_to_manage: bool) -> ReplyKeyboardMarkup:  # todo translate
+    kb = ReplyKeyboardMarkup(resize_keyboard=True)
+    row = ['Create new notification']
+    not nothing_to_manage and row.append('Manage my notifications')
+    kb.row(*row)
     return kb
