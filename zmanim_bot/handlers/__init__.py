@@ -6,9 +6,9 @@ from zmanim_bot.config import config
 from zmanim_bot.helpers import CallbackPrefixes, LOCATION_PATTERN
 from zmanim_bot.misc import dp
 from zmanim_bot.states import FeedbackState, ConverterGregorianDateState, ConverterJewishDateState, \
-    LocationNameState, ZmanimGregorianDateState
+    LocationNameState, ZmanimGregorianDateState, CreateNotificationState
 from . import admin, converter, errors, festivals, forms, main, menus, settings, \
-    incorrect_text_handler, reset_handler, payments, geolocation
+    incorrect_text_handler, reset_handler, payments, geolocation, notifications
 from ..texts.single import buttons
 
 __all__ = ['register_handlers']
@@ -121,6 +121,13 @@ def register_handlers():
     dp.register_pre_checkout_query_handler(payments.handle_pre_checkout)
     dp.register_message_handler(payments.on_success_payment, content_types=[ContentType.SUCCESSFUL_PAYMENT])
     dp.register_message_handler(payments.on_success_payment, content_types=[ContentType])
+
+    # Notifications
+    dp.register_callback_query_handler(notifications.init_notification, text_startswith=CallbackPrefixes.init_notification_setup)
+    dp.register_callback_query_handler(notifications.init_zmanim_notification, text_startswith=CallbackPrefixes.select_notification_zmanim)
+    dp.register_message_handler(notifications.set_offset, state=CreateNotificationState.waiting_for_offset_state)
+    dp.register_message_handler(notifications.set_message, state=CreateNotificationState.waiting_for_message_text_state)
+    dp.register_message_handler(notifications.set_name, state=CreateNotificationState.waiting_for_name_state)
 
     # unknown messages (SHOULD BE LAST!)
     dp.register_message_handler(incorrect_text_handler.handle_incorrect_text)

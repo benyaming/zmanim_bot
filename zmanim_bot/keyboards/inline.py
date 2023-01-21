@@ -207,8 +207,3 @@ def get_format_options_kb(current_type: str) -> InlineKeyboardMarkup:
         row.append(button)
     kb.row(*row)
     return kb
-
-
-def get_notification_kinds_menu() -> InlineKeyboardMarkup:
-    kb = InlineKeyboardMarkup()
-

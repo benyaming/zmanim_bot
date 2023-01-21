@@ -5,14 +5,16 @@ import aiogram_metrics
 from aiogram import types
 
 from zmanim_bot.config import config
-from zmanim_bot.exceptions import (ActiveLocationException,
-                                   MaxLocationLimitException,
-                                   NoLanguageException, NoLocationException,
-                                   NonUniqueLocationException,
-                                   NonUniqueLocationNameException)
+from zmanim_bot.exceptions import (
+    ActiveLocationException,
+    MaxLocationLimitException,
+    NoLanguageException, NoLocationException,
+    NonUniqueLocationException,
+    NonUniqueLocationNameException
+)
 from zmanim_bot.integrations.geo_client import get_location_name
 from zmanim_bot.misc import db_engine
-from .models import Location, User, UserInfo, ZmanimSettings
+from .models import Location, User, UserInfo, ZmanimSettings, Event
 
 __all__ = [
     '_get_or_create_user',
@@ -33,6 +35,8 @@ __all__ = [
     'set_processor_type',
     'get_omer_flag',
     'set_omer_flag',
+    '_create_event',
+    '_get_user_by_id',
 ]
 
 MAX_LOCATION_NAME_SIZE = 27
@@ -80,6 +84,14 @@ async def _get_or_create_user(tg_user: types.User) -> User:
     user.meta.last_seen_at = dt.now()
     await db_engine.save(user)
 
+    return user
+
+
+async def _get_user_by_id(user_id: int) -> User:
+    user = await db_engine.find_one(User, User.user_id == user_id)
+
+    if not user:
+        raise ValueError(f'User {user_id} not found!')
     return user
 
 
@@ -239,3 +251,8 @@ async def set_omer_flag(tg_user: types.User, omer_flag: bool, omer_time: Optiona
     user.omer.notification_time = omer_time
 
     await db_engine.save(user)
+
+
+async def _create_event(event: Event):
+    await db_engine.save(event)
+

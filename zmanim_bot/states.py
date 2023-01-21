@@ -20,3 +20,9 @@ class FeedbackState(StatesGroup):
 
 class LocationNameState(StatesGroup):
     waiting_for_location_name_state = State()
+
+
+class CreateNotificationState(StatesGroup):
+    waiting_for_offset_state = State()
+    waiting_for_message_text_state = State()
+    waiting_for_name_state = State()
