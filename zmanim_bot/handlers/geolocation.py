@@ -39,14 +39,14 @@ async def handle_inline_location_query(query: InlineQuery):
 
 
 @chat_action('text')
-@track('Location menu init')
+# @track('Location menu init')
 async def location_settings(msg: Message):
     kb = inline.get_location_management_kb()
     resp = messages.location_menu_init
     await msg.reply(resp, reply_markup=kb)
 
 
-@track('Location menu back')
+# @track('Location menu back')
 async def back_to_location_settings(call: CallbackQuery):
     await call.answer()
     kb = inline.get_location_management_kb()

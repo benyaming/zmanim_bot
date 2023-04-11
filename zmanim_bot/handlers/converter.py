@@ -7,7 +7,7 @@ from zmanim_bot.utils import chat_action
 
 
 @chat_action('text')
-@track('Entry to converter_api')
+# @track('Entry to converter_api')
 async def handle_converter_entry(msg: Message):
     resp, kb = converter_service.get_converter_entry_menu()
     await msg.reply(resp, reply_markup=kb)
