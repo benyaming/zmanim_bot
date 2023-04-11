@@ -6,5 +6,7 @@ commands = [
     # BotCommand('help', 'Help/Помощь'),
     BotCommand('language', 'Language/Язык'),
     BotCommand('location', 'Location/Локация'),
-    BotCommand('settings', 'Settings/Настройки')
+    BotCommand('settings', 'Settings/Настройки'),
+    BotCommand('report', 'Report/Сообщить о проблеме'),
+    BotCommand('donate', 'Donate/Поддержать')
 ]
