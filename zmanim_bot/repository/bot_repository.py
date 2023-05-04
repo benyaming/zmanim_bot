@@ -78,7 +78,10 @@ async def get_or_set_omer_flag(
         zmanim: Optional[Any] = None  # todo circullar import problem, refactor needed
 ) -> Optional[bool]:
     user = User.get_current()
-    if omer_flag:
-        omer_time = zmanim and zmanim.tzeis_8_5_degrees.isoformat()
+    if omer_flag is not None:
+        omer_time = None
+        if omer_flag:
+            omer_time = zmanim and zmanim.tzeis_8_5_degrees.isoformat()
+
         return await set_omer_flag(user, omer_flag, omer_time)
     return await get_omer_flag(user)
