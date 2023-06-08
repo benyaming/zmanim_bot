@@ -7,7 +7,7 @@ RUN pip install pdm
 WORKDIR /home/app
 COPY . .
 WORKDIR /home/app/zmanim_bot
-RUN pipenv install
+RUN pdm install
 ENV PYTHONPATH=/home/app
 ENV DOCKER_MODE=true
 EXPOSE 8000
