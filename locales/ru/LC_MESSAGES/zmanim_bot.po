@@ -906,7 +906,7 @@ msgstr "Тазриа"
 
 #: zmanim_bot/texts/single/names.py:104
 msgid "Metzora"
-msgstr "Мецара"
+msgstr "Мецора"
 
 #: zmanim_bot/texts/single/names.py:105
 msgid "Acharei Mot"
@@ -938,7 +938,7 @@ msgstr "Насо"
 
 #: zmanim_bot/texts/single/names.py:112
 msgid "Behaalotecha"
-msgstr "Бехаалатха"
+msgstr "Бехаалотха"
 
 #: zmanim_bot/texts/single/names.py:113
 msgid "Shlach"
@@ -1018,7 +1018,7 @@ msgstr "Ваякхель - Пекудей"
 
 #: zmanim_bot/texts/single/names.py:133
 msgid "Tazria - Metzora"
-msgstr "Тазриа - Мецара"
+msgstr "Тазриа - Мецора"
 
 #: zmanim_bot/texts/single/names.py:134
 msgid "Acharei Mot - Kedoshim"
