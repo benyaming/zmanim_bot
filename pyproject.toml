@@ -1,0 +1,35 @@
+
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "Benyamin Ginzburg", email = "benyomin.94@gmail.com"},
+]
+dependencies = [
+    "pillow",
+    "aiogram==2.24",
+    "zmanim",
+    "pydantic[dotenv]==1.10.9",
+    "redis==4.4.1",
+    "betterlogging",
+    "odmantic==0.9.2",
+    "motor",
+    "sentry-sdk==1.13.0",
+    "aiogram-metrics==1.0.4"
+]
+requires-python = ">=3.10"
+license = {text = "-"}
+
+[tool.pdm.scripts]
+babel-extract = """pybabel extract
+#zmanim_bot/texts/plural/units.py
+zmanim_bot/texts/single/buttons.py
+zmanim_bot/texts/single/headers.py
+zmanim_bot/texts/single/helpers.py
+zmanim_bot/texts/single/messages.py
+zmanim_bot/texts/single/names.py
+zmanim_bot/texts/single/zmanim.py
+ -o locales/zmanim_bot.pot -k __:1,2 --add-comments=NOTE"""
+babel-init = "pybabel init -i locales/zmanim_bot.pot -d locales -D zmanim_bot -l "
+babel-compile = "pybabel compile -d locales -D zmanim_bot"
