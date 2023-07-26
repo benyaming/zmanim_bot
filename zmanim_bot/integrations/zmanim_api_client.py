@@ -26,7 +26,7 @@ async def get_zmanim(location: Tuple[float, float], zmanim_settings: dict, date_
     if date_:
         params['date'] = date_
 
-    async with bot.session.post(url, params=params, json=zmanim_settings) as resp:
+    async with (await bot.get_session()).post(url, params=params, json=zmanim_settings) as resp:
         raw_resp = await resp.json()
         return Zmanim(**raw_resp)
 
@@ -47,7 +47,7 @@ async def get_shabbat(
     if date_:
         params['date'] = date_
 
-    async with bot.session.get(url, params=params) as resp:
+    async with (await bot.get_session()).get(url, params=params) as resp:
         raw_resp = await resp.json()
         return Shabbat(**raw_resp)
 
@@ -56,7 +56,7 @@ async def get_daf_yomi(date_=None) -> DafYomi:
     url = config.ZMANIM_API_URL.format('daf_yomi')
     params = None if not date_ else {'date': date_}
 
-    async with bot.session.get(url, params=params) as resp:
+    async with (await bot.get_session()).get(url, params=params) as resp:
         raw_resp = await resp.json()
         return DafYomi(**raw_resp)
 
@@ -65,7 +65,7 @@ async def get_rosh_chodesh(date_=None) -> RoshChodesh:
     url = config.ZMANIM_API_URL.format('rosh_chodesh')
     params = None if not date_ else {'date': date_}
 
-    async with bot.session.get(url, params=params) as resp:
+    async with (await bot.get_session()).get(url, params=params) as resp:
         raw_resp = await resp.json()
         return RoshChodesh(**raw_resp)
 
@@ -85,7 +85,7 @@ async def get_generic_yomtov(
         'havdala': havdala_opinion
     }
 
-    async with bot.session.get(url, params=params) as resp:
+    async with (await bot.get_session()).get(url, params=params) as resp:
         raw_resp = await resp.json()
         return YomTov(**raw_resp)
 
@@ -99,7 +99,7 @@ async def get_generic_fast(name: str, location: Tuple[float, float], havdala_opi
         'havdala': havdala_opinion
     }
 
-    async with bot.session.get(url, params=params) as resp:
+    async with (await bot.get_session()).get(url, params=params) as resp:
         raw_resp = await resp.json()
         return Fast(**raw_resp)
 
@@ -108,7 +108,7 @@ async def get_generic_holiday(name: str) -> Holiday:
     url = config.ZMANIM_API_URL.format('holiday')
     params = {'holiday_name': name}
 
-    async with bot.session.get(url, params=params) as resp:
+    async with (await bot.get_session()).get(url, params=params) as resp:
         raw_resp = await resp.json()
         return Holiday(**raw_resp)
 
@@ -121,7 +121,7 @@ async def get_israel_holidays() -> IsraelHolidays:
     for name in ['yom_hashoah', 'yom_hazikaron', 'yom_haatzmaut', 'yom_yerushalaim']:
         params = {'holiday_name': name}
 
-        async with bot.session.get(url, params=params) as resp:
+        async with (await bot.get_session()).get(url, params=params) as resp:
             raw_resp = await resp.json()
             result.append((name, date.fromisoformat(raw_resp['date'])))
 
