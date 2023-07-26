@@ -13,7 +13,7 @@ async def get_location_name(lat: float, lng: float, locality: str, *, no_trim: b
         'longitude': lng,
         'localityLanguage': locality
     }
-    async with bot.session.get(config.GEO_API_URL, params=params) as resp:
+    async with (await bot.get_session()).get(config.GEO_API_URL, params=params) as resp:
         raw_resp: dict = await resp.json()
         city = raw_resp.get('city')
         locality = raw_resp.get('locality')
@@ -42,7 +42,7 @@ async def find_places_by_query(query: str, language: str) -> List[InlineQueryRes
     }
     results = []
 
-    async with bot.session.get(url, params=params) as resp:
+    async with (await bot.get_session()).get(url, params=params) as resp:
         raw_resp: dict = await resp.json()
 
     for feature in raw_resp.get('features', []):

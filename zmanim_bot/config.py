@@ -1,5 +1,3 @@
-from typing import List, Dict, Optional
-
 from pydantic import BaseSettings, Field, validator
 
 
@@ -15,8 +13,8 @@ class Config(BaseSettings):
     IS_PROD: bool = Field(False, env='IS_PROD')
     WEBHOOK_PATH: str = Field('/zmanim_bot', env='WEBHOOK_PATH')
 
-    LANGUAGE_LIST: List[str] = Field(['English', 'Русский', 'עברית'])
-    LANGUAGE_SHORTCUTS: Dict[str, str] = Field({
+    LANGUAGE_LIST: list[str] = Field(['English', 'Русский', 'עברית'])
+    LANGUAGE_SHORTCUTS: dict[str, str] = Field({
         'English': 'en',
         'Русский': 'ru',
         'עברית': 'he'
@@ -34,16 +32,18 @@ class Config(BaseSettings):
     GEO_API_URL: str = Field(env='GEO_API_URL')
     MAPBOX_API_KEY: str = Field(env='MAPBOX_API_KEY')
 
-    REPORT_ADMIN_LIST: List[int] = Field(env='REPORT_ADMIN_LIST')
+    REPORT_ADMIN_LIST: list[int] = Field(env='REPORT_ADMIN_LIST')
 
     LOCATION_NUMBER_LIMIT: int = Field(5, env='LOCATION_NUMBER_LIMIT')
-    SENTRY_KEY: Optional[str] = Field(env='SENTRY_PUBLIC_KEY')
+    SENTRY_KEY: str | None = Field(env='SENTRY_PUBLIC_KEY')
 
-    METRICS_DSN: Optional[str] = Field(env='METRICS_DSN')
-    METRICS_TABLE_NAME: Optional[str] = Field(env='METRICS_TABLE_NAME')
+    METRICS_DSN: str | None = Field(env='METRICS_DSN')
+    METRICS_TABLE_NAME: str | None = Field(env='METRICS_TABLE_NAME')
 
     PAYMENTS_PROVIDER_TOKEN: str = Field(env='PAYMENTS_PROVIDER_TOKEN')
-    DONATE_OPTIONS: List[int] = Field([2, 5, 10, 25, 50])
+    DONATE_OPTIONS: list[int] = Field([2, 5, 10, 25, 50])
+
+    OPEN_TOPO_DATA_DB: str = Field(..., env='OPEN_TOPO_DATA_DB')
 
     @validator('REPORT_ADMIN_LIST', pre=True)
     def parse_list(cls, report_admin_list):

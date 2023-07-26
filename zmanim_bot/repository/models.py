@@ -28,6 +28,7 @@ class Location(EmbeddedModel):
     lng: float
     name: str
     is_active: bool
+    elevation: int
 
     @property
     def coordinates(self) -> Tuple[float, float]:
