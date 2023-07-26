@@ -5,11 +5,13 @@ import aiogram_metrics
 from aiogram import types
 
 from zmanim_bot.config import config
-from zmanim_bot.exceptions import (ActiveLocationException,
-                                   MaxLocationLimitException,
-                                   NoLanguageException, NoLocationException,
-                                   NonUniqueLocationException,
-                                   NonUniqueLocationNameException)
+from zmanim_bot.exceptions import (
+    ActiveLocationException,
+    MaxLocationLimitException,
+    NoLanguageException, NoLocationException,
+    NonUniqueLocationException,
+    NonUniqueLocationNameException
+)
 from zmanim_bot.integrations.geo_client import get_location_name
 from zmanim_bot.misc import db_engine
 from .models import Location, User, UserInfo, ZmanimSettings
@@ -34,6 +36,8 @@ __all__ = [
     'get_omer_flag',
     'set_omer_flag',
 ]
+
+from ..integrations.open_topo_data_client import get_elevation
 
 MAX_LOCATION_NAME_SIZE = 27
 
@@ -112,11 +116,14 @@ async def set_location(tg_user: types.User, location: Tuple[float, float]) -> Lo
     if len(location_name) > MAX_LOCATION_NAME_SIZE:
         location_name = f'{location_name[:MAX_LOCATION_NAME_SIZE]}...'
 
+    elevation = await get_elevation(*location)
+
     location_obj = Location(
         lat=location[0],
         lng=location[1],
         name=location_name,
-        is_active=True
+        is_active=True,
+        elevation=elevation
     )
     validate_location_coordinates(location_obj, user.location_list)
 
