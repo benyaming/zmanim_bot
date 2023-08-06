@@ -17,11 +17,12 @@ __all__ = [
 ]
 
 
-async def get_zmanim(location: Tuple[float, float], zmanim_settings: dict, date_: str = None) -> Zmanim:
+async def get_zmanim(location: Tuple[float, float, int], zmanim_settings: dict, date_: str = None) -> Zmanim:
     url = config.ZMANIM_API_URL.format('zmanim')
     params = {
         'lat': str(location[0]),
         'lng': str(location[1]),
+        'elevation': str(location[2]) if location[2] else '0'
     }
     if date_:
         params['date'] = date_
@@ -32,7 +33,7 @@ async def get_zmanim(location: Tuple[float, float], zmanim_settings: dict, date_
 
 
 async def get_shabbat(
-        location: Tuple[float, float],
+        location: Tuple[float, float, int],
         cl_offset: int,
         havdala_opinion: str,
         date_: str = None
@@ -41,6 +42,7 @@ async def get_shabbat(
     params = {
         'lat': str(location[0]),
         'lng': str(location[1]),
+        'elevation': str(location[2]) if location[2] else '0',
         'cl_offset': str(cl_offset),
         'havdala': havdala_opinion
     }
@@ -72,7 +74,7 @@ async def get_rosh_chodesh(date_=None) -> RoshChodesh:
 
 async def get_generic_yomtov(
         name: str,
-        location: Tuple[float, float],
+        location: Tuple[float, float, int],
         cl_offset: int,
         havdala_opinion: str
 ) -> YomTov:
@@ -80,6 +82,7 @@ async def get_generic_yomtov(
     params = {
         'lat': str(location[0]),
         'lng': str(location[1]),
+        'elevation': str(location[2]) if location[2] else '0',
         'yomtov_name': name,
         'cl': str(cl_offset),
         'havdala': havdala_opinion
@@ -90,11 +93,12 @@ async def get_generic_yomtov(
         return YomTov(**raw_resp)
 
 
-async def get_generic_fast(name: str, location: Tuple[float, float], havdala_opinion: str) -> Fast:
+async def get_generic_fast(name: str, location: Tuple[float, float, int], havdala_opinion: str) -> Fast:
     url = config.ZMANIM_API_URL.format('fast')
     params = {
         'lat': str(location[0]),
         'lng': str(location[1]),
+        'elevation': str(location[2]) if location[2] else '0',
         'fast_name': name,
         'havdala': havdala_opinion
     }

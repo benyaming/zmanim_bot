@@ -28,11 +28,11 @@ class Location(EmbeddedModel):
     lng: float
     name: str
     is_active: bool
-    elevation: int
+    elevation: int | None = 0
 
     @property
-    def coordinates(self) -> Tuple[float, float]:
-        return self.lat, self.lng
+    def coordinates(self) -> Tuple[float, float, int]:
+        return self.lat, self.lng, self.elevation
 
 
 class OmerSettings(EmbeddedModel):
