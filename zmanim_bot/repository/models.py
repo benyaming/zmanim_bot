@@ -32,7 +32,8 @@ class Location(EmbeddedModel):
 
     @property
     def coordinates(self) -> Tuple[float, float, int]:
-        return self.lat, self.lng, self.elevation
+        elevation = self.elevation if self.elevation >= 0 else 0
+        return self.lat, self.lng, elevation
 
 
 class OmerSettings(EmbeddedModel):
