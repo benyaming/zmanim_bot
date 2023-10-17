@@ -502,7 +502,7 @@ msgstr "Я не знаю таких команд 🤖\nВыберите что-�
 
 #: zmanim_bot/texts/single/messages.py:40
 msgid "Please enter Gregorian date in following format: <code>YYYY-MM-DD</code>"
-msgstr "Введите грегорианскую дату в формате <code>ГГГГ-ММ-ДД</code>:"
+msgstr "Введите григорианскую дату в формате <code>ГГГГ-ММ-ДД</code>:"
 
 #: zmanim_bot/texts/single/messages.py:41
 msgid ""
