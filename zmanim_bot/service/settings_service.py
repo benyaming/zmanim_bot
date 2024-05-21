@@ -65,7 +65,7 @@ async def get_current_omer() -> Tuple[str, InlineKeyboardMarkup]:
 
 async def set_omer(call_data: str) -> InlineKeyboardMarkup:
     omer_flag = not bool(int(call_data.split(CallbackPrefixes.omer)[1]))
-    zmanim = omer_flag and await zmanim_service.get_zmanim()
+    zmanim = omer_flag and await zmanim_service.get_zmanim(must_have_8_5=True)
     await bot_repository.get_or_set_omer_flag(omer_flag, zmanim)
 
     kb = keyboards.inline.get_omer_kb(omer_flag)

@@ -12,11 +12,16 @@ from zmanim_bot.repository import bot_repository
 from zmanim_bot.states import ZmanimGregorianDateState
 
 
-async def get_zmanim() -> Zmanim:
+async def get_zmanim(must_have_8_5: bool = False) -> Zmanim:
     user = await bot_repository.get_or_create_user()
+    user_zmanim_settings = user.zmanim_settings
+
+    if must_have_8_5:
+        user_zmanim_settings.tzeis_8_5_degrees = True
+
     data = await zmanim_api_client.get_zmanim(
         user.location.coordinates,
-        user.zmanim_settings.dict()
+        user_zmanim_settings.dict()
     )
     return data
 

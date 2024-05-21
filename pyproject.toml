@@ -18,8 +18,9 @@ dependencies = [
     "sentry-sdk==1.13.0",
     "aiogram-metrics==1.0.4",
     "setuptools",
+    "urllib3>=2.2.1",
 ]
-requires-python = ">=3.10"
+requires-python = "==3.10.7"
 license = {text = "-"}
 
 [tool.pdm.scripts]
