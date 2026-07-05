@@ -29,8 +29,14 @@ LEHUMRA_TO_MAX = True
 
 
 def round_time_lehumra(dt: datetime, lehumra_to_max: bool) -> datetime:
-    delta = timedelta(minutes=1 if lehumra_to_max else -1)
-    return dt + delta
+    # Round to the whole minute in the strict direction: deadlines floor,
+    # onsets ceil. The old ±1 minute shift over-corrected — displayed times
+    # are truncated to minutes, so flooring already errs on the safe side,
+    # and the extra minute made deadlines a full minute earlier than needed.
+    rounded = dt.replace(second=0, microsecond=0)
+    if lehumra_to_max and rounded != dt:
+        rounded += timedelta(minutes=1)
+    return rounded
 
 
 class BaseModelWithZmanimLehumra(BaseModel):
