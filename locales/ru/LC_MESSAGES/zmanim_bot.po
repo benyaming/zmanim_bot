@@ -922,7 +922,7 @@ msgstr "Эмор"
 
 #: zmanim_bot/texts/single/names.py:108
 msgid "Behar"
-msgstr "Бехар"
+msgstr "Беар"
 
 #: zmanim_bot/texts/single/names.py:109
 msgid "Bechukotai"
@@ -1026,7 +1026,7 @@ msgstr "Ахарей Мот - Кдошим"
 
 #: zmanim_bot/texts/single/names.py:135
 msgid "Behar - Bechukotai"
-msgstr "Бехар - Бехукотай"
+msgstr "Беар - Бехукотай"
 
 #: zmanim_bot/texts/single/names.py:136
 msgid "Chukat - Balak"
