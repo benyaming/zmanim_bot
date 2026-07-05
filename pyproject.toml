@@ -1,13 +1,12 @@
 
 [project]
 name = ""
-version = ""
+version = "1.0.0"
 description = ""
 authors = [
     {name = "Benyamin Ginzburg", email = "benyomin.94@gmail.com"},
 ]
 dependencies = [
-    "pillow",
     "aiogram==2.24",
     "zmanim",
     "pydantic[dotenv]==1.10.9",
