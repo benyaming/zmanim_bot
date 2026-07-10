@@ -71,13 +71,17 @@ class BaseImage:
         return self.__x + length if not self._is_rtl else self.__x - length
 
     def __init__(self):
-        self._font = ImageFont.truetype(str(self._font_path), self._font_size)
-        self._bold_font = ImageFont.truetype(str(self._bold_font_path), self._font_size)
+        # Subclasses that pick their font size only after super().__init__()
+        # (e.g. ZmanimImage via _set_font_properties) leave these at 0 here.
+        # Pillow >= 10 rejects a size of 0, so fall back to a placeholder size;
+        # such fonts are always replaced or unused before anything is drawn.
+        self._font = ImageFont.truetype(str(self._font_path), self._font_size or 1)
+        self._bold_font = ImageFont.truetype(str(self._bold_font_path), self._font_size or 1)
 
         if self._background_path:
             self._image, self._draw = _get_draw(str(self._background_path))
 
-        self._warning_font = ImageFont.truetype(str(self._bold_font_path), self._warning_font_size)
+        self._warning_font = ImageFont.truetype(str(self._bold_font_path), self._warning_font_size or 1)
         self._is_rtl = i18n_.is_rtl()
 
     def _draw_title(self, draw: ImageDraw, title: LazyProxy) -> None:
@@ -117,7 +121,7 @@ class BaseImage:
     def _x_font_offset(self, text: str) -> int:
         """Returns size in px of given text in axys x"""
         last_line = min(text.split('\n'))
-        offset = self._bold_font.getsize(last_line)[0]
+        offset = round(self._bold_font.getlength(last_line))
         if self._is_rtl:
             offset *= -1
 
@@ -125,7 +129,8 @@ class BaseImage:
 
     def _y_font_offset(self, text: str) -> int:
         """Returns size in px of given text in axys y"""
-        return self._bold_font.getsize(text)[1]
+        _, top, _, bottom = self._bold_font.getbbox(text)
+        return bottom - top
 
     def _draw_line(
             self,
