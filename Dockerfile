@@ -1,14 +1,20 @@
 FROM python:3.10-slim
 
-RUN apt update
-RUN apt install -y libraqm-dev
+RUN apt update && apt install -y libraqm-dev
 
-RUN pip install pdm
+# uv package manager (pinned)
+COPY --from=ghcr.io/astral-sh/uv:0.7.3 /uv /uvx /bin/
+
 WORKDIR /home/app
 COPY . .
-WORKDIR /home/app/zmanim_bot
-RUN pdm install
+
+# Install locked dependencies into /home/app/.venv
+# (uv fetches the managed CPython 3.10.7 required by pyproject.toml)
+RUN uv sync --frozen
+
 ENV PYTHONPATH=/home/app
 ENV DOCKER_MODE=true
 EXPOSE 8000
-CMD ["pdm", "run", "python", "main.py"]
+
+WORKDIR /home/app/zmanim_bot
+CMD ["uv", "run", "--no-sync", "python", "main.py"]

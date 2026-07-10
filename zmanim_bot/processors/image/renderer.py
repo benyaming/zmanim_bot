@@ -117,7 +117,7 @@ class BaseImage:
     def _x_font_offset(self, text: str) -> int:
         """Returns size in px of given text in axys x"""
         last_line = min(text.split('\n'))
-        offset = self._bold_font.getsize(last_line)[0]
+        offset = int(self._bold_font.getlength(last_line))
         if self._is_rtl:
             offset *= -1
 
@@ -125,7 +125,7 @@ class BaseImage:
 
     def _y_font_offset(self, text: str) -> int:
         """Returns size in px of given text in axys y"""
-        return self._bold_font.getsize(text)[1]
+        return self._bold_font.getbbox(text)[3]
 
     def _draw_line(
             self,

@@ -1,37 +1,40 @@
-
 [project]
-name = ""
+name = "zmanim-bot"
 version = "1.0.0"
 description = ""
 authors = [
     {name = "Benyamin Ginzburg", email = "benyomin.94@gmail.com"},
 ]
 dependencies = [
-    "pillow",
+    "pillow==11.0.0",
     "aiogram==2.24",
-    "zmanim",
+    "zmanim==0.3.1",
     "pydantic[dotenv]==1.10.9",
     "redis==4.4.1",
-    "betterlogging",
+    "betterlogging==1.0.0",
     "odmantic==0.9.2",
-    "motor",
+    "motor==3.1.2",
+    "pymongo==4.3.3",
     "sentry-sdk==1.13.0",
     "aiogram-metrics==1.0.4",
-    "setuptools",
-    "urllib3>=2.2.1",
+    "setuptools==75.2.0",
+    "urllib3==2.2.3",
 ]
 requires-python = "==3.10.7"
 license = {text = "-"}
 
-[tool.pdm.scripts]
-babel-extract = """pybabel extract
-#zmanim_bot/texts/plural/units.py
-zmanim_bot/texts/single/buttons.py
-zmanim_bot/texts/single/headers.py
-zmanim_bot/texts/single/helpers.py
-zmanim_bot/texts/single/messages.py
-zmanim_bot/texts/single/names.py
-zmanim_bot/texts/single/zmanim.py
- -o locales/zmanim_bot.pot -k __:1,2 --add-comments=NOTE"""
-babel-init = "pybabel init -i locales/zmanim_bot.pot -d locales -D zmanim_bot -l "
-babel-compile = "pybabel compile -d locales -D zmanim_bot"
+# Developer task shortcuts (uv standard). Run with `uv run <name>`:
+#   uv run babel-extract
+#   uv run babel-init en
+#   uv run babel-compile
+[project.scripts]
+babel-extract = "zmanim_bot.tasks:babel_extract"
+babel-init = "zmanim_bot.tasks:babel_init"
+babel-compile = "zmanim_bot.tasks:babel_compile"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["zmanim_bot"]
