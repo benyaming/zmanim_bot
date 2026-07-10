@@ -77,9 +77,11 @@ to switch to webhook mode (`start_webhook`, `WEBHOOK_PATH`).
 - `zmanim_bot/integrations/` — outbound HTTP clients (`zmanim_api_client.py`
   against `ZMANIM_API_URL`, geo/topo clients) and the pydantic response models
   in `zmanim_models.py`.
-- `zmanim_bot/processors/image/renderer.py` — Pillow image rendering. **Note:**
-  use `font.getlength()` / `font.getbbox()`, not the removed `getsize()` (removed
-  in Pillow 10).
+- `zmanim_bot/processors/image/renderer.py` — Pillow image rendering. **Pillow 10+
+  notes:** use `font.getlength()` / `font.getbbox()`, not the removed `getsize()`;
+  and never pass a font size of `0` to `ImageFont.truetype()` (now a `ValueError`) —
+  `BaseImage.__init__` guards this since some subclasses set their real size only
+  after `super().__init__()`.
 - `zmanim_bot/repository/` — MongoDB access via odmantic (user storage).
 - `zmanim_bot/middlewares/i18n.py` — babel-based i18n; `_()` / `lazy_gettext`.
 - `zmanim_bot/texts/` — translatable strings (source for babel extraction).

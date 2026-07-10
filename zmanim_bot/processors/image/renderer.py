@@ -71,13 +71,17 @@ class BaseImage:
         return self.__x + length if not self._is_rtl else self.__x - length
 
     def __init__(self):
-        self._font = ImageFont.truetype(str(self._font_path), self._font_size)
-        self._bold_font = ImageFont.truetype(str(self._bold_font_path), self._font_size)
+        # Subclasses that pick their font size only after super().__init__()
+        # (e.g. ZmanimImage via _set_font_properties) leave these at 0 here.
+        # Pillow >= 10 rejects a size of 0, so fall back to a placeholder size;
+        # such fonts are always replaced or unused before anything is drawn.
+        self._font = ImageFont.truetype(str(self._font_path), self._font_size or 1)
+        self._bold_font = ImageFont.truetype(str(self._bold_font_path), self._font_size or 1)
 
         if self._background_path:
             self._image, self._draw = _get_draw(str(self._background_path))
 
-        self._warning_font = ImageFont.truetype(str(self._bold_font_path), self._warning_font_size)
+        self._warning_font = ImageFont.truetype(str(self._bold_font_path), self._warning_font_size or 1)
         self._is_rtl = i18n_.is_rtl()
 
     def _draw_title(self, draw: ImageDraw, title: LazyProxy) -> None:
