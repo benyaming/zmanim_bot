@@ -1,6 +1,8 @@
 FROM python:3.10-slim
 
-RUN apt update && apt install -y libraqm-dev
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libraqm-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # uv package manager (pinned)
 COPY --from=ghcr.io/astral-sh/uv:0.7.3 /uv /uvx /bin/

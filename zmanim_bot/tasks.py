@@ -11,16 +11,20 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-_TEXTS = ROOT / "zmanim_bot" / "texts" / "single"
+_TEXTS = ROOT / "zmanim_bot" / "texts"
 _LOCALES = ROOT / "locales"
 _POT = _LOCALES / "zmanim_bot.pot"
+# `plural/units.py` holds the plural msgids (year/years, minute/minutes, …) that
+# the runtime uses via `_(*units.tu_*, n)`; it must be extracted too, or the .pot
+# loses every msgid_plural entry.
 _EXTRACT_SOURCES = [
-    _TEXTS / "buttons.py",
-    _TEXTS / "headers.py",
-    _TEXTS / "helpers.py",
-    _TEXTS / "messages.py",
-    _TEXTS / "names.py",
-    _TEXTS / "zmanim.py",
+    _TEXTS / "plural" / "units.py",
+    _TEXTS / "single" / "buttons.py",
+    _TEXTS / "single" / "headers.py",
+    _TEXTS / "single" / "helpers.py",
+    _TEXTS / "single" / "messages.py",
+    _TEXTS / "single" / "names.py",
+    _TEXTS / "single" / "zmanim.py",
 ]
 
 
