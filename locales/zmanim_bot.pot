@@ -1348,3 +1348,16 @@ msgstr ""
 msgid "Astronomical hour [AGRO]"
 msgstr ""
 
+
+
+#: zmanim_bot/texts/single/buttons.py:18
+msgid "Calendar"
+msgstr ""
+
+#: zmanim_bot/texts/single/messages.py:21
+msgid "Changed from the calendar app:"
+msgstr ""
+
+#: zmanim_bot/texts/single/messages.py:22
+msgid "min"
+msgstr ""

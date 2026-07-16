@@ -1443,3 +1443,16 @@ msgstr "Шаа зманит (астрономический час) [МА]"
 msgid "Astronomical hour [AGRO]"
 msgstr "Шаа зманит (астрономический час) [АГРО]"
 
+
+
+#: zmanim_bot/texts/single/buttons.py:18
+msgid "Calendar"
+msgstr "Календарь"
+
+#: zmanim_bot/texts/single/messages.py:21
+msgid "Changed from the calendar app:"
+msgstr "Изменено из приложения-календаря:"
+
+#: zmanim_bot/texts/single/messages.py:22
+msgid "min"
+msgstr "мин"

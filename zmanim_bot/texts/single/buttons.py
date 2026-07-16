@@ -12,6 +12,11 @@ manage_locations = _('Manage saved locations')
 add_location = _('Add new location')
 
 
+# Mini app (the zmanim_site calendar running inside Telegram) — used for both
+# the chat menu button and the main-menu keyboard button.
+calendar_app = _('Calendar')
+
+
 # Main menu
 mm_zmanim = _('Zmanim')
 mm_shabbat = _('Shabbat')
