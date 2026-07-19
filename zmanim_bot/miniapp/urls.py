@@ -4,8 +4,11 @@ from zmanim_bot.config import config
 from zmanim_bot.exceptions import NoLocationException
 from zmanim_bot.repository.models import User
 
-# The site serves English at the root and prefixes the other locales.
-_LOCALE_PATHS = {'he': '/he', 'ru': '/ru'}
+# English must be an explicit /en too, even though the site serves it at the
+# root: a bare root URL goes through the site's locale detection, and the
+# webview's Accept-Language (the phone language) would override the bot
+# language. /en redirects to / while pinning the locale cookie.
+_LOCALE_PATHS = {'en': '/en', 'he': '/he', 'ru': '/ru'}
 
 
 def build_miniapp_url(user: User) -> str | None:
