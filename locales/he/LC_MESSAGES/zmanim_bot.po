@@ -1456,3 +1456,13 @@ msgstr "הוסף מיקום חדש"
 msgid "Manage saved locations"
 msgstr "נהל מיקומים שמורים"
 
+
+
+msgid "Calendar"
+msgstr "לוח שנה"
+
+msgid "Changed from the calendar app:"
+msgstr "שונה מאפליקציית לוח השנה:"
+
+msgid "min"
+msgstr "דק׳"

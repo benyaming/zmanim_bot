@@ -70,7 +70,11 @@ async def _get_or_create_user(tg_user: types.User) -> User:
             )
         )
         await db_engine.save(user)
-        aiogram_metrics.manual_track('New user has joined')
+        # manual_track needs a current aiogram Update; mini-app API requests
+        # (which also get-or-create users) have none — its background task
+        # would just crash on it. Mini-app events are tracked separately.
+        if types.Update.get_current():
+            aiogram_metrics.manual_track('New user has joined')
 
     elif user.personal_info.first_name != tg_user.first_name or \
             user.personal_info.last_name != tg_user.last_name or \

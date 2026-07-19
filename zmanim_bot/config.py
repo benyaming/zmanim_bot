@@ -32,6 +32,13 @@ class Config(BaseSettings):
     GEO_API_URL: str = Field(env='GEO_API_URL')
     MAPBOX_API_KEY: str = Field(env='MAPBOX_API_KEY')
 
+    # Base URL of the companion zmanim_site deployment used as a Telegram Mini
+    # App (e.g. https://zmanim.example). Unset = all mini-app features off.
+    MINIAPP_URL: str | None = Field(None, env='MINIAPP_URL')
+    # Polling (dev) mode has no webhook server, so the mini-app API gets its own
+    # aiohttp server on this port. Unused in prod (routes join the webhook app).
+    MINIAPP_DEV_API_PORT: int = Field(8080, env='MINIAPP_DEV_API_PORT')
+
     REPORT_ADMIN_LIST: list[int] = Field(env='REPORT_ADMIN_LIST')
 
     LOCATION_NUMBER_LIMIT: int = Field(5, env='LOCATION_NUMBER_LIMIT')

@@ -1,4 +1,4 @@
-from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
+from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, WebAppInfo
 
 from zmanim_bot.config import config
 from zmanim_bot.middlewares.i18n import i18n_
@@ -11,14 +11,17 @@ def get_lang_menu() -> ReplyKeyboardMarkup:
     return kb
 
 
-def get_main_menu() -> ReplyKeyboardMarkup:
+def get_main_menu(miniapp_url: str = None) -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     kb.add(buttons.mm_zmanim.value, buttons.mm_shabbat.value, buttons.mm_holidays.value)
     kb.add(buttons.mm_rh.value, buttons.mm_daf_yomi.value, buttons.mm_fasts.value)
     kb.add(buttons.mm_zmanim_by_date.value, buttons.mm_converter.value)
-    kb.add(buttons.hm_report.value, 
-           # buttons.mm_donate.value, 
-           buttons.mm_settings.value)
+    last_row = [KeyboardButton(text=buttons.hm_report.value)]
+    if miniapp_url:
+        last_row.append(KeyboardButton(text=buttons.calendar_app.value, web_app=WebAppInfo(url=miniapp_url)))
+    # last_row.append(KeyboardButton(text=buttons.mm_donate.value))
+    last_row.append(KeyboardButton(text=buttons.mm_settings.value))
+    kb.row(*last_row)
 
     if i18n_.is_rtl():
         for row in kb.keyboard:

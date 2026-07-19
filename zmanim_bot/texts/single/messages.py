@@ -17,6 +17,10 @@ settings_format = _('Select an output type for the bot\'s responces:')
 
 request_language = _('Select your language:')
 
+# Mini app: silent confirmation that a /sync applied bot-relevant settings.
+miniapp_settings_changed = _('Changed from the calendar app:')
+minutes_short = _('min')
+
 request_location_on_init = _('For this feature, the bot should know your location. If you want to find it by name, press the button below.\nAlso, you can pass your location as an attachment or as a pair of coordinates, like <code>55.5, 32.2</code>.')
 request_location = _('If you want to find location by name, press the button below.\nAlso, you can pass your location as an attachment or as a pair of coordinates, like <code>55.5, 32.2</code>.')
 location_menu_init = _('Here you can manage your saved locations or add some more.')

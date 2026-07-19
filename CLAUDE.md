@@ -83,6 +83,19 @@ to switch to webhook mode (`start_webhook`, `WEBHOOK_PATH`).
   `BaseImage.__init__` guards this since some subclasses set their real size only
   after `super().__init__()`.
 - `zmanim_bot/repository/` — MongoDB access via odmantic (user storage).
+- `zmanim_bot/miniapp/` — Telegram Mini App integration with the companion
+  `zmanim_site` app (sibling repo). Gated on the `MINIAPP_URL` env var (unset =
+  off): personalized launch URL + chat menu button (refreshed on every
+  main-menu redirect), and an initData-authenticated HTTP API
+  (`{WEBHOOK_PATH}/miniapp/me|sync|export`) the site calls to read/sync the
+  user's location, candle-lighting offset, and havdala opinion, and to relay
+  export files to the user's chat (the webview can't download). Applied syncs
+  are confirmed to the user with a silent, localized bot message; at
+  `LOCATION_NUMBER_LIMIT` a new mini-app location is skipped, never replacing
+  a saved entry. All sends are best-effort. In prod the API rides
+  on the webhook's aiohttp server; in dev polling mode it gets its own server
+  on `MINIAPP_DEV_API_PORT` (default 8080). See `docs/telegram-mini-app.md` in
+  `zmanim_site` for the full picture.
 - `zmanim_bot/middlewares/i18n.py` — babel-based i18n; `_()` / `lazy_gettext`.
 - `zmanim_bot/texts/` — translatable strings (source for babel extraction).
 
