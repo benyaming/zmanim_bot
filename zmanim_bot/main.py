@@ -14,7 +14,10 @@ from zmanim_bot.utils import ensure_mongo_index
 
 sentry_sdk.init(dsn=config.SENTRY_KEY, integrations=[AioHttpIntegration()])
 
-MINIAPP_API_PATH = f'{config.WEBHOOK_PATH}/miniapp'
+# Normalized against a trailing slash: a reverse proxy that strips the public
+# prefix leaves WEBHOOK_PATH as '/', and the naive f-string would register
+# '//miniapp' — unreachable from outside, since nginx merges double slashes.
+MINIAPP_API_PATH = f"{config.WEBHOOK_PATH.rstrip('/')}/miniapp"
 
 # Keeps the polling-mode API server alive for the process lifetime.
 _dev_api_runner: web.AppRunner | None = None
