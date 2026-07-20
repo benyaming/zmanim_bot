@@ -6,15 +6,19 @@ added directly (NOT via add_subapp: the pinned aiohttp 3.8.6 resolves sub-app
 prefixes through `request.url`, which the pinned yarl rejects when the Host
 header carries a port) and the CORS middleware scopes itself by path prefix,
 so the webhook route is untouched. Auth is stateless: every request carries
-the Mini App initData string, validated against the bot token
-(auth.validate_init_data). CORS allows only the MINIAPP_URL origin in prod,
-anything in dev.
+the Mini App initData string — or, for the calendar site outside Telegram, a
+Login Widget payload — both validated against the bot token (auth.py). CORS
+allows only the MINIAPP_URL origin in prod, anything in dev.
 
-  POST /me    {init_data}                                    -> profile
-  POST /sync  {init_data, location? | cl_offset? | havdala_opinion?} -> profile
+  POST /me    {init_data | auth_data}                        -> profile
+  POST /sync  {init_data | auth_data,
+               location? | cl_offset? | havdala_opinion? | web_prefs?} -> profile
 
 The profile is {language, cl_offset, havdala_opinion, location{lat,lng,name,
-elevation} | null, locations[...]}. Sync mirrors the bot's own location
+elevation} | null, locations[...], web_prefs | null}. `web_prefs` is the
+site's full settings snapshot (its serialized sync blob), stored verbatim and
+returned as-is — the bot never interprets it, it only bounds its size and
+checks it is JSON. Sync mirrors the bot's own location
 semantics: matching coordinates re-activate the saved entry; a new place is
 appended while under LOCATION_NUMBER_LIMIT. At the limit a new place is NOT
 applied — the bot's saved list is user-curated and never overwritten from the
@@ -23,6 +27,7 @@ mini app (the app keeps its local choice; the rest of the sync still applies).
 
 import html
 import io
+import json
 from urllib.parse import urlsplit
 
 from aiogram import types
@@ -37,11 +42,15 @@ from zmanim_bot.repository.models import HAVDALA_OPINIONS, Location, User
 from zmanim_bot.texts.single import buttons, messages
 from zmanim_bot.texts.single import zmanim as zmanim_texts
 
-from .auth import validate_init_data
+from .auth import validate_init_data, validate_login_widget
 from .metrics import track_miniapp_event
 
 CL_OFFSET_MIN = 1
 CL_OFFSET_MAX = 120
+
+# The site's settings snapshot is a few KB even with every list maxed out;
+# the cap only keeps garbage out of Mongo (site-side cap is the same).
+MAX_WEB_PREFS_CHARS = 65536
 
 # Generous cap for relayed export files (multi-page PDF renders run a few MB;
 # Telegram bots can send up to 50 MB).
@@ -108,13 +117,32 @@ async def _user_from_init_data(init_data) -> User:
     return await _get_or_create_user(tg_user)
 
 
+async def _user_from_login_widget(auth_data) -> User:
+    """Validate a Login Widget payload and return the bot user it belongs to."""
+    parsed = validate_login_widget(auth_data, config.BOT_TOKEN) if isinstance(auth_data, dict) else None
+    if not parsed:
+        raise web.HTTPUnauthorized(reason='Invalid auth_data')
+    tg_user = types.User(
+        id=parsed['id'],
+        is_bot=False,
+        first_name=parsed.get('first_name'),
+        last_name=parsed.get('last_name'),
+        username=parsed.get('username'),
+    )
+    return await _get_or_create_user(tg_user)
+
+
 async def _authorize(request: web.Request) -> tuple[User, dict]:
-    """Validate a JSON request's initData and return the bot user + body."""
+    """Validate a JSON request's credential (Mini App initData, or the site's
+    Login Widget payload) and return the bot user + body."""
     try:
         body = await request.json()
     except ValueError:
         raise web.HTTPBadRequest(reason='Invalid JSON body')
-    user = await _user_from_init_data(body.get('init_data'))
+    if body.get('auth_data') is not None:
+        user = await _user_from_login_widget(body['auth_data'])
+    else:
+        user = await _user_from_init_data(body.get('init_data'))
     return user, body
 
 
@@ -139,6 +167,8 @@ def _profile_payload(user: User) -> dict:
         'location': location,
         # The whole saved list, so the mini app can offer them like the bot does.
         'locations': [_location_payload(loc) for loc in user.location_list],
+        # The site's settings snapshot, verbatim (opaque to the bot).
+        'web_prefs': user.web_prefs,
     }
 
 
@@ -212,10 +242,15 @@ async def _notify_settings_changed(user: User, changes: list) -> None:
         logger.warning('miniapp: could not notify %s about a settings change: %s', user.user_id, e)
 
 
+def _auth_source(body: dict) -> str:
+    """'web' for a Login Widget sign-in (site outside Telegram), else 'miniapp'."""
+    return 'web' if body.get('auth_data') is not None else 'miniapp'
+
+
 async def handle_me(request: web.Request) -> web.Response:
-    user, _ = await _authorize(request)
+    user, body = await _authorize(request)
     # /me fires once per launch — the "calendar opened" stats event.
-    await track_miniapp_event('Mini app opened', user)
+    await track_miniapp_event('Mini app opened', user, source=_auth_source(body))
     return web.json_response(_profile_payload(user))
 
 
@@ -269,10 +304,24 @@ async def handle_sync(request: web.Request) -> web.Response:
         user.havdala_opinion = havdala
         changed = True
 
+    web_prefs = body.get('web_prefs')
+    if web_prefs is not None:
+        # Stored verbatim, never interpreted; only bounded and JSON-checked.
+        # Blob updates are routine background syncs — no chat notification.
+        if not isinstance(web_prefs, str) or len(web_prefs) > MAX_WEB_PREFS_CHARS:
+            raise web.HTTPBadRequest(reason='web_prefs must be a string under the size cap')
+        try:
+            json.loads(web_prefs)
+        except ValueError:
+            raise web.HTTPBadRequest(reason='web_prefs must be valid JSON')
+        if web_prefs != user.web_prefs:
+            user.web_prefs = web_prefs
+            changed = True
+
     if changed:
         await db_engine.save(user)
-        fields = [key for key in ('location', 'cl_offset', 'havdala_opinion') if body.get(key) is not None]
-        await track_miniapp_event('Mini app settings sync', user, fields=fields)
+        fields = [key for key in ('location', 'cl_offset', 'havdala_opinion', 'web_prefs') if body.get(key) is not None]
+        await track_miniapp_event('Mini app settings sync', user, fields=fields, source=_auth_source(body))
     if changes:
         await _notify_settings_changed(user, changes)
     return web.json_response(_profile_payload(user))

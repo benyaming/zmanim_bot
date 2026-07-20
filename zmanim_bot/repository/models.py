@@ -75,6 +75,9 @@ class User(Model):
     zmanim_settings: ZmanimSettings = Field(default_factory=ZmanimSettings)
     processor_type: str = 'image'
     omer: OmerSettings = Field(default_factory=OmerSettings)
+    # The calendar site's full settings snapshot (serialized JSON), stored
+    # verbatim for cross-device sync — opaque to the bot (see the miniapp API).
+    web_prefs: Optional[str] = None
 
     meta: UserMeta = Field(default_factory=UserMeta)
 
