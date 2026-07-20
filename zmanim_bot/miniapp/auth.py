@@ -8,6 +8,11 @@ from urllib.parse import parse_qsl
 # still forces a fresh signature at least daily.
 INIT_DATA_MAX_AGE_SECONDS = 24 * 60 * 60
 
+# A Login Widget payload is minted once, at sign-in on the website, and then
+# reused as the sync credential — expiring it forces a fresh sign-in, so the
+# window is a session length, not a request guard.
+LOGIN_WIDGET_MAX_AGE_SECONDS = 90 * 24 * 60 * 60
+
 
 def validate_init_data(init_data: str, bot_token: str) -> dict | None:
     """Validate a Mini App initData string and return its parsed fields.
@@ -48,4 +53,40 @@ def validate_init_data(init_data: str, bot_token: str) -> dict | None:
         if not isinstance(fields['user'], dict) or 'id' not in fields['user']:
             return None
 
+    return fields
+
+
+def validate_login_widget(data: dict, bot_token: str) -> dict | None:
+    """Validate a Telegram Login Widget payload and return its fields.
+
+    Implements https://core.telegram.org/widgets/login#checking-authorization:
+    like initData, `hash` must equal HMAC-SHA256 of the sorted key=value
+    lines, but the key here is the plain SHA256 of the bot token. Returns
+    None when the signature is wrong, the payload is malformed, or older
+    than LOGIN_WIDGET_MAX_AGE_SECONDS.
+    """
+    if not isinstance(data, dict):
+        return None
+    received_hash = data.get('hash')
+    if not isinstance(received_hash, str) or not received_hash:
+        return None
+    fields = {key: value for key, value in data.items() if key != 'hash'}
+    if any(not isinstance(value, (str, int)) for value in fields.values()):
+        return None
+
+    check_string = '\n'.join(f'{key}={fields[key]}' for key in sorted(fields))
+    secret_key = hashlib.sha256(bot_token.encode()).digest()
+    expected_hash = hmac.new(secret_key, check_string.encode(), hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(expected_hash, received_hash):
+        return None
+
+    try:
+        auth_date = int(fields.get('auth_date', 0))
+    except (TypeError, ValueError):
+        return None
+    if auth_date <= 0 or time.time() - auth_date > LOGIN_WIDGET_MAX_AGE_SECONDS:
+        return None
+
+    if not isinstance(fields.get('id'), int):
+        return None
     return fields
