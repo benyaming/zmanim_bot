@@ -104,3 +104,30 @@ class User(Model):
         except KeyError:
             raise UnknownProcessorException()
 
+
+
+class WebSync(Model):
+    """A calendar-site settings blob for someone with no Telegram account.
+
+    Deliberately NOT a `User`: user documents are Telegram-shaped (`user_id` is
+    a Telegram id, `personal_info` comes from Telegram) and `broadcast` iterates
+    that collection to message everyone — synthetic rows there would corrupt
+    both. This is a plain key-value row instead, in its own collection.
+
+    The credential is `key` plus its signature (see api.websync_signature):
+    both come from /google-key after a Google ID token is verified, so only a
+    real signed-in account can read or create a row — the bot need not store
+    the Google id or keep any session. The bot never interprets `blob`; it only
+    bounds its size and checks that it is JSON, exactly as for `User.web_prefs`.
+    `updated_at` carries a TTL index (created in utils.ensure_mongo_index) so a
+    blob no device has touched in a long time is reaped; an active device keeps
+    re-writing and refreshing it.
+    """
+
+    key: str = Field(index=True, unique=True)
+    blob: str
+    updated_at: dt = Field(default_factory=dt.utcnow)
+
+    class Config:
+        collection = 'web_sync'
+        parse_doc_with_default_factories = True

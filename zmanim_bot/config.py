@@ -38,6 +38,17 @@ class Config(BaseSettings):
     # Polling (dev) mode has no webhook server, so the mini-app API gets its own
     # aiohttp server on this port. Unused in prod (routes join the webhook app).
     MINIAPP_DEV_API_PORT: int = Field(8080, env='MINIAPP_DEV_API_PORT')
+    # The calendar site's Google OAuth **web** client id — the same public value
+    # the site is built with. Only used to check the `aud` of an ID token before
+    # handing back that account's sync key. Unset = Google sign-in refused.
+    GOOGLE_CLIENT_ID: str | None = Field(None, env='GOOGLE_CLIENT_ID')
+    # Whether to trust the X-Forwarded-For header for the per-IP rate limit on
+    # the site sync endpoints. Set True ONLY when a reverse proxy that
+    # *overwrites* XFF sits in front (so the client can't forge it); then the
+    # real client IP is used. Default False uses the direct socket peer, which
+    # a client can't spoof — safe when the service is directly reachable, at the
+    # cost of sharing one bucket behind a proxy.
+    TRUST_PROXY_HEADERS: bool = Field(False, env='TRUST_PROXY_HEADERS')
 
     REPORT_ADMIN_LIST: list[int] = Field(env='REPORT_ADMIN_LIST')
 
