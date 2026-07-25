@@ -45,6 +45,9 @@ async def ensure_mongo_index():
     # TTL: reap blobs no device has touched in a long time. An active device
     # re-writes on every sync, refreshing updated_at, so only truly abandoned
     # rows expire (creation is authenticated, so this is hygiene, not a bound).
-    await db_engine.get_collection(WebSync).create_indexes(
-        [IndexModel('updated_at', expireAfterSeconds=WEB_SYNC_TTL_SECONDS)]
-    )
+    # `account` (a hash of the Google sub) is unique so one account maps to one
+    # key, but SPARSE so any pre-account rows (no field) don't collide on null.
+    await db_engine.get_collection(WebSync).create_indexes([
+        IndexModel('updated_at', expireAfterSeconds=WEB_SYNC_TTL_SECONDS),
+        IndexModel('account', unique=True, sparse=True),
+    ])

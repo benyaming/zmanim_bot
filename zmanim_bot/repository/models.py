@@ -116,14 +116,22 @@ class WebSync(Model):
 
     The credential is `key` plus its signature (see api.websync_signature):
     both come from /google-key after a Google ID token is verified, so only a
-    real signed-in account can read or create a row — the bot need not store
-    the Google id or keep any session. The bot never interprets `blob`; it only
-    bounds its size and checks that it is JSON, exactly as for `User.web_prefs`.
-    `updated_at` carries a TTL index (created in utils.ensure_mongo_index) so a
-    blob no device has touched in a long time is reaped; an active device keeps
-    re-writing and refreshing it.
+    real signed-in account can read or create a row — the bot need not keep any
+    session. `account` is a one-way hash of the Google `sub` (never the id
+    itself); /google-key looks a row up by it and mints `key` once, so the key
+    is **stable across bot-token rotations** — a rotation invalidates the
+    token-derived `sig` and forces a re-sign-in, but the same key (hence the
+    same data) is handed back. The bot never interprets `blob`; it only bounds
+    its size and checks it is JSON, as for `User.web_prefs`. `updated_at`
+    carries a TTL index (see utils.ensure_mongo_index) so a blob no device has
+    touched in a long time is reaped; an active device keeps refreshing it.
+
+    Indexes (both created in utils.ensure_mongo_index): `account` is unique but
+    **sparse** — pre-account rows have no such field and several nulls would
+    otherwise collide on a plain unique index.
     """
 
+    account: Optional[str] = None
     key: str = Field(index=True, unique=True)
     blob: str
     updated_at: dt = Field(default_factory=dt.utcnow)

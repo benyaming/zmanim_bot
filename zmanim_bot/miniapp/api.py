@@ -21,9 +21,10 @@ They exist because a browser cannot sync with Google Drive in the background:
 minting an access token always shows UI and refresh tokens are never issued to
 browsers, so a device opening the site once a day would face a popup every
 visit. Instead the bot holds the blob. /google-key verifies a Google ID token
-once per device and returns a `key` (derived from the account) plus a `sig`
-that authenticates it; /websync stores and returns the blob for a key whose
-`sig` checks out. No User document is involved (see repository.models.WebSync).
+once per device and returns the account's `key` (random, stored, stable across
+bot-token rotations) plus a `sig` that authenticates it; /websync stores and
+returns the blob for a key whose `sig` checks out. No User document is involved
+(see repository.models.WebSync).
 
 The profile is {language, cl_offset, havdala_opinion, location{lat,lng,name,
 elevation} | null, locations[...], web_prefs | null}. `web_prefs` is the
@@ -42,6 +43,7 @@ import html
 import io
 import json
 import re
+import secrets
 from datetime import datetime as dt
 from typing import Optional
 from urllib.parse import urlsplit
@@ -552,20 +554,16 @@ async def handle_web_sync(request: web.Request) -> web.Response:
     return web.json_response({'web_prefs': record['blob'] if record else None})
 
 
-def google_sync_key(sub: str) -> str:
-    """The sync key for a Google account.
+def google_account_id(sub: str) -> str:
+    """A stable, token-independent handle for a Google account.
 
-    HMAC of the account's stable `sub` under the bot token: deterministic, so
-    every device signing into the same Google account lands on the same blob,
-    and unguessable without the bot token, so knowing someone's Google id does
-    not reveal their key. It never leaves this server except to the signed-in
-    device itself, and the Google id is never stored.
-
-    Tied to BOT_TOKEN: rotating that orphans existing blobs (users re-sync
-    rather than lose settings, since the device still holds its own copy).
+    Just SHA-256 of the account's `sub`, used only to look the account's row up
+    (see handle_google_key). NOT derived from the bot token — the sync key must
+    survive a token rotation (see websync_signature), so the token can't be part
+    of what identifies the row. One-way, so the stored value can't be turned
+    back into the Google id; the id itself is never stored.
     """
-    digest = hmac.new(config.BOT_TOKEN.encode(), f'google-sync:{sub}'.encode(), hashlib.sha256)
-    return digest.hexdigest()[:32]
+    return hashlib.sha256(f'google-account:{sub}'.encode()).hexdigest()
 
 
 async def handle_google_key(request: web.Request) -> web.Response:
@@ -578,6 +576,12 @@ async def handle_google_key(request: web.Request) -> web.Response:
     popup. The signature authenticates every later /websync call, so the store
     can be public without letting anyone create rows.
 
+    The sync `key` is random and STORED (keyed by the account handle), not
+    derived from the bot token, so rotating the token doesn't change it. What a
+    rotation does invalidate is `sig` (HMAC of the token) — so the device
+    re-signs in, gets the SAME key with a fresh sig, and its data is intact.
+    That's the Telegram-parity behaviour: rotation forces re-auth, never loss.
+
     The profile fields come back too so the site can show who is signed in
     without a second Google call.
     """
@@ -589,7 +593,7 @@ async def handle_google_key(request: web.Request) -> web.Response:
     if not claims:
         raise web.HTTPUnauthorized(reason='Invalid Google credential')
 
-    key = google_sync_key(claims['sub'])
+    key = await _key_for_account(google_account_id(claims['sub']))
     return web.json_response({
         'key': key,
         'sig': websync_signature(key),
@@ -597,6 +601,31 @@ async def handle_google_key(request: web.Request) -> web.Response:
         'name': claims.get('name'),
         'picture': claims.get('picture'),
     })
+
+
+async def _key_for_account(account: str) -> str:
+    """The account's stable sync key: the stored one, or a fresh random one.
+
+    A single atomic upsert keyed by `account`, so the key is minted once and
+    reused for every later sign-in and every device. `$setOnInsert` means a
+    matching row keeps its existing key; on the rare concurrent first sign-in
+    the account's unique index makes one insert win and the other retry into
+    the now-existing row.
+    """
+    collection = db_engine.get_collection(WebSync)
+    for attempt in range(2):
+        try:
+            doc = await collection.find_one_and_update(
+                {'account': account},
+                {'$setOnInsert': {'account': account, 'key': secrets.token_urlsafe(24), 'blob': '', 'updated_at': dt.utcnow()}},
+                upsert=True,
+                return_document=ReturnDocument.AFTER,
+            )
+            return doc['key']
+        except DuplicateKeyError:
+            if attempt:
+                raise
+    raise web.HTTPInternalServerError(reason='Could not allocate a sync key')
 
 
 def register_miniapp_api(app: web.Application, prefix: str) -> None:
