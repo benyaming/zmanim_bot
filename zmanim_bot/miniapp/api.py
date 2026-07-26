@@ -13,8 +13,9 @@ allows only the MINIAPP_URL origin in prod, anything in dev.
   POST /me    {init_data | auth_data}                        -> profile
   POST /sync  {init_data | auth_data,
                location? | cl_offset? | havdala_opinion? | web_prefs?} -> profile
-  POST /websync    {key, sig, web_prefs?}                    -> {web_prefs}
-  POST /google-key {credential}                              -> {key, sig, email, name, picture}
+  POST /websync        {key, sig, web_prefs?}                -> {web_prefs}   (404 if the key is unknown)
+  POST /websync-delete {key, sig}                            -> {deleted}
+  POST /google-key     {credential}                          -> {key, sig, email, name, picture}
 
 /websync and /google-key serve calendar-site users with no Telegram account.
 They exist because a browser cannot sync with Google Drive in the background:
@@ -515,59 +516,53 @@ def websync_signature(key: str) -> str:
     return hmac.new(config.BOT_TOKEN.encode(), f'websync:{key}'.encode(), hashlib.sha256).hexdigest()
 
 
-async def _upsert_blob(collection, key: str, blob: str) -> Optional[dict]:
-    """Store `blob` under `key` atomically, returning the stored row.
-
-    A single upsert, so two devices first-writing the same key concurrently
-    can't both insert (the read-then-insert this replaced let the second raise
-    DuplicateKeyError → 500). On the rare server-side upsert race that still
-    surfaces a duplicate, retry once — the row now exists, so it updates.
-    """
-    update = {'$set': {'blob': blob, 'updated_at': dt.utcnow()}}
-    for attempt in range(2):
-        try:
-            return await collection.find_one_and_update(
-                {'key': key}, update, upsert=True, return_document=ReturnDocument.AFTER,
-            )
-        except DuplicateKeyError:
-            if attempt:
-                raise
-    return None
+def _verify_websync_sig(key: str, sig) -> None:
+    """Reject unless `sig` is the signature the bot issued for `key`. The gate
+    that makes these public endpoints safe — only keys the bot minted pass."""
+    if not isinstance(sig, str) or not hmac.compare_digest(sig, websync_signature(key)):
+        raise web.HTTPUnauthorized(reason='Invalid key signature')
 
 
 async def handle_web_sync(request: web.Request) -> web.Response:
     """Read and write the settings blob of a site user with no Telegram account.
 
-    There is no Telegram account and no session here — the credential is the
-    `key` the site got from /google-key plus its `sig` (see websync_signature).
-    The signature is what makes this safe to expose: without it any caller
-    could create rows under invented keys and grow the collection without
-    bound. Sending `web_prefs` stores it; omitting it is a plain read. One
-    round trip both pushes and pulls.
+    Sending `web_prefs` stores it; omitting it is a plain read. Both are
+    update-only (upsert=False): the row is created once, by /google-key, WITH
+    its account mapping. A write must never create a row here — a returning
+    device whose row was reaped after the TTL would otherwise recreate an
+    account-less orphan, and the next /google-key for that account would mint a
+    different key, splitting it. So a missing row is 404: the site drops the
+    credential and re-signs in, and /google-key re-creates the account-linked
+    row. A read refreshes the TTL so an in-use row isn't reaped.
     """
     body = await _json_dict_body(request)
-
     await _enforce_rate_limit(request, 'websync')
-
     key = _web_sync_key(body)
-    sig = body.get('sig')
-    if not isinstance(sig, str) or not hmac.compare_digest(sig, websync_signature(key)):
-        raise web.HTTPUnauthorized(reason='Invalid key signature')
+    _verify_websync_sig(key, body.get('sig'))
 
     blob = _validated_blob(body)
     collection = db_engine.get_collection(WebSync)
-    if blob is not None:
-        record = await _upsert_blob(collection, key, blob)
-    else:
-        # A read still refreshes the TTL: a device whose settings already match
-        # the remote only ever reads, and without this its row would be reaped
-        # mid-use, losing the only remote copy. upsert=False so a read never
-        # creates a row.
-        record = await collection.find_one_and_update(
-            {'key': key}, {'$currentDate': {'updated_at': True}}, return_document=ReturnDocument.AFTER,
-        )
+    update = {'$set': {'blob': blob, 'updated_at': dt.utcnow()}} if blob is not None else {'$currentDate': {'updated_at': True}}
+    record = await collection.find_one_and_update(
+        {'key': key}, update, upsert=False, return_document=ReturnDocument.AFTER,
+    )
+    if record is None:
+        raise web.HTTPNotFound(reason='Unknown key — re-authenticate')
 
-    return web.json_response({'web_prefs': record['blob'] if record else None})
+    return web.json_response({'web_prefs': record['blob']})
+
+
+async def handle_web_sync_delete(request: web.Request) -> web.Response:
+    """Delete a Google user's stored settings — the account panel's "delete my
+    data" action. Authenticated by key + sig, so a signed-in user can erase
+    their own row without support having to locate an opaque key. Idempotent:
+    deleting an already-absent row still reports success."""
+    body = await _json_dict_body(request)
+    await _enforce_rate_limit(request, 'websync')
+    key = _web_sync_key(body)
+    _verify_websync_sig(key, body.get('sig'))
+    result = await db_engine.get_collection(WebSync).delete_one({'key': key})
+    return web.json_response({'deleted': result.deleted_count > 0})
 
 
 def google_account_id(sub: str) -> str:
@@ -651,4 +646,5 @@ def register_miniapp_api(app: web.Application, prefix: str) -> None:
     app.router.add_post(f'{prefix}/sync', handle_sync)
     app.router.add_post(f'{prefix}/export', handle_export)
     app.router.add_post(f'{prefix}/websync', handle_web_sync)
+    app.router.add_post(f'{prefix}/websync-delete', handle_web_sync_delete)
     app.router.add_post(f'{prefix}/google-key', handle_google_key)
