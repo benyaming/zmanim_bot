@@ -139,3 +139,26 @@ class WebSync(Model):
     class Config:
         collection = 'web_sync'
         parse_doc_with_default_factories = True
+
+
+class WebPrefs(Model):
+    """A Telegram user's calendar-site settings blob, stored APART from their
+    `User` document.
+
+    It used to live on `User.web_prefs`, but the bot mutates `User` through
+    full-document saves in a dozen setters (language, location, …). A website
+    blob sync and any such save racing on the same user would let the save's
+    stale copy revert the blob (see the miniapp API). Keeping it in its own
+    collection, keyed by `user_id` and written only by the website, takes it
+    out of every `User` save entirely. `User.web_prefs` remains only as a
+    read-fallback for rows written before this split; the website's next sync
+    populates the row here and it becomes authoritative.
+    """
+
+    user_id: int = Field(index=True, unique=True)
+    blob: str
+    updated_at: dt = Field(default_factory=dt.utcnow)
+
+    class Config:
+        collection = 'web_prefs'
+        parse_doc_with_default_factories = True

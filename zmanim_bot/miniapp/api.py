@@ -58,7 +58,7 @@ from zmanim_bot.exceptions import NoLocationException
 from zmanim_bot.middlewares.i18n import i18n_
 from zmanim_bot.misc import bot, db_engine, logger, rate_limit_redis
 from zmanim_bot.repository._storage import MAX_LOCATION_NAME_SIZE, _get_or_create_user
-from zmanim_bot.repository.models import HAVDALA_OPINIONS, Location, User, WebSync
+from zmanim_bot.repository.models import HAVDALA_OPINIONS, Location, User, WebPrefs, WebSync
 from zmanim_bot.texts.single import buttons, messages
 from zmanim_bot.texts.single import zmanim as zmanim_texts
 
@@ -232,7 +232,31 @@ def _location_payload(location: Location) -> dict:
     }
 
 
-def _profile_payload(user: User) -> dict:
+async def _load_web_prefs(user: User) -> Optional[str]:
+    """The user's site settings blob from the web_prefs collection, falling back
+    to the legacy `User.web_prefs` for rows written before the split."""
+    row = await db_engine.get_collection(WebPrefs).find_one({'user_id': user.user_id})
+    if row and isinstance(row.get('blob'), str):
+        return row['blob']
+    return user.web_prefs
+
+
+async def _store_web_prefs(user_id: int, blob: str) -> bool:
+    """Write the blob to the web_prefs collection (targeted upsert, never part of
+    a User save). Returns whether it changed. Reading-then-writing is safe here:
+    only the website writes this field, and it is alone in its own row, so the
+    worst case is last-write-wins between two site pushes — the sync model."""
+    collection = db_engine.get_collection(WebPrefs)
+    existing = await collection.find_one({'user_id': user_id})
+    if existing and existing.get('blob') == blob:
+        return False
+    await collection.update_one(
+        {'user_id': user_id}, {'$set': {'blob': blob, 'updated_at': dt.utcnow()}}, upsert=True
+    )
+    return True
+
+
+async def _profile_payload(user: User) -> dict:
     try:
         location = _location_payload(user.location)
     except NoLocationException:
@@ -244,8 +268,9 @@ def _profile_payload(user: User) -> dict:
         'location': location,
         # The whole saved list, so the mini app can offer them like the bot does.
         'locations': [_location_payload(loc) for loc in user.location_list],
-        # The site's settings snapshot, verbatim (opaque to the bot).
-        'web_prefs': user.web_prefs,
+        # The site's settings snapshot, verbatim (opaque to the bot). Stored in
+        # its own collection so a concurrent User save can't revert it.
+        'web_prefs': await _load_web_prefs(user),
     }
 
 
@@ -328,7 +353,7 @@ async def handle_me(request: web.Request) -> web.Response:
     user, body = await _authorize(request)
     # /me fires once per launch — the "calendar opened" stats event.
     await track_miniapp_event('Mini app opened', user, source=_auth_source(body))
-    return web.json_response(_profile_payload(user))
+    return web.json_response(await _profile_payload(user))
 
 
 async def handle_sync(request: web.Request) -> web.Response:
@@ -341,12 +366,9 @@ async def handle_sync(request: web.Request) -> web.Response:
     # None when there was nothing before. No-op writes are saved but not
     # announced (nothing visibly changed).
     changes: list = []
-    changed = False
-    # Did a *structured* field change (location / cl_offset / havdala)? Those
-    # are rare, deliberate edits and go through a full-document save. A
-    # web_prefs-only change (the routine background blob sync) does not, so it
-    # can't rewrite — and clobber — a structured field a bot handler changed
-    # concurrently between this request's load and its write.
+    # Did a *structured* field change (location / cl_offset / havdala)? Those go
+    # through a full-document save; web_prefs is persisted separately, so a
+    # web_prefs-only sync never touches the User document at all.
     structured_changed = False
 
     if body.get('location') is not None:
@@ -355,7 +377,6 @@ async def handle_sync(request: web.Request) -> web.Response:
         except NoLocationException:
             old_location = None
         if _apply_location(user, body['location']):
-            changed = True
             structured_changed = True
             if user.location.name != old_location:
                 changes.append((buttons.sm_location, old_location, user.location.name))
@@ -371,7 +392,6 @@ async def handle_sync(request: web.Request) -> web.Response:
                 f'{cl_offset} {messages.minutes_short}',
             ))
         user.cl_offset = cl_offset
-        changed = True
         structured_changed = True
 
     havdala = body.get('havdala_opinion')
@@ -387,10 +407,10 @@ async def handle_sync(request: web.Request) -> web.Response:
                 getattr(zmanim_texts, havdala),
             ))
         user.havdala_opinion = havdala
-        changed = True
         structured_changed = True
 
     web_prefs = body.get('web_prefs')
+    web_prefs_changed = False
     if web_prefs is not None:
         # Stored verbatim, never interpreted; only bounded and JSON-checked.
         # Blob updates are routine background syncs — no chat notification.
@@ -400,24 +420,20 @@ async def handle_sync(request: web.Request) -> web.Response:
             json.loads(web_prefs)
         except ValueError:
             raise web.HTTPBadRequest(reason='web_prefs must be valid JSON')
-        if web_prefs != user.web_prefs:
-            user.web_prefs = web_prefs
-            changed = True
+        # Its own collection, not a field on User — so the full-document save
+        # above (or any bot setter's) can never revert it.
+        web_prefs_changed = await _store_web_prefs(user.user_id, web_prefs)
 
-    if changed:
-        if structured_changed:
-            await db_engine.save(user)
-        else:
-            # web_prefs-only: write just that field, so a routine blob sync
-            # can't overwrite structured fields with the copy it loaded.
-            await db_engine.get_collection(User).update_one(
-                {'user_id': user.user_id}, {'$set': {'web_prefs': user.web_prefs}}
-            )
+    # Structured fields go through a full save; web_prefs is already persisted
+    # separately, so a web_prefs-only sync does not touch the User document.
+    if structured_changed:
+        await db_engine.save(user)
+    if structured_changed or web_prefs_changed:
         fields = [key for key in ('location', 'cl_offset', 'havdala_opinion', 'web_prefs') if body.get(key) is not None]
         await track_miniapp_event('Mini app settings sync', user, fields=fields, source=_auth_source(body))
     if changes:
         await _notify_settings_changed(user, changes)
-    return web.json_response(_profile_payload(user))
+    return web.json_response(await _profile_payload(user))
 
 
 async def handle_export(request: web.Request) -> web.Response:

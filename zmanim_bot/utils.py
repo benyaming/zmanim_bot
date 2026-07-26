@@ -6,7 +6,7 @@ from pymongo import IndexModel
 
 from zmanim_bot.misc import collection, db_engine
 from zmanim_bot.repository.bot_repository import get_or_set_processor_type
-from zmanim_bot.repository.models import WebSync
+from zmanim_bot.repository.models import WebPrefs, WebSync
 
 # Reap settings blobs untouched for this long (see ensure_mongo_index).
 WEB_SYNC_TTL_SECONDS = 730 * 24 * 60 * 60
@@ -51,3 +51,8 @@ async def ensure_mongo_index():
         IndexModel('updated_at', expireAfterSeconds=WEB_SYNC_TTL_SECONDS),
         IndexModel('account', unique=True, sparse=True),
     ])
+    # Telegram users' site blob lives in its own collection (see WebPrefs),
+    # one row per user_id, so a full-document User save can't revert it.
+    await db_engine.get_collection(WebPrefs).create_indexes(
+        [IndexModel('user_id', unique=True)]
+    )
