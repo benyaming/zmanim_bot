@@ -42,12 +42,13 @@ class Config(BaseSettings):
     # the site is built with. Only used to check the `aud` of an ID token before
     # handing back that account's sync key. Unset = Google sign-in refused.
     GOOGLE_CLIENT_ID: str | None = Field(None, env='GOOGLE_CLIENT_ID')
-    # Whether to trust the X-Forwarded-For header for the per-IP rate limit on
-    # the site sync endpoints. Set True ONLY when a reverse proxy that
-    # *overwrites* XFF sits in front (so the client can't forge it); then the
-    # real client IP is used. Default False uses the direct socket peer, which
-    # a client can't spoof — safe when the service is directly reachable, at the
-    # cost of sharing one bucket behind a proxy.
+    # Whether to trust the X-Real-IP header for the per-IP rate limit on the
+    # site sync endpoints. Set True ONLY when the reverse proxy sets X-Real-IP
+    # to the real client (nginx `proxy_set_header X-Real-IP $remote_addr;`,
+    # which overwrites any client value) — then the limit keys on the real
+    # client. Default False uses the direct socket peer: unspoofable, but behind
+    # a proxy that's the proxy's IP, i.e. one shared bucket, so set True in the
+    # proxied production deployment AFTER confirming nginx sets the header.
     TRUST_PROXY_HEADERS: bool = Field(False, env='TRUST_PROXY_HEADERS')
 
     REPORT_ADMIN_LIST: list[int] = Field(env='REPORT_ADMIN_LIST')

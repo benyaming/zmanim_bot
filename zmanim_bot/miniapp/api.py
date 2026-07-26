@@ -92,16 +92,20 @@ WEB_SYNC_RATE_WINDOW = 60
 
 
 def _client_ip(request: web.Request) -> str:
-    # X-Forwarded-For is client-supplied and spoofable unless a trusted proxy
-    # overwrites it, so it's used only when TRUST_PROXY_HEADERS says so.
-    # Otherwise the direct socket peer, which the caller cannot forge — else a
-    # client rotating the header would get a fresh bucket per request and defeat
-    # the limit.
+    # The real client IP for the per-IP rate limit. Behind the production proxy
+    # it is X-Real-IP, which nginx sets to $remote_addr and OVERWRITES, so a
+    # client can't forge it. Deliberately NOT X-Forwarded-For: nginx appends to
+    # it, so its first hop is whatever the client sent — spoofable, and keying
+    # the limit on it would let one caller rotate the header to get a fresh
+    # bucket per request. When no trusted proxy is declared, fall back to the
+    # socket peer (also unforgeable, but behind a proxy that's the proxy's IP,
+    # i.e. one shared bucket — hence the flag). TRUST_PROXY_HEADERS must only be
+    # set once nginx is confirmed to set X-Real-IP on this location, or a
+    # client-sent X-Real-IP would pass through and defeat the limit.
     if config.TRUST_PROXY_HEADERS:
-        forwarded = request.headers.get('X-Forwarded-For', '')
-        first = forwarded.split(',')[0].strip()
-        if first:
-            return first
+        real = request.headers.get('X-Real-IP', '').strip()
+        if real:
+            return real
     return request.remote or 'unknown'
 
 
