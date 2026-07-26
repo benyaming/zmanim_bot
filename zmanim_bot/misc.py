@@ -4,6 +4,7 @@ from aiogram.contrib.fsm_storage.redis import RedisStorage2
 from motor.core import AgnosticCollection
 from motor.motor_asyncio import AsyncIOMotorClient
 from odmantic import AIOEngine
+from redis.asyncio import Redis as AsyncRedis
 
 from .config import config
 
@@ -19,4 +20,11 @@ loop = bot.loop
 motor_client = AsyncIOMotorClient(config.DB_URL)
 collection: AgnosticCollection = motor_client[config.DB_NAME][config.DB_COLLECTION_NAME]
 db_engine = AIOEngine(motor_client, database=config.DB_NAME)
+
+# A dedicated async Redis client for the mini-app API's rate limiting. Separate
+# from the aiogram FSM storage above (whose `.redis()` accessor is deprecated
+# and meant only for aiogram's own use); same server and db, namespaced keys.
+rate_limit_redis = AsyncRedis(
+    host=config.REDIS_HOST, port=config.REDIS_PORT, db=config.REDIS_DB, decode_responses=True,
+)
 

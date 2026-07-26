@@ -1,8 +1,11 @@
+import asyncio
 import hashlib
 import hmac
 import json
 import time
 from urllib.parse import parse_qsl
+
+from aiohttp import ClientError, ClientSession, ClientTimeout
 
 # initData is minted when the user opens the mini app, so a generous window
 # still forces a fresh signature at least daily.
@@ -90,3 +93,59 @@ def validate_login_widget(data: dict, bot_token: str) -> dict | None:
     if not isinstance(fields.get('id'), int):
         return None
     return fields
+
+
+GOOGLE_TOKENINFO_URL = 'https://oauth2.googleapis.com/tokeninfo'
+GOOGLE_ISSUERS = {'accounts.google.com', 'https://accounts.google.com'}
+
+
+async def verify_google_id_token(credential: str, client_id: str | None) -> dict | None:
+    """Validate a Google ID token and return its claims, or None.
+
+    The site signs in with Google purely to identify which sync blob is
+    the user's; the token is verified here, once per device, and never seen
+    again — afterwards the site holds the derived key (see api.handle_google_key).
+
+    Verification is delegated to Google's tokeninfo endpoint rather than done
+    locally against its public keys. Local verification is what Google
+    recommends at volume, but it needs an RSA/JWT stack this project doesn't
+    carry (google-auth pulls in a blocking HTTP transport, awkward inside
+    aiohttp). This runs once per device per lifetime, so the round trip is
+    cheap; swap in local verification here if that ever stops being true.
+
+    The endpoint checks the signature and expiry; `aud` and `iss` are ours to
+    check, and an unverified email is refused so a token minted for another
+    app or a half-made account can't claim a key.
+    """
+    if not client_id or not isinstance(credential, str) or not credential:
+        return None
+
+    # A short timeout: this is an interactive sign-in, and every call opens its
+    # own session, so aiohttp's ~5-minute default would let a Google stall or a
+    # burst of junk credentials pin many tasks and outbound connections.
+    timeout = ClientTimeout(total=5, connect=3)
+    try:
+        async with ClientSession(timeout=timeout) as session:
+            async with session.get(GOOGLE_TOKENINFO_URL, params={'id_token': credential}) as response:
+                if response.status != 200:
+                    return None
+                claims = await response.json()
+    except (ClientError, ValueError, asyncio.TimeoutError):
+        return None
+
+    if not isinstance(claims, dict):
+        return None
+    if claims.get('aud') != client_id:
+        return None
+    if claims.get('iss') not in GOOGLE_ISSUERS:
+        return None
+    if str(claims.get('email_verified', 'false')).lower() != 'true':
+        return None
+    try:
+        if int(claims.get('exp', 0)) <= time.time():
+            return None
+    except (TypeError, ValueError):
+        return None
+    if not claims.get('sub'):
+        return None
+    return claims

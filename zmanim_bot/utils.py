@@ -4,8 +4,12 @@ import inspect
 from aiogram.types import ChatActions
 from pymongo import IndexModel
 
-from zmanim_bot.misc import collection
+from zmanim_bot.misc import collection, db_engine
 from zmanim_bot.repository.bot_repository import get_or_set_processor_type
+from zmanim_bot.repository.models import WebPrefs, WebSync
+
+# Reap settings blobs untouched for this long (see ensure_mongo_index).
+WEB_SYNC_TTL_SECONDS = 730 * 24 * 60 * 60
 
 
 def chat_action(action: str = None):
@@ -33,3 +37,22 @@ def chat_action(action: str = None):
 async def ensure_mongo_index():
     index = IndexModel('user_id', unique=True)
     await collection.create_indexes([index])
+    # The site's key-value sync store lives in its own collection, so its
+    # unique index on `key` is declared on the model and created here — without
+    # this, lookups scan and two devices racing a first write can duplicate a
+    # row (see repository.models.WebSync).
+    await db_engine.configure_database([WebSync])
+    # TTL: reap blobs no device has touched in a long time. An active device
+    # re-writes on every sync, refreshing updated_at, so only truly abandoned
+    # rows expire (creation is authenticated, so this is hygiene, not a bound).
+    # `account` (a hash of the Google sub) is unique so one account maps to one
+    # key, but SPARSE so any pre-account rows (no field) don't collide on null.
+    await db_engine.get_collection(WebSync).create_indexes([
+        IndexModel('updated_at', expireAfterSeconds=WEB_SYNC_TTL_SECONDS),
+        IndexModel('account', unique=True, sparse=True),
+    ])
+    # Telegram users' site blob lives in its own collection (see WebPrefs),
+    # one row per user_id, so a full-document User save can't revert it.
+    await db_engine.get_collection(WebPrefs).create_indexes(
+        [IndexModel('user_id', unique=True)]
+    )

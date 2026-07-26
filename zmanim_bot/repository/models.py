@@ -104,3 +104,61 @@ class User(Model):
         except KeyError:
             raise UnknownProcessorException()
 
+
+
+class WebSync(Model):
+    """A calendar-site settings blob for someone with no Telegram account.
+
+    Deliberately NOT a `User`: user documents are Telegram-shaped (`user_id` is
+    a Telegram id, `personal_info` comes from Telegram) and `broadcast` iterates
+    that collection to message everyone — synthetic rows there would corrupt
+    both. This is a plain key-value row instead, in its own collection.
+
+    The credential is `key` plus its signature (see api.websync_signature):
+    both come from /google-key after a Google ID token is verified, so only a
+    real signed-in account can read or create a row — the bot need not keep any
+    session. `account` is a one-way hash of the Google `sub` (never the id
+    itself); /google-key looks a row up by it and mints `key` once, so the key
+    is **stable across bot-token rotations** — a rotation invalidates the
+    token-derived `sig` and forces a re-sign-in, but the same key (hence the
+    same data) is handed back. The bot never interprets `blob`; it only bounds
+    its size and checks it is JSON, as for `User.web_prefs`. `updated_at`
+    carries a TTL index (see utils.ensure_mongo_index) so a blob no device has
+    touched in a long time is reaped; an active device keeps refreshing it.
+
+    Indexes (both created in utils.ensure_mongo_index): `account` is unique but
+    **sparse** — pre-account rows have no such field and several nulls would
+    otherwise collide on a plain unique index.
+    """
+
+    account: Optional[str] = None
+    key: str = Field(index=True, unique=True)
+    blob: str
+    updated_at: dt = Field(default_factory=dt.utcnow)
+
+    class Config:
+        collection = 'web_sync'
+        parse_doc_with_default_factories = True
+
+
+class WebPrefs(Model):
+    """A Telegram user's calendar-site settings blob, stored APART from their
+    `User` document.
+
+    It used to live on `User.web_prefs`, but the bot mutates `User` through
+    full-document saves in a dozen setters (language, location, …). A website
+    blob sync and any such save racing on the same user would let the save's
+    stale copy revert the blob (see the miniapp API). Keeping it in its own
+    collection, keyed by `user_id` and written only by the website, takes it
+    out of every `User` save entirely. `User.web_prefs` remains only as a
+    read-fallback for rows written before this split; the website's next sync
+    populates the row here and it becomes authoritative.
+    """
+
+    user_id: int = Field(index=True, unique=True)
+    blob: str
+    updated_at: dt = Field(default_factory=dt.utcnow)
+
+    class Config:
+        collection = 'web_prefs'
+        parse_doc_with_default_factories = True
